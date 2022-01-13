@@ -1,0 +1,11 @@
+@layout('layouts/app')
+
+@section('content')
+  <form action="{{ route('AuthController.register') }}" method="post">
+
+    @elements.button({type: "submit"})
+      Inscription
+    @end
+  </form>
+@end
+
