@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import User from 'App/Models/User'
 import RegisterValidator from 'App/Validators/RegisterValidator'
 
 export default class AuthController {
@@ -8,7 +9,9 @@ export default class AuthController {
 
   public async register({ request, response }: HttpContextContract) {
     const payload = await request.validate(RegisterValidator)
-    // console.log(payload.email)
+
+    const user = await User.create(payload)
+
     return response.redirect('/')
   }
 }
