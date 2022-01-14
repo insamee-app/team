@@ -2,7 +2,6 @@
 
 @section('content')
   <form action='{{ route('AuthController.register') }}' method='POST'>
-    {{ csrfField() }}
 
     @form.group({name: 'email'})
       @!form.label({ title: 'Email' })
