@@ -13,7 +13,7 @@ export default class EmailValidation extends BaseMailer {
     const html = mjml(await View.render('emails/email_validation', { url: this.url })).html
 
     message
-      .subject(`[${Env.get('APP_HOST')}] Validation de votre compte`)
+      .subject(`[${Env.get('EMAIL_HOST')}] Validation de votre compte`)
       .from(`no-reply@${Env.get('EMAIL_HOST')}`)
       .to(this.user.email)
       .html(html)

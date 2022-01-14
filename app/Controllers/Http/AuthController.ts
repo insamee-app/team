@@ -6,6 +6,7 @@ import User from 'App/Models/User'
 import RegisterValidator from 'App/Validators/RegisterValidator'
 import LoginValidator from 'App/Validators/LoginValidator'
 import { UserStatus } from 'App/Enums/UserStatus'
+import SendEmailValidator from 'App/Validators/SendEmailValidator'
 
 export default class AuthController {
   public async showLoginForm({ view }: HttpContextContract) {
@@ -24,7 +25,7 @@ export default class AuthController {
     return view.render('auth/register')
   }
 
-  public async register({ request, view }: HttpContextContract) {
+  public async register({ request, session, response }: HttpContextContract) {
     const payload = await request.validate(RegisterValidator)
 
     const user = await User.create(payload)
@@ -39,7 +40,8 @@ export default class AuthController {
 
     new EmailValidation(user, `${Env.get('APP_URL')}${url}`).sendLater()
 
-    return view.render('auth/confirm')
+    session.flash('success', `Un email de confirmation vous a été envoyé`)
+    return response.redirect('/')
   }
 
   public async validateUser({ auth, request, response, session, params }: HttpContextContract) {
@@ -51,12 +53,38 @@ export default class AuthController {
     const id = params.id
     const user = await User.findOrFail(id)
 
-    user.status = UserStatus.Active
-    await user.save()
+    if (user.status === UserStatus.Pending) {
+      user.status = UserStatus.Active
+      await user.save()
 
-    await auth.login(user)
+      // Important to prevent blocked users from logging in
+      await auth.login(user)
+    }
 
     session.flash('success', `Votre compte a été validé avec succès`)
+    return response.redirect('/')
+  }
+
+  public async showSendEmailForm({ view }: HttpContextContract) {
+    return view.render('auth/verify_email')
+  }
+
+  public async sendEmail({ request, response, session }: HttpContextContract) {
+    const { email } = await request.validate(SendEmailValidator)
+
+    const user = await User.findBy('email', email)
+
+    const url = Route.makeSignedUrl(
+      'AuthController.validateUser',
+      {
+        id: user!.id,
+      },
+      { expiresIn: '1h' }
+    )
+
+    new EmailValidation(user!, `${Env.get('APP_URL')}${url}`).sendLater()
+
+    session.flash('success', `Un email de confirmation vous a été envoyé`)
     return response.redirect('/')
   }
 }
