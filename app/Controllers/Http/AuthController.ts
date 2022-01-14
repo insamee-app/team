@@ -6,7 +6,10 @@ import User from 'App/Models/User'
 import RegisterValidator from 'App/Validators/RegisterValidator'
 import LoginValidator from 'App/Validators/LoginValidator'
 import { UserStatus } from 'App/Enums/UserStatus'
-import SendEmailValidator from 'App/Validators/SendEmailValidator'
+import SendVerifyEmailValidator from 'App/Validators/SendVerifyEmailValidator'
+import ResetPassword from 'App/Mailers/ResetPassword'
+import SendResetPasswordValidator from 'App/Validators/SendResetPasswordValidator'
+import ChangePasswordValidator from 'App/Validators/ChangePasswordValidator'
 
 export default class AuthController {
   public async showLoginForm({ view }: HttpContextContract) {
@@ -71,12 +74,12 @@ export default class AuthController {
     return response.redirect('/')
   }
 
-  public async showSendEmailForm({ view }: HttpContextContract) {
+  public async showSendVerifyEmailForm({ view }: HttpContextContract) {
     return view.render('auth/verify_email')
   }
 
-  public async sendEmail({ request, response, session }: HttpContextContract) {
-    const { email } = await request.validate(SendEmailValidator)
+  public async sendVerifyEmail({ request, response, session }: HttpContextContract) {
+    const { email } = await request.validate(SendVerifyEmailValidator)
 
     const user = await User.findBy('email', email)
 
@@ -92,5 +95,44 @@ export default class AuthController {
 
     session.flash('success', `Un email de confirmation vous a été envoyé`)
     return response.redirect('/')
+  }
+
+  public async showSendResetPasswordForm({ view }: HttpContextContract) {
+    return view.render('auth/reset_password')
+  }
+
+  public async sendResetPassword({ request, response, session }: HttpContextContract) {
+    const { email } = await request.validate(SendResetPasswordValidator)
+
+    const user = await User.findBy('email', email)
+
+    const url = Route.makeSignedUrl(
+      'AuthController.changePassword',
+      {
+        user_id: user!.id,
+      },
+      { expiresIn: '1h' }
+    )
+
+    new ResetPassword(user!, `${Env.get('APP_URL')}${url}`).sendLater()
+
+    session.flash('success', `Un email de réinitialisation de mot de passe vous a été envoyé`)
+    return response.redirect('/')
+  }
+
+  public async showChangePasswordForm({ view, params }: HttpContextContract) {
+    return view.render('auth/change_password', { user_id: params.user_id })
+  }
+
+  public async changePassword({ request, response, session, params }: HttpContextContract) {
+    const { password } = await request.validate(ChangePasswordValidator)
+
+    const user = await User.findOrFail(params.user_id)
+
+    user!.merge({ password })
+    await user!.save()
+
+    session.flash('success', `Votre mot de passe a été modifié avec succès`)
+    response.redirect('/')
   }
 }

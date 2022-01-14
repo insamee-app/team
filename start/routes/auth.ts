@@ -8,7 +8,13 @@ Route.post('register', 'AuthController.register')
 
 Route.delete('logout', 'AuthController.logout')
 
-Route.get('sendEmail', 'AuthController.showSendEmailForm')
-Route.post('sendEmail', 'AuthController.sendEmail')
+Route.get('send-verify-email', 'AuthController.showSendVerifyEmailForm')
+Route.post('send-verify-email', 'AuthController.sendVerifyEmail')
+
+Route.get('send-reset-password', 'AuthController.showSendResetPasswordForm')
+Route.post('send-reset-password', 'AuthController.sendResetPassword')
+
+Route.get('change-password/:user_id', 'AuthController.showChangePasswordForm')
+Route.post('change-password/:user_id', 'AuthController.changePassword')
 
 Route.get('users/:id/verification', 'AuthController.validateUser')
