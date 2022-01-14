@@ -5,6 +5,7 @@ import EmailValidation from 'App/Mailers/EmailValidation'
 import User from 'App/Models/User'
 import RegisterValidator from 'App/Validators/RegisterValidator'
 import LoginValidator from 'App/Validators/LoginValidator'
+import { UserStatus } from 'App/Enums/UserStatus'
 
 export default class AuthController {
   public async showLoginForm({ view }: HttpContextContract) {
@@ -49,8 +50,10 @@ export default class AuthController {
 
     const id = params.id
     const user = await User.findOrFail(id)
-    // user.status = UserStatus.Active
-    // await user.save()
+
+    user.status = UserStatus.Active
+    await user.save()
+
     await auth.login(user)
 
     session.flash('success', `Votre compte a été validé avec succès`)
