@@ -24,6 +24,6 @@ export default class AuthController {
 
     const user = await User.create(payload)
 
-    return response.redirect('/')
+    return response.redirect('auth/confirm')
   }
 }
