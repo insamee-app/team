@@ -4,6 +4,7 @@ import Route from '@ioc:Adonis/Core/Route'
 import EmailValidation from 'App/Mailers/EmailValidation'
 import User from 'App/Models/User'
 import RegisterValidator from 'App/Validators/RegisterValidator'
+import LoginValidator from 'App/Validators/LoginValidator'
 
 export default class AuthController {
   public async showLoginForm({ view }: HttpContextContract) {
@@ -11,7 +12,7 @@ export default class AuthController {
   }
 
   public async login({ auth, request, response }: HttpContextContract) {
-    const { email, password } = await request.only(['email', 'password'])
+    const { email, password } = await request.validate(LoginValidator)
 
     await auth.attempt(email, password)
 
