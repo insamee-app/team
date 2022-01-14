@@ -19,11 +19,11 @@ export default class AuthController {
     return view.render('auth/register')
   }
 
-  public async register({ request, response }: HttpContextContract) {
+  public async register({ request, response, view }: HttpContextContract) {
     const payload = await request.validate(RegisterValidator)
 
     const user = await User.create(payload)
 
-    return response.redirect('/')
+    return view.render('auth/confirm')
   }
 }
