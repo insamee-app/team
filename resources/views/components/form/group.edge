@@ -1,0 +1,8 @@
+@inject({ ...$props.all() })
+
+@set('classes', '')
+@set('name', '')
+
+<div {{ $props.serialize({ class: classes }, false) }}>
+  {{{ await $slots.main() }}}
+</div>

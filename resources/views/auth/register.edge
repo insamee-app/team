@@ -1,9 +1,19 @@
 @layout('layouts/app')
 
 @section('content')
-  <form action="{{ route('AuthController.register') }}" method="post">
+  <form action='{{ route('AuthController.register') }}' method='post'>
 
-    @elements.button({type: "submit"})
+    @form.group({name: 'email'})
+      @!form.label({ title: 'Email' })
+      @!form.input({ type: 'text' })
+    @end
+
+    @form.group({name: 'password'})
+      @!form.label({ title: 'Password' })
+      @!form.input({ type: 'password' })
+    @end
+
+    @elements.button({type: 'submit'})
       Inscription
     @end
   </form>
