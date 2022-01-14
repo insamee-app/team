@@ -1,4 +1,5 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+import { UserStatus } from 'App/Enums/UserStatus'
 
 export default class UsersSchema extends BaseSchema {
   protected tableName = 'users'
@@ -11,6 +12,8 @@ export default class UsersSchema extends BaseSchema {
       table.string('email', 255).notNullable()
       table.string('password', 180).notNullable()
       table.string('remember_me_token').nullable()
+
+      table.integer('status').unsigned().notNullable().defaultTo(UserStatus.Pending)
 
       /**
        * Uses timestampz for PostgreSQL and DATETIME2 for MSSQL
