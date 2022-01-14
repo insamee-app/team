@@ -12,5 +12,6 @@ export default class LoginValidator {
   public messages = {
     'email.required': "L'email est requis",
     'email.userActive': "Cet email n'est pas vérifié",
+    'password.required': 'Le mot de passe est requis',
   }
 }
