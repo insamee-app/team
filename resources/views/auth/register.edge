@@ -1,7 +1,7 @@
 @layout('layouts/app')
 
 @section('content')
-  <form action='{{ route('AuthController.register') }}' method='post'>
+  <form action='{{ route('AuthController.register') }}' method='POST'>
 
     @form.group({name: 'email'})
       @!form.label({ title: 'Email' })
@@ -10,6 +10,11 @@
 
     @form.group({name: 'password'})
       @!form.label({ title: 'Password' })
+      @!form.input({ type: 'password' })
+    @end
+
+    @form.group({ name: 'password_confirmation' })
+      @!form.label({ title: 'Confirmation' })
       @!form.input({ type: 'password' })
     @end
 
