@@ -44,6 +44,12 @@ export default class AuthController {
     return response.redirect('/')
   }
 
+  public async logout({ auth, response }: HttpContextContract) {
+    await auth.logout()
+
+    return response.redirect('/')
+  }
+
   public async validateUser({ auth, request, response, session, params }: HttpContextContract) {
     if (!request.hasValidSignature()) {
       session.flash('error', `Ce lien n'est pas valide`)

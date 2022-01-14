@@ -6,6 +6,8 @@ Route.post('login', 'AuthController.login')
 Route.get('register', 'AuthController.showRegisterForm')
 Route.post('register', 'AuthController.register')
 
+Route.delete('logout', 'AuthController.logout')
+
 Route.get('sendEmail', 'AuthController.showSendEmailForm')
 Route.post('sendEmail', 'AuthController.sendEmail')
 
