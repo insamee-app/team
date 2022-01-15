@@ -3,6 +3,7 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Profile from './Profile'
+import { UserRole } from 'App/Enums/UserRole'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -19,6 +20,9 @@ export default class User extends BaseModel {
 
   @column()
   public status: UserStatus
+
+  @column()
+  public role: UserRole
 
   @hasOne(() => Profile, {
     foreignKey: 'userId',

@@ -7,11 +7,15 @@
     <p>Domaine : {{ school.host }}</p>
 
     <footer>
-      <a href="{{ route('SchoolsController.edit', { id: school.id }) }}">Modifier</a>
-      <form action="{{ route('SchoolsController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
-        {{ csrfField() }}
-        <button type="submit">Supprimer</button>
-      </form>
+      @can('SchoolPolicy.update')
+        <a href="{{ route('SchoolsController.edit', { id: school.id }) }}">Modifier</a>
+      @end
+      @can('SchoolPolicy.delete')
+        <form action="{{ route('SchoolsController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
+          {{ csrfField() }}
+          <button type="submit">Supprimer</button>
+        </form>
+      @end
     </footer>
   </article>
 @end
