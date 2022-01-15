@@ -15,9 +15,6 @@ export default class UsersSchema extends BaseSchema {
 
       table.integer('status').unsigned().notNullable().defaultTo(UserStatus.Pending)
 
-      /**
-       * Uses timestampz for PostgreSQL and DATETIME2 for MSSQL
-       */
       table.timestamp('created_at', { useTz: true }).notNullable()
       table.timestamp('updated_at', { useTz: true }).notNullable()
     })
