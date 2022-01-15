@@ -1,4 +1,5 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 
 export default class UsersSchema extends BaseSchema {
@@ -14,6 +15,7 @@ export default class UsersSchema extends BaseSchema {
       table.string('remember_me_token').nullable()
 
       table.integer('status').unsigned().notNullable().defaultTo(UserStatus.Pending)
+      table.integer('role').unsigned().notNullable().defaultTo(UserRole.Member)
 
       table.timestamp('created_at', { useTz: true }).notNullable()
       table.timestamp('updated_at', { useTz: true }).notNullable()
