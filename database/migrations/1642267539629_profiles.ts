@@ -6,8 +6,8 @@ export default class Profiles extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
-      table.string('user_id').notNullable().references('id').inTable('users')
-      table.string('school_id').notNullable().references('id').inTable('schools')
+      table.uuid('user_id').notNullable().references('id').inTable('users')
+      table.uuid('school_id').notNullable().references('id').inTable('schools')
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
