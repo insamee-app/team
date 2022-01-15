@@ -1,0 +1,41 @@
+@layout('layouts/center')
+@set('title', 'Se connecter')
+
+@section('content')
+    @if(flashMessages.has('auth.errors'))
+    <p>
+      Aucun utilisateur n'a été trouvé avec ces identifiants.
+    </p>
+    @end
+
+    <form
+    class="grid gap-2"
+    action="{{ route('AuthController.login') }}"
+    method="POST"
+    >
+    {{ csrfField() }}
+
+    @form.group({ name: 'email' })
+    @!form.label({ title: 'Email' })
+    @!form.input({ type: 'email' })
+    @end
+
+    @form.group({ name: 'password' })
+      @!form.label({ title: 'Mot de passe' })
+      @!form.input({ type: 'password' })
+    @end
+
+    <div class="mt-6 flex flex-row justify-center">
+      @elements.button({ type: 'submit', classes: "w-full" })
+        Se connecter
+      @end
+    </div>
+  </form>
+
+  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5">
+    <p>Pas encore de compte ?</p>&nbsp;
+    <a href="{{ route('AuthController.register') }}">
+      S'inscrire
+    </a>
+  </div>
+@end

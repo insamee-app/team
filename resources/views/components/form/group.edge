@@ -1,0 +1,7 @@
+@inject({ ...$props.all() })
+
+@set('classes', 'flex flex-col space-y-1')
+
+<div {{ $props.serialize({ class: classes }, false) }}>
+  {{{ await $slots.main() }}}
+</div>

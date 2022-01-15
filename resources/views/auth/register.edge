@@ -1,0 +1,37 @@
+@layout('layouts/center')
+@set('title', 'S\'inscrire')
+
+@section('content')
+  <form class="grid gap-2" action='{{ route('AuthController.register') }}' method='POST'>
+    {{ csrfField() }}
+
+    @form.group({name: 'email'})
+      @!form.label({ title: 'Email' })
+      @!form.input({ type: 'text' })
+    @end
+
+    @form.group({name: 'password'})
+      @!form.label({ title: 'Password' })
+      @!form.input({ type: 'password' })
+    @end
+
+    @form.group({ name: 'password_confirmation' })
+      @!form.label({ title: 'Confirmation' })
+      @!form.input({ type: 'password' })
+    @end
+
+    <div class="mt-6 flex flex-row justify-center">
+      @elements.button({type: 'submit', classes: "w-full"})
+        Inscription
+      @end
+    </div>
+  </form>
+
+  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5">
+    <p>Déjà un compte ?</p>&nbsp;
+    <a href="{{ route('AuthController.login') }}">
+      Se connecter
+    </a>
+  </div>
+@end
+

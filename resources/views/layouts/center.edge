@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{ title }} - {{ env('APP_NAME') }}</title>
+
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+<body>
+  <main class="mt-16 mx-8 space-y-8">
+    <div class="flex flex-row justify-center">
+      <a href="{{ route('home') }}" title="Redirection vers la page d'accueil">
+        <img src="{{ asset('assets/images/logo.png') }}" alt="logo de la plateforme" width="500" height="500" loading="lazy" class="w-32 h-32">
+      </a>
+    </div>
+    <section class="max-w-xs mx-auto">
+      @!section('content')
+    </section>
+  </main>
+</body>
+</html>
