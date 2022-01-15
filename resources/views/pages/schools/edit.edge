@@ -1,0 +1,22 @@
+@layout('layouts/app')
+@set('title', 'Editer ' + school.name)
+
+@section('content')
+  <form action="{{ route('SchoolsController.update', { id: school.id }) }}?_method=PUT" method="POST">
+    {{ csrfField() }}
+
+    @form.group({ name: 'name' })
+    @!form.label({ title: 'Nom' })
+    @!form.input({ type: 'text', value: school.name })
+    @end
+
+    @form.group({ name: 'host' })
+    @!form.label({ title: 'Domaine' })
+    @!form.input({ type: 'text', value: school.host })
+    @end
+
+    @elements.button({ type: 'submit'})
+      Editer l'école
+    @end
+  </form>
+@end

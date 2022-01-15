@@ -1,14 +1,14 @@
 @set('classes', '')
-@set('oldValue', flashMessages.get($context.name) || '')
+@set('value', flashMessages.get($context.name) || $props.get('value') || '')
 @set('error', flashMessages.get(`errors.${$context.name}`) || '')
 
 <input {{
     $props.serialize({
       class: classes,
-      value: oldValue,
+      value: value,
       id: $context.name,
       name: $context.name
-    }, false)
+    })
   }}>
 
 @if(error)
