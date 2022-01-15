@@ -1,7 +1,8 @@
-@layout('layouts/app')
+@layout('layouts/center')
+@set('title', 'S\'inscrire')
 
 @section('content')
-  <form action='{{ route('AuthController.register') }}' method='POST'>
+  <form class="max-w-xs mx-auto grid gap-2" action='{{ route('AuthController.register') }}' method='POST'>
     {{ csrfField() }}
 
     @form.group({name: 'email'})
@@ -19,9 +20,11 @@
       @!form.input({ type: 'password' })
     @end
 
-    @elements.button({type: 'submit'})
-      Inscription
-    @end
+    <div class="mt-6 flex flex-row justify-center">
+      @elements.button({type: 'submit', clsss: "w-full"})
+        Inscription
+      @end
+    </div>
   </form>
 @end
 
