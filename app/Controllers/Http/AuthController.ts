@@ -10,6 +10,7 @@ import SendVerifyEmailValidator from 'App/Validators/SendVerifyEmailValidator'
 import ResetPassword from 'App/Mailers/ResetPassword'
 import SendResetPasswordValidator from 'App/Validators/SendResetPasswordValidator'
 import ChangePasswordValidator from 'App/Validators/ChangePasswordValidator'
+import { getSchoolByHost } from 'App/Services/school'
 
 export default class AuthController {
   public async showLoginForm({ view }: HttpContextContract) {
@@ -31,7 +32,11 @@ export default class AuthController {
   public async register({ request, session, response }: HttpContextContract) {
     const payload = await request.validate(RegisterValidator)
 
+    const host = payload.email.split('@')[1]
+    const school = await getSchoolByHost(host)
+
     const user = await User.create(payload)
+    await user.related('profile').create({ schoolId: school!.id, userId: user.id })
 
     const url = Route.makeSignedUrl(
       'AuthController.validateUser',
