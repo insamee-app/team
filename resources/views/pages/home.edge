@@ -1,1 +1,24 @@
-home.edge
+@layout('layouts/app')
+
+@section('content')
+<ul>
+  <li>
+    <a href="{{ route('home') }}">Home</a>
+  </li>
+  @if(auth.isLoggedIn)
+  <li>
+    <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST">
+      {{ csrfField() }}
+      <button type="submit">Se déconnecter</button>
+    </form>
+  </li>
+  @else
+  <li>
+    <a href="{{ route('AuthController.register') }}">S'inscrire</a>
+  </li>
+  <li>
+    <a href="{{ route('AuthController.login') }}">Se connecter</a>
+  </li>
+  @endif
+</ul>
+@end
