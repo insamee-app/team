@@ -4,9 +4,9 @@ import { UserRole } from 'App/Enums/UserRole'
 
 export default class SchoolPolicy extends BasePolicy {
   public async before(user: User) {
-    if (user.role === UserRole.Admin) {
-      return true
-    }
+    // if (user.role === UserRole.Admin) {
+    //   return true
+    // }
   }
 
   public async viewList() {
