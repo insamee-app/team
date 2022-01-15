@@ -1,0 +1,12 @@
+@layout('layouts/app')
+@set('title', 'Les écoles')
+
+@section('content')
+  <ul>
+    @each(school in schools)
+    <li>
+      <a href="{{ route('SchoolsController.show', { id: school.id }) }}">{{ school.name }}</a>
+    </li>
+    @endeach
+  </ul>
+@end

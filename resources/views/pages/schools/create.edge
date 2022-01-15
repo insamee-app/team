@@ -1,0 +1,22 @@
+@layout('layouts/app')
+@set('title', 'Créer une école')
+
+@section('content')
+  <form action="{{ route('SchoolsController.store') }}" method="POST">
+    {{ csrfField() }}
+
+    @form.group({ name: 'name' })
+    @!form.label({ title: 'Nom' })
+    @!form.input({ type: 'text' })
+    @end
+
+    @form.group({ name: 'host' })
+    @!form.label({ title: 'Domaine' })
+    @!form.input({ type: 'text' })
+    @end
+
+    @elements.button({ type: 'submit'})
+      Créer l'école
+    @end
+  </form>
+@end

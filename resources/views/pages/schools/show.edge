@@ -1,0 +1,17 @@
+@layout('layouts/app')
+@set('title', school.name)
+
+@section('content')
+  <article>
+    <h1>{{ school.name }}</h1>
+    <p>Domaine : {{ school.host }}</p>
+
+    <footer>
+      <a href="{{ route('SchoolsController.edit', { id: school.id }) }}">Modifier</a>
+      <form action="{{ route('SchoolsController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
+        {{ csrfField() }}
+        <button type="submit">Supprimer</button>
+      </form>
+    </footer>
+  </article>
+@end
