@@ -2,7 +2,7 @@
 @set('title', 'Envoyer le email de vérification')
 
 @section('content')
-  <form class="max-w-xs mx-auto grid grid-2" action="{{ route('AuthController.sendVerifyEmail') }}" method="POST">
+  <form class="grid grid-2" action="{{ route('AuthController.sendVerifyEmail') }}" method="POST">
     {{ csrfField() }}
 
     @form.group({name: 'email'})

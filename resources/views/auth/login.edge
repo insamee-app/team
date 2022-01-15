@@ -2,22 +2,22 @@
 @set('title', 'Se connecter')
 
 @section('content')
-  @if(flashMessages.has('auth.errors'))
+    @if(flashMessages.has('auth.errors'))
     <p>
       Aucun utilisateur n'a été trouvé avec ces identifiants.
     </p>
-  @end
+    @end
 
-  <form
-    class="max-w-xs mx-auto grid gap-2"
+    <form
+    class="grid gap-2"
     action="{{ route('AuthController.login') }}"
     method="POST"
-  >
+    >
     {{ csrfField() }}
 
     @form.group({ name: 'email' })
-      @!form.label({ title: 'Email' })
-      @!form.input({ type: 'email' })
+    @!form.label({ title: 'Email' })
+    @!form.input({ type: 'email' })
     @end
 
     @form.group({ name: 'password' })
@@ -31,4 +31,11 @@
       @end
     </div>
   </form>
+
+  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5">
+    <p>Pas encore de compte ?</p>&nbsp;
+    <a href="{{ route('AuthController.register') }}">
+      S'inscrire
+    </a>
+  </div>
 @end

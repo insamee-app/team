@@ -2,7 +2,7 @@
 @set('title', 'S\'inscrire')
 
 @section('content')
-  <form class="max-w-xs mx-auto grid gap-2" action='{{ route('AuthController.register') }}' method='POST'>
+  <form class="grid gap-2" action='{{ route('AuthController.register') }}' method='POST'>
     {{ csrfField() }}
 
     @form.group({name: 'email'})
@@ -26,5 +26,12 @@
       @end
     </div>
   </form>
+
+  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5">
+    <p>Déjà un compte ?</p>&nbsp;
+    <a href="{{ route('AuthController.login') }}">
+      Se connecter
+    </a>
+  </div>
 @end
 
