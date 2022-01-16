@@ -16,6 +16,7 @@ export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
   return {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
+    graduationYear: faker.datatype.number({ min: 2000, max: 2020 }),
   }
 })
   .relation('school', () => SchoolFactory)
