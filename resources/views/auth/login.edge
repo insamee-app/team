@@ -27,7 +27,7 @@
     @end
 
     @form.group({ name: 'rememberMe', class: "flex flex-row items-center space-x-2" })
-      @!form.input({ type: 'checkbox', classes: '' })
+      @!form.input({ type: 'checkbox', value: 'true' })
       @!form.label({ title: 'Se souvenir de moi' })
     @end
 
@@ -41,7 +41,7 @@
   <div class="w-full flex flex-row justify-center mt-8 py-4 px-5 rounded border border-black">
     <p class="text-team-grey">Pas encore de compte ?</p>&nbsp;
     <a href="{{ route('AuthController.register') }}">
-      Se connecter
+      S'inscrire
     </a>
   </div>
 
