@@ -1,15 +1,15 @@
-@set('classes', '')
 @set('value', flashMessages.get($context.name) || $props.get('value') || '')
 @set('error', flashMessages.get(`errors.${$context.name}`) || '')
 
 <input {{
-    $props.serialize({
-      class: classes,
+    $props.serializeExcept(['classes'], {
       value: value,
       id: $context.name,
       name: $context.name
     })
-  }}>
+  }}
+  class="py-1 px-2 rounded border {{ classes }}"
+  >
 
 @if(error)
   <span class="text-sm">{{ error }}</span>

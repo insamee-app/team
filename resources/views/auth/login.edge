@@ -1,4 +1,4 @@
-@layout('layouts/center')
+@layout('layouts/logo')
 @set('title', 'Se connecter')
 
 @section('content')
@@ -15,27 +15,47 @@
     >
     {{ csrfField() }}
 
+    @set('classes', 'border border-black rounded placeholder:text-team-grey')
     @form.group({ name: 'email' })
-    @!form.label({ title: 'Email' })
-    @!form.input({ type: 'email' })
+      @!form.label({ title: 'Adresse électronique' })
+      @!form.input({ type: 'email', placeholder: "example@site.fr", classes: classes})
     @end
 
     @form.group({ name: 'password' })
       @!form.label({ title: 'Mot de passe' })
-      @!form.input({ type: 'password' })
+      @!form.input({ type: 'password', placeholder: "********", classes: classes })
+    @end
+
+    @form.group({ name: 'rememberMe', class: "flex flex-row items-center space-x-2" })
+      @!form.input({ type: 'checkbox', classes: '' })
+      @!form.label({ title: 'Se souvenir de moi' })
     @end
 
     <div class="mt-6 flex flex-row justify-center">
-      @elements.button({ type: 'submit', classes: "w-full" })
+      @elements.button({ type: 'submit', classes: "w-full bg-black text-white" })
         Se connecter
       @end
     </div>
   </form>
 
-  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5">
-    <p>Pas encore de compte ?</p>&nbsp;
+  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5 rounded border border-black">
+    <p class="text-team-grey">Pas encore de compte ?</p>&nbsp;
     <a href="{{ route('AuthController.register') }}">
-      S'inscrire
+      Se connecter
+    </a>
+  </div>
+
+  <div class="w-full flex flex-col items-center mt-8">
+    <p class="text-team-grey">Besoin de vérifier votre compte ?</p>
+    <a href="{{ route('AuthController.sendVerifyEmail') }}">
+      Envoyer le couriel de vérification
+    </a>
+  </div>
+
+  <div class="w-full flex flex-col items-center mt-8">
+    <p class="text-team-grey">Vous avez oublié votre mot de passe ?</p>
+    <a href="{{ route('AuthController.sendResetPassword') }}">
+      Envoyer le couriel de réinitialisation
     </a>
   </div>
 @end

@@ -1,34 +1,46 @@
-@layout('layouts/center')
+@layout('layouts/logo')
 @set('title', 'S\'inscrire')
 
 @section('content')
   <form class="grid gap-2" action='{{ route('AuthController.register') }}' method='POST'>
     {{ csrfField() }}
 
+    @set('classes', 'border border-black rounded placeholder:text-team-grey')
+    @form.group({name: 'firstname'})
+      @!form.label({ title: 'Prénom' })
+      @!form.input({ type: 'fistname', placeholder: 'Votre prénom', classes: classes })
+    @end
+
+    @form.group({name: 'lastname'})
+      @!form.label({ title: 'Nom' })
+      @!form.input({ type: 'lastname', placeholder: 'Votre nom', classes: classes })
+    @end
+
+
     @form.group({name: 'email'})
-      @!form.label({ title: 'Email' })
-      @!form.input({ type: 'text' })
+      @!form.label({ title: 'Adresse électronique' })
+      @!form.input({ type: 'email', placeholder: 'example@site.fr', classes: classes })
     @end
 
     @form.group({name: 'password'})
       @!form.label({ title: 'Password' })
-      @!form.input({ type: 'password' })
+      @!form.input({ type: 'password', placeholder: '********', classes: classes })
     @end
 
     @form.group({ name: 'password_confirmation' })
       @!form.label({ title: 'Confirmation' })
-      @!form.input({ type: 'password' })
+      @!form.input({ type: 'password', placeholder: '********', classes: classes })
     @end
 
     <div class="mt-6 flex flex-row justify-center">
-      @elements.button({type: 'submit', classes: "w-full"})
-        Inscription
+      @elements.button({type: 'submit', classes: "w-full bg-black text-white" })
+        S'inscrire
       @end
     </div>
   </form>
 
-  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5">
-    <p>Déjà un compte ?</p>&nbsp;
+  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5 rounded border border-black">
+    <p class="text-team-grey">Déjà un compte ?</p>&nbsp;
     <a href="{{ route('AuthController.login') }}">
       Se connecter
     </a>
