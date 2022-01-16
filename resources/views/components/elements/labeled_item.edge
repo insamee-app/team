@@ -1,0 +1,13 @@
+@set('label', $props.label)
+@set('value', $props.value)
+@set('variant', $props.variant)
+@set('color', '')
+
+@if(variant === 'mee')
+@set('color', 'text-mee-primary-dark')
+@endif
+
+<div class="flex flex-col space-y-1">
+  <span class="font-light {{color}}">{{ label }}</span>
+  <span class="text-xl text-black">{{ value }}</span>
+</div>

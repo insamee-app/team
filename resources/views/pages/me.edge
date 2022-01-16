@@ -1,0 +1,17 @@
+@layout('layouts/app')
+@set('title', 'Votre profil')
+
+@section('content')
+  @!elements.labeledItem({
+    label: 'Nom',
+    value: user.profile.lastName,
+    variant: 'mee'
+  })
+
+  @!elements.labeledItem({
+    label: 'Prénom',
+    value: user.profile.firstName,
+    variant: 'mee'
+  })
+
+@end

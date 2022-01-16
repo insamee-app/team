@@ -9,6 +9,13 @@ module.exports = {
     extend: {
       colors: {
         'team-grey': '#6b7280',
+        'mee': {
+          primary: {
+            base: '#931f1c',
+            dark: '#5f0000',
+            light: '#c95144',
+          },
+        },
       },
     },
   },
