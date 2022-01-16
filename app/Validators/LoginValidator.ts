@@ -10,6 +10,7 @@ export default class LoginValidator {
       rules.exists({ table: 'users', column: 'email', where: { status: UserStatus.Active } }),
     ]),
     password: schema.string(),
+    rememberMe: schema.boolean.optional(),
   })
 
   public messages = {

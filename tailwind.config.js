@@ -6,7 +6,11 @@ module.exports = {
     './resources/js/**/*.ts',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'team-grey': '#9f9f9f',
+      },
+    },
   },
   plugins: [],
 }

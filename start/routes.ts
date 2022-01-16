@@ -24,4 +24,6 @@ Route.on('/').render('pages/home').as('home')
 
 import './routes/auth'
 
-Route.resource('schools', 'SchoolsController')
+Route.resource('schools', 'SchoolsController').middleware({
+  '*': ['auth'],
+})

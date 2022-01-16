@@ -20,9 +20,7 @@
     "./start/kernel",
     {
       "file": "./start/validator",
-      "environment": [
-        "web"
-      ]
+      "environment": ["web"]
     },
     "./start/bouncer"
   ],
@@ -47,7 +45,5 @@
       "reloadServer": false
     }
   ],
-  "aceProviders": [
-    "@adonisjs/repl"
-  ]
+  "aceProviders": ["@adonisjs/repl"]
 }

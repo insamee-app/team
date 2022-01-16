@@ -18,9 +18,11 @@ export default class AuthController {
   }
 
   public async login({ auth, request, response }: HttpContextContract) {
-    const { email, password } = await request.validate(LoginValidator)
+    const { email, password, rememberMe } = await request.validate(LoginValidator)
 
-    await auth.attempt(email, password)
+    console.log(email, password, rememberMe)
+
+    await auth.attempt(email, password, rememberMe || false)
 
     return response.redirect('/')
   }
@@ -30,13 +32,15 @@ export default class AuthController {
   }
 
   public async register({ request, session, response }: HttpContextContract) {
-    const payload = await request.validate(RegisterValidator)
+    const { firstName, lastName, email, password } = await request.validate(RegisterValidator)
 
-    const host = payload.email.split('@')[1]
+    const host = email.split('@')[1]
     const school = await getSchoolByHost(host)
 
-    const user = await User.create(payload)
-    await user.related('profile').create({ schoolId: school!.id, userId: user.id })
+    const user = await User.create({ email, password })
+    await user
+      .related('profile')
+      .create({ firstName, lastName, schoolId: school!.id, userId: user.id })
 
     const url = Route.makeSignedUrl(
       'AuthController.validateUser',
