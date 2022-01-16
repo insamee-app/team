@@ -5,6 +5,8 @@ export default class RegisterValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
+    firstName: schema.string({ trim: true }, [rules.maxLength(255)]),
+    lastName: schema.string({ trim: true }, [rules.maxLength(255)]),
     email: schema.string({ trim: true }, [
       rules.email(),
       rules.unique({ table: 'users', column: 'email' }),
@@ -14,6 +16,10 @@ export default class RegisterValidator {
   })
 
   public messages = {
+    'firstName.required': 'Le prénom est requis',
+    'firstName.maxLength': 'Le prénom ne doit pas dépasser 255 caractères',
+    'lastName.required': 'Le nom est requis',
+    'lastName.maxLength': 'Le nom ne doit pas dépasser 255 caractères',
     'email.required': "L'email est requis",
     'email.email': "L'email n'est pas valide",
     'email.unique': 'Cet email est déjà utilisé',

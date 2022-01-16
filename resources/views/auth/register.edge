@@ -6,12 +6,12 @@
     {{ csrfField() }}
 
     @set('classes', 'border border-black rounded placeholder:text-team-grey')
-    @form.group({name: 'firstname'})
+    @form.group({name: 'firstName'})
       @!form.label({ title: 'Prénom' })
-      @!form.input({ type: 'fistname', placeholder: 'Votre prénom', classes: classes })
+      @!form.input({ type: 'firstname', placeholder: 'Votre prénom', classes: classes })
     @end
 
-    @form.group({name: 'lastname'})
+    @form.group({name: 'lastName'})
       @!form.label({ title: 'Nom' })
       @!form.input({ type: 'lastname', placeholder: 'Votre nom', classes: classes })
     @end
