@@ -8,6 +8,12 @@ export default class Profile extends BaseModel {
   public id: string
 
   @column()
+  public firstName: string
+
+  @column()
+  public lastName: string
+
+  @column()
   public userId: string
 
   @column()
