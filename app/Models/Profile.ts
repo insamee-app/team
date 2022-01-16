@@ -14,6 +14,9 @@ export default class Profile extends BaseModel {
   public lastName: string
 
   @column()
+  public graduationYear: number
+
+  @column()
   public userId: string
 
   @column()
