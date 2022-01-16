@@ -2,16 +2,36 @@
 @set('title', 'Votre profil')
 
 @section('content')
-  @!elements.labeledItem({
-    label: 'Nom',
-    value: user.profile.lastName,
-    variant: 'mee'
-  })
+  <article class="flex flex-col space-y-8">
+    @!elements.labeledItem({
+      label: 'Nom',
+      value: user.profile.lastName,
+      variant: 'mee'
+    })
 
-  @!elements.labeledItem({
-    label: 'Prénom',
-    value: user.profile.firstName,
-    variant: 'mee'
-  })
+    @!elements.labeledItem({
+      label: 'Prénom',
+      value: user.profile.firstName,
+      variant: 'mee'
+    })
+
+    @!elements.labeledItem({
+      label: 'Adresse électronique',
+      value: user.email,
+      variant: 'mee'
+    })
+
+    @!elements.labeledItem({
+      label: 'Ecole',
+      value: user.profile.school.name,
+      variant: 'mee'
+    })
+
+    @!elements.labeledItem({
+      label: 'Graduation',
+      value: user.profile.graduationYear,
+      variant: 'mee'
+    })
+  </article>
 
 @end
