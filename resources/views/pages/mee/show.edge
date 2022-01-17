@@ -46,24 +46,30 @@
     </div>
   </article>
 
-  <div class="flex flex-col items-end mt-8 space-y-4">
-    <a href="{{ route('ProfilesController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
-      <span>
-        Modifier le profil
-      </span>
-      @!icons.identification({
-        'aria-label': 'Carte d\'identification',
-        class: "w-4 h-4 mt-1"
-      })
-    </a>
-     <a href="{{ route('ProfilesAvatarsController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
-      <span>
-        Modifier l'avatar
-      </span>
-      @!icons.userCircle({
-        'aria-label': 'Carte d\'identification',
-        class: "w-4 h-4 mt-1"
-      })
-    </a>
-  </div>
+  @if(await bouncer.with('ProfilePolicy').allows('update', user) || await bouncer.with('ProfilePolicy').allows('delete', user))
+    <div class="flex flex-col items-end mt-8 space-y-4">
+      @can('ProfilePolicy.update', user)
+        <a href="{{ route('ProfilesController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
+          <span>
+            Modifier le profil
+          </span>
+          @!icons.identification({
+            'aria-label': 'Carte d\'identification',
+            class: "w-4 h-4 mt-1"
+          })
+        </a>
+      @end
+      @can('ProfilePolicy.delete', user)
+        <a href="{{ route('ProfilesAvatarsController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
+          <span>
+            Modifier l'avatar
+          </span>
+          @!icons.userCircle({
+            'aria-label': 'Carte d\'identification',
+            class: "w-4 h-4 mt-1"
+          })
+        </a>
+      @end
+    </div>
+  @endif
 @end
