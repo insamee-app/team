@@ -6,11 +6,7 @@
     <h1 class="text-2xl">Votre profil</h1>
 
     <div class="flex flex-row space-x-8">
-      @if(!user.profile.avatar)
-        <div class="w-36 h-36 rounded-full bg-mee-secondary-dark"></div>
-      @else
-        <img src="{{ user.profile.avatar }}" class="w-36 h-36 rounded-full" alt="Photo de profil de {{ user.profile.firstName }}" loading="lazy" width="144" height="144"/>
-      @endif
+      @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
 
       <div class="flex flex-col space-y-8">
         @!elements.labeledItem({
