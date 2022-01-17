@@ -1,0 +1,75 @@
+@layout('layouts/app')
+@set('title', 'Votre profil')
+
+@section('content')
+  <article class="flex flex-col space-y-8">
+    @if(auth.user.id === user.id)
+      <h1 class="text-2xl">Votre profil</h1>
+    @endif
+
+    <div class="flex flex-row space-x-8">
+      @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
+
+      <div class="flex flex-col space-y-8">
+        @!elements.labeledItem({
+          label: 'Nom',
+          value: user.profile.lastName,
+          variant: 'mee'
+        })
+
+        @!elements.labeledItem({
+          label: 'Prénom',
+          value: user.profile.firstName,
+          variant: 'mee'
+        })
+      </div>
+    </div>
+
+    @!elements.labeledItem({
+      label: 'Adresse électronique',
+      value: user.email,
+      variant: 'mee'
+    })
+
+    <div class="flex flex-row justify-between">
+      @!elements.labeledItem({
+        label: 'Ecole',
+        value: user.profile.school.name,
+        variant: 'mee'
+      })
+
+      @!elements.labeledItem({
+        label: 'Graduation',
+        value: user.profile.graduationYear,
+        variant: 'mee'
+      })
+    </div>
+  </article>
+
+  @if(await bouncer.with('ProfilePolicy').allows('update', user) || await bouncer.with('ProfilePolicy').allows('delete', user))
+    <div class="flex flex-col items-end mt-8 space-y-4">
+      @can('ProfilePolicy.update', user)
+        <a href="{{ route('ProfilesController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
+          <span>
+            Modifier le profil
+          </span>
+          @!icons.identification({
+            'aria-label': 'Carte d\'identification',
+            class: "w-4 h-4 mt-1"
+          })
+        </a>
+      @end
+      @can('ProfilePolicy.delete', user)
+        <a href="{{ route('ProfilesAvatarsController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
+          <span>
+            Modifier l'avatar
+          </span>
+          @!icons.userCircle({
+            'aria-label': 'Carte d\'identification',
+            class: "w-4 h-4 mt-1"
+          })
+        </a>
+      @end
+    </div>
+  @endif
+@end

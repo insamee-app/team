@@ -1,0 +1,5 @@
+@if(!avatar)
+  <div class="w-36 h-36 rounded-full bg-mee-secondary-dark"></div>
+@else
+  <img src="{{ avatar.url }}" class="w-36 h-36 rounded-full" alt="Photo de profil de {{ firstName }}" loading="lazy" width="144" height="144"/>
+@endif

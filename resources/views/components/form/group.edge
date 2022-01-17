@@ -2,6 +2,6 @@
 
 @set('classes', 'flex flex-col space-y-1')
 
-<div {{ $props.serializeExcept(['name'], { class: classes }, false) }}>
+<div {{ $props.serializeExcept(['name', 'disabled'], { class: classes }, false) }}>
   {{{ await $slots.main() }}}
 </div>

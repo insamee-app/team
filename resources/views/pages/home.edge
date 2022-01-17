@@ -6,6 +6,7 @@
     <a href="{{ route('home') }}">Home</a>
   </li>
   @if(auth.isLoggedIn)
+    <a href="{{ route('ProfilesController.show', { id: auth.user.id }) }}">Mon profil</a>
   <li>
     <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST">
       {{ csrfField() }}

@@ -1,0 +1,44 @@
+@layout('layouts/app')
+@set('title', 'Edition de l\'avatar')
+
+@section('content')
+  @if(auth.user.id === user.id)
+    <h1 class="text-2xl">Modifier votre photo de profil</h1>
+  @endif
+
+  <div class="flex flex-col space-y-4 mt-8">
+    <h2>Photo actuelle</h2>
+
+    <div class="flex flex-col items-center space-y-4">
+      @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
+
+      <form action="{{ route('ProfilesAvatarsController.destroy', { id: user.id }) }}?_method=DELETE" method="POST">
+        {{ csrfField() }}
+
+        @elements.button({ type: 'submit', classes: "border border-mee-primary-base text-mee-primary-base text-sm shadow-sm" })
+          Supprimer
+        @end
+      </form>
+    </div>
+  </div>
+
+  <form action="{{ route('ProfilesAvatarsController.update', { id: user.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
+    {{ csrfField() }}
+
+    <h2>Nouvelle photo</h2>
+
+    <div class="mt-4">
+      @form.group({ name: 'avatar', class: "flex flex-row items-center space-x-2" })
+      @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sn  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-team-grey text-sm file:cursor-pointer" })
+      @!form.label({ title: 'Changer son avatar', class: "sr-only" })
+      @end
+    </div>
+
+    <div class="flex flex-col items-end mt-4">
+      @elements.button({ type: 'submit', classes: "bg-mee-primary-base text-white shadow-sm" })
+        Sauvegarder
+      @end
+    </div>
+  </form>
+
+@end

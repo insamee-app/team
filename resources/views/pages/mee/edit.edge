@@ -1,0 +1,44 @@
+@layout('layouts/app')
+@set('title', 'Edition du profil')
+
+@section('content')
+  <h1 class="text-2xl">Moditier votre profil</h1>
+
+  <form action="{{ route('ProfilesController.update', { id: user.id }) }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
+    {{ csrfField() }}
+    <div class="flex flex-col space-y-4">
+      @set('classesMee', 'border border-mee-primary-base rounded placeholder:text-team-grey')
+      @set('classesDisabled', 'text-team-grey border border-team-grey rounded placeholder:text-team-grey')
+      @form.group({name: 'firstName'})
+        @!form.label({ title: 'Prénom' })
+        @!form.input({ type: 'firstname', value: user.profile.firstName, classes: classesMee })
+      @end
+
+      @form.group({name: 'lastName'})
+        @!form.label({ title: 'Nom' })
+        @!form.input({ type: 'lastname', value: user.profile.lastName, classes: classesMee })
+      @end
+
+      @form.group({name: 'email', disabled: 'true'})
+        @!form.label({ title: 'Adresse électronique' })
+        @!form.input({ type: 'email', value: user.email, classes: classesDisabled })
+      @end
+
+      @form.group({name: 'school', disabled: 'true'})
+        @!form.label({ title: 'Ecole' })
+        @!form.input({ type: 'compagny', value: user.profile.lastName, classes: classesDisabled })
+      @end
+
+      @form.group({name: 'graduationYear'})
+        @!form.label({ title: 'Graduation' })
+        @!form.input({ type: 'number', value: user.profile.graduationYear, classes: classesMee })
+      @end
+    </div>
+
+    <div class="flex flex-row justify-end">
+      @elements.button({ type: 'submit', classes: 'bg-mee-primary-base text-white' })
+      Enregistrer les modifications
+    </div>
+    @end
+  </form>
+@end

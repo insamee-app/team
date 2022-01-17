@@ -23,7 +23,8 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.on('/').render('pages/home').as('home')
 
 import './routes/auth'
+import './routes/user'
 
-Route.resource('schools', 'SchoolsController').middleware({
-  '*': ['auth'],
-})
+Route.group(() => {
+  Route.resource('schools', 'SchoolsController')
+}).middleware('auth')
