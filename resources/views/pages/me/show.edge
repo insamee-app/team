@@ -1,0 +1,61 @@
+@layout('layouts/app')
+@set('title', 'Votre profil')
+
+@section('content')
+  <article class="flex flex-col space-y-8">
+    <h1 class="text-2xl">Votre profil</h1>
+
+    <div class="flex flex-row space-x-8">
+      @if(!user.profile.avatar)
+        <div class="w-36 h-36 rounded-full bg-mee-secondary-dark"></div>
+      @else
+        <img src="{{ user.profile.avatar }}" class="w-36 h-36 rounded-full" alt="Photo de profil de {{ user.profile.firstName }}" loading="lazy" width="144" height="144"/>
+      @endif
+
+      <div class="flex flex-col space-y-8">
+        @!elements.labeledItem({
+          label: 'Nom',
+          value: user.profile.lastName,
+          variant: 'mee'
+        })
+
+        @!elements.labeledItem({
+          label: 'Prénom',
+          value: user.profile.firstName,
+          variant: 'mee'
+        })
+      </div>
+    </div>
+
+    @!elements.labeledItem({
+      label: 'Adresse électronique',
+      value: user.email,
+      variant: 'mee'
+    })
+
+    <div class="flex flex-row justify-between">
+      @!elements.labeledItem({
+        label: 'Ecole',
+        value: user.profile.school.name,
+        variant: 'mee'
+      })
+
+      @!elements.labeledItem({
+        label: 'Graduation',
+        value: user.profile.graduationYear,
+        variant: 'mee'
+      })
+    </div>
+  </article>
+
+  <div class="flex flex-col items-end mt-8">
+    <a href="{{ route('ProfilesController.edit') }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
+      <span>
+        Modifier le profil
+      </span>
+      @!icons.identification({
+        'aria-label': 'Carte d\'identification'
+      })
+    </a>
+  </div>
+@end

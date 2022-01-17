@@ -5,7 +5,8 @@
     $props.serializeExcept(['classes'], {
       value: value,
       id: $context.name,
-      name: $context.name
+      name: $context.name,
+      disabled: $context.disabled || false,
     })
   }}
   class="py-1 px-2 rounded border {{ classes }}"
