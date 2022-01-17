@@ -1,0 +1,39 @@
+@layout('layouts/app')
+@set('title', 'Edition de l\'avatar')
+
+@section('content')
+  @if(auth.user.id === user.id)
+    <h1 class="text-2xl">Modifier votre photo de profil</h1>
+  @endif
+
+  <div class="flex flex-col space-y-4 mt-8">
+    <h2>Photo actuelle</h2>
+
+    <div class="flex flex-col items-center space-y-4">
+      @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
+
+      <form action="{{ route('ProfilesAvatarsController.destroy', { id: user.id }) }}?_method=DELETE" method="POST">
+        {{ csrfField() }}
+
+        <button type="submit">
+          Supprimer
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <form action="{{ route('ProfilesAvatarsController.update', { id: user.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-row justify-evenly mt-8">
+    {{ csrfField() }}
+
+    <label for="avatar" class="sr-only">
+      Changer
+    </label>
+    <input type="file" name="avatar" id="avatar" accept="image/png, image/gif, image/jpeg">
+    <p> {{ flashMessages.get('errors.avatar') }}</p>
+
+    <button type="submit">
+      Sauvegarder
+    </button>
+  </form>
+
+@end

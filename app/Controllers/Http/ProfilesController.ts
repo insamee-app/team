@@ -1,31 +1,39 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Profile from 'App/Models/Profile'
-import ProfileEditValidator from 'App/Validators/ProfileEditValidator'
+import User from 'App/Models/User'
+import ProfileValidator from 'App/Validators/ProfileValidator'
 
 export default class ProfilesController {
-  public async me({ auth, view }: HttpContextContract) {
-    const user = auth.user!
+  public async show({ params, view, bouncer }: HttpContextContract) {
+    await bouncer.with('ProfilePolicy').authorize('view')
+
+    const user = await User.findOrFail(params.id)
+
     await user.load('profile', (profile) => profile.preload('school'))
 
-    return view.render('pages/me/show', { user })
+    return view.render('pages/mee/show', { user })
   }
 
-  public async edit({ auth, view }: HttpContextContract) {
-    const user = auth.user!
+  public async edit({ params, view, bouncer }: HttpContextContract) {
+    const user = await User.findOrFail(params.id)
+    await bouncer.with('ProfilePolicy').authorize('update', user)
+
     await user.load('profile', (profile) => profile.preload('school'))
 
-    return view.render('pages/me/edit', { user })
+    return view.render('pages/mee/edit', { user })
   }
 
-  public async update({ request, auth, response }: HttpContextContract) {
-    const user = auth.user!
-    const payload = await request.validate(ProfileEditValidator)
+  public async update({ request, params, response, bouncer }: HttpContextContract) {
+    const user = await User.findOrFail(params.id)
+    await bouncer.with('ProfilePolicy').authorize('update', user)
+
+    const payload = await request.validate(ProfileValidator)
 
     const profile = await Profile.findBy('userId', user.id)
     profile!.merge(payload)
 
     await profile!.save()
 
-    return response.redirect().toRoute('ProfilesController.me')
+    return response.redirect().toRoute('ProfilesController.show', { id: user.id })
   }
 }

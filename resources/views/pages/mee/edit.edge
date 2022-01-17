@@ -4,7 +4,7 @@
 @section('content')
   <h1 class="text-2xl">Moditier votre profil</h1>
 
-  <form action="{{ route('ProfilesController.update') }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
+  <form action="{{ route('ProfilesController.update', { id: user.id }) }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
     {{ csrfField() }}
     <div class="flex flex-col space-y-4">
       @set('classesMee', 'border border-mee-primary-base rounded placeholder:text-team-grey')

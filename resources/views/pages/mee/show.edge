@@ -3,7 +3,9 @@
 
 @section('content')
   <article class="flex flex-col space-y-8">
-    <h1 class="text-2xl">Votre profil</h1>
+    @if(auth.user.id === user.id)
+      <h1 class="text-2xl">Votre profil</h1>
+    @endif
 
     <div class="flex flex-row space-x-8">
       @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
@@ -45,12 +47,22 @@
   </article>
 
   <div class="flex flex-col items-end mt-8">
-    <a href="{{ route('ProfilesController.edit') }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
+    <a href="{{ route('ProfilesController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
       <span>
         Modifier le profil
       </span>
       @!icons.identification({
-        'aria-label': 'Carte d\'identification'
+        'aria-label': 'Carte d\'identification',
+        class: "w-4 h-4"
+      })
+    </a>
+     <a href="{{ route('ProfilesAvatarsController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-2 text-mee-primary-base">
+      <span>
+        Modifier l'avatar
+      </span>
+      @!icons.userCircle({
+        'aria-label': 'Carte d\'identification',
+        class: "w-4 h-4"
       })
     </a>
   </div>
