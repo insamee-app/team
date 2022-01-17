@@ -15,25 +15,30 @@
       <form action="{{ route('ProfilesAvatarsController.destroy', { id: user.id }) }}?_method=DELETE" method="POST">
         {{ csrfField() }}
 
-        <button type="submit">
+        @elements.button({ type: 'submit', classes: "border border-mee-primary-base text-mee-primary-base text-sm shadow-sm" })
           Supprimer
-        </button>
+        @end
       </form>
     </div>
   </div>
 
-  <form action="{{ route('ProfilesAvatarsController.update', { id: user.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-row justify-evenly mt-8">
+  <form action="{{ route('ProfilesAvatarsController.update', { id: user.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
     {{ csrfField() }}
 
-    <label for="avatar" class="sr-only">
-      Changer
-    </label>
-    <input type="file" name="avatar" id="avatar" accept="image/png, image/gif, image/jpeg">
-    <p> {{ flashMessages.get('errors.avatar') }}</p>
+    <h2>Nouvelle photo</h2>
 
-    <button type="submit">
-      Sauvegarder
-    </button>
+    <div class="mt-4">
+      @form.group({ name: 'avatar', class: "flex flex-row items-center space-x-2" })
+      @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sn  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-team-grey text-sm file:cursor-pointer" })
+      @!form.label({ title: 'Changer son avatar', class: "sr-only" })
+      @end
+    </div>
+
+    <div class="flex flex-col items-end mt-4">
+      @elements.button({ type: 'submit', classes: "bg-mee-primary-base text-white shadow-sm" })
+        Sauvegarder
+      @end
+    </div>
   </form>
 
 @end
