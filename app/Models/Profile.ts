@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import School from './School'
+import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -12,6 +13,9 @@ export default class Profile extends BaseModel {
 
   @column()
   public lastName: string
+
+  @attachment()
+  public avatar: AttachmentContract
 
   @column()
   public graduationYear?: number
