@@ -7,7 +7,7 @@ export default class SkillsController {
   public async index({ view, bouncer }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('viewList')
 
-    const skills = await Skill.all()
+    const skills = await Skill.query().orderBy('name', 'asc')
 
     return view.render('pages/skills/index', { skills })
   }
