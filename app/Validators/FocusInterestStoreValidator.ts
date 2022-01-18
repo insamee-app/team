@@ -1,5 +1,6 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import FocusInterest from 'App/Models/FocusInterest'
 
 export default class FocusInterestStoreValidator {
   constructor(protected ctx: HttpContextContract) {}
@@ -7,7 +8,7 @@ export default class FocusInterestStoreValidator {
   public schema = schema.create({
     name: schema.string({ trim: true }, [
       rules.maxLength(255),
-      rules.unique({ table: 'skills', column: 'name' }),
+      rules.unique({ table: FocusInterest.table, column: 'name' }),
     ]),
   })
 
