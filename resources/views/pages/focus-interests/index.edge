@@ -1,0 +1,28 @@
+@layout('layouts/app')
+@set('title', 'Les centres \'intérêts')
+
+@section('content')
+  <h2 class="text-slate-500 text-lg font-semibold">
+    <a href="{{ route('FocusInterestsController.index') }}">
+      Centres d'intérêts
+    </a>
+  </h2>
+
+     <div class="flex flex-row justify-between items-center">
+      <h1 class="text-slate-900 text-2xl font-bold mt-2">Liste des centres d'intérets</h1>
+
+      <a href="{{ route('FocusInterestsController.create') }}" class="px-2 py-1 text-white bg-slate-500 hover:bg-slate-600 shadow-sm rounded">Ajouter</a>
+    </div>
+
+  <div class="flex flex-col space-y-6 mt-8">
+    @each(focus in focusInterests)
+      <a href="{{ route('FocusInterestsController.show', { id: focus.id }) }}">
+        @elements.card()
+          @elements.cardTitle()
+            {{ focus.name }}
+          @end
+        @end
+      </a>
+    @endeach
+  </div>
+@end

@@ -28,4 +28,5 @@ import './routes/user'
 Route.group(() => {
   Route.resource('schools', 'SchoolsController')
   Route.resource('skills', 'SkillsController')
+  Route.resource('focus-interests', 'FocusInterestsController')
 }).middleware('auth')

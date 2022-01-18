@@ -1,6 +1,7 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
+import FocusInterest from 'App/Models/FocusInterest'
 import Profile from 'App/Models/Profile'
 import School from 'App/Models/School'
 import Skill from 'App/Models/Skill'
@@ -14,6 +15,12 @@ export const SchoolFactory = Factory.define(School, ({ faker }) => {
 }).build()
 
 export const SkillFactory = Factory.define(Skill, ({ faker }) => {
+  return {
+    name: faker.lorem.words(),
+  }
+}).build()
+
+export const FocusInterestFactory = Factory.define(FocusInterest, ({ faker }) => {
   return {
     name: faker.lorem.words(),
   }
