@@ -3,12 +3,19 @@ import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Profile from 'App/Models/Profile'
 import School from 'App/Models/School'
+import Skill from 'App/Models/Skill'
 import User from 'App/Models/User'
 
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
     name: faker.company.companyName(),
     host: faker.internet.domainName(),
+  }
+}).build()
+
+export const SkillFactory = Factory.define(Skill, ({ faker }) => {
+  return {
+    name: faker.lorem.words(),
   }
 }).build()
 
