@@ -1,7 +1,7 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class FocusStoreValidator {
+export default class FocusInterestUpdateValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({

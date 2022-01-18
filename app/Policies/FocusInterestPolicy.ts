@@ -2,7 +2,7 @@ import { BasePolicy } from '@ioc:Adonis/Addons/Bouncer'
 import { UserRole } from 'App/Enums/UserRole'
 import User from 'App/Models/User'
 
-export default class FocusPolicy extends BasePolicy {
+export default class FocusInterestPolicy extends BasePolicy {
   public async before(user: User) {
     if (user.role === UserRole.Admin) {
       return true
