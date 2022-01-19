@@ -1,8 +1,17 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  BelongsTo,
+  belongsTo,
+  column,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import School from './School'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
+import Skill from './Skill'
+import FocusInterest from './FocusInterest'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -26,6 +35,12 @@ export default class Profile extends BaseModel {
   @column()
   public schoolId: string
 
+  @column.dateTime({ autoCreate: true })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  public updatedAt: DateTime
+
   @belongsTo(() => User, {
     foreignKey: 'userId',
     localKey: 'id',
@@ -38,9 +53,21 @@ export default class Profile extends BaseModel {
   })
   public school: BelongsTo<typeof School>
 
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  @manyToMany(() => Skill, {
+    pivotTable: 'skills_profiles',
+    localKey: 'id',
+    pivotForeignKey: 'profile_id',
+    pivotRelatedForeignKey: 'skill_id',
+    relatedKey: 'id',
+  })
+  public skills: ManyToMany<typeof Skill>
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  @manyToMany(() => FocusInterest, {
+    pivotTable: 'focus_interests_profiles',
+    localKey: 'id',
+    pivotForeignKey: 'profile_id',
+    pivotRelatedForeignKey: 'focus_interest_id',
+    relatedKey: 'id',
+  })
+  public focusInterests: ManyToMany<typeof FocusInterest>
 }
