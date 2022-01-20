@@ -62,5 +62,12 @@
     })
      @!elements.chips({data: user.profile.skills})
     @end
+
+    @elements.labeledItem({
+      label: 'Centres d\'intérêt',
+      variant: 'mee'
+    })
+     @!elements.chips({data: user.profile.focusInterests})
+    @end
   </article>
 @end

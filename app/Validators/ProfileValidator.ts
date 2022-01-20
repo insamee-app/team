@@ -11,6 +11,9 @@ export default class ProfileValidator {
     skills: schema.array
       .optional()
       .members(schema.string({}, [rules.exists({ table: 'skills', column: 'id' })])),
+    focusInterests: schema.array
+      .optional()
+      .members(schema.string({}, [rules.exists({ table: 'focus_interests', column: 'id' })])),
   })
 
   public messages = {
@@ -19,5 +22,7 @@ export default class ProfileValidator {
     'graduationYear.required': 'Un année de graduation est requise',
     'skills.*.string': 'Une compétence doit être une chaîne de caractères',
     'skills.*.exists': "Une compétence n'existe pas",
+    'focusInterests.*.string': "Un centre d'intérêt doit être une chaîne de caractères",
+    'focusInterests.*.exists': "Un centre d'intérêt n'existe pas",
   }
 }

@@ -42,11 +42,21 @@
         @!form.input({ type: 'number', value: user.profile.graduationYear, classes: classesMee })
       @end
 
-       @form.group({name: 'skills'})
+      @form.group({name: 'skills'})
         @!form.label({ title: 'Compétences' })
         @form.multiselect({
           data: skills,
           selectedData: user.profile.skills.map(skill => skill.id),
+        })
+          Sélectionner des compétences
+        @end
+      @end
+
+      @form.group({name: 'focusInterests'})
+        @!form.label({ title: 'Centre d\'intérêts' })
+        @form.multiselect({
+          data: focusInterests,
+          selectedData: user.profile.focusInterests.map(focusInterest => focusInterest.id),
         })
           Sélectionner des compétences
         @end
