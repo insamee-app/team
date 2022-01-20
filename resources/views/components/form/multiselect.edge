@@ -53,7 +53,7 @@
       x-transition.origin.top
       x-on:click.outside="close($refs.button)"
       style="display: none;"
-      class="absolute z-10 left-0 right-0 top-full mt-1 py-3 bg-white shadow-md rounded"
+      class="absolute z-10 left-0 right-0 top-full mt-1 py-3 bg-white shadow-lg rounded max-h-32 overflow-y-auto"
     >
       <template x-for="(item, i) in items"  >
         <li x-text="item.name" x-on:click="toggleItem(item)" :class="classes(item, i)" :key="item.id" class="py-1 px-3"></li>
