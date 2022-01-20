@@ -3,11 +3,17 @@ import Alpine from 'alpinejs'
 
 window.Alpine = Alpine
 
-Alpine.data('multiselect', (data, selectedData) => ({
-  items: data,
-  selected: selectedData,
+Alpine.data('multiselect', (data, selectedData = []) => ({
   open: false,
   index: -1,
+  items: data,
+  selected: selectedData,
+  selection() {
+    return this.items.filter((item) => this.selected.includes(item.id))
+  },
+  hasSelection() {
+    return this.selected.length > 0
+  },
   incrementIndex() {
     this.index++
     if (this.index > this.items.length) {
@@ -41,6 +47,10 @@ Alpine.data('multiselect', (data, selectedData) => ({
   },
   toggleItemByIndex(index) {
     this.toggleItem(this.items[index])
+  },
+  toggleItemById(id) {
+    this.toggleItem(this.items.find((item) => item.id === id))
+    this.$refs.button.focus()
   },
   isSelected(item) {
     return this.selected.includes(item.id)
