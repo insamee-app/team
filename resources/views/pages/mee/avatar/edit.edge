@@ -2,22 +2,27 @@
 @set('title', 'Edition de l\'avatar')
 
 @section('content')
-  @if(auth.user.id === user.id)
-    <h1 class="text-2xl">Modifier votre photo de profil</h1>
-  @endif
+  <div>
+    <h2 class="text-lg text-mee-primary-base font-semibold">
+      <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
+        Profil
+      </a>
+    </h2>
+
+    <div class="flex flex-row justify-between items-center">
+    <h1 class="text-2xl text-slate-900 font-bold">Modifier la photo</h1>
+  </div>
 
   <div class="flex flex-col space-y-4 mt-8">
-    <h2>Photo actuelle</h2>
+    <h3 class="text-xl font-bold">Photo actuelle</h3>
 
-    <div class="flex flex-col items-center space-y-4">
+    <div class="flex flex-col items-center space-y-2">
       @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
 
       <form action="{{ route('ProfilesAvatarsController.destroy', { id: user.id }) }}?_method=DELETE" method="POST">
         {{ csrfField() }}
 
-        @elements.button({ type: 'submit', classes: "border border-mee-primary-base text-mee-primary-base text-sm shadow-sm" })
-          Supprimer
-        @end
+        <button type="submit" class="text-sm text-mee-primary-base">Supprimer sa photo</button>
       </form>
     </div>
   </div>
@@ -25,18 +30,18 @@
   <form action="{{ route('ProfilesAvatarsController.update', { id: user.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
     {{ csrfField() }}
 
-    <h2>Nouvelle photo</h2>
+    <h3 class="text-xl font-bold">Nouvelle photo</h3>
 
     <div class="mt-4">
       @form.group({ name: 'avatar', class: "flex flex-row items-center space-x-2" })
-      @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sn  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-team-grey text-sm file:cursor-pointer" })
+      @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sn  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-grey-500 text-sm file:cursor-pointer" })
       @!form.label({ title: 'Changer son avatar', class: "sr-only" })
       @end
     </div>
 
     <div class="flex flex-col items-end mt-4">
-      @elements.button({ type: 'submit', classes: "bg-mee-primary-base text-white shadow-sm" })
-        Sauvegarder
+      @elements.button({ type: 'submit', classes: "bg-mee-primary-base text-white shadow-sm focus:!ring-mee-primary-base" })
+        Enregistrer
       @end
     </div>
   </form>

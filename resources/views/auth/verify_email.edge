@@ -5,14 +5,14 @@
   <form class="grid grid-2" action="{{ route('AuthController.sendVerifyEmail') }}" method="POST">
     {{ csrfField() }}
 
-    @set('classes', 'border border-black rounded placeholder:text-team-grey')
+    @set('classes', 'border !border-slate-500 !ring-slate-900 rounded placeholder:text-slate-500')
     @form.group({name: 'email' })
       @!form.label({ title: 'Adresse électronique' })
       @!form.input({ type: 'email', placeholder: 'example@site.fr', classes: classes})
     @end
 
     <div class="mt-6 flex flex-row justify-center">
-      @elements.button({ type: 'submit', classes: "w-full bg-black text-white" })
+      @elements.button({ type: 'submit', classes: "w-full bg-slate-900 text-white !ring-slate-900" })
         Envoyer l'email de vérification
       @end
     </div>

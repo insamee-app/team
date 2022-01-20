@@ -2,13 +2,21 @@
 @set('title', 'Edition du profil')
 
 @section('content')
-  <h1 class="text-2xl">Moditier votre profil</h1>
+  <div>
+      <h2 class="text-lg text-mee-primary-base font-semibold">
+        <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
+          Profil
+        </a>
+      </h2>
+
+      <div class="flex flex-row justify-between items-center">
+        <h1 class="text-2xl text-slate-900 font-bold">Modifier</h1>
+    </div>
 
   <form action="{{ route('ProfilesController.update', { id: user.id }) }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
     {{ csrfField() }}
     <div class="flex flex-col space-y-4">
-      @set('classesMee', 'border border-mee-primary-base rounded placeholder:text-team-grey')
-      @set('classesDisabled', 'text-team-grey border border-team-grey rounded placeholder:text-team-grey')
+      @set('classesMee', '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none')
       @form.group({name: 'firstName'})
         @!form.label({ title: 'Prénom' })
         @!form.input({ type: 'firstname', value: user.profile.firstName, classes: classesMee })
@@ -21,12 +29,12 @@
 
       @form.group({name: 'email', disabled: 'true'})
         @!form.label({ title: 'Adresse électronique' })
-        @!form.input({ type: 'email', value: user.email, classes: classesDisabled })
+        @!form.input({ type: 'email', value: user.email })
       @end
 
       @form.group({name: 'school', disabled: 'true'})
         @!form.label({ title: 'Ecole' })
-        @!form.input({ type: 'compagny', value: user.profile.lastName, classes: classesDisabled })
+        @!form.input({ type: 'compagny', value: user.profile.lastName })
       @end
 
       @form.group({name: 'graduationYear'})
@@ -34,17 +42,30 @@
         @!form.input({ type: 'number', value: user.profile.graduationYear, classes: classesMee })
       @end
 
-       @form.group({name: 'skills'})
-        @!form.label({ title: 'Compétences', id: 'skills-label' })
-        @form.multiselect({})
+      @form.group({name: 'skills'})
+        @!form.label({ title: 'Compétences' })
+        @form.multiselect({
+          data: skills,
+          selectedData: user.profile.skills.map(skill => skill.id),
+        })
+          Sélectionner des compétences
+        @end
+      @end
+
+      @form.group({name: 'focusInterests'})
+        @!form.label({ title: 'Centre d\'intérêts' })
+        @form.multiselect({
+          data: focusInterests,
+          selectedData: user.profile.focusInterests.map(focusInterest => focusInterest.id),
+        })
           Sélectionner des compétences
         @end
       @end
     </div>
 
-    <div class="flex flex-row justify-end">
-      @elements.button({ type: 'submit', classes: 'bg-mee-primary-base text-white' })
-      Enregistrer les modifications
+    <div class="flex flex-row justify-end mt-8 mb-20">
+      @elements.button({ type: 'submit', classes: 'bg-mee-primary-base text-white focus:!ring-mee-primary-base' })
+      Enregistrer
     </div>
     @end
   </form>
