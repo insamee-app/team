@@ -1,6 +1,3 @@
-@set('data', '')
-@set('selectedData', '')
-
 <div
   x-data="multiselect({{ stringify(data) }}, {{ stringify(selectedData) }})"
   x-on:keydown.escape.prevent.stop="close($refs.button)"

@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Profile from 'App/Models/Profile'
 import User from 'App/Models/User'
+import Skill from 'App/Models/Skill'
 import ProfileValidator from 'App/Validators/ProfileValidator'
 
 export default class ProfilesController {
@@ -19,8 +20,9 @@ export default class ProfilesController {
     await bouncer.with('ProfilePolicy').authorize('update', user)
 
     await user.load('profile', (profile) => profile.preload('school'))
+    const skills = await Skill.query().orderBy('name')
 
-    return view.render('pages/mee/edit', { user })
+    return view.render('pages/mee/edit', { user, skills })
   }
 
   public async update({ request, params, response, bouncer }: HttpContextContract) {

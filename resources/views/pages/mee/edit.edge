@@ -35,8 +35,11 @@
       @end
 
        @form.group({name: 'skills'})
-        @!form.label({ title: 'Compétences', id: 'skills-label' })
-        @form.multiselect({})
+        @!form.label({ title: 'Compétences' })
+        @form.multiselect({
+          data: skills,
+          selectedData: []
+        })
           Sélectionner des compétences
         @end
       @end
