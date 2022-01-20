@@ -1,6 +1,4 @@
-@set('classes',  '')
-
-<label {{ $props.serialize({ class: classes }, false) }} for="{{ $context.name }}">
+<label {{ $props.serializeExcept(['classes']) }} for="{{ $context.name }}" class="font-bold {{ classes }}">
   @if(title)
     {{ title }}
   @else

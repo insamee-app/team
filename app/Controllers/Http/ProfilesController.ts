@@ -10,7 +10,7 @@ export default class ProfilesController {
 
     const user = await User.findOrFail(params.id)
 
-    await user.load('profile', (profile) => profile.preload('school'))
+    await user.load('profile', (profile) => profile.preload('school').preload('skills'))
 
     return view.render('pages/mee/show', { user })
   }
@@ -19,8 +19,8 @@ export default class ProfilesController {
     const user = await User.findOrFail(params.id)
     await bouncer.with('ProfilePolicy').authorize('update', user)
 
-    await user.load('profile', (profile) => profile.preload('school'))
-    const skills = await Skill.query().orderBy('name')
+    await user.load('profile', (profile) => profile.preload('school').preload('skills'))
+    const skills = await Skill.query().select('id', 'name').orderBy('name')
 
     return view.render('pages/mee/edit', { user, skills })
   }
@@ -29,12 +29,13 @@ export default class ProfilesController {
     const user = await User.findOrFail(params.id)
     await bouncer.with('ProfilePolicy').authorize('update', user)
 
-    const payload = await request.validate(ProfileValidator)
+    const { skills, ...payload } = await request.validate(ProfileValidator)
 
     const profile = await Profile.findBy('userId', user.id)
     profile!.merge(payload)
 
     await profile!.save()
+    await profile?.related('skills').sync(skills || [])
 
     return response.redirect().toRoute('ProfilesController.show', { id: user.id })
   }

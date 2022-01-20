@@ -7,8 +7,8 @@
   <form action="{{ route('ProfilesController.update', { id: user.id }) }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
     {{ csrfField() }}
     <div class="flex flex-col space-y-4">
-      @set('classesMee', 'border border-mee-primary-base rounded placeholder:text-team-grey')
-      @set('classesDisabled', 'text-team-grey border border-team-grey rounded placeholder:text-team-grey')
+      @set('classesMee', 'border border-mee-primary-base rounded placeholder:text-grey-500')
+      @set('classesDisabled', 'text-grey-500 border border-grey-500 rounded placeholder:text-grey-500')
       @form.group({name: 'firstName'})
         @!form.label({ title: 'Prénom' })
         @!form.input({ type: 'firstname', value: user.profile.firstName, classes: classesMee })
@@ -38,7 +38,7 @@
         @!form.label({ title: 'Compétences' })
         @form.multiselect({
           data: skills,
-          selectedData: []
+          selectedData: user.profile.skills.map(skill => skill.id),
         })
           Sélectionner des compétences
         @end

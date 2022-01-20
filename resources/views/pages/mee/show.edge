@@ -44,6 +44,12 @@
         variant: 'mee'
       })
     </div>
+
+    <ul>
+      @each(skill in user.profile.skills)
+        <li>{{ skill.name }}</li>
+      @endeach
+    </ul>
   </article>
 
   @if(await bouncer.with('ProfilePolicy').allows('update', user) || await bouncer.with('ProfilePolicy').allows('delete', user))

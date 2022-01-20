@@ -27,6 +27,24 @@ Alpine.data('multiselect', (data, selectedData) => ({
 
     this.open = true
   },
+  close(focusAfter) {
+    this.open = false
+
+    focusAfter && focusAfter.focus()
+  },
+  toggleItem(item) {
+    if (this.isSelected(item)) {
+      this.selected = this.selected.filter((i) => i !== item.id)
+    } else {
+      this.selected.push(item.id)
+    }
+  },
+  toggleItemByIndex(index) {
+    this.toggleItem(this.items[index])
+  },
+  isSelected(item) {
+    return this.selected.includes(item.id)
+  },
   handleSpace() {
     if (!this.open) {
       this.open = true
@@ -40,28 +58,10 @@ Alpine.data('multiselect', (data, selectedData) => ({
 
     this.toggleItemByIndex(this.index)
   },
-  close(focusAfter) {
-    this.open = false
-
-    focusAfter && focusAfter.focus()
-  },
-  isSelected(item) {
-    return this.selected.includes(item.id)
-  },
-  toggleItem(item) {
-    if (this.isSelected(item)) {
-      this.selected = this.selected.filter((i) => i !== item.id)
-    } else {
-      this.selected.push(item.id)
-    }
-  },
-  toggleItemByIndex(index) {
-    this.toggleItem(this.items[index])
-  },
-  classes(item, index) {
+  classes(item, i) {
     const classes = ['hover:bg-blue-700']
 
-    if (index === this.index) {
+    if (i === this.index) {
       classes.push('bg-blue-700')
     } else if (this.isSelected(item)) {
       classes.push('bg-blue-500')

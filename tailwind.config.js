@@ -8,8 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'team-grey': '#6b7280',
-        'mee': {
+        mee: {
           primary: {
             base: '#931f1c',
             dark: '#5f0000',
@@ -29,5 +28,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 }
