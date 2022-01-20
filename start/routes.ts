@@ -19,8 +19,21 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import { schema } from '@ioc:Adonis/Core/Validator'
 
-Route.on('/').render('pages/home').as('home')
+Route.get('/', async ({ request, view }) => {
+  return view.render('pages/home', { qs: request.qs() })
+}).as('home')
+
+Route.post('/', async ({ request, response }) => {
+  const newPostSchema = schema.create({
+    cars: schema.array().members(schema.string()),
+  })
+
+  const payload = await request.validate({ schema: newPostSchema })
+  console.log(payload)
+  return response.redirect().withQs(payload).toRoute('home')
+})
 
 import './routes/auth'
 import './routes/user'

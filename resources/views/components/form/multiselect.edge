@@ -1,0 +1,44 @@
+@set('data', '')
+@set('selectedData', '')
+
+<div
+  x-data="multiselect({{ stringify(data) }}, {{ stringify(selectedData) }})"
+  x-on:keydown.escape.prevent.stop="close($refs.button)"
+  x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+    class="relative"
+>
+  <select multiple="multiple" name="{{ $context.name }}[]" hidden>
+    <template x-for="item in selected" :key="item.id">
+      <option selected :value="item.id"></option>
+    </template>
+  </select>
+
+  <button
+      x-ref="button"
+      x-on:click="toggle()"
+      x-on:keydown.space.prevent.stop="handleSpace"
+      x-on:keydown.down.prevent.stop="incrementIndex"
+      x-on:keydown.up.prevent.stop="decrementIndex"
+      id="{{ $context.name }}"
+      :aria-expanded="open"
+      :aria-controls="{{ $context.name }}"
+      type="button"
+      class="border border-black px-4 py-2 focus:outline-none focus:ring-4 focus:ring-aqua-400"
+  >
+    {{{ await $slots.main() }}}
+  </button>
+
+  <ul
+    x-ref="panel"
+    x-show="open"
+    x-transition.origin.top.left
+    x-on:click.outside="close($refs.button)"
+    style="display: none;"
+    class="absolute left-0 mt-2 bg-white border border-black"
+  >
+    <template x-for="(item, index) in items"  >
+      <li x-text="item.name" x-on:click="toggleItem(item)" :class="classes(item, index)" :key="item.id"></li>
+    </template>
+  </ul>
+  </div>
+</div>

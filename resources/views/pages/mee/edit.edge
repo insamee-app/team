@@ -33,6 +33,13 @@
         @!form.label({ title: 'Graduation' })
         @!form.input({ type: 'number', value: user.profile.graduationYear, classes: classesMee })
       @end
+
+       @form.group({name: 'skills'})
+        @!form.label({ title: 'Compétences', id: 'skills-label' })
+        @form.multiselect({})
+          Sélectionner des compétences
+        @end
+      @end
     </div>
 
     <div class="flex flex-row justify-end">
