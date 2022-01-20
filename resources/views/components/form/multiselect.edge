@@ -4,7 +4,7 @@
   x-data="multiselect({{ stringify(data) }}, {{ stringify(selectedData) }})"
   x-on:keydown.escape.prevent.stop="close($refs.button)"
   x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-  class="relative"
+  class="relative flex flex-row"
 >
   <select multiple="multiple" name="{{ $context.name }}[]" hidden>
     <template x-for="id in selected" :key="id">
@@ -22,9 +22,12 @@
     :aria-expanded="open"
     :aria-controls="{{ $context.name }}"
     type="button"
-    class="border border-black px-4 py-2 focus:outline-none focus:ring-4 focus:ring-aqua-400"
+    class="w-full flex flex-row justify-between items-center text-left text-slate-500 py-1 px-2 border border-mee-primary-base rounded focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base focus-within:outline-none"
   >
     {{{ await $slots.main() }}}
+    <svg class="h-5 w-5 transition-transform" viewBox="0 0 20 20" class="" :class="getClassChevron">
+     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+    </svg>
   </button>
 
   @if(error)
@@ -34,13 +37,13 @@
   <ul
     x-ref="panel"
     x-show="open"
-    x-transition.origin.top.left
+    x-transition.origin.top
     x-on:click.outside="close($refs.button)"
     style="display: none;"
-    class="absolute left-0 mt-2 bg-white border border-black"
+    class="absolute left-0 right-0 top-full mt-1 py-3 bg-white shadow-md rounded"
   >
     <template x-for="(item, i) in items"  >
-      <li x-text="item.name" x-on:click="toggleItem(item)" :class="classes(item, i)" :key="item.id"></li>
+      <li x-text="item.name" x-on:click="toggleItem(item)" :class="classes(item, i)" :key="item.id" class="py-1 px-3"></li>
     </template>
   </ul>
   </div>

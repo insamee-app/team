@@ -59,14 +59,21 @@ Alpine.data('multiselect', (data, selectedData) => ({
     this.toggleItemByIndex(this.index)
   },
   classes(item, i) {
-    const classes = ['hover:bg-blue-700']
+    const classes = ['hover:bg-mee-primary-grey-base']
 
     if (i === this.index) {
-      classes.push('bg-blue-700')
+      classes.push('bg-mee-primary-grey-base')
     } else if (this.isSelected(item)) {
-      classes.push('bg-blue-500')
+      classes.push('bg-mee-primary-grey-light')
     }
     return classes.join(' ')
+  },
+  getClassChevron() {
+    if (this.open) {
+      return 'rotate-180'
+    }
+
+    return 'rotate-0'
   },
 }))
 
