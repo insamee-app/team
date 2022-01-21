@@ -87,4 +87,89 @@ Alpine.data('multiselect', (data, selectedData = []) => ({
   },
 }))
 
+Alpine.data('select', (data, selectedData = '') => ({
+  open: false,
+  index: -1,
+  items: data,
+  selected: selectedData,
+  get selection() {
+    return this.items.filter((item) => this.selected === item.id)
+  },
+  get hasSelection() {
+    return this.selected
+  },
+  incrementIndex() {
+    this.index++
+    if (this.index > this.items.length) {
+      this.index = this.items.length
+    }
+  },
+  decrementIndex() {
+    this.index--
+    if (this.index < -1) {
+      this.index = -1
+    }
+  },
+  toggle() {
+    if (this.open) {
+      return this.close()
+    }
+
+    this.open = true
+  },
+  close(focusAfter) {
+    this.open = false
+
+    focusAfter && focusAfter.focus()
+  },
+  toggleItem(item) {
+    if (this.selected && this.selected === item.id) {
+      this.selected = ''
+    } else {
+      this.selected = item.id
+      this.close()
+    }
+  },
+  toggleItemByIndex(index) {
+    this.toggleItem(this.items[index])
+  },
+  toggleItemById(id) {
+    this.toggleItem(this.items.find((item) => item.id === id))
+    this.$refs.button.focus()
+  },
+  isSelected(item) {
+    return this.selected === item.id
+  },
+  handleSpace() {
+    if (!this.open) {
+      this.open = true
+      return
+    }
+
+    if (this.index === -1) {
+      this.close()
+      return
+    }
+
+    this.toggleItemByIndex(this.index)
+  },
+  classes(item, i) {
+    const classes = ['hover:bg-associations-primary-grey-base']
+
+    if (i === this.index) {
+      classes.push('bg-associations-primary-grey-base')
+    } else if (this.isSelected(item)) {
+      classes.push('bg-associations-primary-grey-light')
+    }
+    return classes.join(' ')
+  },
+  get classChevron() {
+    if (this.open) {
+      return 'rotate-180'
+    }
+
+    return 'rotate-0'
+  },
+}))
+
 Alpine.start()

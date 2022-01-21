@@ -10,7 +10,7 @@
         </a>
       </h2>
 
-      <div class="flex flex-row justify-between items-center">
+      <div class="flex flex-row justify-between items-center mt-2">
         <h1 class="text-2xl text-slate-900 font-bold">{{ user.profile.firstName }}&nbsp;{{ user.profile.lastName }}</h1>
           @can('ProfilePolicy.update', user)
             <a href="{{ route('ProfilesController.edit', { id: user.id }) }}" class="rounded text-white bg-mee-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
@@ -50,7 +50,7 @@
       })
 
       @!elements.labeledItem({
-        label: 'Graduation',
+        label: 'Diplomation',
         value: user.profile.graduationYear,
         variant: 'mee'
       })

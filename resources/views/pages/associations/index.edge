@@ -2,21 +2,19 @@
 @set('title', 'Liste des associations')
 
 @section('content')
-  <div>
-    <h2 class="text-lg text-associations-primary-base font-semibold">
-      <a href="{{ route('AssociationsController.index') }}">
-        Associations
-      </a>
-    </h2>
+  <h2 class="text-lg text-associations-primary-base font-semibold">
+    <a href="{{ route('AssociationsController.index') }}">
+      Associations
+    </a>
+  </h2>
 
-    <div class="flex flex-row justify-between items-center">
-      <h1 class="text-2xl text-slate-900 font-bold">Liste des associations</h1>
-        {{--  @can('ProfilePolicy.update', user)  --}}
-          <a href="{{ route('AssociationsController.create') }}" class="rounded text-white bg-associations-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
-            Ajouter
-          </a>
-        {{--  @end  --}}
-    </div>
+  <div class="flex flex-row justify-between items-center mt-2">
+    <h1 class="text-2xl text-slate-900 font-bold">Liste des associations</h1>
+      {{--  @can('AssociationPolicy.create')  --}}
+        <a href="{{ route('AssociationsController.create') }}" class="rounded text-white bg-associations-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base shadow-sm">
+          Ajouter
+        </a>
+      {{--  @end  --}}
   </div>
 
   <section class="grid grid-cols-1 gap-8 mt-8">

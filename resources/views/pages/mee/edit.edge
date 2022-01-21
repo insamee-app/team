@@ -2,16 +2,15 @@
 @set('title', 'Edition du profil')
 
 @section('content')
-  <div>
-      <h2 class="text-lg text-mee-primary-base font-semibold">
-        <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
-          Profil
-        </a>
-      </h2>
+  <h2 class="text-lg text-mee-primary-base font-semibold">
+    <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
+      Profil
+    </a>
+  </h2>
 
-      <div class="flex flex-row justify-between items-center">
-        <h1 class="text-2xl text-slate-900 font-bold">Modifier</h1>
-    </div>
+  <div class="flex flex-row justify-between items-center mt-2">
+      <h1 class="text-2xl font-bold">Modifier</h1>
+  </div>
 
   <form action="{{ route('ProfilesController.update', { id: user.id }) }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
     {{ csrfField() }}
@@ -19,12 +18,12 @@
       @set('classesMee', '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none')
       @form.group({name: 'firstName'})
         @!form.label({ title: 'Prénom' })
-        @!form.input({ type: 'firstname', value: user.profile.firstName, classes: classesMee })
+        @!form.input({ type: 'firstname', placeholder: 'Saisir le prénom', value: user.profile.firstName, classes: classesMee })
       @end
 
       @form.group({name: 'lastName'})
         @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'lastname', value: user.profile.lastName, classes: classesMee })
+        @!form.input({ type: 'lastname', placeholder: 'Saisir le nom', value: user.profile.lastName, classes: classesMee })
       @end
 
       @form.group({name: 'email', disabled: 'true'})
@@ -34,12 +33,12 @@
 
       @form.group({name: 'school', disabled: 'true'})
         @!form.label({ title: 'Ecole' })
-        @!form.input({ type: 'compagny', value: user.profile.lastName })
+        @!form.input({ type: 'compagny', value: user.school.name })
       @end
 
       @form.group({name: 'graduationYear'})
-        @!form.label({ title: 'Graduation' })
-        @!form.input({ type: 'number', value: user.profile.graduationYear, classes: classesMee })
+        @!form.label({ title: 'Diplomation' })
+        @!form.input({ type: 'number', placeholder: 'Saisir l'année de diplomation', value: user.profile.graduationYear, classes: classesMee })
       @end
 
       @form.group({name: 'skills'})
