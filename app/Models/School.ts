@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Profile from './Profile'
+import Association from './Association'
 
 export default class School extends BaseModel {
   @column({ isPrimary: true })
@@ -17,6 +18,12 @@ export default class School extends BaseModel {
     localKey: 'id',
   })
   public profiles: HasMany<typeof Profile>
+
+  @hasMany(() => Association, {
+    foreignKey: 'schoolId',
+    localKey: 'id',
+  })
+  public associations: HasMany<typeof Association>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
