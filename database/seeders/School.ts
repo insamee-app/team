@@ -5,6 +5,10 @@ export default class SchoolSeeder extends BaseSeeder {
   public static developmentOnly = true
 
   public async run() {
-    await SchoolFactory.createMany(7)
+    await SchoolFactory.with('associations', 15)
+      .with('profiles', 30, (profile) =>
+        profile.with('user', 1).with('focusInterests', 2).with('skills', 2)
+      )
+      .createMany(7)
   }
 }

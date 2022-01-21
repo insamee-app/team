@@ -1,6 +1,7 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
+import Association from 'App/Models/Association'
 import FocusInterest from 'App/Models/FocusInterest'
 import Profile from 'App/Models/Profile'
 import School from 'App/Models/School'
@@ -12,7 +13,10 @@ export const SchoolFactory = Factory.define(School, ({ faker }) => {
     name: faker.company.companyName(),
     host: faker.internet.domainName(),
   }
-}).build()
+})
+  .relation('profiles', () => ProfileFactory)
+  .relation('associations', () => AssociationFactory)
+  .build()
 
 export const SkillFactory = Factory.define(Skill, ({ faker }) => {
   return {
@@ -26,6 +30,17 @@ export const FocusInterestFactory = Factory.define(FocusInterest, ({ faker }) =>
   }
 }).build()
 
+export const AssociationFactory = Factory.define(Association, ({ faker }) => {
+  return {
+    name: faker.company.companyName(),
+    overview: faker.lorem.paragraph(),
+    website: faker.internet.url(),
+    email: faker.internet.email(),
+  }
+})
+  .relation('school', () => SchoolFactory)
+  .build()
+
 export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
   return {
     firstName: faker.name.firstName(),
@@ -33,6 +48,9 @@ export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
     graduationYear: faker.datatype.number({ min: 2000, max: 2020 }),
   }
 })
+  .relation('user', () => UserFactory)
+  .relation('focusInterests', () => FocusInterestFactory)
+  .relation('skills', () => SkillFactory)
   .relation('school', () => SchoolFactory)
   .build()
 

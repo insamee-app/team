@@ -13,6 +13,12 @@ export default class School extends BaseModel {
   @column()
   public host: string
 
+  @column.dateTime({ autoCreate: true })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  public updatedAt: DateTime
+
   @hasMany(() => Profile, {
     foreignKey: 'schoolId',
     localKey: 'id',
@@ -24,10 +30,4 @@ export default class School extends BaseModel {
     localKey: 'id',
   })
   public associations: HasMany<typeof Association>
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 }

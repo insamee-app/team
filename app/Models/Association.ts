@@ -25,15 +25,15 @@ export default class Association extends BaseModel {
   @column()
   public schoolId: string
 
-  @belongsTo(() => School, {
-    foreignKey: 'schoolId',
-    localKey: 'id',
-  })
-  public school: BelongsTo<typeof School>
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @belongsTo(() => School, {
+    foreignKey: 'schoolId',
+    localKey: 'id',
+  })
+  public school: BelongsTo<typeof School>
 }
