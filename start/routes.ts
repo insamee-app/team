@@ -29,4 +29,11 @@ Route.group(() => {
   Route.resource('schools', 'SchoolsController')
   Route.resource('skills', 'SkillsController')
   Route.resource('focus-interests', 'FocusInterestsController')
+
+  Route.resource('associations', 'AssociationsController')
+  Route.resource('associations.pictures', 'AssociationsPicturesController').only([
+    'edit',
+    'update',
+    'destroy',
+  ])
 }).middleware('auth')
