@@ -19,11 +19,11 @@
             {{ association.school.name }}
           </span>
         </h1>
-        {{--  @can('AssociationPolicy.update')  --}}
-        <a href="{{ route('AssociationsController.edit', { id: association.id }) }}" class="shadow-sm rounded text-white bg-associations-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
-          Modifier
-        </a>
-        {{--  @end  --}}
+        @can('AssociationPolicy.update')
+          <a href="{{ route('AssociationsController.edit', { id: association.id }) }}" class="shadow-sm rounded text-white bg-associations-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+            Modifier
+          </a>
+        @end
       </div>
     </header>
 

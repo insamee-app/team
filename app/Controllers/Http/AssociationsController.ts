@@ -8,6 +8,8 @@ export default class AssociationsController {
   private PER_PAGE = 10
 
   public async index({ view, request, bouncer }: HttpContextContract) {
+    await bouncer.with('AssociationPolicy').authorize('viewList')
+
     const page = request.input('page') || 1
     const associations = await Association.query().preload('school').paginate(page, this.PER_PAGE)
 
@@ -17,12 +19,16 @@ export default class AssociationsController {
   }
 
   public async create({ view, bouncer }: HttpContextContract) {
+    await bouncer.with('AssociationPolicy').authorize('create')
+
     const schools = await School.all()
 
     return view.render('pages/associations/create', { schools })
   }
 
   public async store({ request, response, bouncer }: HttpContextContract) {
+    await bouncer.with('AssociationPolicy').authorize('create')
+
     const payload = await request.validate(AssociationStoreValidator)
 
     const association = await Association.create(payload)
@@ -31,6 +37,8 @@ export default class AssociationsController {
   }
 
   public async show({ view, params, bouncer }: HttpContextContract) {
+    await bouncer.with('AssociationPolicy').authorize('view')
+
     const association = await Association.findOrFail(params.id)
 
     await association.load('school')
@@ -38,7 +46,9 @@ export default class AssociationsController {
     return view.render('pages/associations/show', { association })
   }
 
-  public async edit({ view, params }: HttpContextContract) {
+  public async edit({ view, params, bouncer }: HttpContextContract) {
+    await bouncer.with('AssociationPolicy').authorize('update')
+
     const association = await Association.findOrFail(params.id)
 
     await association.load('school')
@@ -47,6 +57,8 @@ export default class AssociationsController {
   }
 
   public async update({ request, response, params, bouncer }: HttpContextContract) {
+    await bouncer.with('AssociationPolicy').authorize('update')
+
     const association = await Association.findOrFail(params.id)
 
     const payload = await request.validate(AssociationUpdateValidator)
@@ -58,6 +70,8 @@ export default class AssociationsController {
   }
 
   public async destroy({ params, response, bouncer }: HttpContextContract) {
+    await bouncer.with('AssociationPolicy').authorize('delete')
+
     const association = await Association.findOrFail(params.id)
 
     await association.delete()
