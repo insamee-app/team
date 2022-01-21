@@ -25,6 +25,23 @@ module.exports = {
             light: '#72dbcd',
           },
         },
+        associations: {
+          primary: {
+            base: '#1c8b92',
+            dark: '#005a61',
+            light: '#6dced5',
+            grey: {
+              base: '#bec5c5',
+              dark: '#182b2c',
+              light: '#dee2e2',
+            },
+          },
+          secondary: {
+            base: '#921c6a',
+            dark: '#610041',
+            light: '#d56db2',
+          },
+        },
       },
     },
   },

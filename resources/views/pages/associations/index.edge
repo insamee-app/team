@@ -1,0 +1,53 @@
+@layout('layouts/app')
+@set('title', 'Liste des associations')
+
+@section('content')
+  <div>
+    <h2 class="text-lg text-associations-primary-base font-semibold">
+      <a href="{{ route('AssociationsController.index') }}">
+        Associations
+      </a>
+    </h2>
+
+    <div class="flex flex-row justify-between items-center">
+      <h1 class="text-2xl text-slate-900 font-bold">Liste des associations</h1>
+        {{--  @can('ProfilePolicy.update', user)  --}}
+          <a href="{{ route('AssociationsController.create') }}" class="rounded text-white bg-associations-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+            Ajouter
+          </a>
+        {{--  @end  --}}
+    </div>
+  </div>
+
+  <section class="grid grid-cols-1 gap-8 mt-8">
+    @each(association in associations)
+      <article class="flex flex-col space-y-4 p-4 rounded-2xl border border-associations-primary-grey-light cursor-pointer transition hover:shadow-lg">
+        <a href="{{ route('AssociationsController.show', { id: association.id }) }}">
+          <header class="flex flex-row justify-between">
+            <h3 class="flex flex-col">
+              <span class="text-xl font-bold">
+                {{ association.name }}
+              </span>
+              <span>
+                {{ association.school.name }}
+              </span>
+            </h3>
+            <div class="h-16 w-16 bg-associations-secondary-base rounded-full"></div>
+          </header>
+          <ul class="flex flex-row gap-2 flex-wrap">
+            <li class="text-associations-primary-base">Lorem ipsum</li>
+          </ul>
+          <p class="text-justify">{{ excerpt(association.overview, 200) }}</p>
+        </a>
+      </article>
+    @end
+  </section>
+
+  @!shared.pagination({
+    data: associations,
+    variant: 'associations',
+    classes: 'mt-8',
+    textColor: 'text-associations-primary-base',
+    pageColor: 'bg-associations-primary-base text-slate-900'
+  })
+@end

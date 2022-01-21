@@ -20,7 +20,7 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.on('/').render('home').as('home')
+Route.on('/').render('pages/home').as('home')
 
 import './routes/auth'
 import './routes/user'

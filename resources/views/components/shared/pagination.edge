@@ -1,0 +1,44 @@
+@if(data.hasPages)
+  <div class="flex flex-row justify-between {{ textColor }} {{ classes }}">
+    @if(data.getPreviousPageUrl())
+      <a href={{ data.getPreviousPageUrl() }}>
+        @!icons.chevronLeft({
+          role: 'img',
+          'aria-label': 'Previous page',
+          class: "fill-current w-6 h-6"
+        })
+      </a>
+    @else
+      <div class=" w-6 h-6"></div>
+    @end
+    <ul class="flex flex-row space-x-2">
+      @set('visiblePage', 4)
+      @set('toPage', data.currentPage + visiblePage / 2 > data.lastPage ?
+        data.lastPage :
+        data.currentPage + visiblePage / 2
+      )
+      @set('fromPage', data.currentPage - visiblePage / 2 > 0 ?
+        data.currentPage - visiblePage + (data.lastPage - data.currentPage > visiblePage / 2 ? visiblePage / 2 : data.lastPage - data.currentPage) :
+        1
+      )
+      @each(anchor in data.getUrlsForRange(fromPage, fromPage === 1 ? visiblePage + 1 : toPage))
+        <li>
+          <a href="{{ anchor.url }}" class="px-2 py-[2px] {{ anchor.isActive ? 'rounded ' + pageColor : '' }}">
+            {{ anchor.page }}
+          </a>
+        </li>
+      @end
+    </ul>
+    @if(data.getNextPageUrl())
+      <a href={{ data.getNextPageUrl() }}>
+        @!icons.chevronRight({
+          role: 'img',
+          'aria-label': 'Next page',
+          class: "fill-current w-6 h-6"
+        })
+      </a>
+    @else
+      <div class=" w-6 h-6"></div>
+    @end
+  </div>
+@end

@@ -4,9 +4,13 @@ import AssociationStoreValidator from 'App/Validators/AssociationStoreValidator'
 import AssociationUpdateValidator from 'App/Validators/AssociationUpdateValidator'
 
 export default class AssociationsController {
-  public async index({ view, bouncer }: HttpContextContract) {
-    // TODO: il faut designer la pagination et cette page
-    const associations = await Association.all()
+  private PER_PAGE = 10
+
+  public async index({ view, request, bouncer }: HttpContextContract) {
+    const page = request.input('page') || 1
+    const associations = await Association.query().preload('school').paginate(page, this.PER_PAGE)
+
+    associations.baseUrl(request.url())
 
     return view.render('pages/associations/index', { associations })
   }
