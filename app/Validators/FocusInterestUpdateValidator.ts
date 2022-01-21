@@ -8,7 +8,11 @@ export default class FocusInterestUpdateValidator {
   public schema = schema.create({
     name: schema.string({ trim: true }, [
       rules.maxLength(255),
-      rules.unique({ table: FocusInterest.table, column: 'name' }),
+      rules.unique({
+        table: FocusInterest.table,
+        column: 'name',
+        whereNot: { id: this.ctx.params.id },
+      }),
     ]),
   })
 
