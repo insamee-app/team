@@ -1,11 +1,9 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
-  Route.get('mee/:id', 'ProfilesController.show')
-  Route.get('mee/:id/edit', 'ProfilesController.edit')
-  Route.patch('mee/:id', 'ProfilesController.update')
+  Route.resource('mee', 'ProfilesController').only(['show', 'edit', 'update'])
 
-  Route.get('mee/:id/avatar/edit', 'ProfilesAvatarsController.edit')
-  Route.put('mee/:id/avatar', 'ProfilesAvatarsController.update')
-  Route.delete('mee/:id/avatar', 'ProfilesAvatarsController.destroy')
+  Route.get('mee/:id/avatars/edit', 'ProfilesAvatarsController.edit')
+  Route.put('mee/:id/avatars', 'ProfilesAvatarsController.update')
+  Route.delete('mee/:id/avatars', 'ProfilesAvatarsController.destroy')
 }).middleware('auth')
