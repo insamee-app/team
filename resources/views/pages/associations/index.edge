@@ -1,0 +1,58 @@
+@layout('layouts/app')
+@set('title', 'Liste des associations')
+
+@section('content')
+  <h2 class="text-lg text-associations-primary-base font-semibold">
+    <a href="{{ route('AssociationsController.index') }}">
+      Associations
+    </a>
+  </h2>
+
+  <div class="flex flex-row justify-between items-center mt-2">
+    <h1 class="text-2xl text-slate-900 font-bold">Liste des associations</h1>
+      @can('AssociationPolicy.create')
+        <a href="{{ route('AssociationsController.create') }}" class="rounded text-white bg-associations-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base shadow-sm">
+          Ajouter
+        </a>
+      @end
+  </div>
+
+  <section class="grid grid-cols-1 gap-8 mt-8">
+    @each(association in associations)
+      <a href="{{ route('AssociationsController.show', { id: association.id }) }}">
+        <article class="flex flex-col space-y-4 p-4 rounded-2xl border border-associations-primary-grey-light cursor-pointer transition hover:shadow-lg">
+          <header class="flex flex-row justify-between">
+            <h3 class="flex flex-col">
+              <span class="text-xl font-bold">
+                {{ association.name }}
+              </span>
+              <span>
+                {{ association.school.name }}
+              </span>
+            </h3>
+            @!shared.picture({
+              attachment: association.picture,
+              alt: 'Image de l\'association ' + association.name,
+              bgClass: 'bg-associations-secondary-base',
+              size: 'w-16 h-16',
+              width: '64',
+              height: '64'
+            })
+          </header>
+          <ul class="flex flex-row gap-2 flex-wrap">
+            <li class="text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">Lorem ipsum</li>
+          </ul>
+          <p class="text-justify">{{ excerpt(association.overview, 200) }}</p>
+        </article>
+      </a>
+    @end
+  </section>
+
+  @!shared.pagination({
+    data: associations,
+    variant: 'associations',
+    classes: 'mt-8',
+    textColor: 'text-associations-primary-base',
+    pageColor: 'bg-associations-primary-base text-slate-900'
+  })
+@end

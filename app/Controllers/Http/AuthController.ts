@@ -20,8 +20,6 @@ export default class AuthController {
   public async login({ auth, request, response }: HttpContextContract) {
     const { email, password, rememberMe } = await request.validate(LoginValidator)
 
-    console.log(email, password, rememberMe)
-
     await auth.attempt(email, password, rememberMe || false)
 
     return response.redirect('/')

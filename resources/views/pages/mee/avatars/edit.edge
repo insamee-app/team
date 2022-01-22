@@ -2,22 +2,28 @@
 @set('title', 'Edition de l\'avatar')
 
 @section('content')
-  <div>
-    <h2 class="text-lg text-mee-primary-base font-semibold">
-      <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
-        Profil
-      </a>
-    </h2>
+  <h2 class="text-lg text-mee-primary-base font-semibold">
+    <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
+      Profil
+    </a>
+  </h2>
 
-    <div class="flex flex-row justify-between items-center">
+  <div class="flex flex-row justify-between items-center mt-2">
     <h1 class="text-2xl text-slate-900 font-bold">Modifier la photo</h1>
   </div>
 
-  <div class="flex flex-col space-y-4 mt-8">
+  <section class="flex flex-col space-y-4 mt-8">
     <h3 class="text-xl font-bold">Photo actuelle</h3>
 
     <div class="flex flex-col items-center space-y-2">
-      @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
+      @!shared.picture({
+        attachment: user.profile.avatar,
+        alt: 'Photo de ' + user.profile.firstName,
+        bgClass: 'bg-mee-secondary-base',
+        size: 'w-36 h-36',
+        width: '144',
+        height: '144'
+      })
 
       <form action="{{ route('ProfilesAvatarsController.destroy', { id: user.id }) }}?_method=DELETE" method="POST">
         {{ csrfField() }}
@@ -25,7 +31,7 @@
         <button type="submit" class="text-sm text-mee-primary-base">Supprimer sa photo</button>
       </form>
     </div>
-  </div>
+  </section>
 
   <form action="{{ route('ProfilesAvatarsController.update', { id: user.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
     {{ csrfField() }}
@@ -34,8 +40,8 @@
 
     <div class="mt-4">
       @form.group({ name: 'avatar', class: "flex flex-row items-center space-x-2" })
-      @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sn  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-grey-500 text-sm file:cursor-pointer" })
-      @!form.label({ title: 'Changer son avatar', class: "sr-only" })
+        @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-grey-500 text-sm file:cursor-pointer" })
+        @!form.label({ title: 'Changer son avatar', class: "sr-only" })
       @end
     </div>
 

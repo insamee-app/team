@@ -26,10 +26,5 @@ export default class UserSeeder extends BaseSeeder {
       schoolId: school.id,
       userId: user.id,
     })
-
-    await UserFactory.createMany(10)
-    await UserFactory.apply('active')
-      .with('profile', 1, (profile) => profile.with('school', 1))
-      .createMany(20)
   }
 }

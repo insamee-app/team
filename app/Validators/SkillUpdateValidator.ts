@@ -7,7 +7,11 @@ export default class SkillUpdateValidator {
   public schema = schema.create({
     name: schema.string({ trim: true }, [
       rules.maxLength(255),
-      rules.unique({ table: 'skills', column: 'name' }),
+      rules.unique({
+        table: 'skills',
+        column: 'name',
+        whereNot: { id: this.ctx.params.id },
+      }),
     ]),
   })
 

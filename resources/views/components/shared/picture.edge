@@ -1,0 +1,5 @@
+@if(!attachment)
+  <div class="{{ size }} rounded-full {{ bgClass }}"></div>
+@else
+  <img src="{{ attachment.url }}" class="{{ size }} rounded-full" alt="{{ alt }}" loading="lazy" width="{{ width }}" height="{{ height }}"/>
+@endif

@@ -24,17 +24,17 @@ export default class User extends BaseModel {
   @column()
   public role: UserRole
 
-  @hasOne(() => Profile, {
-    foreignKey: 'userId',
-    localKey: 'id',
-  })
-  public profile: HasOne<typeof Profile>
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasOne(() => Profile, {
+    foreignKey: 'userId',
+    localKey: 'id',
+  })
+  public profile: HasOne<typeof Profile>
 
   @beforeSave()
   public static async hashPassword(user: User) {
