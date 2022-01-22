@@ -21,7 +21,14 @@
     </div>
 
     <div class="flex flex-col items-center space-x-2">
-      @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
+      @!shared.picture({
+        attachment: user.profile.avatar,
+        alt: 'Photo de ' + user.profile.firstName,
+        bgClass: 'bg-mee-secondary-base',
+        size: 'w-36 h-36',
+        width: '144',
+        height: '144'
+      })
 
        @can('ProfilePolicy.delete', user)
         <a href="{{ route('ProfilesAvatarsController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-1 text-mee-primary-base">

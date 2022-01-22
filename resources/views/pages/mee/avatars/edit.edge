@@ -16,7 +16,14 @@
     <h3 class="text-xl font-bold">Photo actuelle</h3>
 
     <div class="flex flex-col items-center space-y-2">
-      @!profile.avatar({avatar: user.profile.avatar, firstName: user.profile.firstName})
+      @!shared.picture({
+        attachment: user.profile.avatar,
+        alt: 'Photo de ' + user.profile.firstName,
+        bgClass: 'bg-mee-secondary-base',
+        size: 'w-36 h-36',
+        width: '144',
+        height: '144'
+      })
 
       <form action="{{ route('ProfilesAvatarsController.destroy', { id: user.id }) }}?_method=DELETE" method="POST">
         {{ csrfField() }}
@@ -33,8 +40,8 @@
 
     <div class="mt-4">
       @form.group({ name: 'avatar', class: "flex flex-row items-center space-x-2" })
-      @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-grey-500 text-sm file:cursor-pointer" })
-      @!form.label({ title: 'Changer son avatar', class: "sr-only" })
+        @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-grey-500 text-sm file:cursor-pointer" })
+        @!form.label({ title: 'Changer son avatar', class: "sr-only" })
       @end
     </div>
 
