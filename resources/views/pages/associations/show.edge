@@ -28,9 +28,16 @@
     </header>
 
     <div class="flex flex-col space-y-2 items-center text-associations-primary-base">
-      <div class="w-36 h-36 bg-associations-secondary-base rounded-full"></div>
-      {{--  @can('AssociationPolicy.update')  --}}
-      <a href="" class="flex flex-row space-x-1 justify-center items-center">
+      @!shared.picture({
+        attachment: association.picture,
+        alt: 'Image de l\'association ' + association.name,
+        bgClass: 'bg-associations-secondary-base',
+        size: 'w-36 h-36',
+        width: '144',
+        height: '144'
+      })
+      @can('AssociationPolicy.update')
+      <a href="{{ route('AssociationsPicturesController.edit', { id: association.id }) }}" class="flex flex-row space-x-1 justify-center items-center">
         <span>
           Changer la photo
         </span>
@@ -38,7 +45,7 @@
           class: 'w-5 h-5 fill-current'
         })
       </a>
-      {{--  @end  --}}
+      @end
     </div>
 
     <section>
