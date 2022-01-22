@@ -8,9 +8,6 @@ export default class SkillsProfiles extends BaseSchema {
       table.primary(['skill_id', 'profile_id'])
       table.uuid('skill_id').notNullable().references('id').inTable('skills')
       table.uuid('profile_id').notNullable().references('id').inTable('profiles')
-
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
     })
   }
 

@@ -59,7 +59,6 @@ export default class Profile extends BaseModel {
     pivotForeignKey: 'profile_id',
     pivotRelatedForeignKey: 'skill_id',
     relatedKey: 'id',
-    pivotTimestamps: true,
   })
   public skills: ManyToMany<typeof Skill>
 
@@ -69,7 +68,6 @@ export default class Profile extends BaseModel {
     pivotForeignKey: 'profile_id',
     pivotRelatedForeignKey: 'focus_interest_id',
     relatedKey: 'id',
-    pivotTimestamps: true,
   })
   public focusInterests: ManyToMany<typeof FocusInterest>
 }

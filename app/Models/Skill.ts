@@ -21,7 +21,6 @@ export default class Skill extends BaseModel {
     pivotForeignKey: 'skill_id',
     pivotRelatedForeignKey: 'profile_id',
     relatedKey: 'id',
-    pivotTimestamps: true,
   })
   public profiles: ManyToMany<typeof Profile>
 }

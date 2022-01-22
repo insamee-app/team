@@ -29,6 +29,7 @@ Route.group(() => {
   Route.resource('schools', 'SchoolsController')
   Route.resource('skills', 'SkillsController')
   Route.resource('focus-interests', 'FocusInterestsController')
+  Route.resource('thematics', 'ThematicsController')
 
   Route.resource('associations', 'AssociationsController')
   Route.get('associations/:id/pictures/edit', 'AssociationsPicturesController.edit')
