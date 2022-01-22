@@ -10,7 +10,7 @@ export default class ProfilesAvatarsController {
 
     await user.load('profile')
 
-    return view.render('pages/mee/avatar/edit', {
+    return view.render('pages/mee/avatars/edit', {
       user,
     })
   }
