@@ -21,7 +21,6 @@ export default class FocusInterest extends BaseModel {
     pivotForeignKey: 'focus_interest_id',
     pivotRelatedForeignKey: 'profile_id',
     relatedKey: 'id',
-    pivotTimestamps: true,
   })
   public profiles: ManyToMany<typeof Profile>
 }
