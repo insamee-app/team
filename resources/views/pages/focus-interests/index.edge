@@ -8,10 +8,11 @@
     </a>
   </h2>
 
-     <div class="flex flex-row justify-between items-center mt-2">
+    <div class="flex flex-row justify-between items-center mt-2">
       <h1 class="text-slate-900 text-2xl font-bold">Liste des centres d'intérets</h1>
-
-      <a href="{{ route('FocusInterestsController.create') }}" class="px-2 py-1 text-white bg-slate-500 hover:bg-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Ajouter</a>
+      @can('FocusInterestPolicy.create')
+        <a href="{{ route('FocusInterestsController.create') }}" class="px-2 py-1 text-white bg-slate-500 hover:bg-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Ajouter</a>
+      @end
     </div>
 
   <div class="flex flex-col space-y-6 mt-8">
