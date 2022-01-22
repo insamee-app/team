@@ -31,9 +31,7 @@ Route.group(() => {
   Route.resource('focus-interests', 'FocusInterestsController')
 
   Route.resource('associations', 'AssociationsController')
-  Route.resource('associations.pictures', 'AssociationsPicturesController').only([
-    'edit',
-    'update',
-    'destroy',
-  ])
+  Route.get('associations/:id/pictures/edit', 'AssociationsPicturesController.edit')
+  Route.put('associations/:id/pictures', 'AssociationsPicturesController.update')
+  Route.delete('associations/:id/pictures', 'AssociationsPicturesController.destroy')
 }).middleware('auth')
