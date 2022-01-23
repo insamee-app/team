@@ -4,6 +4,7 @@ import User from 'App/Models/User'
 import Skill from 'App/Models/Skill'
 import ProfileValidator from 'App/Validators/ProfileValidator'
 import FocusInterest from 'App/Models/FocusInterest'
+import Association from 'App/Models/Association'
 
 export default class ProfilesController {
   public async show({ params, view, bouncer }: HttpContextContract) {
@@ -23,19 +24,22 @@ export default class ProfilesController {
     await bouncer.with('ProfilePolicy').authorize('update', user)
 
     await user.load('profile', (profile) =>
-      profile.preload('school').preload('skills').preload('focusInterests')
+      profile.preload('school').preload('skills').preload('focusInterests').preload('associations')
     )
     const skills = await Skill.query().select('id', 'name').orderBy('name')
     const focusInterests = await FocusInterest.query().select('id', 'name').orderBy('name')
+    const associations = await Association.query().select('id', 'name').orderBy('name')
 
-    return view.render('pages/mee/edit', { user, skills, focusInterests })
+    return view.render('pages/mee/edit', { user, skills, focusInterests, associations })
   }
 
   public async update({ request, params, response, bouncer }: HttpContextContract) {
     const user = await User.findOrFail(params.id)
     await bouncer.with('ProfilePolicy').authorize('update', user)
 
-    const { skills, focusInterests, ...payload } = await request.validate(ProfileValidator)
+    const { skills, focusInterests, associations, ...payload } = await request.validate(
+      ProfileValidator
+    )
 
     const profile = await Profile.findBy('userId', user.id)
     profile!.merge(payload)
@@ -43,6 +47,7 @@ export default class ProfilesController {
     await profile!.save()
     await profile?.related('skills').sync(skills || [])
     await profile?.related('focusInterests').sync(focusInterests || [])
+    await profile?.related('associations').sync(associations || [])
 
     return response.redirect().toRoute('ProfilesController.show', { id: user.id })
   }

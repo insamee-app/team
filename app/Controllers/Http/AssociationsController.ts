@@ -26,9 +26,9 @@ export default class AssociationsController {
   public async create({ view, bouncer }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('create')
 
-    const schools = await School.query().select('id', 'name')
-    const thematics = await Thematic.query().select('id', 'name')
-    const tags = await Tag.query().select('id', 'name')
+    const schools = await School.query().select('id', 'name').orderBy('name')
+    const thematics = await Thematic.query().select('id', 'name').orderBy('name')
+    const tags = await Tag.query().select('id', 'name').orderBy('name')
 
     return view.render('pages/associations/create', { schools, thematics, tags })
   }
@@ -59,9 +59,9 @@ export default class AssociationsController {
 
     const association = await Association.findOrFail(params.id)
 
-    const schools = await School.query().select('id', 'name')
-    const thematics = await Thematic.query().select('id', 'name')
-    const tags = await Tag.query().select('id', 'name')
+    const schools = await School.query().select('id', 'name').orderBy('name')
+    const thematics = await Thematic.query().select('id', 'name').orderBy('name')
+    const tags = await Tag.query().select('id', 'name').orderBy('name')
 
     await association.load('school')
     await association.load('tags')
