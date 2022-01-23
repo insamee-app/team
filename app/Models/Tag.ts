@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import Association from './Association'
 
 export default class Tag extends BaseModel {
   @column({ isPrimary: true })
@@ -13,4 +14,13 @@ export default class Tag extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @manyToMany(() => Association, {
+    pivotTable: 'tags_associations',
+    localKey: 'id',
+    pivotForeignKey: 'tag_id',
+    pivotRelatedForeignKey: 'association_id',
+    relatedKey: 'id',
+  })
+  public associations: ManyToMany<typeof Association>
 }

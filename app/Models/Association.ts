@@ -1,8 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  BelongsTo,
+  belongsTo,
+  column,
+  HasOne,
+  hasOne,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 import School from './School'
 import Thematic from './Thematic'
+import Tag from './Tag'
 
 export default class Association extends BaseModel {
   @column({ isPrimary: true })
@@ -46,4 +56,13 @@ export default class Association extends BaseModel {
     localKey: 'thematicId',
   })
   public thematic: HasOne<typeof Thematic>
+
+  @manyToMany(() => Tag, {
+    pivotTable: 'tags_associations',
+    localKey: 'id',
+    pivotForeignKey: 'association_id',
+    pivotRelatedForeignKey: 'tag_id',
+    relatedKey: 'id',
+  })
+  public tags: ManyToMany<typeof Tag>
 }
