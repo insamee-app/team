@@ -39,6 +39,7 @@
       @form.group({name: 'schoolId'})
         @!form.label({ title: 'Ecole' })
         @form.select({
+          variant: 'associations',
           data: schools,
         })
           Sélectionner une école
@@ -48,6 +49,7 @@
       @form.group({name: 'thematicId'})
         @!form.label({ title: 'Thématique' })
         @form.select({
+          variant: 'associations',
           data: thematics,
         })
           Sélectionner une thématique
@@ -57,6 +59,7 @@
       @form.group({name: 'tags'})
         @!form.label({ title: 'Tags' })
         @form.multiselect({
+          variant: 'associations',
           data: tags,
         })
           Sélectionner des tags

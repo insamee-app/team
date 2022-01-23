@@ -8,23 +8,28 @@ Alpine.data('multiselect', (data, selectedData = []) => ({
   index: -1,
   items: data,
   selected: selectedData,
-  selection() {
+  get selection() {
     return this.items.filter((item) => this.selected.includes(item.id))
   },
-  hasSelection() {
+  get hasSelection() {
     return this.selected.length > 0
   },
   incrementIndex() {
     this.index++
-    if (this.index > this.items.length) {
-      this.index = this.items.length
+    if (this.index >= this.items.length) {
+      this.index = this.items.length - 1
     }
+    this.updateScroll()
   },
   decrementIndex() {
     this.index--
     if (this.index < -1) {
       this.index = -1
     }
+    this.updateScroll()
+  },
+  updateScroll() {
+    this.$refs.panel.scrollTop = this.index * 32
   },
   toggle() {
     if (this.open) {
@@ -68,17 +73,17 @@ Alpine.data('multiselect', (data, selectedData = []) => ({
 
     this.toggleItemByIndex(this.index)
   },
-  classes(item, i) {
-    const classes = ['hover:bg-mee-primary-grey-base']
+  classes(item, i, currentClasses, selectedClasses) {
+    const classes = []
 
     if (i === this.index) {
-      classes.push('bg-mee-primary-grey-base')
+      classes.push(currentClasses)
     } else if (this.isSelected(item)) {
-      classes.push('bg-mee-primary-grey-light')
+      classes.push(selectedClasses)
     }
     return classes.join(' ')
   },
-  getClassChevron() {
+  get classChevron() {
     if (this.open) {
       return 'rotate-180'
     }
@@ -100,15 +105,20 @@ Alpine.data('select', (data, selectedData = '') => ({
   },
   incrementIndex() {
     this.index++
-    if (this.index > this.items.length) {
-      this.index = this.items.length
+    if (this.index >= this.items.length) {
+      this.index = this.items.length - 1
     }
+    this.updateScroll()
   },
   decrementIndex() {
     this.index--
     if (this.index < -1) {
       this.index = -1
     }
+    this.updateScroll()
+  },
+  updateScroll() {
+    this.$refs.panel.scrollTop = this.index * 32
   },
   toggle() {
     if (this.open) {
@@ -153,13 +163,13 @@ Alpine.data('select', (data, selectedData = '') => ({
 
     this.toggleItemByIndex(this.index)
   },
-  classes(item, i) {
-    const classes = ['hover:bg-associations-primary-grey-base']
+  classes(item, i, currentClasses, selectedClasses) {
+    const classes = []
 
     if (i === this.index) {
-      classes.push('bg-associations-primary-grey-base')
+      classes.push(currentClasses)
     } else if (this.isSelected(item)) {
-      classes.push('bg-associations-primary-grey-light')
+      classes.push(selectedClasses)
     }
     return classes.join(' ')
   },
