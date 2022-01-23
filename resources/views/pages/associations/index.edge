@@ -22,29 +22,28 @@
       <a href="{{ route('AssociationsController.show', { id: association.id }) }}">
         <article class="flex flex-col space-y-4 p-4 rounded-2xl border border-associations-primary-grey-light cursor-pointer transition hover:shadow-lg">
           <header class="flex flex-row justify-between">
-            <h3 class="flex flex-col">
-              <span class="text-xl font-bold">
-                {{ association.name }}
-              </span>
-              <span>
-                {{ association.school.name }}
-              </span>
-            </h3>
+            <div class="flex flex-col justify-between">
+              <div class="flex flex-col">
+                <h4 class="text-sm text-associations-primary-grey-dark">{{ association.thematic.name }}</h4>
+                <h3 class="text-xl text-associations-primary-base font-bold">{{ association.name }}</h3>
+              </div>
+              <h4 class="text-sm text-associations-primary-grey-dark">{{ association.school.name }}</h4>
+            </div>
             @!shared.picture({
               attachment: association.picture,
               alt: 'Image de l\'association ' + association.name,
               bgClass: 'bg-associations-secondary-base',
-              size: 'w-16 h-16',
-              width: '64',
-              height: '64'
+              size: 'w-20 h-20',
+              width: '80',
+              height: '80'
             })
           </header>
+          <p class="text-justify">{{ excerpt(association.overview, 150) }}</p>
           <ul class="flex flex-row gap-2 flex-wrap">
             @each(tag in association.tags)
-              <li class="text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">{{tag.name}}</li>
+              <li class="text-sm text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">{{tag.name}}</li>
             @endeach
           </ul>
-          <p class="text-justify">{{ excerpt(association.overview, 200) }}</p>
         </article>
       </a>
     @end
