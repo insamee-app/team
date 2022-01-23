@@ -1,6 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Association from 'App/Models/Association'
 import School from 'App/Models/School'
+import Tag from 'App/Models/Tag'
+import Thematic from 'App/Models/Thematic'
 import AssociationStoreValidator from 'App/Validators/AssociationStoreValidator'
 import AssociationUpdateValidator from 'App/Validators/AssociationUpdateValidator'
 
@@ -21,9 +23,11 @@ export default class AssociationsController {
   public async create({ view, bouncer }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('create')
 
-    const schools = await School.all()
+    const schools = await School.query().select('id', 'name')
+    const thematics = await Thematic.query().select('id', 'name')
+    const tags = await Tag.query().select('id', 'name')
 
-    return view.render('pages/associations/create', { schools })
+    return view.render('pages/associations/create', { schools, thematics, tags })
   }
 
   public async store({ request, response, bouncer }: HttpContextContract) {

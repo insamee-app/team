@@ -13,6 +13,10 @@ export default class AssociationStoreValidator {
     website: schema.string.optional({ trim: true }, [rules.maxLength(255), rules.url()]),
     email: schema.string.optional({ trim: true }, [rules.maxLength(255), rules.email()]),
     schoolId: schema.string({ trim: true }, [rules.exists({ table: 'schools', column: 'id' })]),
+    thematicId: schema.string({ trim: true }, [rules.exists({ table: 'thematics', column: 'id' })]),
+    tags: schema.array
+      .optional([rules.maxLength(10)])
+      .members(schema.string({}, [rules.exists({ table: 'tags', column: 'id' })])),
   })
 
   public messages = {
@@ -27,5 +31,10 @@ export default class AssociationStoreValidator {
     'email.email': "L'email doit être une adresse email valide",
     'schoolId.required': "L'école est requise",
     'schoolId.exists': "L'école n'existe pas",
+    'thematicId.required': 'La thématique est requise',
+    'thematicId.exists': "La thématique n'existe pas",
+    'tags.maxLength': 'Vous ne pouvez pas ajouter plus de 10 tags',
+    'tags.*.string': 'Un tag doit être une chaîne de caractères',
+    'tags.*.exists': "Un tag n'existe pas",
   }
 }

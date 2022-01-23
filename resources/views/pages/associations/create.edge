@@ -42,6 +42,23 @@
           data: schools,
         })
           Sélectionner une école
+      @end
+
+      @form.group({name: 'thematicId'})
+        @!form.label({ title: 'Thématique' })
+        @form.select({
+          data: thematics,
+        })
+          Sélectionner une thématique
+        @end
+      @end
+
+      @form.group({name: 'tags'})
+        @!form.label({ title: 'Tags' })
+        @form.multiselect({
+          data: tags,
+        })
+          Sélectionner des tags
         @end
       @end
     </div>

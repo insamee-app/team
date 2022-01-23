@@ -1,5 +1,5 @@
 @layout('layouts/app')
-@set('title', 'Edition du profil')
+@set('title', 'Modifier ' + association.name)
 
 @section('content')
   <h2 class="text-lg text-associations-primary-base font-semibold">
@@ -39,6 +39,26 @@
       @form.group({name: 'schoolId', disabled: 'true'})
         @!form.label({ title: 'Ecole' })
         @!form.input({ type: 'text', value: association.school.name })
+      @end
+
+      @form.group({name: 'thematicId'})
+        @!form.label({ title: 'Thématique' })
+        @form.select({
+          data: thematics,
+          selectedData: association.thematic.id,
+        })
+          Sélectionner une thématique
+        @end
+      @end
+
+      @form.group({name: 'tags'})
+        @!form.label({ title: 'Tags' })
+        @form.multiselect({
+          data: tags,
+          selectedData: association.tags.map(tag => tag.id),
+        })
+          Sélectionner des tags
+        @end
       @end
     </div>
 
