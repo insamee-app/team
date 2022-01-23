@@ -51,6 +51,8 @@ export default class AssociationsController {
     const association = await Association.findOrFail(params.id)
 
     await association.load('school')
+    await association.load('tags')
+    await association.load('thematic')
 
     return view.render('pages/associations/show', { association })
   }

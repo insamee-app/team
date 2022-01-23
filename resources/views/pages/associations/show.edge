@@ -8,6 +8,12 @@
         <a href="{{ route('AssociationsController.index') }}">
           Associations
         </a>
+        <span>
+          |
+        </span>
+        <span class="capitalize">
+          {{ association.thematic.name }}
+        </span>
       </h2>
 
       <div class="flex flex-row justify-between items-center  mt-2">
@@ -46,6 +52,11 @@
         })
       </a>
       @end
+      <ul class="flex flex-row justify-center items-center gap-2 flex-wrap max-w-lg">
+        @each(tag in association.tags)
+          <li class="text-sm text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">{{tag.name}}</li>
+        @endeach
+      </ul>
     </div>
 
     <section>
