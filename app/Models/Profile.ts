@@ -12,6 +12,7 @@ import School from './School'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 import Skill from './Skill'
 import FocusInterest from './FocusInterest'
+import Association from './Association'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -70,4 +71,13 @@ export default class Profile extends BaseModel {
     relatedKey: 'id',
   })
   public focusInterests: ManyToMany<typeof FocusInterest>
+
+  @manyToMany(() => Association, {
+    pivotTable: 'profiles_associations',
+    localKey: 'id',
+    pivotForeignKey: 'profile_id',
+    pivotRelatedForeignKey: 'association_id',
+    relatedKey: 'id',
+  })
+  public associations: ManyToMany<typeof Association>
 }

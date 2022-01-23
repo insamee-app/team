@@ -11,6 +11,7 @@ import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLit
 import School from './School'
 import Thematic from './Thematic'
 import Tag from './Tag'
+import Profile from './Profile'
 
 export default class Association extends BaseModel {
   @column({ isPrimary: true })
@@ -63,4 +64,13 @@ export default class Association extends BaseModel {
     relatedKey: 'id',
   })
   public tags: ManyToMany<typeof Tag>
+
+  @manyToMany(() => Profile, {
+    pivotTable: 'profiles_associations',
+    localKey: 'id',
+    pivotForeignKey: 'association_id',
+    pivotRelatedForeignKey: 'profile_id',
+    relatedKey: 'id',
+  })
+  public profiles: ManyToMany<typeof Profile>
 }
