@@ -13,7 +13,7 @@ export default class ProfilesController {
     const user = await User.findOrFail(params.id)
 
     await user.load('profile', (profile) =>
-      profile.preload('school').preload('skills').preload('focusInterests')
+      profile.preload('school').preload('skills').preload('focusInterests').preload('associations')
     )
 
     return view.render('pages/mee/show', { user })

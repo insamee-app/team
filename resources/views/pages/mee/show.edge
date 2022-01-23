@@ -24,7 +24,7 @@
       @!shared.picture({
         attachment: user.profile.avatar,
         alt: 'Photo de ' + user.profile.firstName,
-        bgClass: 'bg-mee-secondary-base',
+        placeholderClasses: 'bg-mee-secondary-base rounded-full',
         size: 'w-36 h-36',
         width: '144',
         height: '144'
@@ -75,6 +75,28 @@
       variant: 'mee'
     })
      @!elements.chips({data: user.profile.focusInterests})
+    @end
+    @elements.labeledItem({
+      label: 'Associations',
+      variant: 'mee'
+    })
+     <ul class="flex flex-col space-y-2">
+       @each(association in user.profile.associations)
+          <li>
+            <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="flex flex-row space-x-3">
+              @!shared.picture({
+                attachment: association.picture,
+                alt: 'Logo de ' + association.name,
+                placeholderClasses: 'bg-mee-secondary-base rounded',
+                size: 'w-6 h-6',
+                width: '24',
+                height: '24'
+              })
+              <span>{{ association.name }} </span>
+            </a>
+          </li>
+        @endeach
+     </ul>
     @end
   </article>
 @end
