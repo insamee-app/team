@@ -12,6 +12,7 @@ export default class Associations extends BaseSchema {
       table.string('website').nullable()
       table.string('email').nullable()
       table.uuid('school_id').notNullable().references('id').inTable('schools')
+      table.uuid('thematic_id').notNullable().references('id').inTable('thematics')
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

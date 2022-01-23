@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Association from './Association'
 
 export default class Thematic extends BaseModel {
   @column({ isPrimary: true })
@@ -13,4 +14,10 @@ export default class Thematic extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasMany(() => Association, {
+    foreignKey: 'thematicId',
+    localKey: 'id',
+  })
+  public associations: HasMany<typeof Association>
 }
