@@ -52,6 +52,7 @@ export const AssociationFactory = Factory.define(Association, ({ faker }) => {
     email: faker.internet.email(),
   }
 })
+  .relation('profiles', () => ProfileFactory)
   .relation('tags', () => TagFactory)
   .relation('thematic', () => ThematicFactory)
   .relation('school', () => SchoolFactory)
@@ -68,6 +69,7 @@ export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
   .relation('focusInterests', () => FocusInterestFactory)
   .relation('skills', () => SkillFactory)
   .relation('school', () => SchoolFactory)
+  .relation('associations', () => AssociationFactory)
   .build()
 
 export const UserFactory = Factory.define(User, ({ faker }) => {
