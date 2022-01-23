@@ -44,6 +44,7 @@
       @form.group({name: 'thematicId'})
         @!form.label({ title: 'Thématique' })
         @form.select({
+          variant: 'associations',
           data: thematics,
           selectedData: association.thematic.id,
         })
@@ -54,6 +55,7 @@
       @form.group({name: 'tags'})
         @!form.label({ title: 'Tags' })
         @form.multiselect({
+          variant: 'associations',
           data: tags,
           selectedData: association.tags.map(tag => tag.id),
         })

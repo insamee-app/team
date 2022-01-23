@@ -10,7 +10,7 @@
   @set('listClasses', 'hover:bg-associations-primary-grey-base')
   @set('currentListItemClasses', 'bg-associations-primary-grey-base')
   @set('selectedListItemClasses', 'bg-associations-primary-grey-light')
-@endif
+@end
 
 <div
   x-data="select({{ stringify(data) }}, {{ stringify(flashMessages.get($context.name) || selectedData) }})"

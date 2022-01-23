@@ -1,7 +1,13 @@
 @set('error', flashMessages.get(`errors.${$context.name}`) || '')
 
+@set('buttonClasses', '')
+@set('listClasses', '')
+@set('currentListItemClasses', '')
+@set('selectedListItemClasses', '')
+@set('selectedItemClasses', '')
+
 @if(variant === 'mee')
-  @set('buttonClasses', 'boder-mee-primary-base focus:ring-mee-primary-base')
+  @set('buttonClasses', 'border-mee-primary-base focus:ring-mee-primary-base')
   @set('listClasses', 'hover:bg-mee-primary-grey-base')
   @set('currentListItemClasses', 'bg-mee-primary-grey-base')
   @set('selectedListItemClasses', 'bg-mee-primary-grey-light')
@@ -12,7 +18,7 @@
   @set('currentListItemClasses', 'bg-associations-primary-grey-base')
   @set('selectedListItemClasses', 'bg-associations-primary-grey-light')
   @set('selectedItemClasses', 'bg-associations-primary-base')
-@endif
+@end
 
 <div
   x-data="multiselect({{ stringify(data) }}, {{ stringify(flashMessages.get($context.name) || selectedData) }})"

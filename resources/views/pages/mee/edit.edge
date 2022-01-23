@@ -33,17 +33,18 @@
 
       @form.group({name: 'school', disabled: 'true'})
         @!form.label({ title: 'Ecole' })
-        @!form.input({ type: 'compagny', value: user.school.name })
+        @!form.input({ type: 'compagny', value: user.profile.school.name })
       @end
 
       @form.group({name: 'graduationYear'})
         @!form.label({ title: 'Diplomation' })
-        @!form.input({ type: 'number', placeholder: 'Saisir l'année de diplomation', value: user.profile.graduationYear, classes: classesMee })
+        @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: user.profile.graduationYear, classes: classesMee })
       @end
 
       @form.group({name: 'skills'})
         @!form.label({ title: 'Compétences' })
         @form.multiselect({
+          variant: 'mee',
           data: skills,
           selectedData: user.profile.skills.map(skill => skill.id),
         })
@@ -54,6 +55,7 @@
       @form.group({name: 'focusInterests'})
         @!form.label({ title: 'Centre d\'intérêts' })
         @form.multiselect({
+          variant: 'mee',
           data: focusInterests,
           selectedData: user.profile.focusInterests.map(focusInterest => focusInterest.id),
         })
