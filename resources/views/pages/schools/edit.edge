@@ -1,5 +1,5 @@
 @layout('layouts/app')
-@set('title', 'Editer ' + school.name)
+@set('title', 'Modifier ' + school.name)
 
 @section('content')
   <form action="{{ route('SchoolsController.update', { id: school.id }) }}?_method=PUT" method="POST">
