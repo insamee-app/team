@@ -40,7 +40,9 @@
             })
           </header>
           <ul class="flex flex-row gap-2 flex-wrap">
-            <li class="text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">Lorem ipsum</li>
+            @each(tag in association.tags)
+              <li class="text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">{{tag.name}}</li>
+            @endeach
           </ul>
           <p class="text-justify">{{ excerpt(association.overview, 200) }}</p>
         </article>

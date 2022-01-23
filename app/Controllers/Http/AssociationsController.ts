@@ -13,7 +13,10 @@ export default class AssociationsController {
     await bouncer.with('AssociationPolicy').authorize('viewList')
 
     const page = request.input('page') || 1
-    const associations = await Association.query().preload('school').paginate(page, this.PER_PAGE)
+    const associations = await Association.query()
+      .preload('school')
+      .preload('tags', (tags) => tags.limit(3))
+      .paginate(page, this.PER_PAGE)
 
     associations.baseUrl(request.url())
 
@@ -33,9 +36,10 @@ export default class AssociationsController {
   public async store({ request, response, bouncer }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('create')
 
-    const payload = await request.validate(AssociationStoreValidator)
+    const { tags, ...payload } = await request.validate(AssociationStoreValidator)
 
     const association = await Association.create(payload)
+    await association.related('tags').sync(tags || [])
 
     return response.redirect().toRoute('AssociationsController.show', { id: association.id })
   }
@@ -55,9 +59,15 @@ export default class AssociationsController {
 
     const association = await Association.findOrFail(params.id)
 
-    await association.load('school')
+    const schools = await School.query().select('id', 'name')
+    const thematics = await Thematic.query().select('id', 'name')
+    const tags = await Tag.query().select('id', 'name')
 
-    return view.render('pages/associations/edit', { association })
+    await association.load('school')
+    await association.load('tags')
+    await association.load('thematic')
+
+    return view.render('pages/associations/edit', { association, schools, thematics, tags })
   }
 
   public async update({ request, response, params, bouncer }: HttpContextContract) {
@@ -65,10 +75,11 @@ export default class AssociationsController {
 
     const association = await Association.findOrFail(params.id)
 
-    const payload = await request.validate(AssociationUpdateValidator)
+    const { tags, ...payload } = await request.validate(AssociationUpdateValidator)
 
     association.merge(payload)
     await association.save()
+    await association.related('tags').sync(tags || [])
 
     return response.redirect().toRoute('AssociationsController.show', { id: association.id })
   }
@@ -78,6 +89,7 @@ export default class AssociationsController {
 
     const association = await Association.findOrFail(params.id)
 
+    await association.related('tags').detach()
     await association.delete()
 
     return response.redirect().toRoute('AssociationsController.index')
