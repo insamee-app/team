@@ -52,6 +52,8 @@ export const AssociationFactory = Factory.define(Association, ({ faker }) => {
     email: faker.internet.email(),
   }
 })
+  .relation('tags', () => TagFactory)
+  .relation('thematic', () => ThematicFactory)
   .relation('school', () => SchoolFactory)
   .build()
 

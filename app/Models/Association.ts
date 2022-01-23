@@ -4,8 +4,6 @@ import {
   BelongsTo,
   belongsTo,
   column,
-  HasOne,
-  hasOne,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
@@ -51,11 +49,11 @@ export default class Association extends BaseModel {
   })
   public school: BelongsTo<typeof School>
 
-  @hasOne(() => Thematic, {
-    foreignKey: 'id',
-    localKey: 'thematicId',
+  @belongsTo(() => Thematic, {
+    foreignKey: 'thematicId',
+    localKey: 'id',
   })
-  public thematic: HasOne<typeof Thematic>
+  public thematic: BelongsTo<typeof Thematic>
 
   @manyToMany(() => Tag, {
     pivotTable: 'tags_associations',

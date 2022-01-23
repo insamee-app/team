@@ -5,7 +5,9 @@ export default class SchoolSeeder extends BaseSeeder {
   public static developmentOnly = true
 
   public async run() {
-    await SchoolFactory.with('associations', 15)
+    await SchoolFactory.with('associations', 15, (association) =>
+      association.with('thematic', 1).with('tags', 5)
+    )
       .with('profiles', 30, (profile) =>
         profile.with('user', 1).with('focusInterests', 2).with('skills', 2)
       )
