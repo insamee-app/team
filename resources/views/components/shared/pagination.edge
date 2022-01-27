@@ -1,3 +1,14 @@
+@set('pageColor', '')
+@set('textColor', '')
+
+@if(variant === 'mee')
+  @set('pageColor', 'bg-mee-primary-base text-white')
+  @set('textColor', 'text-mee-primary-base')
+@elseif(variant === 'associations')
+  @set('pageColor', 'bg-associations-primary-base text-slate-900')
+  @set('textColor', 'text-associations-primary-base')
+@end
+
 @if(data.hasPages)
   <div class="flex flex-row justify-between {{ textColor }} {{ classes }}">
     @if(data.getPreviousPageUrl())

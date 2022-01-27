@@ -7,6 +7,23 @@ import FocusInterest from 'App/Models/FocusInterest'
 import Association from 'App/Models/Association'
 
 export default class ProfilesController {
+  private PER_PAGE = 10
+
+  public async index({ view, request, bouncer }: HttpContextContract) {
+    await bouncer.with('ProfilePolicy').authorize('viewList')
+
+    const page = request.input('page') || 1
+    const users = await User.query()
+      .preload('profile', (profile) =>
+        profile.preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
+      )
+      .paginate(page, this.PER_PAGE)
+
+    users.baseUrl(request.url())
+
+    return view.render('pages/mee/index', { users })
+  }
+
   public async show({ params, view, bouncer }: HttpContextContract) {
     await bouncer.with('ProfilePolicy').authorize('view')
 
