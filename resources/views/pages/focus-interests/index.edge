@@ -2,7 +2,7 @@
 @set('title', 'Les centres \'intérêts')
 
 @section('content')
-  <h2 class="text-slate-500 text-lg font-semibold">
+  <h2 class="text-mee-primary-base text-lg font-semibold">
     <a href="{{ route('FocusInterestsController.index') }}">
       Centres d'intérêts
     </a>
@@ -11,13 +11,13 @@
     <div class="flex flex-row justify-between items-center mt-2">
       <h1 class="text-slate-900 text-2xl font-bold">Liste des centres d'intérets</h1>
       @can('FocusInterestPolicy.create')
-        <a href="{{ route('FocusInterestsController.create') }}" class="px-2 py-1 text-white bg-slate-500 hover:bg-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Ajouter</a>
+        <a href="{{ route('FocusInterestsController.create') }}" class="px-2 py-1 text-white bg-mee-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Ajouter</a>
       @end
     </div>
 
   <div class="flex flex-col space-y-6 mt-8">
     @each(focus in focusInterests)
-      <a href="{{ route('FocusInterestsController.show', { id: focus.id }) }}" class="rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+      <a href="{{ route('FocusInterestsController.show', { id: focus.id }) }}" class="rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
         @elements.card()
           @elements.cardTitle()
             {{ focus.name }}

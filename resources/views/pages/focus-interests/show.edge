@@ -3,7 +3,7 @@
 
 @section('content')
 
-  <h2 class="text-slate-500 text-lg font-semibold">
+  <h2 class="text-mee-primary-base text-lg font-semibold">
     <a href="{{ route('FocusInterestsController.index') }}">
       Centres d'intérêts
     </a>
@@ -17,11 +17,11 @@
         <form action="{{ route('FocusInterestsController.destroy', { id: focusInterest.id }) }}?_method=DELETE" method="POST">
           {{ csrfField() }}
 
-          <button type="submit" class="px-2 py-1 text-black border border-slate-500 hover:border-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Supprimer</button>
+          <button type="submit" class="px-2 py-1 text-black border border-mee-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Supprimer</button>
         </form>
       @end
       @can('FocusInterestPolicy.delete')
-        <a href="{{ route('FocusInterestsController.edit', { id: focusInterest.id }) }}" class="px-2 py-1 text-white bg-slate-500 hover:bg-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Modifier</a>
+        <a href="{{ route('FocusInterestsController.edit', { id: focusInterest.id }) }}" class="px-2 py-1 text-white bg-mee-primary-base hover:bg-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Modifier</a>
       @end
     </div>
   @endif
