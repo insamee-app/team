@@ -1,9 +1,13 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Skill from 'App/Models/Skill'
+import User from 'App/Models/User'
 import SkillStoreValidator from 'App/Validators/SkillStoreValidator'
 import SkillUpdateValidator from 'App/Validators/SkillUpdateValidator'
 
 export default class SkillsController {
+  private PER_PAGE = 10
+
   public async index({ view, bouncer }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('viewList')
 
@@ -28,12 +32,28 @@ export default class SkillsController {
     return response.redirect().toRoute('SkillsController.show', { id: skill.id })
   }
 
-  public async show({ view, params, bouncer }: HttpContextContract) {
+  public async show({ request, view, params, bouncer }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('view')
 
-    const skill = await Skill.findOrFail(params.id)
+    const page = request.input('page')
 
-    return view.render('pages/skills/show', { skill })
+    const skill = await Skill.findOrFail(params.id)
+    const users = await User.query()
+      .whereIn(
+        'id',
+        Database.from('profiles')
+          .select('profiles.user_id')
+          .join('skills_profiles', 'profiles.id', '=', 'skills_profiles.profile_id')
+          .where('skill_id', params.id)
+      )
+      .preload('profile', (profile) =>
+        profile.preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
+      )
+      .paginate(page, this.PER_PAGE)
+
+    users.baseUrl(request.url())
+
+    return view.render('pages/skills/show', { skill, users })
   }
 
   public async edit({ view, params, bouncer }: HttpContextContract) {

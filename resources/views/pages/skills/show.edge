@@ -2,27 +2,39 @@
 @set('title', skill.name)
 
 @section('content')
-
-  <h2 class="text-slate-500 text-lg font-semibold">
+  <h2 class="text-mee-primary-base text-lg font-semibold">
     <a href="{{ route('SkillsController.index') }}">
       Compétences
     </a>
   </h2>
 
-  <h1 class="mt-2 text-slate-900 text-2xl font-bold">{{ skill.name }}</h1>
+  <div class="flex flex-row justify-between items-center mt-2">
+    <h1 class="text-slate-900 text-2xl font-bold">{{ skill.name }}</h1>
+    @can('SkillPolicy.udpate')
+      <a href="{{ route('SkillsController.edit', { id: skill.id}) }}" class="px-2 py-1 text-white bg-mee-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Modifier</a>
+    @end
+  </div>
 
-  @if(await bouncer.with('SkillPolicy').allows('update') || await bouncer.with('SkillPolicy').allows('delete'))
-    <div class="flex flex-row justify-between mt-8">
-      @can('SkillPolicy.update')
-        <form action="{{ route('SkillsController.destroy', { id: skill.id }) }}?_method=DELETE" method="POST">
-          {{ csrfField() }}
+  <section class="flex flex-col mt-8">
+    <h2 class="font-bold text-xl">
+      Mee associés
+    </h2>
 
-          <button type="submit" class="px-2 py-1 text-black border border-slate-500 hover:border-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Supprimer</button>
-        </form>
-      @end
-      @can('SkillPolicy.delete')
-        <a href="{{ route('SkillsController.edit', { id: skill.id }) }}" class="px-2 py-1 text-white bg-slate-500 hover:bg-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Modifier</a>
+    <div class="grid grid-cols-1 gap-8 mt-4">
+      @each(user in users)
+        <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
+        @!mee.card({
+          user: user
+        })
+        </a>
       @end
     </div>
-  @endif
+
+    @!shared.pagination({
+      data: users,
+      variant: 'mee',
+      classes: 'mt-8',
+    })
+  </section>
+
 @end
