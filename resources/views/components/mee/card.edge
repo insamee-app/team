@@ -1,0 +1,25 @@
+@elements.card({
+  variant: 'mee',
+  classes: 'hover:shadow-lg cursor-pointer space-y-4'
+})
+  <header class="flex flex-row space-x-4 items-center">
+    @!shared.picture({
+      attachment: user.profile.picture,
+      alt: 'Avatar de ' + user.profile.firstName,
+      placeholderClasses: 'bg-mee-secondary-base rounded-full',
+      size: 'w-28 h-28',
+      width: '112',
+      height: '112'
+    })
+    <h3 class="flex flex-col space-y-2 font-bold text-xl text-mee-primary-dark">
+      <span>{{ user.profile.firstName }}</span>
+      <span>{{ user.profile.lastName }}</span>
+    </h3>
+  </header>
+  {{--  <p class="text-justify">{{ excerpt(association.overview, 150) }}</p>  --}}
+  <ul class="flex flex-row gap-2 flex-wrap">
+    @each(focusInterest in user.profile.focusInterests)
+      <li class="text-sm text-mee-primary-base bg-mee-primary-grey-light rounded-full px-2 py-1">{{focusInterest.name}}</li>
+    @endeach
+  </ul>
+@end
