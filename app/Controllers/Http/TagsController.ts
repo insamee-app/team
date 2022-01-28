@@ -4,6 +4,8 @@ import TagStoreValidator from 'App/Validators/TagStoreValidator'
 import TagUpdateValidator from 'App/Validators/TagUpdateValidator'
 
 export default class TagsController {
+  private PER_PAGE = 10
+
   public async index({ view, bouncer }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('viewList')
 
@@ -28,12 +30,24 @@ export default class TagsController {
     return response.redirect().toRoute('TagsController.show', { id: tag.id })
   }
 
-  public async show({ view, bouncer, params }: HttpContextContract) {
+  public async show({ request, view, bouncer, params }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('view')
 
-    const tag = await Tag.findOrFail(params.id)
+    const page = request.input('page', 1)
 
-    return view.render('pages/tags/show', { tag })
+    const tag = await Tag.findOrFail(params.id)
+    const associations = await tag
+      .related('associations')
+      .query()
+      .preload('school')
+      .preload('thematic')
+      .preload('tags', (tags) => tags.groupLimit(3))
+      .orderBy('name', 'asc')
+      .paginate(page, this.PER_PAGE)
+
+    associations.baseUrl(request.url())
+
+    return view.render('pages/tags/show', { tag, associations })
   }
 
   public async edit({ view, bouncer, params }: HttpContextContract) {
