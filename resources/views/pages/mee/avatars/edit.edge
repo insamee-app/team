@@ -1,5 +1,5 @@
 @layout('layouts/app')
-@set('title', 'Modifier l\'avatar de ' + user.profile.firstName)
+@set('title', 'Modifier l\'avatar de ' + profile.firstName)
 
 @section('content')
   <h2 class="text-lg text-mee-primary-base font-semibold">
@@ -17,15 +17,15 @@
 
     <div class="flex flex-col items-center space-y-2">
       @!shared.picture({
-        attachment: user.profile.avatar,
-        alt: 'Photo de ' + user.profile.firstName,
+        attachment: profile.avatar,
+        alt: 'Photo de ' + profile.firstName,
         placeholderClasses: 'bg-mee-secondary-base rounded-full',
         size: 'w-36 h-36',
         width: '144',
         height: '144'
       })
 
-      <form action="{{ route('ProfilesAvatarsController.destroy', { id: user.id }) }}?_method=DELETE" method="POST">
+      <form action="{{ route('ProfilesAvatarsController.destroy', { id: profile.id }) }}?_method=DELETE" method="POST">
         {{ csrfField() }}
 
         <button type="submit" class="text-sm text-mee-primary-base">Supprimer sa photo</button>
@@ -33,7 +33,7 @@
     </div>
   </section>
 
-  <form action="{{ route('ProfilesAvatarsController.update', { id: user.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
+  <form action="{{ route('ProfilesAvatarsController.update', { id: profile.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
     {{ csrfField() }}
 
     <h3 class="text-xl font-bold">Nouvelle photo</h3>

@@ -1,6 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Profile from 'App/Models/Profile'
-import User from 'App/Models/User'
 import Skill from 'App/Models/Skill'
 import ProfileValidator from 'App/Validators/ProfileValidator'
 import FocusInterest from 'App/Models/FocusInterest'
@@ -39,9 +38,10 @@ export default class ProfilesController {
   }
 
   public async edit({ params, view, bouncer }: HttpContextContract) {
-    const profile = await Profile.query().preload('user').where('id', params.id).firstOrFail()
-    await bouncer.with('ProfilePolicy').authorize('update', profile.user)
+    const profile = await Profile.firstOrFail(params.id)
+    await bouncer.with('ProfilePolicy').authorize('update', profile)
 
+    await profile.load('user')
     await profile.load('school')
     await profile.load('skills')
     await profile.load('focusInterests')
@@ -55,8 +55,8 @@ export default class ProfilesController {
   }
 
   public async update({ request, params, response, bouncer }: HttpContextContract) {
-    const profile = await Profile.query().preload('user').where('id', params.id).firstOrFail()
-    await bouncer.with('ProfilePolicy').authorize('update', profile.user)
+    const profile = await Profile.firstOrFail(params.id)
+    await bouncer.with('ProfilePolicy').authorize('update', profile)
 
     const { skills, focusInterests, associations, ...payload } = await request.validate(
       ProfileValidator
@@ -69,6 +69,6 @@ export default class ProfilesController {
     await profile?.related('focusInterests').sync(focusInterests || [])
     await profile?.related('associations').sync(associations || [])
 
-    return response.redirect().toRoute('ProfilesController.show', { id: profile.id })
+    return response.redirect().toRoute('ProfilesController.show', { id: params.id })
   }
 }

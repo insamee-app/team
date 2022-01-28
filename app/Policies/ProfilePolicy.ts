@@ -1,5 +1,6 @@
 import { BasePolicy } from '@ioc:Adonis/Addons/Bouncer'
 import { UserRole } from 'App/Enums/UserRole'
+import Profile from 'App/Models/Profile'
 import User from 'App/Models/User'
 
 export default class ProfilePolicy extends BasePolicy {
@@ -14,10 +15,10 @@ export default class ProfilePolicy extends BasePolicy {
   public async view() {
     return true
   }
-  public async update(userAuthenticated: User, user: User) {
-    return userAuthenticated.id === user.id
+  public async update(user: User, profile: Profile) {
+    return user.id === profile.userId
   }
-  public async delete(userAuthenticated: User, user: User) {
-    return userAuthenticated.id === user.id
+  public async delete(user: User, profile: Profile) {
+    return user.id === profile.userId
   }
 }
