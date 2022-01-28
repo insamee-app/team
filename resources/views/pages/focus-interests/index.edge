@@ -15,15 +15,21 @@
       @end
     </div>
 
-  <div class="flex flex-col space-y-6 mt-8">
-    @each(focus in focusInterests)
-      <a href="{{ route('FocusInterestsController.show', { id: focus.id }) }}" class="rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
-        @elements.card()
-          @elements.cardTitle()
-            {{ focus.name }}
+  <div class="mt-8">
+    @shared.list({
+      items: focusInterests
+    })
+      @slot('main', focusInterest)
+        <a href="{{ route('SkillsController.show', { id: focusInterest.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+          @elements.card({
+            classes: 'border-mee-primary-grey-light'
+          })
+            @elements.cardTitle()
+              {{ focusInterest.name }}
+            @end
           @end
-        @end
-      </a>
-    @endeach
+        </a>
+      @end
+    @end
   </div>
 @end

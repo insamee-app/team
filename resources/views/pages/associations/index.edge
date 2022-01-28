@@ -17,15 +17,19 @@
       @end
   </div>
 
-  <section class="grid grid-cols-1 gap-8 mt-8">
-    @each(association in associations)
-      <a href="{{ route('AssociationsController.show', { id: association.id }) }}">
-       @!associations.card({
-         association: association
-       })
-      </a>
+  <div class="mt-8">
+    @shared.list({
+      items: associations
+    })
+      @slot('main', association)
+        <a href="{{ route('ProfilesController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+          @!associations.card({
+            association,
+          })
+        </a>
+      @end
     @end
-  </section>
+  </div>
 
   @!shared.pagination({
     data: associations,

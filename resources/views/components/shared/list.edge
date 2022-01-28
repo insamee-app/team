@@ -1,0 +1,7 @@
+<ul class="grid grid-cols-1 gap-8">
+  @each(item in items)
+    <li>
+      {{{ await $slots.main(item) }}}
+    </li>
+  @end
+</ul>

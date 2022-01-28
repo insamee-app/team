@@ -15,17 +15,21 @@
       @end
     </div>
 
-  <div class="flex flex-col space-y-6 mt-8">
-    @each(tag in tags)
-      <a href="{{ route('TagsController.show', { id: tag.id }) }}" class="rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
-        @elements.card({
-          classes: 'border-associations-primary-grey-light'
-        })
-          @elements.cardTitle()
-            {{ tag.name }}
+  <div class="mt-8">
+    @shared.list({
+      items: tags
+    })
+      @slot('main', tag)
+        <a href="{{ route('TagsController.show', { id: tag.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+          @elements.card({
+            classes: 'border-associations-primary-grey-light'
+          })
+            @elements.cardTitle()
+              {{ tag.name }}
+            @end
           @end
-        @end
-      </a>
-    @endeach
+        </a>
+      @end
+    @end
   </div>
 @end
