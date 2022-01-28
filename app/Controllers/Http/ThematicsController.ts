@@ -4,6 +4,8 @@ import ThematicStoreValidator from 'App/Validators/ThematicStoreValidator'
 import ThematicUpdateValidator from 'App/Validators/ThematicUpdateValidator'
 
 export default class ThematicsController {
+  private PER_PAGE = 10
+
   public async index({ view, bouncer }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('viewList')
 
@@ -28,12 +30,24 @@ export default class ThematicsController {
     return response.redirect().toRoute('ThematicsController.show', { id: thematic.id })
   }
 
-  public async show({ view, bouncer, params }: HttpContextContract) {
+  public async show({ request, view, bouncer, params }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('view')
 
-    const thematic = await Thematic.findOrFail(params.id)
+    const page = request.input('page', 1)
 
-    return view.render('pages/thematics/show', { thematic })
+    const thematic = await Thematic.findOrFail(params.id)
+    const associations = await thematic
+      .related('associations')
+      .query()
+      .preload('school')
+      .preload('thematic')
+      .preload('tags', (tags) => tags.groupLimit(3))
+      .orderBy('name', 'asc')
+      .paginate(page, this.PER_PAGE)
+
+    associations.baseUrl(request.url())
+
+    return view.render('pages/thematics/show', { thematic, associations })
   }
 
   public async edit({ view, bouncer, params }: HttpContextContract) {
