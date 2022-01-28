@@ -38,22 +38,13 @@ export default class SkillsController {
     const page = request.input('page')
 
     const skill = await Skill.findOrFail(params.id)
-    const users = await User.query()
-      .whereIn(
-        'id',
-        Database.from('profiles')
-          .select('profiles.user_id')
-          .join('skills_profiles', 'profiles.id', '=', 'skills_profiles.profile_id')
-          .where('skill_id', params.id)
-      )
-      .preload('profile', (profile) =>
-        profile.preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
-      )
+    const profiles = await skill
+      .related('profiles')
+      .query()
+      .preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
       .paginate(page, this.PER_PAGE)
 
-    users.baseUrl(request.url())
-
-    return view.render('pages/skills/show', { skill, users })
+    return view.render('pages/skills/show', { skill, profiles })
   }
 
   public async edit({ view, params, bouncer }: HttpContextContract) {

@@ -1,5 +1,5 @@
 @layout('layouts/app')
-@set('title', 'Modifier le profil de ' + user.profile.firstName)
+@set('title', 'Modifier le profil de ' + profile.firstName)
 
 @section('content')
   <h2 class="text-lg text-mee-primary-base font-semibold">
@@ -12,33 +12,33 @@
       <h1 class="text-2xl font-bold">Modifier</h1>
   </div>
 
-  <form action="{{ route('ProfilesController.update', { id: user.id }) }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
+  <form action="{{ route('ProfilesController.update', { id: profile.id }) }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
     {{ csrfField() }}
     <div class="flex flex-col space-y-4">
       @set('classesMee', '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none')
       @form.group({name: 'firstName'})
         @!form.label({ title: 'Prénom' })
-        @!form.input({ type: 'firstname', placeholder: 'Saisir le prénom', value: user.profile.firstName, classes: classesMee })
+        @!form.input({ type: 'firstname', placeholder: 'Saisir le prénom', value: profile.firstName, classes: classesMee })
       @end
 
       @form.group({name: 'lastName'})
         @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'lastname', placeholder: 'Saisir le nom', value: user.profile.lastName, classes: classesMee })
+        @!form.input({ type: 'lastname', placeholder: 'Saisir le nom', value: profile.lastName, classes: classesMee })
       @end
 
       @form.group({name: 'email', disabled: 'true'})
         @!form.label({ title: 'Adresse électronique' })
-        @!form.input({ type: 'email', value: user.email })
+        @!form.input({ type: 'email', value: profile.user.email })
       @end
 
       @form.group({name: 'school', disabled: 'true'})
         @!form.label({ title: 'Ecole' })
-        @!form.input({ type: 'compagny', value: user.profile.school.name })
+        @!form.input({ type: 'compagny', value: profile.school.name })
       @end
 
       @form.group({name: 'graduationYear'})
         @!form.label({ title: 'Diplomation' })
-        @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: user.profile.graduationYear, classes: classesMee })
+        @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, classes: classesMee })
       @end
 
       @form.group({name: 'skills'})
@@ -46,7 +46,7 @@
         @form.multiselect({
           variant: 'mee',
           data: skills,
-          selectedData: user.profile.skills.map(skill => skill.id),
+          selectedData: profile.skills.map(skill => skill.id),
         })
           Sélectionner des compétences
         @end
@@ -57,7 +57,7 @@
         @form.multiselect({
           variant: 'mee',
           data: focusInterests,
-          selectedData: user.profile.focusInterests.map(focusInterest => focusInterest.id),
+          selectedData: profile.focusInterests.map(focusInterest => focusInterest.id),
         })
           Sélectionner des compétences
         @end
@@ -68,7 +68,7 @@
         @form.multiselect({
           variant: 'mee',
           data: associations,
-          selectedData: user.profile.associations.map(association => association.id),
+          selectedData: profile.associations.map(association => association.id),
         })
           Sélectionner des associations
         @end

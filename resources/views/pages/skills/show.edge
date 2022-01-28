@@ -21,17 +21,17 @@
     </h2>
 
     <div class="grid grid-cols-1 gap-8 mt-4">
-      @each(user in users)
-        <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
+      @each(profile in profiles)
+        <a href="{{ route('ProfilesController.show', { id: profile.id }) }}">
         @!mee.card({
-          user: user
+          profile: profile
         })
         </a>
       @end
     </div>
 
     @!shared.pagination({
-      data: users,
+      data: profiles,
       variant: 'mee',
       classes: 'mt-8',
     })

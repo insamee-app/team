@@ -1,5 +1,5 @@
 @layout('layouts/app')
-@set('title', user.profile.firstName)
+@set('title', profile.firstName)
 
 @section('content')
   <article class="flex flex-col space-y-8">
@@ -11,9 +11,9 @@
       </h2>
 
       <div class="flex flex-row justify-between items-center mt-2">
-        <h1 class="text-2xl text-slate-900 font-bold">{{ user.profile.firstName }}&nbsp;{{ user.profile.lastName }}</h1>
-          @can('ProfilePolicy.update', user)
-            <a href="{{ route('ProfilesController.edit', { id: user.id }) }}" class="rounded text-white bg-mee-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+        <h1 class="text-2xl font-bold">{{ profile.firstName }}&nbsp;{{ profile.lastName }}</h1>
+          @can('ProfilePolicy.update', profile.user)
+            <a href="{{ route('ProfilesController.edit', { id: profile.id }) }}" class="rounded text-white bg-mee-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
               Modifier
             </a>
           @end
@@ -22,8 +22,8 @@
 
     <div class="flex flex-col items-center space-x-2">
       @!shared.picture({
-        attachment: user.profile.avatar,
-        alt: 'Photo de ' + user.profile.firstName,
+        attachment: profile.avatar,
+        alt: 'Photo de ' + profile.firstName,
         placeholderClasses: 'bg-mee-secondary-base rounded-full',
         size: 'w-36 h-36',
         width: '144',
@@ -31,7 +31,7 @@
       })
 
        @can('ProfilePolicy.delete', user)
-        <a href="{{ route('ProfilesAvatarsController.edit', { id: user.id }) }}" class="flex flex-row items-center space-x-1 text-mee-primary-base">
+        <a href="{{ route('ProfilesAvatarsController.edit', { id: profile.id }) }}" class="flex flex-row items-center space-x-1 text-mee-primary-base">
           <span>
             Modifier l'avatar
           </span>
@@ -45,20 +45,20 @@
 
     @!elements.labeledItem({
       label: 'Adresse électronique',
-      value: user.email,
+      value: profile.user.email,
       variant: 'mee'
     })
 
     <div class="flex flex-row justify-between">
       @!elements.labeledItem({
         label: 'Ecole',
-        value: user.profile.school.name,
+        value: profile.school.name,
         variant: 'mee'
       })
 
       @!elements.labeledItem({
         label: 'Diplomation',
-        value: user.profile.graduationYear,
+        value: profile.graduationYear,
         variant: 'mee'
       })
     </div>
@@ -67,21 +67,21 @@
       label: 'Compétences',
       variant: 'mee'
     })
-     @!elements.chips({data: user.profile.skills})
+     @!elements.chips({data: profile.skills})
     @end
 
     @elements.labeledItem({
       label: 'Centres d\'intérêts',
       variant: 'mee'
     })
-     @!elements.chips({data: user.profile.focusInterests})
+     @!elements.chips({data: profile.focusInterests})
     @end
     @elements.labeledItem({
       label: 'Associations',
       variant: 'mee'
     })
      <ul class="flex flex-col space-y-2">
-       @each(association in user.profile.associations)
+       @each(association in profile.associations)
           <li>
             <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="flex flex-row space-x-3">
               @!shared.picture({

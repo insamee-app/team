@@ -12,53 +12,56 @@ export default class ProfilesController {
   public async index({ view, request, bouncer }: HttpContextContract) {
     await bouncer.with('ProfilePolicy').authorize('viewList')
 
-    const page = request.input('page') || 1
-    const users = await User.query()
-      .preload('profile', (profile) =>
-        profile.preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
-      )
+    const page = request.input('page', 1)
+
+    const profiles = await Profile.query()
+      .preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
       .paginate(page, this.PER_PAGE)
 
-    users.baseUrl(request.url())
+    profiles.baseUrl(request.url())
 
-    return view.render('pages/mee/index', { users })
+    return view.render('pages/mee/index', { profiles })
   }
 
   public async show({ params, view, bouncer }: HttpContextContract) {
     await bouncer.with('ProfilePolicy').authorize('view')
 
-    const user = await User.findOrFail(params.id)
+    const profile = await Profile.query()
+      .where('id', params.id)
+      .preload('school')
+      .preload('skills')
+      .preload('focusInterests')
+      .preload('associations')
+      .preload('user')
+      .firstOrFail()
 
-    await user.load('profile', (profile) =>
-      profile.preload('school').preload('skills').preload('focusInterests').preload('associations')
-    )
-
-    return view.render('pages/mee/show', { user })
+    return view.render('pages/mee/show', { profile })
   }
 
   public async edit({ params, view, bouncer }: HttpContextContract) {
-    const user = await User.findOrFail(params.id)
-    await bouncer.with('ProfilePolicy').authorize('update', user)
+    const profile = await Profile.query().preload('user').where('id', params.id).firstOrFail()
+    await bouncer.with('ProfilePolicy').authorize('update', profile.user)
 
-    await user.load('profile', (profile) =>
-      profile.preload('school').preload('skills').preload('focusInterests').preload('associations')
-    )
+    await profile.load('school')
+    await profile.load('skills')
+    await profile.load('focusInterests')
+    await profile.load('associations')
+
     const skills = await Skill.query().select('id', 'name').orderBy('name')
     const focusInterests = await FocusInterest.query().select('id', 'name').orderBy('name')
     const associations = await Association.query().select('id', 'name').orderBy('name')
 
-    return view.render('pages/mee/edit', { user, skills, focusInterests, associations })
+    return view.render('pages/mee/edit', { profile, skills, focusInterests, associations })
   }
 
   public async update({ request, params, response, bouncer }: HttpContextContract) {
-    const user = await User.findOrFail(params.id)
-    await bouncer.with('ProfilePolicy').authorize('update', user)
+    const profile = await Profile.query().preload('user').where('id', params.id).firstOrFail()
+    await bouncer.with('ProfilePolicy').authorize('update', profile.user)
 
     const { skills, focusInterests, associations, ...payload } = await request.validate(
       ProfileValidator
     )
 
-    const profile = await Profile.findBy('userId', user.id)
     profile!.merge(payload)
 
     await profile!.save()
@@ -66,6 +69,6 @@ export default class ProfilesController {
     await profile?.related('focusInterests').sync(focusInterests || [])
     await profile?.related('associations').sync(associations || [])
 
-    return response.redirect().toRoute('ProfilesController.show', { id: user.id })
+    return response.redirect().toRoute('ProfilesController.show', { id: profile.id })
   }
 }

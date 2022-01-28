@@ -9,21 +9,21 @@
   </h2>
 
   <div class="flex flex-row justify-between items-center mt-2">
-    <h1 class="text-2xl text-slate-900 font-bold">Liste des mee</h1>
+    <h1 class="text-2xl font-bold">Liste des mee</h1>
   </div>
 
   <section class="grid grid-cols-1 gap-8 mt-8">
-    @each(user in users)
-      <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
+    @each(profile in profiles)
+      <a href="{{ route('ProfilesController.show', { id: profile.id }) }}">
        @!mee.card({
-         user: user
+         profile: profile
        })
       </a>
     @end
   </section>
 
   @!shared.pagination({
-    data: users,
+    data: profiles,
     variant: 'mee',
     classes: 'mt-8',
   })
