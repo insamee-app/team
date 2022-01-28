@@ -4,28 +4,28 @@
 @section('content')
   <section>
 
-    <h2 class="text-slate-500 text-lg font-semibold">
+    <h2 class="text-associations-primary-base text-lg font-semibold">
       <a href="{{ route('ThematicsController.index') }}">
         Thématiques
       </a>
     </h2>
 
-    <h1 class="text-slate-900 text-2xl font-bold mt-2">Créer</h1>
+    <h1 class="text-2xl font-bold mt-2">Créer</h1>
 
     <form action="{{ route('ThematicsController.store') }}" method="POST" class="mt-8">
       {{ csrfField() }}
 
       @form.group({ name: 'name' })
         @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'text', placeholder: 'Saisir le nom', classes: '!border-slate-500 focus:!ring-slate-500 focus-within:!outline-none' })
+        @!form.input({ type: 'text', placeholder: 'Saisir le nom', classes: '!border-associations-primary-base focus:!ring-associations-primary-base focus-within:!outline-none' })
       @end
 
       <div class="flex flex-row justify-between mt-8">
-        @elements.button({ type: 'reset', classes: 'text-black border border-slate-500 hover:border-slate-600 focus:!ring-slate-500' })
+        @elements.button({ type: 'reset', classes: 'text-black border border-associations-primary-base focus:!ring-associations-primary-base' })
           Annuler
         @end
 
-        @elements.button({ type: 'submit', classes: 'text-white bg-slate-500 hover:bg-slate-600 focus:!ring-slate-500' })
+        @elements.button({ type: 'submit', classes: 'text-white bg-associations-primary-base focus:!ring-associations-primary-base' })
           Enregistrer
         @end
       </div>

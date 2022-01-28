@@ -2,27 +2,39 @@
 @set('title', thematic.name)
 
 @section('content')
-
-  <h2 class="text-slate-500 text-lg font-semibold">
+  <h2 class="text-associations-primary-base text-lg font-semibold">
     <a href="{{ route('ThematicsController.index') }}">
       Thématiques
     </a>
   </h2>
 
-  <h1 class="mt-2 text-slate-900 text-2xl font-bold">{{ thematic.name }}</h1>
+  <div class="flex flex-row justify-between items-center mt-2">
+    <h1 class="text-2xl font-bold">{{ thematic.name }}</h1>
+    @can('ThematicPolicy.udpate')
+      <a href="{{ route('ThematicsController.edit', { id: thematic.id}) }}" class="px-2 py-1 text-white bg-associations-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">Modifier</a>
+    @end
+  </div>
 
-  @if(await bouncer.with('ThematicPolicy').allows('update') || await bouncer.with('ThematicPolicy').allows('delete'))
-    <div class="flex flex-row justify-between mt-8">
-      @can('ThematicPolicy.update')
-        <form action="{{ route('ThematicsController.destroy', { id: thematic.id }) }}?_method=DELETE" method="POST">
-          {{ csrfField() }}
 
-          <button type="submit" class="px-2 py-1 text-black border border-slate-500 hover:border-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Supprimer</button>
-        </form>
-      @end
-      @can('ThematicPolicy.delete')
-        <a href="{{ route('ThematicsController.edit', { id: thematic.id }) }}" class="px-2 py-1 text-white bg-slate-500 hover:bg-slate-600 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Modifier</a>
+    <section class="flex flex-col mt-8">
+    <h2 class="font-bold text-xl">
+      Associations associées
+    </h2>
+
+    <div class="grid grid-cols-1 gap-8 mt-4">
+      @each(association in associations)
+        <a href="{{ route('AssociationsController.show', { id: association.id }) }}">
+        @!associations.card({
+          association: association,
+        })
+        </a>
       @end
     </div>
-  @endif
+
+    @!shared.pagination({
+      data: associations,
+      variant: 'associations',
+      classes: 'mt-8',
+    })
+  </section>
 @end

@@ -4,9 +4,9 @@
 @section('content')
   <section>
 
-    <h2 class="text-slate-500 text-lg font-semibold">
+    <h2 class="text-associations-primary-base text-lg font-semibold">
       <a href="{{ route('ThematicsController.index') }}">
-        Compétences
+        Thématiques
       </a>
     </h2>
 
@@ -17,15 +17,15 @@
 
       @form.group({ name: 'name' })
         @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'text', value: thematic.name, placeholder: 'Saisir le nom', classes: '!border-slate-500 focus:!ring-slate-500 focus-within:!outline-none' })
+        @!form.input({ type: 'text', value: thematic.name, placeholder: 'Saisir le nom', classes: '!border-associations-primary-base focus:!ring-associations-primary-base focus-within:!outline-none' })
       @end
 
       <div class="flex flex-row justify-between mt-8">
-        @elements.button({ type: 'reset', classes: 'text-black border border-slate-500 hover:border-slate-600 focus:!ring-slate-500' })
+        @elements.button({ type: 'reset', classes: 'text-black border border-associations-primary-base focus:!ring-associations-primary-base' })
           Annuler
         @end
 
-        @elements.button({ type: 'submit', classes: 'text-white bg-slate-500 hover:bg-slate-600 focus:!ring-slate-500' })
+        @elements.button({ type: 'submit', classes: 'text-white bg-associations-primary-base  focus:!ring-associations-primary-base' })
           Enregistrer
         @end
       </div>
