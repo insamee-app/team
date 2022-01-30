@@ -22,7 +22,8 @@
       "file": "./start/validator",
       "environment": ["web"]
     },
-    "./start/bouncer"
+    "./start/bouncer",
+    "./start/view"
   ],
   "providers": [
     "./providers/AppProvider",

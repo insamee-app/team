@@ -1,13 +1,9 @@
 {
   "assets/app.css": "http://localhost:8080/assets/app.css",
   "assets/app.js": "http://localhost:8080/assets/app.js",
-  "assets/images/logo_team.png": "http://localhost:8080/assets/images/logo_team.ebbde318.png",
-  "assets/images/platform=Evenements, diamond=true.png": "http://localhost:8080/assets/images/platform=Evenements, diamond=true.3d6b4421.png",
-  "assets/images/platform=Mee, diamond=true.png": "http://localhost:8080/assets/images/platform=Mee, diamond=true.e02e210c.png",
-  "assets/images/platform=Associations, diamond=true.png": "http://localhost:8080/assets/images/platform=Associations, diamond=true.859df648.png",
-  "assets/images/platform=Tutorat, diamond=true.png": "http://localhost:8080/assets/images/platform=Tutorat, diamond=true.fc624d3d.png",
   "assets/images/logo_tutorat.png": "http://localhost:8080/assets/images/logo_tutorat.fc624d3d.png",
+  "assets/images/logo_mee.png": "http://localhost:8080/assets/images/logo_mee.e02e210c.png",
   "assets/images/logo_associations.png": "http://localhost:8080/assets/images/logo_associations.859df648.png",
-  "assets/images/logo_evenements.png": "http://localhost:8080/assets/images/logo_evenements.3d6b4421.png",
-  "assets/images/logo_mee.png": "http://localhost:8080/assets/images/logo_mee.e02e210c.png"
+  "assets/images/logo_team.png": "http://localhost:8080/assets/images/logo_team.ebbde318.png",
+  "assets/images/logo_evenements.png": "http://localhost:8080/assets/images/logo_evenements.3d6b4421.png"
 }

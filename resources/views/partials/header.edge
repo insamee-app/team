@@ -44,38 +44,16 @@
             })
           </button>
           <ul class="flex flex-col space-y-6">
-            <li>
-              <a href="{{ route('AssociationsController.index') }}" class="flex flex-row items-center space-x-1 text-tutorat-primary-base">
-                <div class="w-7">
-                  <img src="{{ asset('assets/images/logo_tutorat.png') }}" alt="Logo de la plateforme Tutorat" width="500" height="500" loading="lazy" class="h-6 w-auto">
-                </div>
-                <span>Tutorat</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ route('AssociationsController.index') }}" class="flex flex-row items-center space-x-1 text-evenements-primary-base">
-                <div class="w-7">
-                  <img src="{{ asset('assets/images/logo_evenements.png') }}" alt="Logo de la plateforme Evènements" width="500" height="500" loading="lazy" class="h-6 w-auto">
-                </div>
-                <span>Evènements</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ route('AssociationsController.index') }}" class="flex flex-row items-center space-x-1 text-associations-primary-base">
-                <div class="w-7">
-                  <img src="{{ asset('assets/images/logo_associations.png') }}" alt="Logo de la plateforme Associations" width="500" height="500" loading="lazy" class="h-6 w-auto">
-                </div>
-                <span>Associations</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ route('ProfilesController.index') }}" class="flex flex-row items-center space-x-1 text-mee-primary-base">
-                <div class="w-7">
-                  <img src="{{ asset('assets/images/logo_mee.png') }}" alt="Logo de la plateforme Mee" width="500" height="500" loading="lazy" class="h-6 w-auto">
-                </div>
-                <span>Mee</span>
-              </a>
-            </li>
+            @each(item in routesTeam)
+              <li>
+                <a href="{{ route(item.name) }}" class="flex flex-row items-center space-x-1 {{item.color}}">
+                  <div class="w-7">
+                    <img src="{{ asset(`assets/images/${item.asset}`) }}" alt="Logo de la plateforme {{ item.title }}" width="500" height="500" loading="lazy" class="h-6 w-auto">
+                  </div>
+                  <span>{{ item.title }}</span>
+                </a>
+              </li>
+            @end
           </ul>
         </nav>
       </div>
