@@ -1,4 +1,9 @@
 import View from '@ioc:Adonis/Core/View'
+import User from 'App/Models/User'
+
+View.global('loadCurrentProfile', async function (user: User) {
+  await user.load('profile')
+})
 
 View.global('routesTeam', [
   {
@@ -24,5 +29,24 @@ View.global('routesTeam', [
     title: 'Mee',
     asset: 'logo_mee.png',
     color: 'text-mee-primary-base',
+  },
+])
+
+View.global('routesExplorer', [
+  {
+    name: 'SkillsController.index',
+    title: 'Compétences',
+  },
+  {
+    name: 'FocusInterestsController.index',
+    title: "Centres d'intérêts",
+  },
+  {
+    name: 'ThematicsController.index',
+    title: 'Thématiques',
+  },
+  {
+    name: 'TagsController.index',
+    title: 'Tags',
   },
 ])
