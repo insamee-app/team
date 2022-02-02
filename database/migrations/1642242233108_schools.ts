@@ -7,7 +7,11 @@ export default class Schools extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
       table.string('name').notNullable()
-      table.string('host', 48).notNullable()
+      table.string('hostname', 48).notNullable()
+      table.string('city').notNullable()
+      table.string('website').nullable()
+      table.string('overview', 2048).nullable()
+      table.json('banner').nullable()
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
