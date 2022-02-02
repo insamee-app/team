@@ -18,8 +18,8 @@ async function validateExistsHostSchool(
     return
   }
 
-  const host = value.split('@')[1]
-  const school = await getSchoolByHost(host)
+  const hostname = value.split('@')[1]
+  const school = await getSchoolByHost(hostname)
 
   if (school) return
 
