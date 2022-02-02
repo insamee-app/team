@@ -20,18 +20,22 @@
       Mee associés
     </h2>
 
-    <div class="grid grid-cols-1 gap-8 mt-4">
-      @each(user in users)
-        <a href="{{ route('ProfilesController.show', { id: user.id }) }}">
-        @!mee.card({
-          user: user
-        })
-        </a>
+    <div class="mt-8">
+      @shared.list({
+        items: profiles
+      })
+        @slot('main', profile)
+          <a href="{{ route('ProfilesController.show', { id: profile.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+            @!mee.card({
+              profile,
+            })
+          </a>
+        @end
       @end
     </div>
 
     @!shared.pagination({
-      data: users,
+      data: profiles,
       variant: 'mee',
       classes: 'mt-8',
     })

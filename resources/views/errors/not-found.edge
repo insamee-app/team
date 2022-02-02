@@ -1,1 +1,16 @@
-<p> It's a 404 </p>
+@layout('layouts/error')
+@set('title', 'Cette page n\'existe pas')
+
+@section('content')
+<h1 class="text-mee-primary-base text-xl font-bold">
+  Page non-trouvée
+</h1>
+
+<p>
+  La page que vous cherchez n'existe pas.
+</p>
+
+<p>
+  Retournez à la <a href="{{ route('home') }}" class="underline text-mee-primary-base">page d'accueil</a> pour trouver ce qu'il vous faut !
+</p>
+@end

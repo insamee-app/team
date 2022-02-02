@@ -29,6 +29,15 @@ Route.get('/', async ({ view, auth }) => {
 import './routes/auth'
 import './routes/user'
 
+// Temporary
+Route.get('tutorats', ({ response }) => {
+  return response.redirect('/')
+}).as('TutoratsController.index')
+// Temporary
+Route.get('events', ({ response }) => {
+  return response.redirect('/')
+}).as('EventsController.index')
+
 Route.group(() => {
   Route.resource('schools', 'SchoolsController')
   Route.resource('skills', 'SkillsController')

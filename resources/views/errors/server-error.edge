@@ -1,1 +1,16 @@
-<p> It's a 500 </p>
+@layout('layouts/error')
+@set('title', 'Une erreur est survenu')
+
+@section('content')
+  <h1 class="text-mee-primary-base text-xl font-bold">
+    Erreur
+  </h1>
+
+  <p>
+    La page que vous cherchez rencontre actuellement une erreur.
+  </p>
+
+  <p>
+    Si cela persiste, n'hésitez pas à <a href="{{ }}" class="underline text-mee-primary-base">nous contacter</a>.
+  </p>
+@end

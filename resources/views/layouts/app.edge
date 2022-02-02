@@ -11,10 +11,12 @@
   @entryPointScripts('app')
 </head>
 <body>
-{{--  @include('partials/header')  --}}
+  @include('partials/header')
 
-  <main>
+  <main class="mt-20 px-4">
     @!section('content')
   </main>
+
+  @include('partials/footer')
 </body>
 </html>

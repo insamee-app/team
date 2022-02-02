@@ -1,0 +1,230 @@
+<header class="fixed top-0 left-0 right-0 flex flex-row justify-between items-center px-4 py-2 border-b border-slate-200 bg-white/95 backdrop-blur">
+  <div x-data="{ open: false }">
+    <button
+      class="focus-within:outline-none focus:rounded focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
+      x-on:click="open = true"
+    >
+      @!icons.menu({
+        class: 'w-6 h-6 fill-current text-slate-900',
+        'aria-label': 'Logo du menu'
+      })
+    </button>
+
+    <template x-teleport="body">
+      <div
+        x-show="open"
+        x-on:keydown.window.escape.prevent.stop="open = false"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+        class="fixed inset-0 overflow-y-auto"
+      >
+        <div
+          x-show="open"
+          x-on:click="open = false"
+          x-transition.opacity
+          class="absolute inset-0 bg-white/20 backdrop-blur-sm">
+        </div>
+
+        <div
+        x-show="open"
+        x-transition.origin.left.top
+        x-on:click.stop
+        x-trap.noscroll.inert="open"
+        class="absolute top-0 bottom-0 left-0 bg-white shadow-lg w-80 max-w-[calc(100%-3rem)] flex flex-col pt-16 pb-8 px-8 overflow-scroll"
+        >
+          <button x-on:click="open = false">
+            @!icons.x({
+              class: 'w-6 h-6 fill-current text-slate-500 absolute top-2 right-2',
+            })
+          </button>
+          @if(auth.isGuest)
+            <nav
+              aria-label="navigation principale"
+              class="text-slate-500 text-xl font-bold"
+            >
+              <ul class="flex flex-col space-y-4">
+                <li>
+                  <a href="{{ route('home') }}" class="flex flex-row items-center space-x-2 {{ request.matchesRoute(route('home')) ? 'text-slate-900' : '' }}">
+                    <span class="w-6">
+                      @!icons.home({
+                        class: 'w-5 h-5 fill-current',
+                        'aria-hidden': true
+                      })
+                    </span>
+                    <span>Accueil</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('home') }}" class="flex flex-row items-center space-x-2 {{ request.matchesRoute(route('home')) ? 'text-slate-900' : '' }}">
+                    <span class="w-6">
+                      @!icons.colorSwatch({
+                        class: 'w-5 h-5 fill-current',
+                        'aria-hidden': true
+                      })
+                    </span>
+                    <span>Le concept</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <nav aria-label="navigation entre les plateformes" class="mt-16">
+              <ul class="flex flex-col space-y-6">
+                @each(item in routesTeam)
+                <li>
+                  <a href="{{ route(item.name) }}" class="flex flex-row items-center space-x-1 text-xl font-bold {{item.color}}">
+                    <div class="w-6">
+                      <img src="{{ asset(`assets/images/${item.asset}`) }}" alt="Logo de la plateforme {{ item.title }}" width="500" height="500" loading="lazy" class="h-5 w-auto">
+                    </div>
+                    <span>{{ item.title }}</span>
+                  </a>
+                </li>
+                @end
+              </ul>
+            </nav>
+            <div class="flex flex-row justify-between items-center mt-16">
+              <a href="{{ route('AuthController.login') }}" class="text-black">Se connecter</a>
+              <a
+                href="{{ route('AuthController.register') }}"
+                class="shadow-sm rounded text-slate-900 border border-slate-900 py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
+              >
+                S'inscrire
+              </a>
+            </div>
+          @else
+            {{{  await loadCurrentProfile(auth.user) ?? '' }}}
+            <a href="{{ route('ProfilesController.show', { id: auth.user.profile.id }) }}" class="flex flex-row items-center text-lg font-bold {{ request.url() === route('ProfilesController.show', { id: auth.user.profile.id }) ? 'text-slate-900' : 'text-slate-500' }}">
+              <span class="w-7">
+                @!icons.user({
+                  'aria-hidden': true,
+                  class: 'w-5 h-5 fill-current'
+                })
+              </span>
+              <span>
+                Mon profil
+              </span>
+            </a>
+            <div class="flex flex-row items-center mt-4">
+              @!shared.picture({
+                attachment: auth.user.profile.avatar,
+                alt: 'Photo de ' + auth.user.profile.firstName,
+                placeholderClasses: 'bg-mee-primary-base rounded-full',
+                size: 'w-24 h-24',
+                width: '96',
+                height: '96'
+              })
+              <div class="ml-4 flex flex-col space-y-2 text-lg">
+                <span>
+                  {{ auth.user.profile.firstName }}
+                </span>
+                <span>
+                  {{ auth.user.profile.lastName }}
+                </span>
+              </div>
+            </div>
+            <div class="mt-16" x-data="{ nav: false }">
+              <button x-on:click="nav = !nav" class="w-full flex flex-row justify-between items-center text-slate-500" aria-haspopup="true" :aria-expanded="nav" aria-controls="explorer-nav">
+                <div class="flex flex-row items-center text-lg font-bold">
+                  <span class="w-7">
+                    @!icons.sparkles({
+                      'aria-hidden': true,
+                      class: 'w-5 h-5 fill-current'
+                    })
+                  </span>
+                  <span>
+                    Explorer
+                  </span>
+                </div>
+                @!icons.chevronDown({
+                  'aria-hidden': true,
+                  class: 'w-5 h-5 fill-current transition',
+                  ':class': "{ 'rotate-180': nav }"
+                })
+              </button>
+              <nav aria-label="navigation d'exploration" :aria-hidden="!nav" id="explorer-nav" x-show="nav" class="ml-6 text-slate-500">
+                <ul class="mt-4 flex flex-col space-y-2">
+                  @each(item in routesExplorer)
+                    <li>
+                      <a href="{{ route(item.name) }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route(item.name)) ? 'text-slate-900' : '' }}">
+                        {{ item.title }}
+                      </a>
+                    </li>
+                  @end
+                </ul>
+              </nav>
+            </div>
+            <div class="mt-8 grow flex flex-col justify-end">
+              <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST" class="flex justify-center items-center">
+                {{ csrfField() }}
+                <button type="submit" class="text-slate-500 text-sm">
+                  Se déconnecter
+                </button>
+              </form>
+            </div>
+          @end
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <div x-data="{ open: false }">
+    <button
+      class="w-8 h-8 focus-within:outline-none focus:rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
+      x-on:click="open = true"
+    >
+      @!logos.insameeapp({
+        class: 'w-8 h-8',
+        'aria-label': 'Logo de d\'InsameeApp'
+      })
+    </button>
+
+    <template x-teleport="body">
+      <div
+        x-show="open"
+        x-on:keydown.window.escape.prevent.stop="open = false"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+        class="fixed inset-0 overflow-y-auto"
+      >
+        <div
+          x-show="open"
+          x-on:click="open = false"
+          x-transition.opacity
+          class="absolute inset-0 bg-white/20 backdrop-blur-sm">
+        </div>
+
+        <nav
+        x-show="open"
+        x-transition.origin.right.top
+        x-on:click.stop
+        x-trap.noscroll.inert="open"
+        aria-label="navigation entre les plateformes"
+        class="absolute top-4 right-4 flex flex-col bg-white shadow-lg rounded-lg p-6 font-bold text-lg"
+        >
+          <button x-on:click="open = false">
+            @!icons.x({
+              class: 'w-6 h-6 fill-current text-slate-500 absolute top-2 right-2',
+            })
+          </button>
+          <ul class="flex flex-col space-y-6">
+            @each(item in routesTeam)
+              <li>
+                <a href="{{ route(item.name) }}" class="flex flex-row items-center space-x-1 {{item.color}}">
+                  <div class="w-7">
+                    <img src="{{ asset(`assets/images/${item.asset}`) }}" alt="Logo de la plateforme {{ item.title }}" width="500" height="500" loading="lazy" class="h-6 w-auto">
+                  </div>
+                  <span>{{ item.title }}</span>
+                </a>
+              </li>
+            @end
+          </ul>
+        </nav>
+      </div>
+    </template>
+  </div>
+</header>
+
+
