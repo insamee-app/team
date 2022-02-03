@@ -53,29 +53,31 @@
     </div>
   @end
 
-  <section class="flex flex-col mt-8">
-    <h2 class="font-bold text-xl">
-      Associsations de l'école
-    </h2>
+  @if(associations.length > 0)
+    <section class="flex flex-col mt-8">
+      <h2 class="font-bold text-xl">
+        Associations de l'école
+      </h2>
 
-    <div class="mt-8">
-      @shared.list({
-        items: associations
-      })
-        @slot('main', association)
-          <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
-            @!associations.card({
-              association,
-            })
-          </a>
+      <div class="mt-8">
+        @shared.list({
+          items: associations
+        })
+          @slot('main', association)
+            <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+              @!associations.card({
+                association,
+              })
+            </a>
+          @end
         @end
-      @end
-    </div>
+      </div>
 
-    @!shared.pagination({
-      data: associations,
-      variant: 'associations',
-      classes: 'mt-8',
-    })
-  </section>
+      @!shared.pagination({
+        data: associations,
+        variant: 'associations',
+        classes: 'mt-8',
+      })
+    </section>
+  @end
 @end
