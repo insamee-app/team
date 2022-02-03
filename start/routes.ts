@@ -20,10 +20,8 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async ({ view, auth }) => {
-  const profile = await auth.user?.related('profile').query().firstOrFail()
-
-  return view.render('pages/home', { profile })
+Route.get('/', async ({ view }) => {
+  return view.render('pages/home')
 }).as('home')
 
 import './routes/auth'

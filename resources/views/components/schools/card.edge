@@ -1,0 +1,23 @@
+@elements.card({
+  variant: 'mee',
+  classes: 'hover:shadow-lg cursor-pointer space-y-4'
+})
+  <header class="flex flex-col space-y-4">
+    @if(school.banner)
+      <img src="{{ school.banner.url }}" class="w-full h-auto rounded-lg" alt="Bannière de {{ schhol.name }}" loading="lazy" width="500" height="128"/>
+    @else
+      <div aria-hidden="true" class="rounded-lg bg-slate-500 w-full h-32"></div>
+    @end
+    <h3 class="font-bold text-xl">
+      {{ school.name }}
+    </h3>
+  </header>
+
+  @if(school.overview)
+    <p class="text-justify">{{ excerpt(school.overview, 150) }}</p>
+  @end
+  <ul class="flex flex-row gap-2 flex-wrap">
+      <li class="text-sm text-slate-500 bg-slate-200 rounded-full px-2 py-1">{{ school.$extras.associations_count }} associations</li>
+      <li class="text-sm text-slate-500 bg-slate-200 rounded-full px-2 py-1">{{ school.$extras.profiles_count }} profils</li>
+  </ul>
+@end

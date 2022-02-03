@@ -3,10 +3,19 @@ import School from 'App/Models/School'
 import SchoolValidator from 'App/Validators/SchoolValidator'
 
 export default class SchoolsController {
-  public async index({ view, bouncer }: HttpContextContract) {
+  private PER_PAGE = 10
+
+  public async index({ view, bouncer, request }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('viewList')
 
-    const schools = await School.all()
+    const page = request.input('page', 1)
+
+    const schools = await School.query()
+      .withCount('associations')
+      .withCount('profiles')
+      .paginate(page, this.PER_PAGE)
+
+    schools.baseUrl(request.url())
 
     return view.render('pages/schools/index', { schools })
   }
