@@ -37,12 +37,22 @@ export default class SchoolsController {
     response.redirect().toRoute('SchoolsController.show', { id: school.id })
   }
 
-  public async show({ params, view, bouncer }: HttpContextContract) {
+  public async show({ request, params, view, bouncer }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('view')
 
-    const school = await School.findOrFail(params.id)
+    const page = request.input('page', 1)
 
-    return view.render('pages/schools/show', { school })
+    const school = await School.findOrFail(params.id)
+    const associations = await school
+      .related('associations')
+      .query()
+      .preload('thematic', (thematic) => thematic.select('name'))
+      .preload('school', (school) => school.select('name'))
+      .paginate(page, this.PER_PAGE)
+
+    associations.baseUrl(request.url())
+
+    return view.render('pages/schools/show', { school, associations })
   }
 
   public async edit({ params, view, bouncer }: HttpContextContract) {

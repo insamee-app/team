@@ -32,7 +32,8 @@
         data.currentPage - visiblePage + (data.lastPage - data.currentPage > visiblePage / 2 ? visiblePage / 2 : data.lastPage - data.currentPage) :
         1
       )
-      @each(anchor in data.getUrlsForRange(fromPage, fromPage === 1 ? visiblePage + 1 : toPage))
+      @set('max', data.lastPage > visiblePage ? visiblePage + 1 : data.lastPage)
+      @each(anchor in data.getUrlsForRange(fromPage, fromPage === 1 ? max : toPage))
         <li>
           <a href="{{ anchor.url }}" class="px-2 py-[2px] {{ anchor.isActive ? 'rounded ' + pageColor : '' }}">
             {{ anchor.page }}
