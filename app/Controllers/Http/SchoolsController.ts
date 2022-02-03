@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import School from 'App/Models/School'
-import SchoolValidator from 'App/Validators/SchoolValidator'
+import SchoolStoreValidator from 'App/Validators/SchoolStoreValidator'
 
 export default class SchoolsController {
   private PER_PAGE = 10
@@ -29,7 +29,7 @@ export default class SchoolsController {
   public async store({ response, request, bouncer }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('create')
 
-    const payload = await request.validate(SchoolValidator)
+    const payload = await request.validate(SchoolStoreValidator)
 
     const school = await School.create(payload)
 
@@ -55,7 +55,7 @@ export default class SchoolsController {
   public async update({ params, request, response, bouncer }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('update')
 
-    const payload = await request.validate(SchoolValidator)
+    // const payload = await request.validate(Validator)
 
     const school = await School.findOrFail(params.id)
 
