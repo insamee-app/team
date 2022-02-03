@@ -1,12 +1,22 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import School from 'App/Models/School'
-import SchoolValidator from 'App/Validators/SchoolValidator'
+import SchoolStoreValidator from 'App/Validators/SchoolStoreValidator'
+import SchoolUpdateValidator from 'App/Validators/SchoolUpdateValidator'
 
 export default class SchoolsController {
-  public async index({ view, bouncer }: HttpContextContract) {
+  private PER_PAGE = 10
+
+  public async index({ view, bouncer, request }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('viewList')
 
-    const schools = await School.all()
+    const page = request.input('page', 1)
+
+    const schools = await School.query()
+      .withCount('associations')
+      .withCount('profiles')
+      .paginate(page, this.PER_PAGE)
+
+    schools.baseUrl(request.url())
 
     return view.render('pages/schools/index', { schools })
   }
@@ -20,19 +30,29 @@ export default class SchoolsController {
   public async store({ response, request, bouncer }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('create')
 
-    const payload = await request.validate(SchoolValidator)
+    const payload = await request.validate(SchoolStoreValidator)
 
     const school = await School.create(payload)
 
     response.redirect().toRoute('SchoolsController.show', { id: school.id })
   }
 
-  public async show({ params, view, bouncer }: HttpContextContract) {
+  public async show({ request, params, view, bouncer }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('view')
 
-    const school = await School.findOrFail(params.id)
+    const page = request.input('page', 1)
 
-    return view.render('pages/schools/show', { school })
+    const school = await School.findOrFail(params.id)
+    const associations = await school
+      .related('associations')
+      .query()
+      .preload('thematic', (thematic) => thematic.select('name'))
+      .preload('school', (school) => school.select('name'))
+      .paginate(page, this.PER_PAGE)
+
+    associations.baseUrl(request.url())
+
+    return view.render('pages/schools/show', { school, associations })
   }
 
   public async edit({ params, view, bouncer }: HttpContextContract) {
@@ -46,7 +66,7 @@ export default class SchoolsController {
   public async update({ params, request, response, bouncer }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('update')
 
-    const payload = await request.validate(SchoolValidator)
+    const payload = await request.validate(SchoolUpdateValidator)
 
     const school = await School.findOrFail(params.id)
 

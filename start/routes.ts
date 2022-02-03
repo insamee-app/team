@@ -20,14 +20,13 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async ({ view, auth }) => {
-  const profile = await auth.user?.related('profile').query().firstOrFail()
-
-  return view.render('pages/home', { profile })
+Route.get('/', async ({ view }) => {
+  return view.render('pages/home')
 }).as('home')
 
 import './routes/auth'
 import './routes/user'
+import './routes/school'
 
 // Temporary
 Route.get('tutorats', ({ response }) => {
@@ -39,7 +38,6 @@ Route.get('events', ({ response }) => {
 }).as('EventsController.index')
 
 Route.group(() => {
-  Route.resource('schools', 'SchoolsController')
   Route.resource('skills', 'SkillsController')
   Route.resource('focus-interests', 'FocusInterestsController')
   Route.resource('thematics', 'ThematicsController')

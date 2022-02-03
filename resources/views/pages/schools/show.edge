@@ -1,21 +1,81 @@
-  @layout('layouts/app')
+@layout('layouts/app')
 @set('title', school.name)
 
 @section('content')
-  <article>
-    <h1>{{ school.name }}</h1>
-    <p>Domaine : {{ school.host }}</p>
+  <h2 class="text-slate-500 text-lg font-semibold">
+    <a href="{{ route('SchoolsController.index') }}">
+      Ecoles | {{ school.city }}
+    </a>
+  </h2>
 
-    <footer>
-      @can('SchoolPolicy.update')
-        <a href="{{ route('SchoolsController.edit', { id: school.id }) }}">Modifier</a>
+  @if(school.banner)
+    <img src="{{ school.banner.url }}" class="w-full h-auto rounded-lg mt-2" alt="Bannière de {{ school.name }}" loading="lazy" width="500" height="128"/>
+  @else
+    <div aria-hidden="true" class="rounded-lg bg-slate-500 w-full h-32 mt-2"></div>
+  @end
+
+   @can('SchoolPolicy.delete')
+    <div class="flex flex-row justify-center items-center mt-2">
+      <a href="{{ route('SchoolsBannersController.edit', { id: school.id }) }}" class="flex flex-row items-center space-x-1 text-slate-500">
+        <span>
+          Modifier la bannière
+          </span>
+          @!icons.photograph({
+            'aria-hidden': true,
+            class: 'w-4 h-4 mt-1 fill-current',
+          })
+        </a>
+      </div>
+    @end
+
+  <div class="flex flex-row justify-between items-center mt-2">
+    <h1 class="text-2xl font-bold">{{ school.name }}</h1>
+    @can('SchoolPolicy.udpate')
+      <a href="{{ route('SchoolsController.edit', { id: school.id}) }}" class="px-2 py-1 text-white bg-slate-500 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Modifier</a>
+    @end
+  </div>
+
+  @if(school.overview)
+    <h2 class="text-xl font-bold mt-8">
+      Présentation
+    </h2>
+
+    <p class="mt-4 text-justify">
+      {{ school.overview }}
+    </p>
+  @end
+
+  @if(school.website)
+    <div class="mt-8">
+      <a href="{{ school.website }}" rel="noopener noreferrer" target="_blank" class="shadow-sm rounded text-slate-500 border border-slate-500 py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+        En savoir plus
+      </a>
+    </div>
+  @end
+
+  <section class="flex flex-col mt-8">
+    <h2 class="font-bold text-xl">
+      Associsations de l'école
+    </h2>
+
+    <div class="mt-8">
+      @shared.list({
+        items: associations
+      })
+        @slot('main', association)
+          <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+            @!associations.card({
+              association,
+            })
+          </a>
+        @end
       @end
-      @can('SchoolPolicy.delete')
-        <form action="{{ route('SchoolsController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
-          {{ csrfField() }}
-          <button type="submit">Supprimer</button>
-        </form>
-      @end
-    </footer>
-  </article>
+    </div>
+
+    @!shared.pagination({
+      data: associations,
+      variant: 'associations',
+      classes: 'mt-8',
+    })
+  </section>
 @end

@@ -2,11 +2,34 @@
 @set('title', 'Les écoles')
 
 @section('content')
-  <ul>
-    @each(school in schools)
-    <li>
-      <a href="{{ route('SchoolsController.show', { id: school.id }) }}">{{ school.name }}</a>
-    </li>
-    @endeach
-  </ul>
+  <h2 class="text-slate-500 text-lg font-semibold">
+    <a href="{{ route('SchoolsController.index') }}">
+      Ecoles
+    </a>
+  </h2>
+
+  <div class="flex flex-row justify-between items-center mt-2">
+    <h1 class="text-slate-900 text-2xl font-bold">Liste des écoles</h1>
+    @can('SchoolPolicy.create')
+      <a href="{{ route('SchoolsController.create') }}" class="px-2 py-1 text-white bg-slate-500 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Ajouter</a>
+    @end
+  </div>
+  <div class="mt-4">
+    @shared.list({
+      items: schools
+    })
+      @slot('main', school)
+        <a href="{{ route('SchoolsController.show', { id: school.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+          @!schools.card({
+            school,
+          })
+        </a>
+      @end
+    @end
+  </div>
+
+@!shared.pagination({
+  data: schools,
+  classes: 'mt-8',
+})
 @end

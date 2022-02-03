@@ -13,7 +13,10 @@ import Tag from 'App/Models/Tag'
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
     name: faker.company.companyName(),
-    host: faker.internet.domainName(),
+    hostname: faker.internet.domainName(),
+    city: faker.address.city(),
+    website: faker.internet.url(),
+    overview: faker.lorem.paragraph(),
   }
 })
   .relation('profiles', () => ProfileFactory)

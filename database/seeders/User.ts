@@ -3,8 +3,6 @@ import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import School from 'App/Models/School'
 import User from 'App/Models/User'
-import { UserFactory } from 'Database/factories'
-
 export default class UserSeeder extends BaseSeeder {
   public static developmentOnly = true
 
@@ -17,7 +15,9 @@ export default class UserSeeder extends BaseSeeder {
     })
     const school = await School.create({
       name: 'Team',
-      host: 'team.fr',
+      hostname: 'team.fr',
+      city: 'Paris',
+      website: 'https://team.fr',
     })
     await user.related('profile').create({
       firstName: 'Admin',
