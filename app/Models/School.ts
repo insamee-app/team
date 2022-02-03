@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Profile from './Profile'
 import Association from './Association'
-import { AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
+import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 
 export default class School extends BaseModel {
   @column({ isPrimary: true })
@@ -23,7 +23,7 @@ export default class School extends BaseModel {
   @column()
   public overview?: string
 
-  @column()
+  @attachment({ folder: 'banners', preComputeUrl: true })
   public banner?: AttachmentContract | null
 
   @column.dateTime({ autoCreate: true })

@@ -26,6 +26,7 @@ Route.get('/', async ({ view }) => {
 
 import './routes/auth'
 import './routes/user'
+import './routes/school'
 
 // Temporary
 Route.get('tutorats', ({ response }) => {
@@ -37,7 +38,6 @@ Route.get('events', ({ response }) => {
 }).as('EventsController.index')
 
 Route.group(() => {
-  Route.resource('schools', 'SchoolsController')
   Route.resource('skills', 'SkillsController')
   Route.resource('focus-interests', 'FocusInterestsController')
   Route.resource('thematics', 'ThematicsController')

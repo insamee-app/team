@@ -9,14 +9,14 @@
   </h2>
 
   @if(school.banner)
-    <img src="{{ school.banner.url }}" class="w-full h-auto rounded-lg mt-2" alt="Bannière de {{ schhol.name }}" loading="lazy" width="500" height="128"/>
+    <img src="{{ school.banner.url }}" class="w-full h-auto rounded-lg mt-2" alt="Bannière de {{ school.name }}" loading="lazy" width="500" height="128"/>
   @else
     <div aria-hidden="true" class="rounded-lg bg-slate-500 w-full h-32 mt-2"></div>
   @end
 
    @can('SchoolPolicy.delete')
     <div class="flex flex-row justify-center items-center mt-2">
-      <a href="" class="flex flex-row items-center space-x-1 text-slate-500">
+      <a href="{{ route('SchoolsBannersController.edit', { id: school.id }) }}" class="flex flex-row items-center space-x-1 text-slate-500">
         <span>
           Modifier la bannière
           </span>

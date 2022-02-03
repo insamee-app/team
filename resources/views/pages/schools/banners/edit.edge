@@ -1,0 +1,51 @@
+@layout('layouts/app')
+@set('title', 'Modifier la bannière de ' + school.name)
+
+@section('content')
+  <h2 class="text-lg text-slate-500 font-semibold">
+    <a href="{{ route('SchoolsController.show', { id: school.id }) }}">
+      Ecoles
+    </a>
+  </h2>
+
+  <div class="flex flex-row justify-between items-center mt-2">
+    <h1 class="text-2xl text-slate-900 font-bold">Modifier la bannière</h1>
+  </div>
+
+  <section class="flex flex-col space-y-4 mt-8">
+    <h3 class="text-xl font-bold">Bannière actuelle</h3>
+
+    <div class="flex flex-col items-center space-y-2">
+      @if(school.banner)
+        <img src="{{ school.banner.url }}" class="w-full h-auto rounded-lg mt-2" alt="Bannière de {{ school.name }}" loading="lazy" width="500" height="128"/>
+      @else
+        <div aria-hidden="true" class="rounded-lg bg-slate-500 w-full h-32 mt-2"></div>
+      @end
+
+      <form action="{{ route('SchoolsBannersController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
+        {{ csrfField() }}
+
+        <button type="submit" class="text-sm text-slate-500">Supprimer la bannière</button>
+      </form>
+    </div>
+  </section>
+
+  <form action="{{ route('SchoolsBannersController.update', { id: school.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
+    {{ csrfField() }}
+
+    <h3 class="text-xl font-bold">Nouvelle bannière</h3>
+
+    <div class="mt-4">
+      @form.group({ name: 'banner', class: "flex flex-row items-center space-x-2" })
+        @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-slate-200 file:text-slate-500 hover:file:bg-slate-300 hover:file:text-slate-600 text-grey-500 text-sm file:cursor-pointer" })
+        @!form.label({ title: 'Changer la bannière', class: "sr-only" })
+      @end
+    </div>
+
+    <div class="flex flex-col items-end mt-4">
+      @elements.button({ type: 'submit', classes: "bg-slate-500 text-white shadow-sm focus:!ring-slate-500" })
+        Enregistrer
+      @end
+    </div>
+  </form>
+@end
