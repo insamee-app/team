@@ -17,7 +17,25 @@
     <p class="text-justify">{{ excerpt(school.overview, 150) }}</p>
   @end
   <ul class="flex flex-row gap-2 flex-wrap">
-      <li class="text-sm text-slate-500 bg-slate-200 rounded-full px-2 py-1">{{ school.$extras.associations_count }} associations</li>
-      <li class="text-sm text-slate-500 bg-slate-200 rounded-full px-2 py-1">{{ school.$extras.profiles_count }} profils</li>
+      <li class="text-sm text-slate-500 bg-slate-200 rounded-full px-2 py-1">
+        <span class="font-bold">
+          {{ school.$extras.associations_count }}
+        </span>
+        @if(school.$extras.associations_count <= 1)
+          association
+        @else
+          associations
+        @end
+      </li>
+      <li class="text-sm text-slate-500 bg-slate-200 rounded-full px-2 py-1">
+        <span class="font-bold">
+          {{ school.$extras.profiles_count }}
+        </span>
+        @if(school.$extras.profiles_count <= 1)
+          profil
+        @else
+          profils
+        @end
+      </li>
   </ul>
 @end
