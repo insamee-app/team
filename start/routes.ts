@@ -43,6 +43,8 @@ Route.group(() => {
   Route.resource('thematics', 'ThematicsController')
   Route.resource('tags', 'TagsController')
 
+  Route.resource('reasons', 'ReasonsController')
+
   Route.resource('associations', 'AssociationsController')
   Route.get('associations/:id/pictures/edit', 'AssociationsPicturesController.edit')
   Route.put('associations/:id/pictures', 'AssociationsPicturesController.update')

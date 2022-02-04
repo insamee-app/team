@@ -9,6 +9,7 @@ import School from 'App/Models/School'
 import Skill from 'App/Models/Skill'
 import User from 'App/Models/User'
 import Tag from 'App/Models/Tag'
+import Reason from 'App/Models/Reason'
 
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
@@ -42,6 +43,12 @@ export const ThematicFactory = Factory.define(Thematic, ({ faker }) => {
 }).build()
 
 export const TagFactory = Factory.define(Tag, ({ faker }) => {
+  return {
+    name: faker.lorem.words(),
+  }
+}).build()
+
+export const ReasonFactory = Factory.define(Reason, ({ faker }) => {
   return {
     name: faker.lorem.words(),
   }
