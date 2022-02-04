@@ -1,5 +1,5 @@
 export enum ReportEntity {
-  User,
+  Profile,
   Association,
   School,
 }

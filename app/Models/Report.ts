@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Reason from './Reason'
 import User from './User'
 import Association from './Association'
@@ -12,19 +12,25 @@ export default class Report extends BaseModel {
   public id: string
 
   @column()
-  public reporter_id: string
+  public number: string
 
   @column()
-  public reason_id: string
+  public reporterId: string
+
+  @column()
+  public reasonId: string
 
   @column()
   public description: string
 
   @column()
-  public entity_id: string
+  public entityId: string
 
   @column()
-  public entity_type: ReportEntity
+  public entityType: ReportEntity
+
+  @column()
+  public isResolved: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -32,33 +38,33 @@ export default class Report extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => User, {
-    localKey: 'reporter_id',
-    foreignKey: 'id',
+  @belongsTo(() => User, {
+    localKey: 'id',
+    foreignKey: 'reporterId',
   })
-  public reporter: HasOne<typeof User>
+  public reporter: BelongsTo<typeof User>
 
-  @hasOne(() => Reason, {
-    localKey: 'reason_id',
-    foreignKey: 'id',
+  @belongsTo(() => Reason, {
+    localKey: 'id',
+    foreignKey: 'reasonId',
   })
-  public reason: HasOne<typeof Reason>
+  public reason: BelongsTo<typeof Reason>
 
-  @hasOne(() => Profile, {
-    localKey: 'entity_id',
-    foreignKey: 'id',
+  @belongsTo(() => Profile, {
+    localKey: 'id',
+    foreignKey: 'entityId',
   })
-  public profile: HasOne<typeof Profile>
+  public profile: BelongsTo<typeof Profile>
 
-  @hasOne(() => Association, {
-    localKey: 'entity_id',
-    foreignKey: 'id',
+  @belongsTo(() => Association, {
+    localKey: 'id',
+    foreignKey: 'entityId',
   })
-  public association: HasOne<typeof Association>
+  public association: BelongsTo<typeof Association>
 
-  @hasOne(() => School, {
-    localKey: 'entity_id',
-    foreignKey: 'id',
+  @belongsTo(() => School, {
+    localKey: 'id',
+    foreignKey: 'entityId',
   })
-  public school: HasOne<typeof School>
+  public school: BelongsTo<typeof School>
 }

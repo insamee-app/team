@@ -17,7 +17,7 @@ export default class Reason extends BaseModel {
 
   @hasMany(() => Report, {
     localKey: 'id',
-    foreignKey: 'reason_id',
+    foreignKey: 'reasonId',
   })
   public reports: HasMany<typeof Report>
 }

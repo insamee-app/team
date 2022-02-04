@@ -79,7 +79,7 @@ export default class Association extends BaseModel {
 
   @hasMany(() => Report, {
     localKey: 'id',
-    foreignKey: 'entity_id',
+    foreignKey: 'entityId',
   })
   public reports: HasMany<typeof Report>
 }

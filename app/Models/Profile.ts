@@ -86,7 +86,7 @@ export default class Profile extends BaseModel {
 
   @hasMany(() => Report, {
     localKey: 'id',
-    foreignKey: 'entity_id',
+    foreignKey: 'entityId',
   })
   public reports: HasMany<typeof Report>
 }
