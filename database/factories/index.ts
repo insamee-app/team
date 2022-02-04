@@ -10,6 +10,8 @@ import Skill from 'App/Models/Skill'
 import User from 'App/Models/User'
 import Tag from 'App/Models/Tag'
 import Reason from 'App/Models/Reason'
+import Report from 'App/Models/Report'
+import { ReportEntity } from 'App/Enums/ReportEntity'
 
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
@@ -91,4 +93,21 @@ export const UserFactory = Factory.define(User, ({ faker }) => {
   .state('admin', (user) => (user.role = UserRole.Admin))
   .state('active', (user) => (user.status = UserStatus.Active))
   .relation('profile', () => ProfileFactory)
+  .build()
+
+export const ReportFactory = Factory.define(Report, ({ faker }) => {
+  return {
+    description: faker.lorem.paragraph(),
+    is_resolved: false,
+  }
+})
+  .relation('reporter', () => UserFactory)
+  .relation('reason', () => ReasonFactory)
+  .relation('profile', () => ProfileFactory)
+  .relation('association', () => AssociationFactory)
+  .relation('school', () => SchoolFactory)
+  .state('resolved', (report) => (report.isResolved = true))
+  .state('profile', (report) => (report.entityType = ReportEntity.Profile))
+  .state('association', (report) => (report.entityType = ReportEntity.Association))
+  .state('school', (report) => (report.entityType = ReportEntity.School))
   .build()
