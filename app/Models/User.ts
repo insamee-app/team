@@ -1,9 +1,18 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import {
+  column,
+  beforeSave,
+  BaseModel,
+  hasOne,
+  HasOne,
+  hasMany,
+  HasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Profile from './Profile'
 import { UserRole } from 'App/Enums/UserRole'
+import Report from './Report'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -35,6 +44,12 @@ export default class User extends BaseModel {
     localKey: 'id',
   })
   public profile: HasOne<typeof Profile>
+
+  @hasMany(() => Report, {
+    foreignKey: 'reporter_id',
+    localKey: 'id',
+  })
+  public reports: HasMany<typeof Report>
 
   @beforeSave()
   public static async hashPassword(user: User) {

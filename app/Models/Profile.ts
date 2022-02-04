@@ -4,6 +4,8 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  HasMany,
+  hasMany,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
@@ -13,6 +15,7 @@ import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLit
 import Skill from './Skill'
 import FocusInterest from './FocusInterest'
 import Association from './Association'
+import Report from './Report'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -80,4 +83,10 @@ export default class Profile extends BaseModel {
     relatedKey: 'id',
   })
   public associations: ManyToMany<typeof Association>
+
+  @hasMany(() => Report, {
+    localKey: 'id',
+    foreignKey: 'entity_id',
+  })
+  public reports: HasMany<typeof Report>
 }

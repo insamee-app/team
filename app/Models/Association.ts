@@ -4,6 +4,8 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  hasMany,
+  HasMany,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
@@ -12,6 +14,7 @@ import School from './School'
 import Thematic from './Thematic'
 import Tag from './Tag'
 import Profile from './Profile'
+import Report from './Report'
 
 export default class Association extends BaseModel {
   @column({ isPrimary: true })
@@ -73,4 +76,10 @@ export default class Association extends BaseModel {
     relatedKey: 'id',
   })
   public profiles: ManyToMany<typeof Profile>
+
+  @hasMany(() => Report, {
+    localKey: 'id',
+    foreignKey: 'entity_id',
+  })
+  public reports: HasMany<typeof Report>
 }
