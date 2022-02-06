@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { ReportEntity } from 'App/Enums/ReportEntity'
 import Report from 'App/Models/Report'
+import { DateTime } from 'luxon'
 
 export default class ReportsController {
   private PER_PAGE = 10
@@ -11,8 +12,8 @@ export default class ReportsController {
     const page = request.input('page', 1)
 
     const reports = await Report.query()
-      .select('number', 'id', 'isResolved')
-      .where('isResolved', false)
+      .select('number', 'id', 'resolvedAt')
+      .whereNull('resolvedAt')
       .orderBy('number', 'desc')
       .paginate(page, this.PER_PAGE)
 
@@ -62,14 +63,12 @@ export default class ReportsController {
     return view.render('pages/reports/show', { report })
   }
 
-  public async update({ bouncer, request, response, params }: HttpContextContract) {
+  public async update({ bouncer, response, params }: HttpContextContract) {
     await bouncer.with('ReportPolicy').authorize('update')
-
-    const isResolved = request.input('isResolved')
 
     const report = await Report.query().where('id', params.id).firstOrFail()
 
-    report.isResolved = isResolved
+    report.resolvedAt = DateTime.local()
 
     await report.save()
 

@@ -5,6 +5,8 @@ export default class Reports extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
+      table.unique(['resolved_at', 'reporter_id', 'entity_id'])
+
       table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
       table.bigIncrements('number', { primaryKey: false }).notNullable().unique()
       table.uuid('reporter_id').notNullable().references('id').inTable('users')
@@ -14,7 +16,7 @@ export default class Reports extends BaseSchema {
       table.uuid('entity_id').notNullable()
       table.integer('entity_type').unsigned().notNullable()
 
-      table.boolean('is_resolved').notNullable().defaultTo(false)
+      table.timestamp('resolved_at', { useTz: true }).nullable()
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

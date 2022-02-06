@@ -8,7 +8,7 @@
     </a>
   </h2>
 
-  <h1 class="text-2xl font-bold mt-2">Numéro {{ report.number }} - {{ report.isResolved ? 'Résolu' : 'Non résolu' }}</h1>
+  <h1 class="text-2xl font-bold mt-2">Numéro {{ report.number }} - {{ report.resolvedAt ? 'Résolu' : 'Non résolu' }}</h1>
 
   <div>
     <span>
@@ -59,7 +59,7 @@
       </div>
     @end
 
-    <div class="mt-8 flex flex-row {{ report.isResolved ? 'justify-start' : 'justify-between' }}">
+    <div class="mt-8 flex flex-row {{ report.resolvedAt ? 'justify-start' : 'justify-between' }}">
       @if(report.profile)
         <a href="{{ route('ProfilesController.show', { id: report.profile.id }) }}" class="px-2 py-1 text-white bg-mee-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
           Voir le profil
@@ -73,10 +73,9 @@
           Voir l'école
         </a>
       @end
-      @unless(report.isResolved)
+      @unless(report.resolvedAt)
         <form action="{{ route('ReportsController.update', { id: report.id }) }}?_method=PUT" method="POST">
           {{ csrfField() }}
-          <input type="checkbox" checked hidden name="isResolved" class="hidden" />
           <button type="submit" class="px-2 py-1 text-white bg-slate-500 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Résoudre</button>
         </form>
       @end

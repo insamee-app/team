@@ -29,8 +29,8 @@ export default class Report extends BaseModel {
   @column()
   public entityType: ReportEntity
 
-  @column()
-  public isResolved: boolean
+  @column.dateTime({ autoCreate: false })
+  public resolvedAt: DateTime | null
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
