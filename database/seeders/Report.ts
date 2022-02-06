@@ -6,16 +6,18 @@ export default class ReportSeeder extends BaseSeeder {
 
   public async run() {
     // With profiles
-    await ReportFactory.with('reason', 1)
-      .with('reporter', 1, (user) =>
-        user.with('profile', 1, (profile) => profile.with('school', 1))
-      )
+    await ReportFactory.with('reporter', 1, (user) =>
+      user.with('profile', 1, (profile) => profile.with('school', 1))
+    )
+      .with('reason', 1)
       .with('profile', 1, (profile) => profile.with('user', 1).with('school', 1))
       .apply('profile')
-      .createMany(1)
+      .createMany(6)
 
     // Without associations
-    await ReportFactory.with('reporter', 1)
+    await ReportFactory.with('reporter', 1, (user) =>
+      user.with('profile', 1, (profile) => profile.with('school', 1))
+    )
       .with('reason', 1)
       .with('association', 1, (association) =>
         association.with('thematic', 1).with('tags', 5).with('school', 1)
@@ -24,7 +26,9 @@ export default class ReportSeeder extends BaseSeeder {
       .createMany(6)
 
     // Without schools
-    await ReportFactory.with('reporter', 1)
+    await ReportFactory.with('reporter', 1, (user) =>
+      user.with('profile', 1, (profile) => profile.with('school', 1))
+    )
       .with('reason', 1)
       .with('school', 1)
       .apply('school')
