@@ -76,7 +76,7 @@
       @unless(report.isResolved)
         <form action="{{ route('ReportsController.update', { id: report.id }) }}?_method=PUT" method="POST">
           {{ csrfField() }}
-          <input type="number" hidden value="true" />
+          <input type="checkbox" checked hidden name="isResolved" class="hidden" />
           <button type="submit" class="px-2 py-1 text-white bg-slate-500 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Résoudre</button>
         </form>
       @end

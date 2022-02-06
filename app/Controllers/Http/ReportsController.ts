@@ -20,10 +20,6 @@ export default class ReportsController {
     return view.render('pages/reports/index', { reports })
   }
 
-  public async create({}: HttpContextContract) {}
-
-  public async store({}: HttpContextContract) {}
-
   public async show({ bouncer, view, params }: HttpContextContract) {
     await bouncer.with('ReportPolicy').authorize('create')
 
@@ -65,9 +61,17 @@ export default class ReportsController {
     return view.render('pages/reports/show', { report })
   }
 
-  public async edit({}: HttpContextContract) {}
+  public async update({ bouncer, request, response, params }: HttpContextContract) {
+    await bouncer.with('ReportPolicy').authorize('update')
 
-  public async update({}: HttpContextContract) {}
+    const isResolved = request.input('isResolved')
 
-  public async destroy({}: HttpContextContract) {}
+    const report = await Report.query().where('id', params.id).firstOrFail()
+
+    report.isResolved = isResolved
+
+    await report.save()
+
+    return response.redirect().toRoute('ReportsController.show', { id: params.id })
+  }
 }
