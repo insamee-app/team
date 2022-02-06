@@ -12,6 +12,7 @@ export default class ReportsController {
 
     const reports = await Report.query()
       .select('number', 'id', 'isResolved')
+      .where('isResolved', false)
       .orderBy('number', 'desc')
       .paginate(page, this.PER_PAGE)
 
