@@ -20,7 +20,7 @@
       items: skills
     })
       @slot('main', skill)
-        <a href="{{ route('SkillsController.show', { id: skill.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+        <a href="{{ route('SkillsController.show', { id: skill.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base transition hover:shadow-lg">
           @elements.card({
             classes: 'border-mee-primary-grey-light'
           })
