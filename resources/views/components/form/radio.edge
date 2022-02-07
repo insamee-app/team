@@ -6,12 +6,10 @@
   @set('classes', 'bg-mee-primary-base')
 @endif
 
-{{ inspect(value) }}
-
 <div class="flex flex-col space-y-1">
   @each(item in data)
     <div class="flex flex-row items-center space-x-2">
-      <input type="radio" id="{{ item.id }}" name="{{ $context.name }}" value="{{ item.id }}" checked="{{ value }}" class="{{ classes }}">
+      <input type="radio" id="{{ item.id }}" name="{{ $context.name }}" value="{{ item.id }}" {{ value === item.id ? 'checked':  ''}} class="{{ classes }}">
       <label for="{{ item.id }}">{{ item.name }}</label>
     </div>
   @end
