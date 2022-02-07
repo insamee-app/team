@@ -28,8 +28,4 @@ export default class ReportPolicy extends BasePolicy {
   public async delete() {
     return false
   }
-
-  public async deleteList() {
-    return false
-  }
 }
