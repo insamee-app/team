@@ -4,6 +4,7 @@ import Skill from 'App/Models/Skill'
 import ProfileValidator from 'App/Validators/ProfileValidator'
 import FocusInterest from 'App/Models/FocusInterest'
 import Association from 'App/Models/Association'
+import Report from 'App/Models/Report'
 
 export default class ProfilesController {
   private PER_PAGE = 10
@@ -22,7 +23,7 @@ export default class ProfilesController {
     return view.render('pages/mee/index', { profiles })
   }
 
-  public async show({ params, view, bouncer }: HttpContextContract) {
+  public async show({ params, view, bouncer, auth }: HttpContextContract) {
     await bouncer.with('ProfilePolicy').authorize('view')
 
     const profile = await Profile.query()
@@ -33,8 +34,13 @@ export default class ProfilesController {
       .preload('associations')
       .preload('user')
       .firstOrFail()
+    const report = await Report.query()
+      .where('reporterId', auth.user!.id)
+      .where('entityId', params.id)
+      .whereNull('resolvedAt')
+      .first()
 
-    return view.render('pages/mee/show', { profile })
+    return view.render('pages/mee/show', { profile, report })
   }
 
   public async edit({ params, view, bouncer }: HttpContextContract) {

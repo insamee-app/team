@@ -7,6 +7,6 @@ Route.group(() => {
   Route.put('mee/:id/avatars', 'ProfilesAvatarsController.update')
   Route.delete('mee/:id/avatars', 'ProfilesAvatarsController.destroy')
 
-  Route.get('mee/:id/reports/create', 'ReportsProfilesController.createReport')
-  Route.post('mee/:id/reports', 'ReportsController.store')
+  Route.get('mee/:id/reports/create', 'ReportsProfilesController.create')
+  Route.post('mee/:id/reports', 'ReportsProfilesController.store')
 }).middleware('auth')
