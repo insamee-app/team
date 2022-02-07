@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="FR-fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico"  type="image/ico">
+
+  @include('partials/head')
+
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+<body>
+  @include('partials/header')
+
+  <div class="h-screen pt-20">
+    <div class="flex flex-row justify-center">
+      <a href="{{ route('home') }}" title="Redirection vers la page d'accueil">
+        <img src="{{ asset('assets/images/logo_team.png') }}" alt="logo de la plateforme" width="128" height="128" loading="lazy" class="w-32 h-32">
+      </a>
+    </div>
+
+    <main class="mt-8 px-4 flex flex-col">
+      @!section('content')
+    </main>
+  </div>
+
+  @include('partials/footer')
+</body>
+</html>
