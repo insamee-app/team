@@ -8,6 +8,8 @@ export default class Reasons extends BaseSchema {
       table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
       table.string('name').unique().notNullable()
 
+      table.integer('type').unsigned().notNullable()
+
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

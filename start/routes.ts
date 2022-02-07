@@ -25,8 +25,11 @@ Route.get('/', async ({ view }) => {
 }).as('home')
 
 import './routes/auth'
-import './routes/user'
+import './routes/profile'
 import './routes/school'
+import './routes/association'
+
+import './routes/report'
 
 // Temporary
 Route.get('tutorats', ({ response }) => {
@@ -42,11 +45,5 @@ Route.group(() => {
   Route.resource('focus-interests', 'FocusInterestsController')
   Route.resource('thematics', 'ThematicsController')
   Route.resource('tags', 'TagsController')
-
   Route.resource('reasons', 'ReasonsController')
-
-  Route.resource('associations', 'AssociationsController')
-  Route.get('associations/:id/pictures/edit', 'AssociationsPicturesController.edit')
-  Route.put('associations/:id/pictures', 'AssociationsPicturesController.update')
-  Route.delete('associations/:id/pictures', 'AssociationsPicturesController.destroy')
 }).middleware('auth')

@@ -1,6 +1,13 @@
 @set('value', flashMessages.get($context.name) || $props.get('value') || '')
 @set('error', flashMessages.get(`errors.${$context.name}`) || '')
 
+@set('classes', 'border-slate-500 focus:ring-slate-500 focus:border-slate-500')
+@if(variant === 'mee')
+  @set('classes', 'border-mee-primary-base focus:ring-mee-primary-base focus:border-mee-primary-base')
+@elseif(variant === 'association')
+  @set('classes', 'border-associations-primary-base focus:ring-associations-primary-base focus:border-associations-primary-base')
+@endif
+
 <textarea {{
     $props.serializeExcept(['classes'], {
       id: $context.name,

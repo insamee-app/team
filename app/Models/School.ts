@@ -3,6 +3,7 @@ import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Profile from './Profile'
 import Association from './Association'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
+import Report from './Report'
 
 export default class School extends BaseModel {
   @column({ isPrimary: true })
@@ -43,4 +44,10 @@ export default class School extends BaseModel {
     localKey: 'id',
   })
   public associations: HasMany<typeof Association>
+
+  @hasMany(() => Report, {
+    localKey: 'id',
+    foreignKey: 'entityId',
+  })
+  public reports: HasMany<typeof Report>
 }

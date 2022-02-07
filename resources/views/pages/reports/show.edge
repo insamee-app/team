@@ -1,0 +1,87 @@
+@layout('layouts/app')
+@set('title', 'Rapport ' + report.number)
+
+@section('content')
+  <h2 class="text-slate-500 text-lg font-semibold">
+    <a href="{{ route('ReportsController.index') }}">
+      Rapports
+    </a>
+  </h2>
+
+  <h1 class="text-2xl font-bold mt-2">Numéro {{ report.number }} - {{ report.resolvedAt ? 'Résolu' : 'Non résolu' }}</h1>
+
+  <div>
+    <span>
+      Par
+      <a href="{{ route('ProfilesController.show', { id: report.reporter.profile.id }) }}" class="text-slate-500">
+        {{ report.reporter.profile.firstName }} {{ report.reporter.profile.lastName }}
+      </a>
+    </span>
+  </div>
+
+  <article class="mt-8">
+    <h3 class="text-xl font-bold">
+      {{ report.reason.name }}
+    </h3>
+
+    @if(report.description)
+      <p class="mt-4 text-justify">
+        {{ report.description }}
+      </p>
+    @endif
+
+    @if(report.profile)
+      <h3 class="mt-8 text-xl font-bold">
+        Profil
+      </h3>
+
+      <div class="mt-4 flex flex-col space-y-2">
+        <p>{{ report.profile.firstName }} {{ report.profile.lastName }}</p>
+        <p>{{ report.profile.user.email }}</p>
+        <p>{{ report.profile.school.name }}</p>
+      </div>
+    @elseif(report.association)
+      <h3 class="mt-8 text-xl font-bold">
+        Association
+      </h3>
+
+      <div class="mt-4 flex flex-col space-y-2">
+        <p>{{ report.association.name }}</p>
+        <p>{{ report.association.school.name }}</p>
+      </div>
+    @elseif(report.school)
+      <h3 class="mt-8 text-xl font-bold">
+        School
+      </h3>
+
+      <div class="mt-4 flex flex-col space-y-2">
+        <p>{{ report.school.name }}</p>
+      </div>
+    @end
+
+    <div class="mt-8 flex flex-row {{ report.resolvedAt ? 'justify-start' : 'justify-between' }}">
+      @if(report.profile)
+        <a href="{{ route('ProfilesController.show', { id: report.profile.id }) }}" class="px-2 py-1 text-white bg-mee-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+          Voir le profil
+        </a>
+      @elseif(report.association)
+        <a href="{{ route('AssociationsController.show', { id: report.association.id }) }}" class="px-2 py-1 text-white bg-associations-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+          Voir l'association
+        </a>
+      @elseif(report.school)
+        <a href="{{ route('SchoolsController.show', { id: report.school.id }) }}" class="px-2 py-1 text-white bg-slate-500 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+          Voir l'école
+        </a>
+      @end
+      @unless(report.resolvedAt)
+        <form action="{{ route('ReportsController.update', { id: report.id }) }}?_method=PUT" method="POST">
+          {{ csrfField() }}
+          <button type="submit" class="px-2 py-1 text-white bg-slate-500 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Résoudre</button>
+        </form>
+      @end
+    </div>
+
+  </article>
+
+
+@end

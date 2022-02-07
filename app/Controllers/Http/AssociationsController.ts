@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Association from 'App/Models/Association'
+import Report from 'App/Models/Report'
 import School from 'App/Models/School'
 import Tag from 'App/Models/Tag'
 import Thematic from 'App/Models/Thematic'
@@ -45,16 +46,21 @@ export default class AssociationsController {
     return response.redirect().toRoute('AssociationsController.show', { id: association.id })
   }
 
-  public async show({ view, params, bouncer }: HttpContextContract) {
+  public async show({ view, params, bouncer, auth }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('view')
 
-    const association = await Association.findOrFail(params.id)
+    const association = await Association.query()
+      .preload('school')
+      .preload('thematic')
+      .preload('tags')
+      .firstOrFail()
+    const report = await Report.query()
+      .where('reporterId', auth.user!.id)
+      .where('entityId', params.id)
+      .whereNull('resolvedAt')
+      .first()
 
-    await association.load('school')
-    await association.load('tags')
-    await association.load('thematic')
-
-    return view.render('pages/associations/show', { association })
+    return view.render('pages/associations/show', { association, report })
   }
 
   public async edit({ view, params, bouncer }: HttpContextContract) {

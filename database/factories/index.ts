@@ -10,6 +10,10 @@ import Skill from 'App/Models/Skill'
 import User from 'App/Models/User'
 import Tag from 'App/Models/Tag'
 import Reason from 'App/Models/Reason'
+import Report from 'App/Models/Report'
+import { ReportEntity } from 'App/Enums/ReportEntity'
+import { DateTime } from 'luxon'
+import { ReasonType } from 'App/Enums/ReasonType'
 
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
@@ -51,8 +55,13 @@ export const TagFactory = Factory.define(Tag, ({ faker }) => {
 export const ReasonFactory = Factory.define(Reason, ({ faker }) => {
   return {
     name: faker.lorem.words(),
+    type: ReasonType.Association,
   }
-}).build()
+})
+  .state('profile', (reason) => (reason.type = ReasonType.Profile))
+  .state('association', (reason) => (reason.type = ReasonType.Association))
+  .state('school', (reason) => (reason.type = ReasonType.School))
+  .build()
 
 export const AssociationFactory = Factory.define(Association, ({ faker }) => {
   return {
@@ -91,4 +100,21 @@ export const UserFactory = Factory.define(User, ({ faker }) => {
   .state('admin', (user) => (user.role = UserRole.Admin))
   .state('active', (user) => (user.status = UserStatus.Active))
   .relation('profile', () => ProfileFactory)
+  .build()
+
+export const ReportFactory = Factory.define(Report, ({ faker }) => {
+  return {
+    description: faker.lorem.paragraph(),
+    resolvedAt: null,
+  }
+})
+  .relation('reporter', () => UserFactory)
+  .relation('reason', () => ReasonFactory)
+  .relation('profile', () => ProfileFactory)
+  .relation('association', () => AssociationFactory)
+  .relation('school', () => SchoolFactory)
+  .state('resolved', (report) => (report.resolvedAt = DateTime.local()))
+  .state('profile', (report) => (report.entityType = ReportEntity.Profile))
+  .state('association', (report) => (report.entityType = ReportEntity.Association))
+  .state('school', (report) => (report.entityType = ReportEntity.School))
   .build()

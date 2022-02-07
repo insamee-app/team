@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Report from 'App/Models/Report'
 import School from 'App/Models/School'
 import SchoolStoreValidator from 'App/Validators/SchoolStoreValidator'
 import SchoolUpdateValidator from 'App/Validators/SchoolUpdateValidator'
@@ -37,7 +38,7 @@ export default class SchoolsController {
     response.redirect().toRoute('SchoolsController.show', { id: school.id })
   }
 
-  public async show({ request, params, view, bouncer }: HttpContextContract) {
+  public async show({ request, params, view, bouncer, auth }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('view')
 
     const page = request.input('page', 1)
@@ -49,10 +50,15 @@ export default class SchoolsController {
       .preload('thematic', (thematic) => thematic.select('name'))
       .preload('school', (school) => school.select('name'))
       .paginate(page, this.PER_PAGE)
+    const report = await Report.query()
+      .where('reporterId', auth.user!.id)
+      .where('entityId', params.id)
+      .whereNull('resolvedAt')
+      .first()
 
     associations.baseUrl(request.url())
 
-    return view.render('pages/schools/show', { school, associations })
+    return view.render('pages/schools/show', { school, associations, report })
   }
 
   public async edit({ params, view, bouncer }: HttpContextContract) {

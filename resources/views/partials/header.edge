@@ -171,6 +171,43 @@
                 </ul>
               </nav>
             </div>
+            @can('ReportPolicy.viewList')
+              <div class="mt-8" x-data="{ nav: false }">
+                <button x-on:click="nav = !nav" class="w-full flex flex-row justify-between items-center text-slate-500" aria-haspopup="true" :aria-expanded="nav" aria-controls="admin-nav">
+                  <div class="flex flex-row items-center text-lg font-bold">
+                    <span class="w-7">
+                      @!icons.lockClosed({
+                        'aria-hidden': true,
+                        class: 'w-5 h-5 fill-current'
+                      })
+                    </span>
+                    <span>
+                      Administrer
+                    </span>
+                  </div>
+                  @!icons.chevronDown({
+                    'aria-hidden': true,
+                    class: 'w-5 h-5 fill-current transition',
+                    ':class': "{ 'rotate-180': nav }"
+                  })
+                </button>
+                <nav
+                  aria-label="navigation d'administration"
+                  :aria-hidden="!nav"
+                  id="admin-nav"
+                  x-show="nav"
+                  x-transition.origin.top
+                  class="ml-6 text-slate-500">
+                  <ul class="mt-4 flex flex-col space-y-2">
+                    <li>
+                      <a href="{{ route('ReportsController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('ReportsController.index')) ? 'text-slate-900' : '' }}">
+                        Les rapports
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            @end
             <div class="mt-8 grow flex flex-col justify-end">
               <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST" class="flex justify-center items-center">
                 {{ csrfField() }}
