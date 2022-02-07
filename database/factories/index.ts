@@ -13,6 +13,7 @@ import Reason from 'App/Models/Reason'
 import Report from 'App/Models/Report'
 import { ReportEntity } from 'App/Enums/ReportEntity'
 import { DateTime } from 'luxon'
+import { ReasonType } from 'App/Enums/ReasonType'
 
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
@@ -54,8 +55,13 @@ export const TagFactory = Factory.define(Tag, ({ faker }) => {
 export const ReasonFactory = Factory.define(Reason, ({ faker }) => {
   return {
     name: faker.lorem.words(),
+    type: ReasonType.Association,
   }
-}).build()
+})
+  .state('profile', (reason) => (reason.type = ReasonType.Profile))
+  .state('association', (reason) => (reason.type = ReasonType.Association))
+  .state('school', (reason) => (reason.type = ReasonType.School))
+  .build()
 
 export const AssociationFactory = Factory.define(Association, ({ faker }) => {
   return {

@@ -21,7 +21,7 @@ export default class Report extends BaseModel {
   public reasonId: string
 
   @column()
-  public description: string
+  public description: string | null
 
   @column()
   public entityId: string

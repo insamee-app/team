@@ -8,5 +8,5 @@ Route.group(() => {
   Route.delete('schools/:id/banners', 'SchoolsBannersController.destroy')
 
   Route.get('schools/:id/reports/create', 'ReportsSchoolsController.create')
-  Route.post('schools/:id/reports', 'ReportsController.store')
+  Route.post('schools/:id/reports', 'ReportsSchoolsController.store')
 }).middleware('auth')
