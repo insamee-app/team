@@ -1,9 +1,9 @@
 @set('value', flashMessages.get($context.name) || $props.get('value') || '')
 @set('error', flashMessages.get(`errors.${$context.name}`) || '')
 
-@set('classes', 'bg-slate-500 checked:!bg-slate-500 checked:focus:ring-slate-500')
+@set('classes', 'bg-slate-500 checked:!bg-slate-500 checked:focus:ring-slate-500 border-slate-500')
 @if(variant === 'mee')
-  @set('classes', 'bg-mee-primary-base')
+  @set('classes', 'bg-mee-primary-base checked:!bg-mee-primary-base checked:focus:!ring-mee-primary-base border-mee-primary-base')
 @endif
 
 <div class="flex flex-col space-y-1">
