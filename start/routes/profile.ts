@@ -1,7 +1,13 @@
 import Route from '@ioc:Adonis/Core/Route'
 
+Route.get('/mee/home', ({ view }) => {
+  return view.render('pages/mee/home')
+})
+
+Route.get('/mee', 'ProfilesController.index')
+
 Route.group(() => {
-  Route.resource('mee', 'ProfilesController').only(['index', 'show', 'edit', 'update'])
+  Route.resource('mee', 'ProfilesController').only(['show', 'edit', 'update'])
 
   Route.get('mee/:id/avatars/edit', 'ProfilesAvatarsController.edit')
   Route.put('mee/:id/avatars', 'ProfilesAvatarsController.update')

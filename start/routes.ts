@@ -20,9 +20,19 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async ({ view }) => {
+Route.get('/', async ({ view, auth, response }) => {
+  if (auth.user) {
+    return response.redirect().toRoute('ProfilesController.index')
+  }
+
   return view.render('pages/home')
 }).as('home')
+
+Route.get('/home', async ({ view }) => {
+  return view.render('pages/home')
+})
+
+import './routes/static'
 
 import './routes/auth'
 import './routes/profile'

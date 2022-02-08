@@ -1,0 +1,28 @@
+@layout('layouts/static')
+@set('title', 'Nous contacter')
+
+@section('content')
+  <article class="max-w-xs w-full mx-auto">
+    <h1 class="text-xl font-bold">Nous contacter</h1>
+
+    <div class="mt-8 flex flex-col justify-center items-center space-y-4">
+      <p>Besoin d'<strong class="font-bold">aide</strong> ?</p>
+      <p>Une <strong class="font-bold">suggestion</strong> ?</p>
+      <p>Un <strong class="font-bold">bogue</strong> trouvé ?</p>
+    </div>
+
+    <div class="mt-8 flex">
+      <a href="mailto:{{ env('EMAIL_HOST') }}" class="w-full p-2 rounded bg-slate-900 text-white text-center focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:!ring-slate-900">
+        Envoyer un courriel
+      </a>
+    </div>
+
+
+    <div class="mt-16 flex justify-center items-center">
+      @!graphics.subscriber({
+        role: 'img',
+        'aria-label': 'Enveloppe en papier',
+      })
+    </div>
+  </article>
+@end

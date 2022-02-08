@@ -9,7 +9,11 @@ import Report from 'App/Models/Report'
 export default class ProfilesController {
   private PER_PAGE = 10
 
-  public async index({ view, request, bouncer }: HttpContextContract) {
+  public async index({ view, request, bouncer, auth }: HttpContextContract) {
+    if (auth.isGuest) {
+      return view.render('pages/mee/home')
+    }
+
     await bouncer.with('ProfilePolicy').authorize('viewList')
 
     const page = request.input('page', 1)

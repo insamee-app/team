@@ -1,24 +1,60 @@
 @layout('layouts/app')
 
 @section('content')
-<ul>
-  <li>
-    <a href="{{ route('home') }}">Home</a>
-  </li>
-  @if(auth.isLoggedIn)
-  <li>
-    <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST">
-      {{ csrfField() }}
-      <button type="submit">Se déconnecter</button>
-    </form>
-  </li>
-  @else
-  <li>
-    <a href="{{ route('AuthController.register') }}">S'inscrire</a>
-  </li>
-  <li>
-    <a href="{{ route('AuthController.login') }}">Se connecter</a>
-  </li>
-  @endif
-</ul>
+<section class="mx-auto max-w-screen-xl grid lg:grid-cols-3 justify-items-center items-center gap-16">
+  <div class="flex flex-col justify-center space-y-8 text-center">
+    <h1 class="text-5xl lg:text-6xl xl:text-8xl font-bold capitalize">{{ env('TEAM_NAME') }}</h1>
+    <h2 class="text-2xl lg:text-3xl xl:text-4xl text-slate-500">{{ env('TEAM_TAGLINE') }}</h2>
+  </div>
+  <div>
+    <a href="{{ route('AuthController.login') }}" class="p-2 lg:px-4 rounded text-lg lg:text-xl lg:font-bold text-white bg-slate-900 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 lg:col-start-1 lg:row-span-2">Rejoindre l'écosystème</a>
+  </div>
+  <ul class="grid md:grid-cols-2 gap-12 lg:contents">
+    <li class="lg:col-start-2 lg:row-start-1 self-stretch">
+      <a href="{{ route('TutoratsController.index') }}" class="h-full p-8 flex flex-col justify-between space-y-12 rounded-2xl text-center border border-tutorat-primary-grey-light transition hover:shadow-lg focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tutorat-primary-base">
+        @!graphics.tutorat({
+          role: 'img',
+          'aria-label': 'Représentation graphique de la plateforme tutorat',
+          class: 'w-full h-auto'
+        })
+        <span class="text-xl text-center text-tutorat-primary-dark">La mise en relation des étudiants et des tuteurs</span>
+      </a>
+    </li>
+    <li class="lg:col-start-3 lg:row-start-1 self-stretch">
+      <a href="{{ route('EventsController.index') }}" class="h-full p-8 flex flex-col justify-between space-y-12 rounded-2xl text-center border border-evenements-primary-grey-light transition hover:shadow-lg focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-evenements-primary-base">
+        @!graphics.evenements({
+          role: 'img',
+          'aria-label': 'Représentation graphique de la plateforme événements',
+          class: 'w-full h-auto'
+        })
+        <span class="text-xl text-center text-evenements-primary-dark">La mise en relation des évènements et des étudiants</span>
+      </a>
+    </li>
+    <li class="self-stretch">
+      <a href="{{ route('AssociationsController.index') }}" class="h-full p-8 flex flex-col justify-between space-y-12 rounded-2xl text-center border border-associations-primary-grey-light transition hover:shadow-lg focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+        @!graphics.associations({
+          role: 'img',
+          'aria-label': 'Représentation graphique de la plateforme associations',
+          class: 'w-full h-auto'
+        })
+        <span class="text-xl text-center text-associations-primary-dark">
+          La mise en relation des associations
+        </span>
+      </a>
+    </li>
+    <li class="self-stretch">
+      <a href="{{ route('ProfilesController.index') }}" class="h-full p-8 flex flex-col justify-between space-y-12 rounded-2xl text-center border border-mee-primary-grey-light transition hover:shadow-lg focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+        @!graphics.mee({
+          role: 'img',
+          'aria-label': 'Représentation graphique de la plateforme mee',
+          class: 'w-full h-auto'
+        })
+        <span class="text-xl text-center text-mee-primary-dark">
+          La mise en relation des profils étudiants
+        </span>
+      </a>
+    </li>
+  </ul>
+  <a href="{{ route('about') }}" class="text-slate-500 lg:col-start-2">En savoir plus</a>
+</section>
 @end

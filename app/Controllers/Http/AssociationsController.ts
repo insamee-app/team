@@ -10,7 +10,11 @@ import AssociationUpdateValidator from 'App/Validators/AssociationUpdateValidato
 export default class AssociationsController {
   private PER_PAGE = 10
 
-  public async index({ view, request, bouncer }: HttpContextContract) {
+  public async index({ view, request, bouncer, auth }: HttpContextContract) {
+    if (auth.isGuest) {
+      return view.render('pages/associations/home')
+    }
+
     await bouncer.with('AssociationPolicy').authorize('viewList')
 
     const page = request.input('page') || 1
