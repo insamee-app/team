@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="FR-fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico"  type="image/ico">
+
+    @include('partials/head')
+
+    @entryPointStyles('app')
+    @entryPointScripts('app')
+  </head>
+  <body>
+    @include('partials/header')
+
+    <main>
+      @!section('content')
+    </main>
+
+    @include('partials/footer')
+  </body>
+</html>
