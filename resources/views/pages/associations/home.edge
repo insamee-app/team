@@ -1,0 +1,104 @@
+@layout('layouts/showcase')
+@set('title', 'Les Mee')
+
+
+@section('content')
+  @home.hero()
+    <div class="px-4 flex flex-col space-y-8">
+      @home.heroTitle({
+        classes: '',
+      })
+        Du temps libre après les cours ?
+      @end
+      @home.heroSubtitle({
+        classes: '',
+      })
+        Parce qu'être étudiant, c'est découvrir des associations ou trouver celle qu'il te convient
+      @end
+    </div>
+    <div class="w-full h-auto">
+      @!graphics.associations({
+        class: 'w-full h-auto',
+      })
+    </div>
+    <div class="mb-8 flex flex-row justify-center items-center">
+      @!icons.arrowDown({
+        class: 'w-6 h-6 text-associations-primary-base fill-current'
+      })
+    </div>
+  @end
+  @home.section({
+    classes: 'justify-evenly relative'
+  })
+  <div class="absolute h-[90%] -top-12 right-[50%]">
+    @!graphics.associations.blob({
+      class: 'h-full w-auto',
+    })
+  </div>
+  <div class="flex flex-col space-y-8 px-4">
+    @home.sectionTitle()
+      La vie associative, tu connais ?
+    @end
+    @home.sectionText({
+      classes: 'text-right',
+    })
+      Les <span class="text-associations-primary-base">associations</span> organise régulièrement des évènements ! Tu peux y rencontrer des personnes avec les mêmes centres d'intérêts que toi !
+    @end
+  </div>
+  <div class="w-[90%] mx-auto relative">
+    @!graphics.associations.havingFun({
+      class: 'h-full w-full',
+    })
+  </div>
+  @end
+  <hr class="max-w-xs mx-autobg-associations-primary-grey-base">
+  @home.section({
+    classes: 'justify-evenly relative overflow-hidden'
+  })
+    <div class="absolute h-[90%] -bottom-24 left-[50%]">
+      @!graphics.associations.blob({
+        class: 'h-full w-auto',
+      })
+    </div>
+    <div class="flex flex-col space-y-8 px-4">
+      @home.sectionTitle()
+        Envie de rejoindre une association ?
+      @end
+      @home.sectionText({
+        classes: '',
+      })
+        Avec <span class="text-associations-primary-base">Associations</span>, tu peux contacter associations ou ses membres pour les rejoindre.
+      @end
+    </div>
+    <div class="mx-auto relative">
+      @!graphics.associations.teamChill({
+        class: 'h-full w-full',
+      })
+    </div>
+  @end
+  <hr class="bg-associations-primary-grey-base max-w-xs mx-auto">
+  @home.section({
+    classes: 'justify-between overflow-hidden relative'
+  })
+  <div class="absolute h-[90%] top-0 right-[50%] transform -rotate-90">
+    @!graphics.associations.blob({
+      class: 'h-full w-auto',
+    })
+  </div>
+  <div class="flex flex-col space-y-8 px-4">
+    @home.sectionTitle({
+    })
+      Un projet ambitieux ?
+    @end
+    @home.sectionText({
+    })
+      Sur <span class="text-associations-primary-base">Associations</span>, tu peux trouver des associations avec lesquelles collaborer !
+    @end
+  </div>
+  <div class="h-[55%] w-auto mx-auto relative -left-[40%]">
+      @!graphics.associations.teamWork({
+        class: 'w-auto h-full',
+      })
+  </div>
+  @end
+@end
