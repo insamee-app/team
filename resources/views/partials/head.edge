@@ -1,1 +1,1 @@
-<title>{{ title }} - {{ env('APP_NAME') }}</title>
+<title>{{ title ? title + ' - ' : '' }}{{ env('TEAM_NAME') }}</title>
