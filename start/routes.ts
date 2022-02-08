@@ -19,8 +19,6 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import Markdown from 'App/Services/Markdown'
-import fs from 'fs/promises'
 
 Route.get('/', async ({ view, auth, response }) => {
   if (auth.user) {
@@ -32,13 +30,6 @@ Route.get('/', async ({ view, auth, response }) => {
 
 Route.get('/home', async ({ view }) => {
   return view.render('pages/home')
-})
-
-Route.get('/about', async ({ view }) => {
-  const aboutFile = await fs.readFile('./content/about.md', 'utf-8')
-  const html = await Markdown.render(aboutFile)
-
-  return view.render('templates/about', { html })
 })
 
 import './routes/static'
