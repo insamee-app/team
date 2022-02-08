@@ -1,0 +1,53 @@
+@layout('layouts/app')
+@set('title', 'Plan du site')
+
+@section('content')
+  <article class="prose prose-slate md:prose-lg lg:prose-xl">
+    <h1>Plan du site</h1>
+    <h2>Contenu principal</h2>
+    <ul>
+      <li>
+        <a href="{{ route('ProfilesController.index') }}">Les profils</a>
+      </li>
+      <li>
+        <a href="{{ route('AssociationsController.index') }}">Les associations</a>
+      </li>
+      <li>
+        <a href="{{ route('SchoolsController.index') }}">Les écoles</a>
+      </li>
+    </ul>
+    <h2>Contenu secondaire</h2>
+    <ul>
+      <li>
+        <a href="{{ route('SkillsController.index') }}">Les compétences</a>
+      </li>
+      <li>
+        <a href="{{ route('FocusInterestsController.index') }}">Les centres d'intérêts</a>
+      </li>
+      <li>
+        <a href="{{ route('ThematicsController.index') }}">Les thématiques</a>
+      </li>
+      <li>
+        <a href="{{ route('TagsController.index') }}">Les tags</a>
+      </li>
+    </ul>
+    <h2>Contenu statique</h2>
+    <ul>
+       <li>
+        <a href="{{ route('terms') }}">Conditions Générales d'Utilsiation</a>
+      </li>
+      <li>
+        <a href="{{ route('privacy') }}">Politique de confidentialité</a>
+      </li>
+      <li>
+        <a href="{{ route('sitemap') }}">Plan du site</a>
+      </li>
+      <li>
+        <a href="{{ route('contact-us') }}">Nous contacter</a>
+      </li>
+      <li>
+        <a href="{{ route('about') }}">En savoir plus</a>
+      </li>
+    </ul>
+  </article>
+@end
