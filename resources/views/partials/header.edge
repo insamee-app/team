@@ -200,6 +200,11 @@
                   class="ml-6 text-slate-500">
                   <ul class="mt-4 flex flex-col space-y-2">
                     <li>
+                      <a href="{{ route('RolesController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('RolesController.index')) ? 'text-slate-900' : '' }}">
+                        Les roles
+                      </a>
+                    </li>
+                    <li>
                       <a href="{{ route('ReportsController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('ReportsController.index')) ? 'text-slate-900' : '' }}">
                         Les rapports
                       </a>

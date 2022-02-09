@@ -51,6 +51,7 @@ Route.get('events', ({ response }) => {
 }).as('EventsController.index')
 
 Route.group(() => {
+  Route.resource('roles', 'RolesController')
   Route.resource('skills', 'SkillsController')
   Route.resource('focus-interests', 'FocusInterestsController')
   Route.resource('thematics', 'ThematicsController')

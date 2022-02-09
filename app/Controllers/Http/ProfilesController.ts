@@ -5,6 +5,7 @@ import ProfileValidator from 'App/Validators/ProfileValidator'
 import FocusInterest from 'App/Models/FocusInterest'
 import Association from 'App/Models/Association'
 import Report from 'App/Models/Report'
+import Role from 'App/Models/Role'
 
 export default class ProfilesController {
   private PER_PAGE = 10
@@ -20,6 +21,7 @@ export default class ProfilesController {
 
     const profiles = await Profile.query()
       .preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
+      .preload('role')
       .paginate(page, this.PER_PAGE)
 
     profiles.baseUrl(request.url())
@@ -37,6 +39,7 @@ export default class ProfilesController {
       .preload('focusInterests')
       .preload('associations')
       .preload('user')
+      .preload('role')
       .firstOrFail()
     const report = await Report.query()
       .where('reporterId', auth.user!.id)
@@ -48,7 +51,7 @@ export default class ProfilesController {
   }
 
   public async edit({ params, view, bouncer }: HttpContextContract) {
-    const profile = await Profile.firstOrFail(params.id)
+    const profile = await Profile.query().where('id', params.id).firstOrFail()
     await bouncer.with('ProfilePolicy').authorize('update', profile)
 
     await profile.load('user')
@@ -60,8 +63,9 @@ export default class ProfilesController {
     const skills = await Skill.query().select('id', 'name').orderBy('name')
     const focusInterests = await FocusInterest.query().select('id', 'name').orderBy('name')
     const associations = await Association.query().select('id', 'name').orderBy('name')
+    const roles = await Role.query().select('id', 'name').orderBy('name')
 
-    return view.render('pages/mee/edit', { profile, skills, focusInterests, associations })
+    return view.render('pages/mee/edit', { profile, skills, focusInterests, associations, roles })
   }
 
   public async update({ request, params, response, bouncer }: HttpContextContract) {

@@ -10,7 +10,9 @@ export default class Profiles extends BaseSchema {
       table.string('last_name').notNullable()
       table.json('avatar').nullable()
       table.integer('graduation_year').notNullable()
+      table.string('bio', 2048).nullable()
 
+      table.uuid('role_id').nullable().references('id').inTable('roles')
       table.uuid('user_id').notNullable().references('id').inTable('users')
       table.uuid('school_id').notNullable().references('id').inTable('schools')
 

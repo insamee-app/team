@@ -1,6 +1,7 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
+import Role from 'App/Models/Role'
 import School from 'App/Models/School'
 import User from 'App/Models/User'
 export default class UserSeeder extends BaseSeeder {
@@ -19,10 +20,15 @@ export default class UserSeeder extends BaseSeeder {
       city: 'Paris',
       website: 'https://team.fr',
     })
+    const role = await Role.create({
+      name: 'étudiant',
+    })
+
     await user.related('profile').create({
       firstName: 'Admin',
       lastName: 'Team',
       graduationYear: 2020,
+      roleId: role.id,
       schoolId: school.id,
       userId: user.id,
     })

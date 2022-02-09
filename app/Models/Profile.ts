@@ -16,6 +16,7 @@ import Skill from './Skill'
 import FocusInterest from './FocusInterest'
 import Association from './Association'
 import Report from './Report'
+import Role from './Role'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -32,6 +33,12 @@ export default class Profile extends BaseModel {
 
   @column()
   public graduationYear?: number
+
+  @column()
+  public bio?: string
+
+  @column()
+  public roleId: string
 
   @column()
   public userId: string
@@ -56,6 +63,12 @@ export default class Profile extends BaseModel {
     localKey: 'id',
   })
   public school: BelongsTo<typeof School>
+
+  @belongsTo(() => Role, {
+    foreignKey: 'roleId',
+    localKey: 'id',
+  })
+  public role: BelongsTo<typeof Role>
 
   @manyToMany(() => Skill, {
     pivotTable: 'skills_profiles',
