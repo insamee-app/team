@@ -11,6 +11,7 @@ import ResetPassword from 'App/Mailers/ResetPassword'
 import SendResetPasswordValidator from 'App/Validators/SendResetPasswordValidator'
 import ChangePasswordValidator from 'App/Validators/ChangePasswordValidator'
 import { getSchoolByHost } from 'App/Services/school'
+import Welcome from 'App/Mailers/Welcome'
 
 export default class AuthController {
   public async showLoginForm({ view }: HttpContextContract) {
@@ -68,6 +69,7 @@ export default class AuthController {
 
     const id = params.id
     const user = await User.findOrFail(id)
+    const profile = await user.related('profile').query().select('first_name').firstOrFail()
 
     if (user.status === UserStatus.Pending) {
       user.status = UserStatus.Active
@@ -75,6 +77,8 @@ export default class AuthController {
 
       // Important to prevent blocked users from logging in
       await auth.login(user)
+
+      new Welcome(user, profile, `${Env.get('APP_URL')}`).sendLater()
     }
 
     session.flash('success', `Votre compte a été validé avec succès`)
