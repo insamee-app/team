@@ -8,6 +8,8 @@ export default class ProfileValidator {
     firstName: schema.string({ trim: true }),
     lastName: schema.string({ trim: true }),
     graduationYear: schema.number.optional(),
+    bio: schema.string.optional({ trim: true }, [rules.maxLength(2048)]),
+    roleId: schema.string.optional({}, [rules.exists({ table: 'roles', column: 'id' })]),
     skills: schema.array
       .optional([rules.maxLength(10)])
       .members(schema.string({}, [rules.exists({ table: 'skills', column: 'id' })])),

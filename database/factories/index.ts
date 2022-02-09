@@ -14,6 +14,7 @@ import Report from 'App/Models/Report'
 import { ReportEntity } from 'App/Enums/ReportEntity'
 import { DateTime } from 'luxon'
 import { ReasonType } from 'App/Enums/ReasonType'
+import Role from 'App/Models/Role'
 
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
@@ -27,6 +28,12 @@ export const SchoolFactory = Factory.define(School, ({ faker }) => {
   .relation('profiles', () => ProfileFactory)
   .relation('associations', () => AssociationFactory)
   .build()
+
+export const RoleFactory = Factory.define(Role, ({ faker }) => {
+  return {
+    name: faker.lorem.words(),
+  }
+}).build()
 
 export const SkillFactory = Factory.define(Skill, ({ faker }) => {
   return {
@@ -82,6 +89,7 @@ export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     graduationYear: faker.datatype.number({ min: 2000, max: 2020 }),
+    bio: faker.lorem.paragraph(4),
   }
 })
   .relation('user', () => UserFactory)
@@ -89,6 +97,7 @@ export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
   .relation('skills', () => SkillFactory)
   .relation('school', () => SchoolFactory)
   .relation('associations', () => AssociationFactory)
+  .relation('role', () => RoleFactory)
   .build()
 
 export const UserFactory = Factory.define(User, ({ faker }) => {

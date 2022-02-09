@@ -1,7 +1,11 @@
 @set('error', flashMessages.get(`errors.${$context.name}`) || '')
 
+  @set('buttonClasses', 'border-slate-500 focus:ring-slate-500')
+  @set('listClasses', 'hover:bg-slate-400')
+  @set('currentListItemClasses', 'bg-slate-400')
+  @set('selectedListItemClasses', 'bg-slate-200')
 @if(variant === 'mee')
-  @set('buttonClasses', 'boder-mee-primary-base focus:ring-mee-primary-base')
+  @set('buttonClasses', 'border-mee-primary-base focus:ring-mee-primary-base')
   @set('listClasses', 'hover:bg-mee-primary-grey-base')
   @set('currentListItemClasses', 'bg-mee-primary-grey-base')
   @set('selectedListItemClasses', 'bg-mee-primary-grey-light')

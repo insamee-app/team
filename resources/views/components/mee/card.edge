@@ -2,23 +2,26 @@
   variant: 'mee',
   classes: 'hover:shadow-lg cursor-pointer space-y-4'
 })
-  <header class="flex flex-row space-x-4 items-center">
-    @!shared.picture({
-      attachment: profile.avatar,
-      alt: 'Avatar de ' + profile.firstName,
-      placeholderClasses: 'bg-mee-secondary-base rounded-full',
-      size: 'w-28 h-28',
-      width: '112',
-      height: '112'
-    })
+  <header class="flex flex-row space-x-4">
+    <div class="relative">
+      @!shared.picture({
+        attachment: profile.avatar,
+        alt: 'Avatar de ' + profile.firstName,
+        placeholderClasses: 'bg-mee-secondary-base rounded-full',
+        size: 'w-28 h-28',
+        width: '112',
+        height: '112'
+      })
+      <span class="absolute left-1/2 bottom-0 px-2 py-1 rounded-full border-2 border-white bg-mee-primary-grey-light text-mee-primary-base text-sm whitespace-nowrap">{{ profile.role.name }}</span>
+    </div>
     <h3 class="flex flex-col space-y-2 font-bold text-xl text-mee-primary-dark">
       <span>{{ profile.firstName }}</span>
       <span>{{ profile.lastName }}</span>
     </h3>
   </header>
-  {{--  @if()
-    <p class="text-justify">{{ excerpt(association.overview, 150) }}</p>
-  @end  --}}
+  @if(profile.bio)
+    <p class="text-justify">{{ excerpt(profile.bio, 150) }}</p>
+  @end
   @if(profile.focusInterests.length)
     <ul class="flex flex-row gap-2 flex-wrap">
       @each(focusInterest in profile.focusInterests)

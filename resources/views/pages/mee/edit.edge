@@ -41,6 +41,16 @@
         @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, classes: classesMee })
       @end
 
+      @form.group({name: 'roleId'})
+        @!form.label({ title: 'Role' })
+        @form.select({
+          variant: 'mee',
+          data: roles,
+        })
+          Sélectionner votre role
+        @end
+      @end
+
       @form.group({name: 'skills'})
         @!form.label({ title: 'Compétences' })
         @form.multiselect({
@@ -72,6 +82,11 @@
         })
           Sélectionner des associations
         @end
+      @end
+
+      @form.group({name: 'bio'})
+        @!form.label({ title: 'Bio' })
+        @!form.area({ type: 'text', classes: classesAssociations, value: profile.bio, variant: 'mee' })
       @end
     </div>
 
