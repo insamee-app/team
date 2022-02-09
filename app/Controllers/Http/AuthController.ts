@@ -36,7 +36,7 @@ export default class AuthController {
     const school = await getSchoolByHost(host)
 
     const user = await User.create({ email, password })
-    await user
+    const profile = await user
       .related('profile')
       .create({ firstName, lastName, schoolId: school!.id, userId: user.id })
 
@@ -48,7 +48,7 @@ export default class AuthController {
       { expiresIn: '1h' }
     )
 
-    new EmailValidation(user, `${Env.get('APP_URL')}${url}`).sendLater()
+    new EmailValidation(user, profile, `${Env.get('APP_URL')}${url}`).sendLater()
 
     session.flash('success', `Un email de confirmation vous a été envoyé`)
     return response.redirect('/')
@@ -89,6 +89,7 @@ export default class AuthController {
     const { email } = await request.validate(SendVerifyEmailValidator)
 
     const user = await User.findBy('email', email)
+    const profile = await user!.related('profile').query().select('first_name').firstOrFail()
 
     const url = Route.makeSignedUrl(
       'AuthController.validateUser',
@@ -98,7 +99,7 @@ export default class AuthController {
       { expiresIn: '1h' }
     )
 
-    new EmailValidation(user!, `${Env.get('APP_URL')}${url}`).sendLater()
+    new EmailValidation(user!, profile, `${Env.get('APP_URL')}${url}`).sendLater()
 
     session.flash('success', `Un email de confirmation vous a été envoyé`)
     return response.redirect('/')
@@ -112,6 +113,7 @@ export default class AuthController {
     const { email } = await request.validate(SendResetPasswordValidator)
 
     const user = await User.findBy('email', email)
+    const profile = await user!.related('profile').query().select('first_name').firstOrFail()
 
     const url = Route.makeSignedUrl(
       'AuthController.changePassword',
@@ -121,7 +123,7 @@ export default class AuthController {
       { expiresIn: '1h' }
     )
 
-    new ResetPassword(user!, `${Env.get('APP_URL')}${url}`).sendLater()
+    new ResetPassword(user!, profile, `${Env.get('APP_URL')}${url}`).sendLater()
 
     session.flash('success', `Un email de réinitialisation de mot de passe vous a été envoyé`)
     return response.redirect('/')

@@ -1,17 +1,49 @@
 <mjml>
   <mj-head>
-    <mj-title>{{ env('APP_NAME') }}</mj-title>
+    <mj-preview>[{{ env('EMAIL_HOST') }}] Validation de votre compte</mj-preview>
   </mj-head>
-  <mj-body background-color="#E7E7E7" width="600px">
-    <mj-section>
-      <mj-column width="100%">
-        <mj-text>
-          Bienvenue
+  <mj-body background-color="white">
+    <mj-section  padding-bottom="0" padding="24px">
+      <mj-column>
+        <mj-image align="center" src="{{ asset('assets/images/logo_team.png') }}" alt="logo d'InsameeApp" width="120px" />
+      </mj-column>
+    </mj-section>
+    <mj-section padding-top="32px" padding-bottom="0" padding="24px">
+      <mj-column>
+        <mj-text font-size="16px" color="#0f172a" padding-left="0" padding-right="0">
+          Bonjour{{ profile.firstName ? ' ' + profile.firstName + ',' : ',' }}
         </mj-text>
-
-        <mj-button href="{{ url }}">
-          Cliquez ici pour valider votre compte
+        <mj-text font-size="16px" color="#0f172a" padding-left="0" padding-right="0">
+          Merci de ton inscrioption à <strong>{{ capitalCase(env('TEAM_NAME')) }}</strong>.
+        </mj-text>
+        <mj-text font-size="16px" color="#0f172a" padding-left="0" padding-right="0">
+          Pour finaliser ta venue, tu es invité à vérifier ton email en cliquant sur le lien ci-dessous. Tu pourras par la suite te connecter et accéder pleinement aux différentes plateformes.
+        </mj-text>
+        <mj-button href="{{ url }}" border-radius="0.25rem" padding-top="32px" color="white" background-color="#0f172a"padding="0" font-size="16px">
+          Vérifier mon email
         </mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section padding-top="32px"  padding-bottom="0" padding="24px">
+      <mj-column>
+        <mj-text color="#64748b" padding="0">
+          {{ capitalCase(env('TEAM_NAME')) }},
+        </mj-text>
+        <br />
+        <mj-text color="#64748b" font-style="italic" padding="0" font-size="14px">
+          une application par InsameeApp
+        </mj-text>
+    </mj-section>
+    <mj-section padding-top="16px"  padding-bottom="0" padding="25px">
+      <mj-column>
+        <mj-raw>
+          <a href="https://insameeapp.fr">
+            <img src="{{ asset('assets/images/mail_globe.png') }}" alt="logo d'InsameeApp" width="24px" />
+          </a>
+          <a href="https://twitter.com/insameeapp" style="margin-left: 12px;">
+            <img src="{{ asset('assets/images/mail_twitter.png') }}" alt="logo d'InsameeApp" width="24px" />
+          </a>
+        </mj-raw>
       </mj-column>
     </mj-section>
   </mj-body>
