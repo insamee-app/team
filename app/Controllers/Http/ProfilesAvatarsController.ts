@@ -13,7 +13,7 @@ export default class ProfilesAvatarsController {
     })
   }
 
-  public async update({ params, request, response, bouncer }: HttpContextContract) {
+  public async update({ params, request, response, bouncer, session }: HttpContextContract) {
     const profile = await Profile.firstOrFail(params.id)
     await bouncer.with('ProfilePolicy').authorize('update', profile)
 
@@ -23,10 +23,11 @@ export default class ProfilesAvatarsController {
 
     await profile.save()
 
+    session.flash('success', "Avatar de l'utilisateur mise à jour avec succès")
     return response.redirect().toRoute('ProfilesController.show', { id: params.id })
   }
 
-  public async destroy({ params, response, bouncer }: HttpContextContract) {
+  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     const profile = await Profile.firstOrFail(params.id)
     await bouncer.with('ProfilePolicy').authorize('delete', profile)
 
@@ -34,6 +35,7 @@ export default class ProfilesAvatarsController {
 
     await profile.save()
 
+    session.flash('success', "Avatar de l'utilisateur supprimé avec succès")
     return response.redirect().toRoute('ProfilesController.show', { id: params.id })
   }
 }

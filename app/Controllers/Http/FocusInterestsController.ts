@@ -20,13 +20,14 @@ export default class FocusInterestsController {
     return view.render('pages/focus-interests/create')
   }
 
-  public async store({ response, request, bouncer }: HttpContextContract) {
+  public async store({ response, request, bouncer, session }: HttpContextContract) {
     await bouncer.with('FocusInterestPolicy').authorize('create')
 
     const data = await request.validate(FocusInterestStoreValidator)
 
     const focusInterest = await FocusInterest.create(data)
 
+    session.flash('success', "Centre d'intérêt créé avec succès")
     return response.redirect().toRoute('FocusInterestsController.show', { id: focusInterest.id })
   }
 
@@ -53,7 +54,7 @@ export default class FocusInterestsController {
     return view.render('pages/focus-interests/edit', { focusInterest })
   }
 
-  public async update({ request, response, params, bouncer }: HttpContextContract) {
+  public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('FocusInterestPolicy').authorize('update')
 
     const focusInterest = await FocusInterest.findOrFail(params.id)
@@ -67,7 +68,7 @@ export default class FocusInterestsController {
     return response.redirect().toRoute('FocusInterestsController.show', { id: focusInterest.id })
   }
 
-  public async destroy({ params, response, bouncer }: HttpContextContract) {
+  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('FocusInterestPolicy').authorize('delete')
 
     const focusInterest = await FocusInterest.findOrFail(params.id)

@@ -20,13 +20,14 @@ export default class TagsController {
     return view.render('pages/tags/create')
   }
 
-  public async store({ request, bouncer, response }: HttpContextContract) {
+  public async store({ request, bouncer, response, session }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('create')
 
     const data = await request.validate(TagStoreValidator)
 
     const tag = await Tag.create(data)
 
+    session.flash('success', 'Tag créé avec succès')
     return response.redirect().toRoute('TagsController.show', { id: tag.id })
   }
 
@@ -58,7 +59,7 @@ export default class TagsController {
     return view.render('pages/tags/edit', { tag })
   }
 
-  public async update({ request, response, bouncer, params }: HttpContextContract) {
+  public async update({ request, response, bouncer, params, session }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('update')
 
     const tag = await Tag.findOrFail(params.id)
@@ -69,16 +70,18 @@ export default class TagsController {
 
     await tag.save()
 
+    session.flash('success', 'Tag modifié avec succès')
     return response.redirect().toRoute('TagsController.show', { id: tag.id })
   }
 
-  public async destroy({ response, bouncer, params }: HttpContextContract) {
+  public async destroy({ response, bouncer, params, session }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('delete')
 
     const tag = await Tag.findOrFail(params.id)
 
     await tag.delete()
 
+    session.flash('success', 'Tag supprimé avec succès')
     return response.redirect().toRoute('TagsController.index')
   }
 }

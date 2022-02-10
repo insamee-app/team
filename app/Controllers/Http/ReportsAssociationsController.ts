@@ -14,7 +14,7 @@ export default class ReportsAssociationsController {
     return view.render('pages/associations/reports/create', { reasons })
   }
 
-  public async store({ response, params, request, auth, bouncer }: HttpContextContract) {
+  public async store({ response, params, request, auth, bouncer, session }: HttpContextContract) {
     await bouncer.with('ReportAssociationPolicy').authorize('create')
 
     const { reasonId, description } = await request.validate(ReportAssociationValidator)
@@ -26,7 +26,7 @@ export default class ReportsAssociationsController {
       .first()
 
     if (report) {
-      // TODO: Afficher un message d'erreur
+      session.flash('error', 'Vous avez déjà signalé cette association')
       return response.redirect().toRoute('AssociationsController.show', { id: params.id })
     }
 
@@ -38,6 +38,7 @@ export default class ReportsAssociationsController {
       entityType: ReportEntity.Association,
     })
 
+    session.flash('success', 'Votre signalement a bien été pris en compte')
     return response.redirect().toRoute('AssociationsController.show', { id: params.id })
   }
 }

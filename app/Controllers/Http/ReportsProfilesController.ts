@@ -14,7 +14,7 @@ export default class ReportsProfilesController {
     return view.render('pages/mee/reports/create', { reasons })
   }
 
-  public async store({ response, params, request, auth, bouncer }: HttpContextContract) {
+  public async store({ response, params, request, auth, bouncer, session }: HttpContextContract) {
     await bouncer.with('ReportProfilePolicy').authorize('create')
 
     const { reasonId, description } = await request.validate(ReportProfileValidator)
@@ -26,7 +26,7 @@ export default class ReportsProfilesController {
       .first()
 
     if (report) {
-      // TODO: Afficher un message d'erreur
+      session.flash('error', 'Vous avez déjà signalé ce profil')
       return response.redirect().toRoute('ProfilesController.show', { id: params.id })
     }
 
@@ -38,6 +38,7 @@ export default class ReportsProfilesController {
       entityType: ReportEntity.Profile,
     })
 
+    session.flash('success', 'Votre signalement a bien été pris en compte')
     return response.redirect().toRoute('ProfilesController.show', { id: params.id })
   }
 }

@@ -18,13 +18,14 @@ export default class RolesController {
     return view.render('pages/roles/create')
   }
 
-  public async store({ response, request, bouncer }: HttpContextContract) {
+  public async store({ response, request, bouncer, session }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('create')
 
     const data = await request.validate(RoleStoreValidator)
 
     const role = await Role.create(data)
 
+    session.flash('success', 'Role créé avec succès')
     return response.redirect().toRoute('RolesController.show', { id: role.id })
   }
 
@@ -44,7 +45,7 @@ export default class RolesController {
     return view.render('pages/roles/edit', { role })
   }
 
-  public async update({ request, response, params, bouncer }: HttpContextContract) {
+  public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('update')
 
     const role = await Role.findOrFail(params.id)
@@ -55,16 +56,18 @@ export default class RolesController {
 
     await role.save()
 
+    session.flash('success', 'Role modifié avec succès')
     return response.redirect().toRoute('RolesController.show', { id: role.id })
   }
 
-  public async destroy({ response, params, bouncer }: HttpContextContract) {
+  public async destroy({ response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('delete')
 
     const role = await Role.findOrFail(params.id)
 
     await role.delete()
 
+    session.flash('success', 'Role supprimé avec succès')
     return response.redirect().toRoute('RolesController.index')
   }
 }
