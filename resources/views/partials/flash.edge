@@ -1,11 +1,29 @@
-@if(flashMessages.has('success'))
-  <div x-data="flash" x-show="open" class="fixed z-20 right-4 left-4 top-20 mx-auto max-w-md border border-blue-600 rounded-lg flex flex-row justify-between items-center space-x-4 p-4 bg-white/95 backdrop-blur shadow-lg" x-transition.origin.top.duration.250ms>
+  @set('border', '')
+  @set('focus', '')
+  @set('color', '')
+@if(flashMessages.has('info'))
+  @set('border', 'border-blue-600')
+  @set('focus', 'focus:ring-blue-600')
+  @set('color', 'text-blue-600')
+@elseif(flashMessages.has('success'))
+  @set('border', 'border-green-600')
+  @set('focus', 'focus:ring-green-600')
+  @set('color', 'text-green-600')
+@elseif(flashMessages.has('error'))
+  @set('border', 'border-red-600')
+  @set('focus', 'focus:ring-red-600')
+  @set('color', 'text-red-600')
+@end
+
+
+@if(flashMessages.has('info') || flashMessages.has('success') || flashMessages.has('error'))
+  <div x-data="flash" x-show="open" class="fixed z-20 right-4 left-4 top-20 mx-auto max-w-md border {{ border }} rounded-lg flex flex-row justify-between items-start space-x-4 p-4 bg-white/95 backdrop-blur shadow-lg" x-transition.origin.top.duration.250ms>
     <span>
-      {{ flashMessages.get('success') }}
+      {{ flashMessages.get('info') || flashMessages.get('success') || flashMessages.get('error') }}
     </span>
-    <button x-on:click="close" class="focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 rounded">
+    <button x-on:click="close" class="focus-within:outline-none focus:ring-2 focus:ring-offset-2 {{ focus }} rounded">
       @!icons.x({
-        class: 'w-6 h-6 text-blue-600 fill-current',
+        class: `w-6 h-6 ${color} fill-current`,
         'aria-label': 'Close button'
       })
     </button>
