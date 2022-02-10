@@ -39,7 +39,7 @@ export default class AssociationsController {
     return view.render('pages/associations/create', { schools, thematics, tags })
   }
 
-  public async store({ request, response, bouncer }: HttpContextContract) {
+  public async store({ request, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('create')
 
     const { tags, ...payload } = await request.validate(AssociationStoreValidator)
@@ -47,6 +47,7 @@ export default class AssociationsController {
     const association = await Association.create(payload)
     await association.related('tags').sync(tags || [])
 
+    session.flash('success', 'Association créée avec succès')
     return response.redirect().toRoute('AssociationsController.show', { id: association.id })
   }
 
@@ -83,7 +84,7 @@ export default class AssociationsController {
     return view.render('pages/associations/edit', { association, schools, thematics, tags })
   }
 
-  public async update({ request, response, params, bouncer }: HttpContextContract) {
+  public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('update')
 
     const association = await Association.findOrFail(params.id)
@@ -94,10 +95,11 @@ export default class AssociationsController {
     await association.save()
     await association.related('tags').sync(tags || [])
 
+    session.flash('success', 'Association modifiée avec succès')
     return response.redirect().toRoute('AssociationsController.show', { id: association.id })
   }
 
-  public async destroy({ params, response, bouncer }: HttpContextContract) {
+  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('delete')
 
     const association = await Association.findOrFail(params.id)
@@ -105,6 +107,7 @@ export default class AssociationsController {
     await association.related('tags').detach()
     await association.delete()
 
+    session.flash('success', 'Association supprimée avec succès')
     return response.redirect().toRoute('AssociationsController.index')
   }
 }

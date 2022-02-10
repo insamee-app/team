@@ -18,13 +18,14 @@ export default class ReasonsController {
     return view.render('pages/reasons/create')
   }
 
-  public async store({ response, request, bouncer }: HttpContextContract) {
+  public async store({ response, request, bouncer, session }: HttpContextContract) {
     await bouncer.with('ReasonPolicy').authorize('create')
 
     const data = await request.validate(ReasonStoreValidator)
 
     const reason = await Reason.create(data)
 
+    session.flash('success', 'Raison créée avec succès')
     return response.redirect().toRoute('ReasonsController.show', { id: reason.id })
   }
 
@@ -44,7 +45,7 @@ export default class ReasonsController {
     return view.render('pages/reasons/edit', { reason })
   }
 
-  public async update({ request, response, params, bouncer }: HttpContextContract) {
+  public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('ReasonPolicy').authorize('update')
 
     const reason = await Reason.findOrFail(params.id)
@@ -55,16 +56,18 @@ export default class ReasonsController {
 
     await reason.save()
 
+    session.flash('success', 'Raison modifiée avec succès')
     return response.redirect().toRoute('ReasonsController.show', { id: reason.id })
   }
 
-  public async destroy({ params, response, bouncer }: HttpContextContract) {
+  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('ReasonPolicy').authorize('delete')
 
     const reason = await Reason.findOrFail(params.id)
 
     await reason.delete()
 
+    session.flash('success', 'Raison supprimée avec succès')
     return response.redirect().toRoute('ReasonsController.index')
   }
 }

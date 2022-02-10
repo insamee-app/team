@@ -28,13 +28,14 @@ export default class SchoolsController {
     return view.render('pages/schools/create')
   }
 
-  public async store({ response, request, bouncer }: HttpContextContract) {
+  public async store({ response, request, bouncer, session }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('create')
 
     const payload = await request.validate(SchoolStoreValidator)
 
     const school = await School.create(payload)
 
+    session.flash('success', 'Ecole créée avec succès')
     response.redirect().toRoute('SchoolsController.show', { id: school.id })
   }
 
@@ -69,7 +70,7 @@ export default class SchoolsController {
     return view.render('pages/schools/edit', { school })
   }
 
-  public async update({ params, request, response, bouncer }: HttpContextContract) {
+  public async update({ params, request, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('update')
 
     const payload = await request.validate(SchoolUpdateValidator)
@@ -80,16 +81,18 @@ export default class SchoolsController {
 
     await school.save()
 
+    session.flash('success', 'Ecole modifiée avec succès')
     response.redirect().toRoute('SchoolsController.show', { id: school.id })
   }
 
-  public async destroy({ params, response, bouncer }: HttpContextContract) {
+  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('delete')
 
     const school = await School.findOrFail(params.id)
 
     await school.delete()
 
+    session.flash('success', 'Ecole supprimée avec succès')
     response.redirect().toRoute('SchoolsController.index')
   }
 }

@@ -20,13 +20,14 @@ export default class ThematicsController {
     return view.render('pages/thematics/create')
   }
 
-  public async store({ request, bouncer, response }: HttpContextContract) {
+  public async store({ request, bouncer, response, session }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('create')
 
     const data = await request.validate(ThematicStoreValidator)
 
     const thematic = await Thematic.create(data)
 
+    session.flash('success', 'Thématique créée avec succès')
     return response.redirect().toRoute('ThematicsController.show', { id: thematic.id })
   }
 
@@ -58,7 +59,7 @@ export default class ThematicsController {
     return view.render('pages/thematics/edit', { thematic })
   }
 
-  public async update({ request, response, bouncer, params }: HttpContextContract) {
+  public async update({ request, response, bouncer, params, session }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('update')
 
     const thematic = await Thematic.findOrFail(params.id)
@@ -69,16 +70,18 @@ export default class ThematicsController {
 
     await thematic.save()
 
+    session.flash('success', 'Thématique modifiée avec succès')
     return response.redirect().toRoute('ThematicsController.show', { id: thematic.id })
   }
 
-  public async destroy({ response, bouncer, params }: HttpContextContract) {
+  public async destroy({ response, bouncer, params, session }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('delete')
 
     const thematic = await Thematic.findOrFail(params.id)
 
     await thematic.delete()
 
+    session.flash('success', 'Thématique supprimée avec succès')
     return response.redirect().toRoute('ThematicsController.index')
   }
 }

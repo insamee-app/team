@@ -14,7 +14,7 @@ export default class SchoolsBannersController {
     })
   }
 
-  public async update({ params, request, response, bouncer }: HttpContextContract) {
+  public async update({ params, request, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('update')
 
     const school = await School.findOrFail(params.id)
@@ -25,10 +25,11 @@ export default class SchoolsBannersController {
 
     await school.save()
 
+    session.flash('success', "Bannière de l'école mise à jour avec succès")
     return response.redirect().toRoute('SchoolsController.show', { id: params.id })
   }
 
-  public async destroy({ params, response, bouncer }: HttpContextContract) {
+  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('delete')
 
     const school = await School.findOrFail(params.id)
@@ -37,6 +38,7 @@ export default class SchoolsBannersController {
 
     await school.save()
 
+    session.flash('success', "Bannière de l'école supprimée avec succès")
     return response.redirect().toRoute('SchoolsController.show', { id: params.id })
   }
 }

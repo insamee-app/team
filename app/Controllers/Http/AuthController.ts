@@ -18,12 +18,18 @@ export default class AuthController {
     return view.render('auth/login')
   }
 
-  public async login({ auth, request, response }: HttpContextContract) {
+  public async login({ auth, request, response, session }: HttpContextContract) {
     const { email, password, rememberMe } = await request.validate(LoginValidator)
 
     await auth.attempt(email, password, rememberMe || false)
 
-    return response.redirect('/')
+    const profile = await auth.user?.related('profile').query().select('first_name').firstOrFail()
+
+    session.flash(
+      'info',
+      `Vous êtes maintenant connecté ${profile!.firstName ? profile!.firstName : ''}`
+    )
+    return response.redirect().toRoute('ProfilesController.index')
   }
 
   public async showRegisterForm({ view }: HttpContextContract) {
@@ -52,7 +58,7 @@ export default class AuthController {
     new EmailValidation(user, profile, `${Env.get('APP_URL')}${url}`).sendLater()
 
     session.flash('success', `Un email de confirmation vous a été envoyé`)
-    return response.redirect('/')
+    return response.redirect().toRoute('home')
   }
 
   public async logout({ auth, response }: HttpContextContract) {
@@ -64,7 +70,7 @@ export default class AuthController {
   public async validateUser({ auth, request, response, session, params }: HttpContextContract) {
     if (!request.hasValidSignature()) {
       session.flash('error', `Ce lien n'est pas valide`)
-      return response.redirect().toPath('/')
+      return response.redirect().toRoute('home')
     }
 
     const id = params.id
@@ -79,10 +85,14 @@ export default class AuthController {
       await auth.login(user)
 
       new Welcome(user, profile, `${Env.get('APP_URL')}`).sendLater()
+
+      session.flash('success', `Votre compte a été validé avec succès`)
+      return response.redirect().toRoute('ProfilesController.index')
     }
 
-    session.flash('success', `Votre compte a été validé avec succès`)
-    return response.redirect('/')
+    session.flash('info', `Votre compte a déjà été validé`)
+    if (auth.isLoggedIn) return response.redirect().toRoute('ProfilesController.index')
+    else return response.redirect().toRoute('home')
   }
 
   public async showSendVerifyEmailForm({ view }: HttpContextContract) {
@@ -106,7 +116,7 @@ export default class AuthController {
     new EmailValidation(user!, profile, `${Env.get('APP_URL')}${url}`).sendLater()
 
     session.flash('success', `Un email de confirmation vous a été envoyé`)
-    return response.redirect('/')
+    return response.redirect().toRoute('home')
   }
 
   public async showSendResetPasswordForm({ view }: HttpContextContract) {
@@ -130,7 +140,7 @@ export default class AuthController {
     new ResetPassword(user!, profile, `${Env.get('APP_URL')}${url}`).sendLater()
 
     session.flash('success', `Un email de réinitialisation de mot de passe vous a été envoyé`)
-    return response.redirect('/')
+    return response.redirect().toRoute('home')
   }
 
   public async showChangePasswordForm({ view, params }: HttpContextContract) {
@@ -146,6 +156,6 @@ export default class AuthController {
     await user!.save()
 
     session.flash('success', `Votre mot de passe a été modifié avec succès`)
-    response.redirect('/')
+    response.redirect().toRoute('home')
   }
 }

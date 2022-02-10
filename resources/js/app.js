@@ -185,4 +185,20 @@ Alpine.data('select', (data, selectedData = '') => ({
   },
 }))
 
+Alpine.data('flash', () => ({
+  open: false,
+  timeout: null,
+  // Automatically close after 7 seconds
+  init() {
+    this.open = true
+    this.timeout = setTimeout(() => {
+      this.open = false
+    }, 7000)
+  },
+  close() {
+    clearTimeout(this.timeout)
+    this.open = false
+  },
+}))
+
 Alpine.start()

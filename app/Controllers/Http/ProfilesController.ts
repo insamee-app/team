@@ -68,7 +68,7 @@ export default class ProfilesController {
     return view.render('pages/mee/edit', { profile, skills, focusInterests, associations, roles })
   }
 
-  public async update({ request, params, response, bouncer }: HttpContextContract) {
+  public async update({ request, params, response, bouncer, session }: HttpContextContract) {
     const profile = await Profile.firstOrFail(params.id)
     await bouncer.with('ProfilePolicy').authorize('update', profile)
 
@@ -83,6 +83,7 @@ export default class ProfilesController {
     await profile?.related('focusInterests').sync(focusInterests || [])
     await profile?.related('associations').sync(associations || [])
 
+    session.flash('success', 'Profil mis à jour avec succès')
     return response.redirect().toRoute('ProfilesController.show', { id: params.id })
   }
 }

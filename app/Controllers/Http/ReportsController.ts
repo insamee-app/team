@@ -63,7 +63,7 @@ export default class ReportsController {
     return view.render('pages/reports/show', { report })
   }
 
-  public async update({ bouncer, response, params }: HttpContextContract) {
+  public async update({ bouncer, response, params, session }: HttpContextContract) {
     await bouncer.with('ReportPolicy').authorize('update')
 
     const report = await Report.query().where('id', params.id).firstOrFail()
@@ -72,6 +72,7 @@ export default class ReportsController {
 
     await report.save()
 
+    session.flash('success', 'Signalement résolu avec succès')
     return response.redirect().toRoute('ReportsController.show', { id: params.id })
   }
 }

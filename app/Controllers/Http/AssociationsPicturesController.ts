@@ -14,7 +14,7 @@ export default class AssociationsPicturesController {
     })
   }
 
-  public async update({ params, request, response, bouncer }: HttpContextContract) {
+  public async update({ params, request, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('update')
 
     const association = await Association.findOrFail(params.id)
@@ -25,10 +25,11 @@ export default class AssociationsPicturesController {
 
     await association.save()
 
+    session.flash('success', "Image de l'association mise à jour avec succès")
     return response.redirect().toRoute('AssociationsController.show', { id: params.id })
   }
 
-  public async destroy({ params, response, bouncer }: HttpContextContract) {
+  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('delete')
 
     const association = await Association.findOrFail(params.id)
@@ -37,6 +38,7 @@ export default class AssociationsPicturesController {
 
     await association.save()
 
+    session.flash('success', "Image de l'association supprimée avec succès")
     return response.redirect().toRoute('AssociationsController.show', { id: params.id })
   }
 }

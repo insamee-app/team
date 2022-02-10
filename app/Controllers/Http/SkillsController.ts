@@ -20,13 +20,14 @@ export default class SkillsController {
     return view.render('pages/skills/create')
   }
 
-  public async store({ response, request, bouncer }: HttpContextContract) {
+  public async store({ response, request, bouncer, session }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('create')
 
     const data = await request.validate(SkillStoreValidator)
 
     const skill = await Skill.create(data)
 
+    session.flash('success', 'Compétence créée avec succès')
     return response.redirect().toRoute('SkillsController.show', { id: skill.id })
   }
 
@@ -53,7 +54,7 @@ export default class SkillsController {
     return view.render('pages/skills/edit', { skill })
   }
 
-  public async update({ request, response, params, bouncer }: HttpContextContract) {
+  public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('update')
 
     const skill = await Skill.findOrFail(params.id)
@@ -64,16 +65,18 @@ export default class SkillsController {
 
     await skill.save()
 
+    session.flash('success', 'Compétence modifiée avec succès')
     return response.redirect().toRoute('SkillsController.show', { id: skill.id })
   }
 
-  public async destroy({ params, response, bouncer }: HttpContextContract) {
+  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('delete')
 
     const skill = await Skill.findOrFail(params.id)
 
     await skill.delete()
 
+    session.flash('success', 'Compétence supprimée avec succès')
     return response.redirect().toRoute('SkillsController.index')
   }
 }

@@ -14,7 +14,7 @@ export default class ReportsSchoolsController {
     return view.render('pages/schools/reports/create', { reasons })
   }
 
-  public async store({ response, params, request, auth, bouncer }: HttpContextContract) {
+  public async store({ response, params, request, auth, bouncer, session }: HttpContextContract) {
     await bouncer.with('ReportSchoolPolicy').authorize('create')
 
     const { reasonId, description } = await request.validate(ReportSchoolValidator)
@@ -26,7 +26,7 @@ export default class ReportsSchoolsController {
       .first()
 
     if (report) {
-      // TODO: Afficher un message d'erreur
+      session.flash('error', 'Vous avez déjà signalé cette école')
       return response.redirect().toRoute('SchoolsController.show', { id: params.id })
     }
 
@@ -38,6 +38,7 @@ export default class ReportsSchoolsController {
       entityType: ReportEntity.School,
     })
 
+    session.flash('success', 'Votre signalement a bien été pris en compte')
     return response.redirect().toRoute('SchoolsController.show', { id: params.id })
   }
 }
