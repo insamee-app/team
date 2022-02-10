@@ -1,5 +1,5 @@
 @if(flashMessages.has('success'))
-  <div x-data="flash" x-show="open" class="absolute z-20 right-4 left-4 top-20 mx-auto max-w-md border border-blue-600 rounded-lg flex flex-row justify-between items-center space-x-4 p-4 bg-white/95 backdrop-blur shadow-lg" x-transition.origin.top.duration.250ms>
+  <div x-data="flash" x-show="open" class="fixed z-20 right-4 left-4 top-20 mx-auto max-w-md border border-blue-600 rounded-lg flex flex-row justify-between items-center space-x-4 p-4 bg-white/95 backdrop-blur shadow-lg" x-transition.origin.top.duration.250ms>
     <span>
       {{ flashMessages.get('success') }}
     </span>
