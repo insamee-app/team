@@ -8,6 +8,10 @@ import {
   HasOne,
   hasMany,
   HasMany,
+  beforeFetch,
+  beforeFind,
+  ModelQueryBuilderContract,
+  beforePaginate,
 } from '@ioc:Adonis/Lucid/Orm'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Profile from './Profile'
@@ -34,6 +38,9 @@ export default class User extends BaseModel {
   public role: UserRole
 
   @column.dateTime({ autoCreate: true })
+  public blockedAt: DateTime | null
+
+  @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
@@ -56,5 +63,47 @@ export default class User extends BaseModel {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }
+  }
+
+  @beforeFind()
+  @beforeFetch()
+  public static ignoreBlocked(query: ModelQueryBuilderContract<typeof User>) {
+    if (query['ignoreBlocked'] === false) {
+      return
+    }
+    query.whereNull(`${query.model.table}.blocked_at`)
+  }
+
+  @beforePaginate()
+  public static ignoreBlockedPaginate([countQuery, query]): void {
+    countQuery['ignoreBlocked'] = query['ignoreBlocked']
+    this.ignoreBlocked(countQuery)
+  }
+
+  public static disableIgnoreBlocked(query: ModelQueryBuilderContract<typeof User>) {
+    if (query['ignoreBlocked'] === false) {
+      return query
+    }
+    query['ignoreBlocked'] = false
+    return query
+  }
+
+  public static withBlocked(this: typeof User) {
+    return this.disableIgnoreBlocked(this.query())
+  }
+
+  public static onlyBlocked(this: typeof User) {
+    const query = this.query()
+    return this.disableIgnoreBlocked(query).whereNotNull(`${query.model.table}.blocked_at`)
+  }
+
+  public async block() {
+    this.blockedAt = DateTime.local()
+    await this.save()
+  }
+
+  public async unblock() {
+    this.blockedAt = null
+    await this.save()
   }
 }
