@@ -33,6 +33,11 @@ export default class ReportsController {
           .select('id')
           .preload('profile', (profile) => profile.select('id', 'lastName', 'firstName'))
       )
+      .preload('resolvedBy', (user) =>
+        user
+          .select('id')
+          .preload('profile', (profile) => profile.select('id', 'lastName', 'firstName'))
+      )
       .firstOrFail()
 
     switch (report.entityType) {
@@ -63,11 +68,12 @@ export default class ReportsController {
     return view.render('pages/reports/show', { report })
   }
 
-  public async update({ bouncer, response, params, session }: HttpContextContract) {
+  public async update({ bouncer, response, params, session, auth }: HttpContextContract) {
     await bouncer.with('ReportPolicy').authorize('update')
 
     const report = await Report.query().where('id', params.id).firstOrFail()
 
+    report.resolvedById = auth.user!.id
     report.resolvedAt = DateTime.local()
 
     await report.save()

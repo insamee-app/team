@@ -122,6 +122,7 @@ export const ReportFactory = Factory.define(Report, ({ faker }) => {
   .relation('profile', () => ProfileFactory)
   .relation('association', () => AssociationFactory)
   .relation('school', () => SchoolFactory)
+  .relation('resolvedBy', () => UserFactory)
   .state('resolved', (report) => (report.resolvedAt = DateTime.local()))
   .state('profile', (report) => (report.entityType = ReportEntity.Profile))
   .state('association', (report) => (report.entityType = ReportEntity.Association))

@@ -14,6 +14,7 @@ export default class Reports extends BaseSchema {
       table.uuid('entity_id').notNullable()
       table.integer('entity_type').unsigned().notNullable()
 
+      table.uuid('resolved_by_id').nullable().references('id').inTable('users')
       table.timestamp('resolved_at', { useTz: true }).nullable()
 
       table.timestamp('created_at', { useTz: true })
