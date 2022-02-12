@@ -1,5 +1,5 @@
 export enum UserRole {
   Member = 1,
-  // TODO: add modo
+  Moderator,
   Admin,
 }
