@@ -6,6 +6,8 @@ import FocusInterest from 'App/Models/FocusInterest'
 import Association from 'App/Models/Association'
 import Report from 'App/Models/Report'
 import Role from 'App/Models/Role'
+import { UserRole } from 'App/Enums/UserRole'
+import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
 
 export default class ProfilesController {
   private PER_PAGE = 10
@@ -32,13 +34,20 @@ export default class ProfilesController {
   public async show({ params, view, bouncer, auth }: HttpContextContract) {
     await bouncer.with('ProfilePolicy').authorize('view')
 
-    const profile = await Profile.query()
+    let queryProfile: ModelQueryBuilderContract<typeof Profile, Profile>
+    if (auth.user!.role === UserRole.Admin)
+      queryProfile = Profile.withBlockedUser().preload(
+        'user',
+        (user) => (user['ignoreBlocked'] = false)
+      )
+    else queryProfile = Profile.query().preload('user')
+
+    const profile = await queryProfile
       .where('id', params.id)
       .preload('school')
       .preload('skills')
       .preload('focusInterests')
       .preload('associations')
-      .preload('user')
       .preload('role')
       .firstOrFail()
     const report = await Report.query()

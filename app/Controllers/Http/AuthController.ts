@@ -21,7 +21,7 @@ export default class AuthController {
   public async login({ auth, request, response, session }: HttpContextContract) {
     const { email, password, rememberMe } = await request.validate(LoginValidator)
 
-    await auth.attempt(email, password, rememberMe || false)
+    await auth.attempt(email.toLowerCase(), password, rememberMe || false)
 
     const profile = await auth.user?.related('profile').query().select('first_name').firstOrFail()
 
@@ -42,7 +42,7 @@ export default class AuthController {
     const host = email.split('@')[1]
     const school = await getSchoolByHost(host)
 
-    const user = await User.create({ email, password })
+    const user = await User.create({ email: email.toLowerCase(), password })
     const profile = await user
       .related('profile')
       .create({ firstName, lastName, schoolId: school!.id, userId: user.id })
@@ -81,7 +81,6 @@ export default class AuthController {
       user.status = UserStatus.Active
       await user.save()
 
-      // Important to prevent blocked users from logging in
       await auth.login(user)
 
       new Welcome(user, profile, `${Env.get('APP_URL')}`).sendLater()
@@ -102,7 +101,7 @@ export default class AuthController {
   public async sendVerifyEmail({ request, response, session }: HttpContextContract) {
     const { email } = await request.validate(SendVerifyEmailValidator)
 
-    const user = await User.findBy('email', email)
+    const user = await User.findBy('email', email.toLowerCase())
     const profile = await user!.related('profile').query().select('first_name').firstOrFail()
 
     const url = Route.makeSignedUrl(
@@ -126,7 +125,7 @@ export default class AuthController {
   public async sendResetPassword({ request, response, session }: HttpContextContract) {
     const { email } = await request.validate(SendResetPasswordValidator)
 
-    const user = await User.findBy('email', email)
+    const user = await User.findBy('email', email.toLowerCase())
     const profile = await user!.related('profile').query().select('first_name').firstOrFail()
 
     const url = Route.makeSignedUrl(

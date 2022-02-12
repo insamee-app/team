@@ -37,7 +37,7 @@ export default class User extends BaseModel {
   @column()
   public role: UserRole
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: false, autoUpdate: false })
   public blockedAt: DateTime | null
 
   @column.dateTime({ autoCreate: true })
