@@ -34,6 +34,7 @@ export default class ProfilesController {
   public async show({ params, view, bouncer, auth }: HttpContextContract) {
     await bouncer.with('ProfilePolicy').authorize('view')
 
+    // A profile, if he's blocked, can only be viewed be an admin
     let queryProfile: ModelQueryBuilderContract<typeof Profile, Profile>
     if (auth.user!.role === UserRole.Admin)
       queryProfile = Profile.withBlockedUser().preload(
