@@ -51,4 +51,48 @@ export default class UsersController {
     session.flash('success', 'Utilisateur débloqué avec succès')
     return response.redirect().toRoute('UsersController.show', { id: user.id })
   }
+
+  public async makeModerator({ response, params, bouncer, session }: HttpContextContract) {
+    await bouncer.with('UserPolicy').authorize('update')
+
+    const user = await User.withBlocked().where('id', params.id).firstOrFail()
+
+    await user.makeModerator()
+
+    session.flash('success', 'Utilisateur promu au role de modérateur')
+    return response.redirect().toRoute('UsersController.show', { id: user.id })
+  }
+
+  public async makeAdmin({ response, params, bouncer, session }: HttpContextContract) {
+    await bouncer.with('UserPolicy').authorize('update')
+
+    const user = await User.withBlocked().where('id', params.id).firstOrFail()
+
+    await user.makeAdmin()
+
+    session.flash('success', "Utilisateur promu au role d'administrateur")
+    return response.redirect().toRoute('UsersController.show', { id: user.id })
+  }
+
+  public async removeModerator({ response, params, bouncer, session }: HttpContextContract) {
+    await bouncer.with('UserPolicy').authorize('update')
+
+    const user = await User.withBlocked().where('id', params.id).firstOrFail()
+
+    await user.makeMember()
+
+    session.flash('success', 'Utilisateur rétrogradé au role de membre')
+    return response.redirect().toRoute('UsersController.show', { id: user.id })
+  }
+
+  public async removeAdmin({ response, params, bouncer, session }: HttpContextContract) {
+    await bouncer.with('UserPolicy').authorize('update')
+
+    const user = await User.withBlocked().where('id', params.id).firstOrFail()
+
+    await user.makeMember()
+
+    session.flash('success', 'Utilisateur rétrogradé au role de membre')
+    return response.redirect().toRoute('UsersController.show', { id: user.id })
+  }
 }

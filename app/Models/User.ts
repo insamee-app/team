@@ -106,4 +106,19 @@ export default class User extends BaseModel {
     this.blockedAt = null
     await this.save()
   }
+
+  public async makeAdmin() {
+    this.role = UserRole.Admin
+    await this.save()
+  }
+
+  public async makeModerator() {
+    this.role = UserRole.Moderator
+    await this.save()
+  }
+
+  public async makeMember() {
+    this.role = UserRole.Member
+    await this.save()
+  }
 }

@@ -38,6 +38,8 @@
               <span class="py-1 px-2 bg-slate-200 font-bold rounded-full">
                 @if (user.role === UserRole.Admin)
                   Admin
+                @elseif (user.role === UserRole.Modérateur)
+                  Modérateur
                 @elseif (user.role === UserRole.Member)
                   Member
                 @endif
