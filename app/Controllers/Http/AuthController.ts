@@ -101,7 +101,7 @@ export default class AuthController {
   public async sendVerifyEmail({ request, response, session }: HttpContextContract) {
     const { email } = await request.validate(SendVerifyEmailValidator)
 
-    const user = await User.findBy('email', email.toLowerCase())
+    const user = await User.query().where('email', email.toLowerCase()).firstOrFail()
     const profile = await user!.related('profile').query().select('first_name').firstOrFail()
 
     const url = Route.makeSignedUrl(
@@ -125,7 +125,7 @@ export default class AuthController {
   public async sendResetPassword({ request, response, session }: HttpContextContract) {
     const { email } = await request.validate(SendResetPasswordValidator)
 
-    const user = await User.findBy('email', email.toLowerCase())
+    const user = await User.query().where('email', email.toLowerCase()).firstOrFail()
     const profile = await user!.related('profile').query().select('first_name').firstOrFail()
 
     const url = Route.makeSignedUrl(

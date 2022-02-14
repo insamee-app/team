@@ -79,16 +79,19 @@ export default class ProfilesController {
   }
 
   public async update({ request, params, response, bouncer, session }: HttpContextContract) {
-    const profile = await Profile.firstOrFail(params.id)
+    const profile = await Profile.query().where('id', params.id).firstOrFail()
     await bouncer.with('ProfilePolicy').authorize('update', profile)
 
     const { skills, focusInterests, associations, ...payload } = await request.validate(
       ProfileValidator
     )
 
+    console.log(payload)
+
     profile!.merge(payload)
 
     await profile!.save()
+    console.log(profile.$isPersisted)
     await profile?.related('skills').sync(skills || [])
     await profile?.related('focusInterests').sync(focusInterests || [])
     await profile?.related('associations').sync(associations || [])

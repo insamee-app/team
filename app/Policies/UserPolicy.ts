@@ -11,12 +11,12 @@ export default class UserPolicy extends BasePolicy {
     }
   }
 
-  public async viewList() {
-    return false
+  public async viewList(user: User) {
+    return user.role === UserRole.Moderator
   }
 
-  public async view() {
-    return false
+  public async view(user: User) {
+    return user.role === UserRole.Moderator
   }
 
   public async create() {
@@ -29,5 +29,13 @@ export default class UserPolicy extends BasePolicy {
 
   public async delete() {
     return false
+  }
+
+  public async block(user: User) {
+    return user.role === UserRole.Moderator
+  }
+
+  public async unblock(user: User) {
+    return user.role === UserRole.Moderator
   }
 }

@@ -55,6 +55,7 @@ export default class AssociationsController {
     await bouncer.with('AssociationPolicy').authorize('view')
 
     const association = await Association.query()
+      .where('id', params.id)
       .preload('school')
       .preload('thematic')
       .preload('tags')

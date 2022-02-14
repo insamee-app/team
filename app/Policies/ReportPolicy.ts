@@ -11,20 +11,20 @@ export default class ReportPolicy extends BasePolicy {
     }
   }
 
-  public async viewList() {
-    return false
+  public async viewList(user: User) {
+    return user.role === UserRole.Moderator
   }
 
-  public async view() {
-    return false
+  public async view(user: User) {
+    return user.role === UserRole.Moderator
   }
 
   public async create() {
     return false
   }
 
-  public async update() {
-    return false
+  public async update(user: User) {
+    return user.role === UserRole.Moderator
   }
 
   public async delete() {

@@ -23,7 +23,7 @@ export default class ReportsController {
   }
 
   public async show({ bouncer, view, params }: HttpContextContract) {
-    await bouncer.with('ReportPolicy').authorize('create')
+    await bouncer.with('ReportPolicy').authorize('view')
 
     const report = await Report.query()
       .where('id', params.id)

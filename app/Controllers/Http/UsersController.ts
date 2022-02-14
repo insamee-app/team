@@ -31,7 +31,7 @@ export default class UsersController {
   }
 
   public async block({ response, params, bouncer, session }: HttpContextContract) {
-    await bouncer.with('UserPolicy').authorize('update')
+    await bouncer.with('UserPolicy').authorize('block')
 
     const user = await User.withBlocked().where('id', params.id).firstOrFail()
 
@@ -42,7 +42,7 @@ export default class UsersController {
   }
 
   public async unblock({ response, params, bouncer, session }: HttpContextContract) {
-    await bouncer.with('UserPolicy').authorize('update')
+    await bouncer.with('UserPolicy').authorize('unblock')
 
     const user = await User.withBlocked().where('id', params.id).firstOrFail()
 

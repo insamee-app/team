@@ -5,7 +5,7 @@ import AssociationPictureValidator from 'App/Validators/AssociationPictureValida
 
 export default class AssociationsPicturesController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
-    await bouncer.with('AssociationPolicy').authorize('update')
+    await bouncer.with('AssociationPicturePolicy').authorize('update')
 
     const association = await Association.findOrFail(params.id)
 
@@ -15,7 +15,7 @@ export default class AssociationsPicturesController {
   }
 
   public async update({ params, request, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('AssociationPolicy').authorize('update')
+    await bouncer.with('AssociationPicturePolicy').authorize('update')
 
     const association = await Association.findOrFail(params.id)
 
@@ -30,7 +30,7 @@ export default class AssociationsPicturesController {
   }
 
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('AssociationPolicy').authorize('delete')
+    await bouncer.with('AssociationPicturePolicy').authorize('delete')
 
     const association = await Association.findOrFail(params.id)
 
