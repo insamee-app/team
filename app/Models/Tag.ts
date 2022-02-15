@@ -1,7 +1,8 @@
-import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import AppSoftDeletes from './AppSoftDeletes'
 import Association from './Association'
 
-export default class Tag extends BaseModel {
+export default class Tag extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 

@@ -1,11 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Profile from './Profile'
 import Association from './Association'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 import Report from './Report'
+import AppSoftDeletes from './AppSoftDeletes'
 
-export default class School extends BaseModel {
+export default class School extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 

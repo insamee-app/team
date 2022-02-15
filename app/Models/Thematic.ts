@@ -1,7 +1,8 @@
-import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import AppSoftDeletes from './AppSoftDeletes'
 import Association from './Association'
 
-export default class Thematic extends BaseModel {
+export default class Thematic extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 

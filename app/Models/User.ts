@@ -3,7 +3,6 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import {
   column,
   beforeSave,
-  BaseModel,
   hasOne,
   HasOne,
   hasMany,
@@ -17,8 +16,9 @@ import { UserStatus } from 'App/Enums/UserStatus'
 import Profile from './Profile'
 import { UserRole } from 'App/Enums/UserRole'
 import Report from './Report'
+import AppSoftDeletes from './AppSoftDeletes'
 
-export default class User extends BaseModel {
+export default class User extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 

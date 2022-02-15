@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
 import {
-  BaseModel,
   beforeFetch,
   beforeFind,
   beforePaginate,
@@ -21,8 +20,9 @@ import FocusInterest from './FocusInterest'
 import Association from './Association'
 import Report from './Report'
 import Role from './Role'
+import AppSoftDeletes from './AppSoftDeletes'
 
-export default class Profile extends BaseModel {
+export default class Profile extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 
