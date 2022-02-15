@@ -16,6 +16,7 @@ export default class Profiles extends BaseSchema {
       table.uuid('user_id').notNullable().references('id').inTable('users')
       table.uuid('school_id').notNullable().references('id').inTable('schools')
 
+      table.timestamp('deleted_at', { useTz: true }).nullable()
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
