@@ -1,4 +1,4 @@
-@can(policy + '.destroy')
+@if(await bouncer.with(policy).allows('delete', item))
   <div class="mt-8 text-right text-sm">
     @set('action', '')
     @if(item.deleted_at)

@@ -10,7 +10,7 @@
 
   <div class="flex flex-row justify-between items-center mt-2">
     <h1 class="text-2xl font-bold">{{ tag.name }}</h1>
-    @can('TagPolicy.udpate')
+    @can('TagPolicy.update')
       <a href="{{ route('TagsController.edit', { id: tag.id}) }}" class="px-2 py-1 text-white bg-associations-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">Modifier</a>
     @end
   </div>

@@ -129,6 +129,7 @@
   @if(auth.user.id === profile.user.id)
     @set('end', 'mon profil')
   @end
+
   @!shared.delete({
     item: profile.user,
     policy: 'UserPolicy',
