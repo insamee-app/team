@@ -27,8 +27,8 @@ export default class UserPolicy extends BasePolicy {
     return false
   }
 
-  public async delete() {
-    return false
+  public async delete(user: User, target: User) {
+    return user.id === target.id
   }
 
   public async block(user: User) {

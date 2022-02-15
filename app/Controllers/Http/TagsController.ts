@@ -36,7 +36,7 @@ export default class TagsController {
 
     const page = request.input('page', 1)
 
-    const tag = await Tag.findOrFail(params.id)
+    const tag = await Tag.query().where(params.id).firstOrFail()
     const associations = await tag
       .related('associations')
       .query()
@@ -54,7 +54,7 @@ export default class TagsController {
   public async edit({ view, bouncer, params }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('update')
 
-    const tag = await Tag.findOrFail(params.id)
+    const tag = await Tag.query().where(params.id).firstOrFail()
 
     return view.render('pages/tags/edit', { tag })
   }
@@ -62,7 +62,7 @@ export default class TagsController {
   public async update({ request, response, bouncer, params, session }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('update')
 
-    const tag = await Tag.findOrFail(params.id)
+    const tag = await Tag.query().where(params.id).firstOrFail()
 
     const data = await request.validate(TagUpdateValidator)
 
@@ -77,7 +77,7 @@ export default class TagsController {
   public async destroy({ response, bouncer, params, session }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('delete')
 
-    const tag = await Tag.findOrFail(params.id)
+    const tag = await Tag.query().where(params.id).firstOrFail()
 
     await tag.delete()
 

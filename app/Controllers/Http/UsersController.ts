@@ -30,6 +30,17 @@ export default class UsersController {
     return view.render('pages/users/show', { user })
   }
 
+  public async destroy({ response, params, bouncer, session }: HttpContextContract) {
+    const user = await User.withBlocked().where('id', params.id).firstOrFail()
+
+    await bouncer.with('UserPolicy').authorize('delete', user)
+
+    await user.delete()
+
+    session.flash('success', 'Compte supprimé avec succès')
+    return response.redirect().toRoute('home')
+  }
+
   public async block({ response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('UserPolicy').authorize('block')
 

@@ -32,7 +32,7 @@ export default class ReasonsController {
   public async show({ view, params, bouncer }: HttpContextContract) {
     await bouncer.with('ReasonPolicy').authorize('view')
 
-    const reason = await Reason.findOrFail(params.id)
+    const reason = await Reason.query().where(params.id).firstOrFail()
 
     return view.render('pages/reasons/show', { reason })
   }
@@ -40,7 +40,7 @@ export default class ReasonsController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
     await bouncer.with('ReasonPolicy').authorize('update')
 
-    const reason = await Reason.findOrFail(params.id)
+    const reason = await Reason.query().where(params.id).firstOrFail()
 
     return view.render('pages/reasons/edit', { reason })
   }
@@ -48,7 +48,7 @@ export default class ReasonsController {
   public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('ReasonPolicy').authorize('update')
 
-    const reason = await Reason.findOrFail(params.id)
+    const reason = await Reason.query().where(params.id).firstOrFail()
 
     const data = await request.validate(ReasonUpdateValidator)
 
@@ -63,7 +63,7 @@ export default class ReasonsController {
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('ReasonPolicy').authorize('delete')
 
-    const reason = await Reason.findOrFail(params.id)
+    const reason = await Reason.query().where(params.id).firstOrFail()
 
     await reason.delete()
 

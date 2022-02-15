@@ -36,7 +36,7 @@ export default class SkillsController {
 
     const page = request.input('page')
 
-    const skill = await Skill.findOrFail(params.id)
+    const skill = await Skill.query().where(params.id).firstOrFail()
     const profiles = await skill
       .related('profiles')
       .query()
@@ -49,7 +49,7 @@ export default class SkillsController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('update')
 
-    const skill = await Skill.findOrFail(params.id)
+    const skill = await Skill.query().where(params.id).firstOrFail()
 
     return view.render('pages/skills/edit', { skill })
   }
@@ -57,7 +57,7 @@ export default class SkillsController {
   public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('update')
 
-    const skill = await Skill.findOrFail(params.id)
+    const skill = await Skill.query().where(params.id).firstOrFail()
 
     const data = await request.validate(SkillUpdateValidator)
 
@@ -72,7 +72,7 @@ export default class SkillsController {
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('delete')
 
-    const skill = await Skill.findOrFail(params.id)
+    const skill = await Skill.query().where(params.id).firstOrFail()
 
     await skill.delete()
 

@@ -1,14 +1,13 @@
 import { DateTime } from 'luxon'
-import { BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Reason from './Reason'
 import User from './User'
 import Association from './Association'
 import School from './School'
 import { ReportEntity } from 'App/Enums/ReportEntity'
 import Profile from './Profile'
-import AppSoftDeletes from './AppSoftDeletes'
 
-export default class Report extends AppSoftDeletes {
+export default class Report extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
