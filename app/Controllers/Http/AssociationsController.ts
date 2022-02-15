@@ -21,7 +21,7 @@ export default class AssociationsController {
     const associations = await Association.query()
       .preload('school')
       .preload('thematic')
-      .preload('tags', (tags) => tags.groupLimit(3))
+      .preload('tags')
       .paginate(page, this.PER_PAGE)
 
     associations.baseUrl(request.url())

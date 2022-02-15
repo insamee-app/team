@@ -15,6 +15,13 @@
     @end
   </div>
 
+  @!shared.delete({
+    item: skill,
+    policy: 'SkillPolicy',
+    controller: 'SkillsController',
+    end: "la compétence"
+  })
+
   <section class="flex flex-col mt-8">
     <h2 class="font-bold text-xl">
       Mee associés

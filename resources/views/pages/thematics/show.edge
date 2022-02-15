@@ -15,8 +15,14 @@
     @end
   </div>
 
+  @!shared.delete({
+    item: thematic,
+    policy: 'ThematicPolicy',
+    controller: 'ThematicsController',
+    end: "la thématique"
+  })
 
-    <section class="flex flex-col mt-8">
+  <section class="flex flex-col mt-8">
     <h2 class="font-bold text-xl">
       Associations associées
     </h2>

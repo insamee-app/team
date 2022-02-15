@@ -81,11 +81,10 @@
     </section>
   @end
 
-  <div class="mt-8 flex flex-row justify-end text-sm italic text-slate-500">
-    @unless(report)
-      <a href="{{ route('ReportsSchoolsController.create', { id: school.id }) }}">Signaler l'école</a>
-    @else
-      <span>Vous avez déjà signalé l'école</span>
-    @end
-  </div>
+  @!shared.report({
+    report,
+    id: school.id,
+    controller: 'ReportsSchoolsController',
+    end: "l'école"
+  })
 @end

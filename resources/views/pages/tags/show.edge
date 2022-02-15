@@ -15,8 +15,14 @@
     @end
   </div>
 
+  @!shared.delete({
+    item: tag,
+    policy: 'TagPolicy',
+    controller: 'TagsController',
+    end: "le tag"
+  })
 
-    <section class="flex flex-col mt-8">
+  <section class="flex flex-col mt-8">
     <h2 class="font-bold text-xl">
       Associations associées
     </h2>

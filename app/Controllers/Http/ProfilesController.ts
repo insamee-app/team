@@ -22,7 +22,7 @@ export default class ProfilesController {
     const page = request.input('page', 1)
 
     const profiles = await Profile.query()
-      .preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
+      .preload('focusInterests')
       .preload('role')
       .paginate(page, this.PER_PAGE)
 

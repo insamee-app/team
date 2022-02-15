@@ -12,7 +12,9 @@
         width: '112',
         height: '112'
       })
-      <span class="absolute left-1/2 bottom-0 px-2 py-1 rounded-full border-2 border-white bg-mee-primary-grey-light text-mee-primary-base text-sm whitespace-nowrap">{{ profile.role.name }}</span>
+      @if(profile.role)
+        <span class="absolute left-1/2 bottom-0 px-2 py-1 rounded-full border-2 border-white bg-mee-primary-grey-light text-mee-primary-base text-sm whitespace-nowrap">{{ profile.role.name }}</span>
+      @endif
     </div>
     <h3 class="flex flex-col space-y-2 font-bold text-xl text-mee-primary-dark">
       <span>{{ profile.firstName }}</span>
@@ -24,8 +26,11 @@
   @end
   @if(profile.focusInterests.length)
     <ul class="flex flex-row gap-2 flex-wrap">
-      @each(focusInterest in profile.focusInterests)
-        <li class="text-sm text-mee-primary-base bg-mee-primary-grey-light rounded-full px-2 py-1">{{focusInterest.name}}</li>
+      @each((focusInterest, index) in profile.focusInterests)
+        {{--  Use this because groupLimit doesn't work with soft delete  --}}
+        @if(index < 3)
+          <li class="text-sm text-mee-primary-base bg-mee-primary-grey-light rounded-full px-2 py-1">{{focusInterest.name}}</li>
+        @end
       @endeach
     </ul>
   @end

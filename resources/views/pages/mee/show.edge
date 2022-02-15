@@ -116,11 +116,23 @@
       @end
   </article>
 
-  <div class="mt-8 flex flex-row justify-end text-sm italic text-slate-500">
-    @unless(report)
-      <a href="{{ route('ReportsProfilesController.create', { id: profile.id }) }}">Signaler le profil</a>
-    @else
-      <span>Vous avez déjà signalé le profil</span>
-    @end
-  </div>
+  @unless(auth.user.id === profile.user.id)
+    @!shared.report({
+      report,
+      id: profile.id,
+      controller: 'ReportsProfilesController',
+      end: "le profil"
+    })
+  @end
+
+  @set('end', 'l\'utilisateur')
+  @if(auth.user.id === profile.user.id)
+    @set('end', 'mon profil')
+  @end
+  @!shared.delete({
+    item: profile.user,
+    policy: 'UserPolicy',
+    controller: 'UsersController',
+    end
+  })
 @end

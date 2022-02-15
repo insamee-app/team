@@ -36,11 +36,11 @@ export default class SkillsController {
 
     const page = request.input('page')
 
-    const skill = await Skill.query().where(params.id).firstOrFail()
+    const skill = await Skill.query().where('id', params.id).firstOrFail()
     const profiles = await skill
       .related('profiles')
       .query()
-      .preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
+      .preload('focusInterests')
       .paginate(page, this.PER_PAGE)
 
     return view.render('pages/skills/show', { skill, profiles })
@@ -49,7 +49,7 @@ export default class SkillsController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('update')
 
-    const skill = await Skill.query().where(params.id).firstOrFail()
+    const skill = await Skill.query().where('id', params.id).firstOrFail()
 
     return view.render('pages/skills/edit', { skill })
   }
@@ -57,7 +57,7 @@ export default class SkillsController {
   public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('update')
 
-    const skill = await Skill.query().where(params.id).firstOrFail()
+    const skill = await Skill.query().where('id', params.id).firstOrFail()
 
     const data = await request.validate(SkillUpdateValidator)
 
@@ -72,7 +72,7 @@ export default class SkillsController {
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('delete')
 
-    const skill = await Skill.query().where(params.id).firstOrFail()
+    const skill = await Skill.query().where('id', params.id).firstOrFail()
 
     await skill.delete()
 

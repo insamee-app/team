@@ -35,6 +35,9 @@ export default class UsersController {
 
     await bouncer.with('UserPolicy').authorize('delete', user)
 
+    const profile = await user.related('profile').query().firstOrFail()
+
+    await profile.delete()
     await user.delete()
 
     session.flash('success', 'Compte supprimé avec succès')

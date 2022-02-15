@@ -21,8 +21,11 @@
   </header>
   <p class="text-justify">{{ excerpt(association.overview, 150) }}</p>
   <ul class="flex flex-row gap-2 flex-wrap">
-    @each(tag in association.tags)
-      <li class="text-sm text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">{{tag.name}}</li>
+    @each((tag, index) in association.tags)
+      {{--  Use this because groupLimit doesn't work with soft delete  --}}
+      @if(index < 3)
+        <li class="text-sm text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">{{tag.name}}</li>
+      @endif
     @endeach
   </ul>
 @end

@@ -36,13 +36,13 @@ export default class ThematicsController {
 
     const page = request.input('page', 1)
 
-    const thematic = await Thematic.query().where(params.id).firstOrFail()
+    const thematic = await Thematic.query().where('id', params.id).firstOrFail()
     const associations = await thematic
       .related('associations')
       .query()
       .preload('school')
       .preload('thematic')
-      .preload('tags', (tags) => tags.groupLimit(3))
+      .preload('tags')
       .orderBy('name', 'asc')
       .paginate(page, this.PER_PAGE)
 
@@ -54,7 +54,7 @@ export default class ThematicsController {
   public async edit({ view, bouncer, params }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('update')
 
-    const thematic = await Thematic.query().where(params.id).firstOrFail()
+    const thematic = await Thematic.query().where('id', params.id).firstOrFail()
 
     return view.render('pages/thematics/edit', { thematic })
   }
@@ -62,7 +62,7 @@ export default class ThematicsController {
   public async update({ request, response, bouncer, params, session }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('update')
 
-    const thematic = await Thematic.query().where(params.id).firstOrFail()
+    const thematic = await Thematic.query().where('id', params.id).firstOrFail()
 
     const data = await request.validate(ThematicUpdateValidator)
 
@@ -77,7 +77,7 @@ export default class ThematicsController {
   public async destroy({ response, bouncer, params, session }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('delete')
 
-    const thematic = await Thematic.query().where(params.id).firstOrFail()
+    const thematic = await Thematic.query().where('id', params.id).firstOrFail()
 
     await thematic.delete()
 
