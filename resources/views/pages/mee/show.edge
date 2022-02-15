@@ -116,7 +116,7 @@
       @end
   </article>
 
-  @unless(auth.user.id === profile.user.id)
+  @if(auth.user.id !== profile.user.id)
     @!shared.report({
       report,
       id: profile.id,

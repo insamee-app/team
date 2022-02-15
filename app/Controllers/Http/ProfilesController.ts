@@ -34,24 +34,39 @@ export default class ProfilesController {
   public async show({ params, view, bouncer, auth }: HttpContextContract) {
     await bouncer.with('ProfilePolicy').authorize('view')
 
-    // A profile, if he's blocked, can only be viewed be an admin
+    // A profile, if he's blocked, can only be viewed by an admin
     let queryProfile: ModelQueryBuilderContract<typeof Profile, Profile>
     if (auth.user!.role === UserRole.Admin)
-      queryProfile = Profile.withBlockedUser().preload(
-        'user',
-        (user) => (user['ignoreBlocked'] = false)
+      queryProfile = Profile.withBlockedUser().preload('user', (user) => {
+        user['ignoreBlocked'] = false
+        user.select('id', 'email', 'deleted_at')
+      })
+    else
+      queryProfile = Profile.query().preload('user', (user) =>
+        user.select('id', 'email', 'deleted_at')
       )
-    else queryProfile = Profile.query().preload('user')
 
     const profile = await queryProfile
+      .select(
+        'id',
+        'first_name',
+        'last_name',
+        'avatar',
+        'graduation_year',
+        'bio',
+        'role_id',
+        'user_id',
+        'school_id'
+      )
       .where('id', params.id)
-      .preload('school')
-      .preload('skills')
-      .preload('focusInterests')
-      .preload('associations')
-      .preload('role')
+      .preload('school', (school) => school.select('id', 'name'))
+      .preload('skills', (skill) => skill.select('id', 'name'))
+      .preload('focusInterests', (focusInterest) => focusInterest.select('id', 'name'))
+      .preload('associations', (association) => association.select('id', 'name', 'picture'))
+      .preload('role', (role) => role.select('id', 'name'))
       .firstOrFail()
     const report = await Report.query()
+      .select('id')
       .where('reporterId', auth.user!.id)
       .where('entityId', params.id)
       .whereNull('resolvedAt')
