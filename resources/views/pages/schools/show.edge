@@ -30,7 +30,7 @@
 
   <div class="flex flex-row justify-between items-center mt-2">
     <h1 class="text-2xl font-bold">{{ school.name }}</h1>
-    @can('SchoolPolicy.udpate')
+    @can('SchoolPolicy.update')
       <a href="{{ route('SchoolsController.edit', { id: school.id}) }}" class="px-2 py-1 text-white bg-slate-500 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Modifier</a>
     @end
   </div>
@@ -81,11 +81,10 @@
     </section>
   @end
 
-  <div class="mt-8 flex flex-row justify-end text-sm italic text-slate-500">
-    @unless(report)
-      <a href="{{ route('ReportsSchoolsController.create', { id: school.id }) }}">Signaler l'école</a>
-    @else
-      <span>Vous avez déjà signalé l'école</span>
-    @end
-  </div>
+  @!shared.report({
+    report,
+    id: school.id,
+    controller: 'ReportsSchoolsController',
+    end: "l'école"
+  })
 @end

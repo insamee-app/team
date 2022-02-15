@@ -10,13 +10,19 @@
 
   <div class="flex flex-row justify-between items-center mt-2">
     <h1 class="text-2xl font-bold">{{ thematic.name }}</h1>
-    @can('ThematicPolicy.udpate')
+    @can('ThematicPolicy.update')
       <a href="{{ route('ThematicsController.edit', { id: thematic.id}) }}" class="px-2 py-1 text-white bg-associations-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">Modifier</a>
     @end
   </div>
 
+  @!shared.delete({
+    item: thematic,
+    policy: 'ThematicPolicy',
+    controller: 'ThematicsController',
+    end: "la thématique"
+  })
 
-    <section class="flex flex-col mt-8">
+  <section class="flex flex-col mt-8">
     <h2 class="font-bold text-xl">
       Associations associées
     </h2>

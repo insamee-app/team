@@ -6,6 +6,8 @@ import FocusInterest from 'App/Models/FocusInterest'
 import Association from 'App/Models/Association'
 import Report from 'App/Models/Report'
 import Role from 'App/Models/Role'
+import { UserRole } from 'App/Enums/UserRole'
+import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
 
 export default class ProfilesController {
   private PER_PAGE = 10
@@ -20,7 +22,7 @@ export default class ProfilesController {
     const page = request.input('page', 1)
 
     const profiles = await Profile.query()
-      .preload('focusInterests', (focusInterest) => focusInterest.groupLimit(3))
+      .preload('focusInterests')
       .preload('role')
       .paginate(page, this.PER_PAGE)
 
@@ -32,16 +34,39 @@ export default class ProfilesController {
   public async show({ params, view, bouncer, auth }: HttpContextContract) {
     await bouncer.with('ProfilePolicy').authorize('view')
 
-    const profile = await Profile.query()
+    // A profile, if he's blocked, can only be viewed by an admin
+    let queryProfile: ModelQueryBuilderContract<typeof Profile, Profile>
+    if (auth.user!.role === UserRole.Admin)
+      queryProfile = Profile.withBlockedUser().preload('user', (user) => {
+        user['ignoreBlocked'] = false
+        user.select('id', 'email', 'deleted_at')
+      })
+    else
+      queryProfile = Profile.query().preload('user', (user) =>
+        user.select('id', 'email', 'deleted_at')
+      )
+
+    const profile = await queryProfile
+      .select(
+        'id',
+        'first_name',
+        'last_name',
+        'avatar',
+        'graduation_year',
+        'bio',
+        'role_id',
+        'user_id',
+        'school_id'
+      )
       .where('id', params.id)
-      .preload('school')
-      .preload('skills')
-      .preload('focusInterests')
-      .preload('associations')
-      .preload('user')
-      .preload('role')
+      .preload('school', (school) => school.select('id', 'name'))
+      .preload('skills', (skill) => skill.select('id', 'name'))
+      .preload('focusInterests', (focusInterest) => focusInterest.select('id', 'name'))
+      .preload('associations', (association) => association.select('id', 'name', 'picture'))
+      .preload('role', (role) => role.select('id', 'name'))
       .firstOrFail()
     const report = await Report.query()
+      .select('id')
       .where('reporterId', auth.user!.id)
       .where('entityId', params.id)
       .whereNull('resolvedAt')
@@ -69,16 +94,19 @@ export default class ProfilesController {
   }
 
   public async update({ request, params, response, bouncer, session }: HttpContextContract) {
-    const profile = await Profile.firstOrFail(params.id)
+    const profile = await Profile.query().where('id', params.id).firstOrFail()
     await bouncer.with('ProfilePolicy').authorize('update', profile)
 
     const { skills, focusInterests, associations, ...payload } = await request.validate(
       ProfileValidator
     )
 
+    console.log(payload)
+
     profile!.merge(payload)
 
     await profile!.save()
+    console.log(profile.$isPersisted)
     await profile?.related('skills').sync(skills || [])
     await profile?.related('focusInterests').sync(focusInterests || [])
     await profile?.related('associations').sync(associations || [])

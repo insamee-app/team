@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
 import {
-  BaseModel,
+  beforeFetch,
+  beforeFind,
+  beforePaginate,
   BelongsTo,
   belongsTo,
   column,
@@ -8,6 +10,7 @@ import {
   hasMany,
   ManyToMany,
   manyToMany,
+  ModelQueryBuilderContract,
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import School from './School'
@@ -17,8 +20,9 @@ import FocusInterest from './FocusInterest'
 import Association from './Association'
 import Report from './Report'
 import Role from './Role'
+import AppSoftDeletes from './AppSoftDeletes'
 
-export default class Profile extends BaseModel {
+export default class Profile extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 
@@ -102,4 +106,32 @@ export default class Profile extends BaseModel {
     foreignKey: 'entityId',
   })
   public reports: HasMany<typeof Report>
+
+  @beforeFind()
+  @beforeFetch()
+  public static ignoreBlockedUser(query: ModelQueryBuilderContract<typeof Profile>) {
+    if (query['ignoreBlocked'] === false) {
+      return
+    }
+
+    query.whereHas('user', (userQuery) => userQuery.whereNull('blocked_at'))
+  }
+
+  @beforePaginate()
+  public static ignoreBlockedUserPaginate([countQuery, query]): void {
+    countQuery['ignoreBlocked'] = query['ignoreBlocked']
+    this.ignoreBlockedUser(countQuery)
+  }
+
+  public static disableIgnoreBlockedUser(query: ModelQueryBuilderContract<typeof Profile>) {
+    if (query['ignoreBlocked'] === false) {
+      return query
+    }
+    query['ignoreBlocked'] = false
+    return query
+  }
+
+  public static withBlockedUser(this: typeof Profile) {
+    return this.disableIgnoreBlockedUser(this.query())
+  }
 }

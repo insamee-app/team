@@ -1,7 +1,8 @@
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import AppSoftDeletes from './AppSoftDeletes'
 import Profile from './Profile'
 
-export default class Role extends BaseModel {
+export default class Role extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 

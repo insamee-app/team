@@ -4,17 +4,19 @@ import User from 'App/Models/User'
 
 export default class RolePolicy extends BasePolicy {
   public async before(user: User) {
+    if (user.blockedAt) return false
+
     if (user.role === UserRole.Admin) {
       return true
     }
   }
 
   public async viewList() {
-    return true
+    return false
   }
 
   public async view() {
-    return true
+    return false
   }
 
   public async create() {

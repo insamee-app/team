@@ -10,10 +10,17 @@
 
   <div class="flex flex-row justify-between items-center mt-2">
     <h1 class="text-2xl font-bold">{{ skill.name }}</h1>
-    @can('SkillPolicy.udpate')
+    @can('SkillPolicy.update')
       <a href="{{ route('SkillsController.edit', { id: skill.id}) }}" class="px-2 py-1 text-white bg-mee-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Modifier</a>
     @end
   </div>
+
+  @!shared.delete({
+    item: skill,
+    policy: 'SkillPolicy',
+    controller: 'SkillsController',
+    end: "la compétence"
+  })
 
   <section class="flex flex-col mt-8">
     <h2 class="font-bold text-xl">

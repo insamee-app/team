@@ -1,19 +1,13 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import AppSoftDeletes from './AppSoftDeletes'
 import Association from './Association'
 
-export default class Tag extends BaseModel {
+export default class Tag extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 
   @column()
   public name: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @manyToMany(() => Association, {
     pivotTable: 'tags_associations',

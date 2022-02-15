@@ -199,16 +199,27 @@
                   x-transition.origin.top
                   class="ml-6 text-slate-500">
                   <ul class="mt-4 flex flex-col space-y-2">
-                    <li>
-                      <a href="{{ route('RolesController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('RolesController.index')) ? 'text-slate-900' : '' }}">
-                        Les roles
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ route('ReportsController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('ReportsController.index')) ? 'text-slate-900' : '' }}">
-                        Les rapports
-                      </a>
-                    </li>
+                    @can('RolePolicy.viewList')
+                      <li>
+                        <a href="{{ route('RolesController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('RolesController.index')) ? 'text-slate-900' : '' }}">
+                          Les roles
+                        </a>
+                      </li>
+                    @end
+                    @can('ReportPolicy.viewList')
+                      <li>
+                        <a href="{{ route('ReportsController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('ReportsController.index')) ? 'text-slate-900' : '' }}">
+                          Les rapports
+                        </a>
+                      </li>
+                    @end
+                    @can('UserPolicy.viewList')
+                      <li>
+                        <a href="{{ route('UsersController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('UsersController.index')) ? 'text-slate-900' : '' }}">
+                          Les utilisateurs
+                        </a>
+                      </li>
+                    @end
                   </ul>
                 </nav>
               </div>

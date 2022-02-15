@@ -35,6 +35,7 @@ Route.get('/home', async ({ view }) => {
 import './routes/static'
 
 import './routes/auth'
+import './routes/users'
 import './routes/profile'
 import './routes/school'
 import './routes/association'

@@ -12,6 +12,7 @@ Route.group(() => {
     'show',
     'edit',
     'update',
+    'destroy',
   ])
 
   Route.get('associations/:id/pictures/edit', 'AssociationsPicturesController.edit')

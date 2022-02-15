@@ -32,7 +32,7 @@ export default class RolesController {
   public async show({ view, params, bouncer }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('view')
 
-    const role = await Role.findOrFail(params.id)
+    const role = await Role.query().where('id', params.id).firstOrFail()
 
     return view.render('pages/roles/show', { role })
   }
@@ -40,7 +40,7 @@ export default class RolesController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('update')
 
-    const role = await Role.findOrFail(params.id)
+    const role = await Role.query().where('id', params.id).firstOrFail()
 
     return view.render('pages/roles/edit', { role })
   }
@@ -48,7 +48,7 @@ export default class RolesController {
   public async update({ request, response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('update')
 
-    const role = await Role.findOrFail(params.id)
+    const role = await Role.query().where('id', params.id).firstOrFail()
 
     const data = await request.validate(RoleUpdateValidator)
 
@@ -63,7 +63,7 @@ export default class RolesController {
   public async destroy({ response, params, bouncer, session }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('delete')
 
-    const role = await Role.findOrFail(params.id)
+    const role = await Role.query().where('id', params.id).firstOrFail()
 
     await role.delete()
 

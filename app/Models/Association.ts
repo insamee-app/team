@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
 import {
-  BaseModel,
   BelongsTo,
   belongsTo,
   column,
@@ -15,8 +14,9 @@ import Thematic from './Thematic'
 import Tag from './Tag'
 import Profile from './Profile'
 import Report from './Report'
+import AppSoftDeletes from './AppSoftDeletes'
 
-export default class Association extends BaseModel {
+export default class Association extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 

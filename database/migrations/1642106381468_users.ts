@@ -17,6 +17,8 @@ export default class UsersSchema extends BaseSchema {
       table.integer('status').unsigned().notNullable().defaultTo(UserStatus.Pending)
       table.integer('role').unsigned().notNullable().defaultTo(UserRole.Member)
 
+      table.timestamp('blocked_at', { useTz: true }).nullable()
+      table.timestamp('deleted_at', { useTz: true }).nullable()
       table.timestamp('created_at', { useTz: true }).notNullable()
       table.timestamp('updated_at', { useTz: true }).notNullable()
     })

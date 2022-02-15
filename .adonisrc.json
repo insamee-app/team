@@ -20,7 +20,9 @@
     "./start/kernel",
     {
       "file": "./start/validator",
-      "environment": ["web"]
+      "environment": [
+        "web"
+      ]
     },
     "./start/bouncer",
     "./start/view"
@@ -35,7 +37,8 @@
     "@adonisjs/auth",
     "@adonisjs/mail",
     "@adonisjs/bouncer",
-    "@adonisjs/attachment-lite"
+    "@adonisjs/attachment-lite",
+    "adonis-lucid-soft-deletes"
   ],
   "metaFiles": [
     {
@@ -47,5 +50,7 @@
       "reloadServer": false
     }
   ],
-  "aceProviders": ["@adonisjs/repl"]
+  "aceProviders": [
+    "@adonisjs/repl"
+  ]
 }

@@ -23,12 +23,17 @@ export default class ReportsController {
   }
 
   public async show({ bouncer, view, params }: HttpContextContract) {
-    await bouncer.with('ReportPolicy').authorize('create')
+    await bouncer.with('ReportPolicy').authorize('view')
 
     const report = await Report.query()
       .where('id', params.id)
       .preload('reason', (reason) => reason.select('name'))
       .preload('reporter', (user) =>
+        user
+          .select('id')
+          .preload('profile', (profile) => profile.select('id', 'lastName', 'firstName'))
+      )
+      .preload('resolvedBy', (user) =>
         user
           .select('id')
           .preload('profile', (profile) => profile.select('id', 'lastName', 'firstName'))
@@ -63,11 +68,12 @@ export default class ReportsController {
     return view.render('pages/reports/show', { report })
   }
 
-  public async update({ bouncer, response, params, session }: HttpContextContract) {
+  public async update({ bouncer, response, params, session, auth }: HttpContextContract) {
     await bouncer.with('ReportPolicy').authorize('update')
 
     const report = await Report.query().where('id', params.id).firstOrFail()
 
+    report.resolvedById = auth.user!.id
     report.resolvedAt = DateTime.local()
 
     await report.save()

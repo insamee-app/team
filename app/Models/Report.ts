@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Reason from './Reason'
 import User from './User'
 import Association from './Association'
@@ -28,6 +28,9 @@ export default class Report extends BaseModel {
 
   @column()
   public entityType: ReportEntity
+
+  @column()
+  public resolvedById: string | null
 
   @column.dateTime({ autoCreate: false })
   public resolvedAt: DateTime | null
@@ -67,4 +70,10 @@ export default class Report extends BaseModel {
     foreignKey: 'entityId',
   })
   public school: BelongsTo<typeof School>
+
+  @belongsTo(() => User, {
+    localKey: 'id',
+    foreignKey: 'resolvedById',
+  })
+  public resolvedBy: BelongsTo<typeof User>
 }

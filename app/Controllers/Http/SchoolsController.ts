@@ -44,7 +44,7 @@ export default class SchoolsController {
 
     const page = request.input('page', 1)
 
-    const school = await School.findOrFail(params.id)
+    const school = await School.query().where('id', params.id).firstOrFail()
     const associations = await school
       .related('associations')
       .query()
@@ -65,7 +65,7 @@ export default class SchoolsController {
   public async edit({ params, view, bouncer }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('update')
 
-    const school = await School.findOrFail(params.id)
+    const school = await School.query().where('id', params.id).firstOrFail()
 
     return view.render('pages/schools/edit', { school })
   }
@@ -75,7 +75,7 @@ export default class SchoolsController {
 
     const payload = await request.validate(SchoolUpdateValidator)
 
-    const school = await School.findOrFail(params.id)
+    const school = await School.query().where('id', params.id).firstOrFail()
 
     school.merge(payload)
 
@@ -88,7 +88,7 @@ export default class SchoolsController {
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('delete')
 
-    const school = await School.findOrFail(params.id)
+    const school = await School.query().where('id', params.id).firstOrFail()
 
     await school.delete()
 

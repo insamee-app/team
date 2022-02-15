@@ -1,5 +1,10 @@
 import View from '@ioc:Adonis/Core/View'
+import { UserRole } from 'App/Enums/UserRole'
+import { UserStatus } from 'App/Enums/UserStatus'
 import User from 'App/Models/User'
+
+View.global('UserRole', UserRole)
+View.global('UserStatus', UserStatus)
 
 View.global('loadCurrentProfile', async function (user: User) {
   await user.load('profile')

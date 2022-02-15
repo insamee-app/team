@@ -2,7 +2,7 @@ import { BasePolicy } from '@ioc:Adonis/Addons/Bouncer'
 import { UserRole } from 'App/Enums/UserRole'
 import User from 'App/Models/User'
 
-export default class ReportPolicy extends BasePolicy {
+export default class UserPolicy extends BasePolicy {
   public async before(user: User) {
     if (user.blockedAt) return false
 
@@ -23,11 +23,19 @@ export default class ReportPolicy extends BasePolicy {
     return false
   }
 
-  public async update(user: User) {
+  public async update() {
+    return false
+  }
+
+  public async delete(user: User, target: User) {
+    return user.id === target.id
+  }
+
+  public async block(user: User) {
     return user.role === UserRole.Moderator
   }
 
-  public async delete() {
-    return false
+  public async unblock(user: User) {
+    return user.role === UserRole.Moderator
   }
 }

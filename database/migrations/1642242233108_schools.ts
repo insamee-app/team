@@ -13,6 +13,7 @@ export default class Schools extends BaseSchema {
       table.string('overview', 2048).nullable()
       table.json('banner').nullable()
 
+      table.timestamp('deleted_at', { useTz: true }).nullable()
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

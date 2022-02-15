@@ -10,8 +10,15 @@
 
   <div class="flex flex-row justify-between items-center mt-2">
     <h1 class="text-2xl font-bold">{{ reason.name }}</h1>
-    @can('ReasonPolicy.udpate')
+    @can('ReasonPolicy.update')
       <a href="{{ route('ReasonsController.edit', { id: reason.id}) }}" class="px-2 py-1 text-white bg-slate-500 shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Modifier</a>
     @end
   </div>
+
+  @!shared.delete({
+    item: reason,
+    policy: 'ReasonPolicy',
+    controller: 'ReasonsController',
+    end: "la raison"
+  })
 @end

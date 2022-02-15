@@ -1,7 +1,8 @@
-import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import AppSoftDeletes from './AppSoftDeletes'
 import Profile from './Profile'
 
-export default class Skill extends BaseModel {
+export default class Skill extends AppSoftDeletes {
   @column({ isPrimary: true })
   public id: string
 
