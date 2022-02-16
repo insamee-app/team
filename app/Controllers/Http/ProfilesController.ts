@@ -10,7 +10,7 @@ import School from 'App/Models/School'
 import Skill from 'App/Models/Skill'
 import ProfileValidator from 'App/Validators/ProfileValidator'
 export default class ProfilesController {
-  private PER_PAGE = 1
+  private PER_PAGE = 10
 
   public async index({ view, request, bouncer, auth }: HttpContextContract) {
     if (auth.isGuest) {
