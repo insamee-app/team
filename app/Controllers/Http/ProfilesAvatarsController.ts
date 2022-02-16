@@ -5,8 +5,8 @@ import ProfileAvatarValidator from 'App/Validators/ProfileAvatarValidator'
 
 export default class ProfilesAvatarsController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
-    const profile = await Profile.firstOrFail(params.id)
-    await bouncer.with('ProfilePolicy').authorize('update', profile)
+    const profile = await Profile.query().where('id', params.id).firstOrFail()
+    await bouncer.with('ProfileAvatarPolicy').authorize('update', profile)
 
     return view.render('pages/mee/avatars/edit', {
       profile,
@@ -14,8 +14,8 @@ export default class ProfilesAvatarsController {
   }
 
   public async update({ params, request, response, bouncer, session }: HttpContextContract) {
-    const profile = await Profile.firstOrFail(params.id)
-    await bouncer.with('ProfilePolicy').authorize('update', profile)
+    const profile = await Profile.query().where('id', params.id).firstOrFail()
+    await bouncer.with('ProfileAvatarPolicy').authorize('update', profile)
 
     const { avatar } = await request.validate(ProfileAvatarValidator)
 
@@ -23,19 +23,19 @@ export default class ProfilesAvatarsController {
 
     await profile.save()
 
-    session.flash('success', "Avatar de l'utilisateur mise à jour avec succès")
+    session.flash('success', 'Avatar mis à jour avec succès')
     return response.redirect().toRoute('ProfilesController.show', { id: params.id })
   }
 
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
-    const profile = await Profile.firstOrFail(params.id)
-    await bouncer.with('ProfilePolicy').authorize('delete', profile)
+    const profile = await Profile.query().where('id', params.id).firstOrFail()
+    await bouncer.with('ProfileAvatarPolicy').authorize('delete', profile)
 
     profile.avatar = null
 
     await profile.save()
 
-    session.flash('success', "Avatar de l'utilisateur supprimé avec succès")
+    session.flash('success', 'Avatar supprimé avec succès')
     return response.redirect().toRoute('ProfilesController.show', { id: params.id })
   }
 }

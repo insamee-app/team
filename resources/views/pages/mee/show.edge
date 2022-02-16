@@ -37,7 +37,7 @@
         @endif
       </div>
 
-       @can('ProfilePolicy.delete', profile.user)
+       @can('ProfilePolicy.delete', profile)
         <a href="{{ route('ProfilesAvatarsController.edit', { id: profile.id }) }}" class="flex flex-row items-center space-x-1 text-mee-primary-base">
           <span>
             Modifier l'avatar
