@@ -1,14 +1,14 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Profile from 'App/Models/Profile'
-import Skill from 'App/Models/Skill'
-import ProfileValidator from 'App/Validators/ProfileValidator'
-import FocusInterest from 'App/Models/FocusInterest'
+import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
+import { UserRole } from 'App/Enums/UserRole'
 import Association from 'App/Models/Association'
+import FocusInterest from 'App/Models/FocusInterest'
+import Profile from 'App/Models/Profile'
 import Report from 'App/Models/Report'
 import Role from 'App/Models/Role'
-import { UserRole } from 'App/Enums/UserRole'
-import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
-
+import School from 'App/Models/School'
+import Skill from 'App/Models/Skill'
+import ProfileValidator from 'App/Validators/ProfileValidator'
 export default class ProfilesController {
   private PER_PAGE = 10
 
@@ -19,16 +19,21 @@ export default class ProfilesController {
 
     await bouncer.with('ProfilePolicy').authorize('viewList')
 
-    const page = request.input('page', 1)
+    const { page = 1, ...qs } = request.qs()
 
     const profiles = await Profile.query()
+      .filter(qs)
       .preload('focusInterests')
       .preload('role')
       .paginate(page, this.PER_PAGE)
 
-    profiles.baseUrl(request.url())
+    profiles.baseUrl(request.url()).queryString(qs)
 
-    return view.render('pages/mee/index', { profiles })
+    const schools = await School.query().select('id', 'name').orderBy('name')
+    const skills = await Skill.query().select('id', 'name').orderBy('name')
+    const focusInterests = await FocusInterest.query().select('id', 'name').orderBy('name')
+
+    return view.render('pages/mee/index', { profiles, schools, skills, focusInterests })
   }
 
   public async show({ params, view, bouncer, auth }: HttpContextContract) {

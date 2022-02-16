@@ -1,4 +1,6 @@
-import { DateTime } from 'luxon'
+import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
+import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
+import { compose } from '@ioc:Adonis/Core/Helpers'
 import {
   BelongsTo,
   belongsTo,
@@ -8,15 +10,18 @@ import {
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
-import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
-import School from './School'
-import Thematic from './Thematic'
-import Tag from './Tag'
+import { DateTime } from 'luxon'
+import AppSoftDeletes from './AppSoftDeletes'
+import AssociationFilter from './Filters/AssociationFilter'
 import Profile from './Profile'
 import Report from './Report'
-import AppSoftDeletes from './AppSoftDeletes'
+import School from './School'
+import Tag from './Tag'
+import Thematic from './Thematic'
 
-export default class Association extends AppSoftDeletes {
+export default class Association extends compose(AppSoftDeletes, Filterable) {
+  public static $filter = () => AssociationFilter
+
   @column({ isPrimary: true })
   public id: string
 
