@@ -21,8 +21,13 @@ import Association from './Association'
 import Report from './Report'
 import Role from './Role'
 import AppSoftDeletes from './AppSoftDeletes'
+import { compose } from '@ioc:Adonis/Core/Helpers'
+import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
+import ProfileFilter from './Filters/ProfileFilter'
 
-export default class Profile extends AppSoftDeletes {
+export default class Profile extends compose(AppSoftDeletes, Filterable) {
+  public static $filter = () => ProfileFilter
+
   @column({ isPrimary: true })
   public id: string
 
