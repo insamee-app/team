@@ -12,6 +12,13 @@
     <h1 class="text-2xl font-bold">Liste des mee</h1>
   </div>
 
+  @!mee.filters({
+    class: 'mt-4',
+    schools,
+    skills,
+    focusInterests,
+  })
+
   <div class="mt-8">
     @shared.list({
       items: profiles

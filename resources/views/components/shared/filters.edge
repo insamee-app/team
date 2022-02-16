@@ -1,0 +1,34 @@
+@set('buttonColor', 'bg-slate-500 text-white focus:ring-slate-500')
+@set('bgColor', 'bg-slate-200')
+
+@if(variant === 'mee')
+  @set('buttonColor', 'bg-mee-primary-base text-white focus:ring-mee-primary-base')
+  @set('bgColor', 'bg-mee-primary-grey-light')
+@elseif(variant === 'associations')
+  @set('buttonColor', 'bg-associations-primary-base text-black focus:ring-associations-primary-base')
+  @set('bgColor', 'bg-associations-primary-grey-light')
+@end
+
+<div x-data="{ showFilters: false }" class="p-4 flex flex-col justify-center items-center rounded-lg {{ bgColor }} {{ $props.class }}">
+  <button x-on:click="showFilters = true" x-show="!showFilters" x-transtion.origin.center class="shadow-sm rounded text-white py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 {{ buttonColor }}" >
+    Voir les filtres
+  </button>
+
+  {{--  Used to show button only if filters are applied  --}}
+  @if(Object.keys(request.except(['page'])).length > 0)
+     <a href="{{ request.url() }}" x-show="!showFilters" x-transtion.origin.center class="mt-8 shadow-sm rounded text-white py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 {{ buttonColor }}" >
+      Annuler les filtres
+    </a>
+  @end
+
+  <form x-show="showFilters" x-cloak x-transition.origin.center method="GET" action="{{ route(controller + '.index') }}" class="w-full flex flex-col items-center justify-center">
+
+    <div class="w-full flex flex-col gap-4">
+        {{{ await $slots.main() }}}
+    </div>
+
+    <button class="mt-8 shadow-sm rounded text-white py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 {{ buttonColor }}">
+      Appliquer les filtres
+    </button>
+  </form>
+</div>
