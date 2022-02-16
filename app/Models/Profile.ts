@@ -1,4 +1,6 @@
-import { DateTime } from 'luxon'
+import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
+import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
+import { compose } from '@ioc:Adonis/Core/Helpers'
 import {
   beforeFetch,
   beforeFind,
@@ -12,18 +14,16 @@ import {
   manyToMany,
   ModelQueryBuilderContract,
 } from '@ioc:Adonis/Lucid/Orm'
-import User from './User'
-import School from './School'
-import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
-import Skill from './Skill'
-import FocusInterest from './FocusInterest'
+import { DateTime } from 'luxon'
+import AppSoftDeletes from './AppSoftDeletes'
 import Association from './Association'
+import ProfileFilter from './Filters/ProfileFilter'
+import FocusInterest from './FocusInterest'
 import Report from './Report'
 import Role from './Role'
-import AppSoftDeletes from './AppSoftDeletes'
-import { compose } from '@ioc:Adonis/Core/Helpers'
-import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
-import ProfileFilter from './Filters/ProfileFilter'
+import School from './School'
+import Skill from './Skill'
+import User from './User'
 
 export default class Profile extends compose(AppSoftDeletes, Filterable) {
   public static $filter = () => ProfileFilter

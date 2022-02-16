@@ -1,14 +1,14 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Profile from 'App/Models/Profile'
-import Skill from 'App/Models/Skill'
-import ProfileValidator from 'App/Validators/ProfileValidator'
-import FocusInterest from 'App/Models/FocusInterest'
+import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
+import { UserRole } from 'App/Enums/UserRole'
 import Association from 'App/Models/Association'
+import FocusInterest from 'App/Models/FocusInterest'
+import Profile from 'App/Models/Profile'
 import Report from 'App/Models/Report'
 import Role from 'App/Models/Role'
-import { UserRole } from 'App/Enums/UserRole'
-import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
 import School from 'App/Models/School'
+import Skill from 'App/Models/Skill'
+import ProfileValidator from 'App/Validators/ProfileValidator'
 export default class ProfilesController {
   private PER_PAGE = 1
 

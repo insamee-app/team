@@ -17,16 +17,22 @@ export default class AssociationsController {
 
     await bouncer.with('AssociationPolicy').authorize('viewList')
 
-    const page = request.input('page') || 1
+    const { page = 1, ...qs } = request.qs()
+
     const associations = await Association.query()
+      .filter(qs)
       .preload('school')
       .preload('thematic')
       .preload('tags')
       .paginate(page, this.PER_PAGE)
 
-    associations.baseUrl(request.url())
+    associations.baseUrl(request.url()).queryString(qs)
 
-    return view.render('pages/associations/index', { associations })
+    const schools = await School.query().select('id', 'name').orderBy('name')
+    const thematics = await Thematic.query().select('id', 'name').orderBy('name')
+    const tags = await Tag.query().select('id', 'name').orderBy('name')
+
+    return view.render('pages/associations/index', { associations, schools, thematics, tags })
   }
 
   public async create({ view, bouncer }: HttpContextContract) {

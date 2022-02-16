@@ -17,6 +17,13 @@
       @end
   </div>
 
+  @!associations.filters({
+    class: 'mt-4',
+    schools,
+    thematics,
+    tags,
+  })
+
   <div class="mt-8">
     @shared.list({
       items: associations
