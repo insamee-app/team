@@ -23,6 +23,7 @@
 
   <form x-show="showFilters" x-cloak x-transition.origin.center method="GET" action="{{ route(controller + '.index') }}" class="w-full flex flex-col items-center justify-center">
 
+    @inject({ placeholderColor: 'text-slate-600'})
     <div class="w-full flex flex-col gap-4">
         {{{ await $slots.main() }}}
     </div>
