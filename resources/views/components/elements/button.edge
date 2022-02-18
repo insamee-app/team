@@ -1,1 +1,27 @@
-<button {{ $props.serializeExcept(['classes']) }} class="p-2 shadow-sm rounded focus:!ring-2 focus:!ring-offset-2 focus-within:outline-none {{ classes }}"> {{{ await $slots.main() }}}</button>
+
+@set('baseClass', 'shadow-sm rounded px-2 py-1 focus-within:outline-none focus:ring-2 focus:ring-offset-2')
+@set('colorClass', '')
+@if(fill)
+  @set('colorClass', 'bg-text-slate-500 text-white focus:ring-slate-500')
+@else
+  @set('colorClass', 'border border-slate-500 bg-text-white text-slate-500 focus:ring-gray-500')
+@end
+
+
+@if(variant === 'mee')
+  @if(fill)
+    @set('colorClass', 'bg-mee-primary-base text-white focus:ring-mee-primary-base')
+  @else
+    @set('colorClass', 'border border-mee-primary-base bg-white text-mee-primary-base focus:ring-gray-500')
+  @end
+@elseif(variant === 'associations')
+  @if(fill)
+    @set('colorClass', 'bg-associations-primary-base text-white focus:ring-associations-primary-base')
+  @else
+    @set('colorClass', 'border border-associations-primary-base bg-white text-associations-primary-base focus:ring-gray-500')
+  @end
+@end
+
+@set('className', [baseClass, colorClass].join(' '))
+
+{{{ await $slots.main(className) }}}

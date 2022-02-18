@@ -1,99 +1,109 @@
 @layout('layouts/app')
 @set('title', 'Modifier le profil de ' + profile.firstName)
+@set('className', '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none')
 
 @section('content')
-  <h2 class="text-lg text-mee-primary-base font-semibold">
-    <a href="{{ route('ProfilesController.index') }}">
-      Mee
-    </a>
-  </h2>
-
-  <div class="flex flex-row justify-between items-center mt-2">
-      <h1 class="text-2xl font-bold">Modifier</h1>
-  </div>
-
-  <form action="{{ route('ProfilesController.update', { id: profile.id }) }}?_method=PATCH" method="POST" class="mt-8 space-y-8">
-    {{ csrfField() }}
-    <div class="flex flex-col space-y-4">
-      @set('classesMee', '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none')
-      @form.group({name: 'firstName'})
-        @!form.label({ title: 'Prénom' })
-        @!form.input({ type: 'firstname', placeholder: 'Saisir le prénom', value: profile.firstName, classes: classesMee })
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'ProfilesController',
+        variant: 'mee',
+      })
+        Mee
       @end
 
-      @form.group({name: 'lastName'})
-        @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'lastname', placeholder: 'Saisir le nom', value: profile.lastName, classes: classesMee })
+      @shared.title()
+        Modifier
       @end
-
-      @form.group({name: 'email', disabled: 'true'})
-        @!form.label({ title: 'Adresse électronique' })
-        @!form.input({ type: 'email', value: profile.user.email })
-      @end
-
-      @form.group({name: 'school', disabled: 'true'})
-        @!form.label({ title: 'Ecole' })
-        @!form.input({ type: 'compagny', value: profile.school.name })
-      @end
-
-      @form.group({name: 'graduationYear'})
-        @!form.label({ title: 'Diplomation' })
-        @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, classes: classesMee })
-      @end
-
-      @form.group({name: 'roleId'})
-        @!form.label({ title: 'Role' })
-        @form.select({
-          variant: 'mee',
-          data: roles,
-        })
-          Sélectionner votre role
-        @end
-      @end
-
-      @form.group({name: 'skills'})
-        @!form.label({ title: 'Compétences' })
-        @form.multiselect({
-          variant: 'mee',
-          data: skills,
-          selectedData: profile.skills.map(skill => skill.id),
-        })
-          Sélectionner des compétences
-        @end
-      @end
-
-      @form.group({name: 'focusInterests'})
-        @!form.label({ title: 'Centre d\'intérêts' })
-        @form.multiselect({
-          variant: 'mee',
-          data: focusInterests,
-          selectedData: profile.focusInterests.map(focusInterest => focusInterest.id),
-        })
-          Sélectionner des centres d'intérêts
-        @end
-      @end
-
-      @form.group({name: 'associations'})
-        @!form.label({ title: 'Associations' })
-        @form.multiselect({
-          variant: 'mee',
-          data: associations,
-          selectedData: profile.associations.map(association => association.id),
-        })
-          Sélectionner des associations
-        @end
-      @end
-
-      @form.group({name: 'bio'})
-        @!form.label({ title: 'Bio' })
-        @!form.area({ type: 'text', classes: classesAssociations, value: profile.bio, variant: 'mee' })
-      @end
-    </div>
-
-    <div class="flex flex-row justify-end mt-8 mb-20">
-      @elements.button({ type: 'submit', classes: 'bg-mee-primary-base text-white focus:!ring-mee-primary-base' })
-      Enregistrer
-    </div>
     @end
-  </form>
+
+    <form action="{{ route('ProfilesController.update', { id: profile.id }) }}?_method=PATCH" method="POST">
+      {{ csrfField() }}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @form.group({name: 'firstName'})
+          @!form.label({ title: 'Prénom' })
+          @!form.input({ type: 'firstname', placeholder: 'Saisir le prénom', value: profile.firstName, classes: className })
+        @end
+
+        @form.group({name: 'lastName'})
+          @!form.label({ title: 'Nom' })
+          @!form.input({ type: 'lastname', placeholder: 'Saisir le nom', value: profile.lastName, classes: className })
+        @end
+
+        @form.group({name: 'email', disabled: 'true'})
+          @!form.label({ title: 'Adresse électronique' })
+          @!form.input({ type: 'email', value: profile.user.email })
+        @end
+
+        @form.group({name: 'school', disabled: 'true'})
+          @!form.label({ title: 'Ecole' })
+          @!form.input({ type: 'compagny', value: profile.school.name })
+        @end
+
+        @form.group({name: 'graduationYear', className: 'hello'})
+          @!form.label({ title: 'Diplomation' })
+          @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, classes: className })
+        @end
+
+        @form.group({name: 'roleId'})
+          @!form.label({ title: 'Role' })
+          @form.select({
+            variant: 'mee',
+            data: roles,
+          })
+            Sélectionner votre role
+          @end
+        @end
+
+        @form.group({name: 'skills', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Compétences' })
+          @form.multiselect({
+            variant: 'mee',
+            data: skills,
+            selectedData: profile.skills.map(skill => skill.id),
+          })
+            Sélectionner des compétences
+          @end
+        @end
+
+        @form.group({name: 'focusInterests', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Centre d\'intérêts' })
+          @form.multiselect({
+            variant: 'mee',
+            data: focusInterests,
+            selectedData: profile.focusInterests.map(focusInterest => focusInterest.id),
+          })
+            Sélectionner des centres d'intérêts
+          @end
+        @end
+
+        @form.group({name: 'associations', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Associations' })
+          @form.multiselect({
+            variant: 'mee',
+            data: associations,
+            selectedData: profile.associations.map(association => association.id),
+          })
+            Sélectionner des associations
+          @end
+        @end
+
+        @form.group({name: 'bio', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Bio' })
+          @!form.area({ type: 'text', classes: classesAssociations, value: profile.bio, variant: 'mee' })
+        @end
+      </div>
+
+      <div class="flex flex-row justify-end mt-8 mb-20">
+        @elements.button({
+          variant: 'mee',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
 @end
