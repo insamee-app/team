@@ -10,7 +10,7 @@
 @end
 
 @if(data.hasPages)
-  <div class="flex flex-row justify-between text-lg md:text-xl font-bold {{ textColor }} {{ classes }}">
+  <div class="flex flex-row justify-between text-lg md:text-xl font-bold {{ textColor }} {{ className }}">
     @if(data.getPreviousPageUrl())
       <a href={{ data.getPreviousPageUrl() }}>
         @!icons.chevronLeft({
