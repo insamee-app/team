@@ -7,13 +7,7 @@ Route.get('/associations/home', ({ view }) => {
 Route.get('/associations', 'AssociationsController.index')
 
 Route.group(() => {
-  Route.resource('associations', 'AssociationsController').only([
-    'create',
-    'show',
-    'edit',
-    'update',
-    'destroy',
-  ])
+  Route.resource('associations', 'AssociationsController')
 
   Route.get('associations/:id/pictures/edit', 'AssociationsPicturesController.edit')
   Route.put('associations/:id/pictures', 'AssociationsPicturesController.update')
