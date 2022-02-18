@@ -2,29 +2,35 @@
 @set('title', 'Les associations')
 
 @section('content')
-  <h2 class="text-lg text-associations-primary-base font-semibold">
-    <a href="{{ route('AssociationsController.index') }}">
-      Associations
-    </a>
-  </h2>
+  @shared.subtitle({
+    controller: 'AssociationsController',
+    variant: 'associations',
+  })
+    Associations
+  @end
 
-  <div class="flex flex-row justify-between items-center mt-2">
-    <h1 class="text-2xl text-slate-900 font-bold">Liste des associations</h1>
+  @shared.title()
+    Liste des associations
+
+    @slot('actions')
       @can('AssociationPolicy.create')
         <a href="{{ route('AssociationsController.create') }}" class="rounded text-white bg-associations-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base shadow-sm">
           Ajouter
         </a>
       @end
-  </div>
+    @end
+  @end
 
-  @!associations.filters({
-    class: 'mt-4',
-    schools,
-    thematics,
-    tags,
-  })
+  @shared.grid()
+    @slot('filters', scope)
+      @!associations.filters({
+        class: scope.className,
+        schools,
+        thematics,
+        tags,
+      })
+    @end
 
-  <div class="mt-8">
     @shared.list({
       items: associations
     })
@@ -36,11 +42,13 @@
         </a>
       @end
     @end
-  </div>
 
-  @!shared.pagination({
-    data: associations,
-    variant: 'associations',
-    classes: 'mt-8',
-  })
+    @slot('pagination', scope)
+      @!shared.pagination({
+        data: associations,
+        variant: 'associations',
+        classes: scope.className,
+      })
+    @end
+  @end
 @end

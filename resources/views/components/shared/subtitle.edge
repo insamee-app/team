@@ -1,0 +1,12 @@
+@set('color', 'text-slate-500')
+@if(variant === 'mee')
+  @set('color', 'text-mee-primary-base')
+@elseif(variant === 'associations')
+  @set('color', 'text-associations-primary-base')
+@endif
+
+<h2 class="text-lg md:text-xl lg:text-2xl font-semibold {{ color }}">
+  <a href="{{ route(controller + '.index') }}">
+    {{{ await $slots.main() }}}
+  </a>
+</h2>
