@@ -1,6 +1,6 @@
 @elements.card({
   variant: 'associations',
-  classes: 'hover:shadow-lg cursor-pointer space-y-4 transition'
+  classes: 'hover:shadow-lg cursor-pointer space-y-4 lg:space-y-6 transition h-full flex flex-col'
 })
    <header class="flex flex-row justify-between">
     <div class="flex flex-col justify-between">
@@ -14,13 +14,13 @@
       attachment: association.picture,
       alt: 'Image de l\'association ' + association.name,
       placeholderClasses: 'bg-associations-secondary-base rounded-full',
-      size: 'w-20 h-20 flex-shrink-0',
+      size: 'w-20 h-20 lg:w-24 lg:h-24 flex-shrink-0',
       width: '80',
       height: '80'
     })
   </header>
-  <p class="text-justify">{{ excerpt(association.overview, 150) }}</p>
-  <ul class="flex flex-row gap-2 flex-wrap">
+  <p class="text-justify lg:text-lg">{{ excerpt(association.overview, 150) }}</p>
+  <ul class="flex-grow flex flex-row gap-2 flex-wrap content-end">
     @each((tag, index) in association.tags)
       {{--  Use this because groupLimit doesn't work with soft delete  --}}
       @if(index < 3)
