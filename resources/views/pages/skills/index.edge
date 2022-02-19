@@ -2,34 +2,44 @@
 @set('title', 'Les compétences')
 
 @section('content')
-  <h2 class="text-mee-primary-base text-lg font-semibold">
-    <a href="{{ route('SkillsController.index') }}">
-      Compétences
-    </a>
-  </h2>
+  @shared.subtitle({
+    controller: 'SkillsController',
+    variant: 'mee'
+  })
+    Compétences
+  @end
 
-  <div class="flex flex-row justify-between items-center mt-2">
-    <h1 class="text-slate-900 text-2xl font-bold">Liste des compétences</h1>
-    @can('SkillPolicy.create')
-      <a href="{{ route('SkillsController.create') }}" class="px-2 py-1 text-white bg-mee-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Ajouter</a>
-    @end
-  </div>
-
-  <div class="mt-4">
-    @shared.list({
-      items: skills
-    })
-      @slot('main', skill)
-        <a href="{{ route('SkillsController.show', { id: skill.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base transition hover:shadow-lg">
-          @elements.card({
-            classes: 'border-mee-primary-grey-light'
-          })
-            @elements.cardTitle()
-              {{ skill.name }}
-            @end
+  @shared.title()
+    Liste des compétences
+    @slot('actions')
+      @can('SkillPolicy.create')
+        @elements.button({
+          fill: true,
+          variant: 'mee',
+        })
+          @slot('main', className)
+          <a href="{{ route('SkillsController.create') }}" class="{{ className }}">
+            Ajouter
+          </a>
           @end
-        </a>
+        @end
       @end
     @end
-  </div>
+  @end
+
+  @shared.list({
+    items: skills
+  })
+    @slot('main', skill)
+      <a href="{{ route('SkillsController.show', { id: skill.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+        @elements.card({
+          classes: 'border-mee-primary-grey-light hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            {{ skill.name }}
+          @end
+        @end
+      </a>
+    @end
+  @end
 @end

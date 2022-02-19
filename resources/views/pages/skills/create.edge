@@ -1,34 +1,47 @@
 @layout('layouts/app')
-@set('title', 'Créer une compétence')
+@set('title', 'Créer une compétecne')
 
 @section('content')
-  <section>
-
-    <h2 class="text-mee-primary-base text-lg font-semibold">
-      <a href="{{ route('SkillsController.index') }}">
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'SkillsController',
+        variant: 'mee',
+      })
         Compétences
-      </a>
-    </h2>
+      @end
 
-    <h1 class="text-2xl font-bold mt-2">Créer</h1>
+      @shared.title()
+        Créer une compétence
+      @end
+    @end
 
-    <form action="{{ route('SkillsController.store') }}" method="POST" class="mt-8">
+    <form action="{{ route('SkillsController.store') }}" method="POST">
       {{ csrfField() }}
 
       @form.group({ name: 'name' })
         @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'text', placeholder: 'Saisir le nom', classes: '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none' })
+        @!form.input({ type: 'text', placeholder: 'Saisir le nom', variant: 'mee' })
       @end
 
       <div class="flex flex-row justify-between mt-8">
-        @elements.button({ type: 'reset', classes: 'text-black border border-mee-primary-base  focus:!ring-mee-primary-base' })
-          Annuler
+        @elements.button({
+          variant: 'mee',
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
         @end
-
-        @elements.button({ type: 'submit', classes: 'text-white bg-mee-primary-base focus:!ring-mee-primary-base' })
-          Enregistrer
+        @elements.button({
+          fill: true,
+          variant: 'mee',
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
         @end
       </div>
     </form>
-  </section>
+  @end
 @end
+
