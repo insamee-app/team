@@ -2,45 +2,64 @@
 @set('title', tag.name)
 
 @section('content')
-  <h2 class="text-associations-primary-base text-lg font-semibold">
-    <a href="{{ route('SkillsController.index') }}">
-      Tags
-    </a>
-  </h2>
-
-  <div class="flex flex-row justify-between items-center mt-2">
-    <h1 class="text-2xl font-bold">{{ tag.name }}</h1>
-    @can('TagPolicy.update')
-      <a href="{{ route('TagsController.edit', { id: tag.id}) }}" class="px-2 py-1 text-white bg-associations-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">Modifier</a>
-    @end
-  </div>
-
-  @!shared.delete({
-    item: tag,
-    policy: 'TagPolicy',
-    controller: 'TagsController',
-    end: "le tag"
-  })
-
-  <section class="flex flex-col mt-8">
-    <h2 class="font-bold text-xl">
-      Associations associées
-    </h2>
-
-    <div class="grid grid-cols-1 gap-8 mt-4">
-      @each(association in associations)
-        <a href="{{ route('AssociationsController.show', { id: association.id }) }}">
-        @!associations.card({
-          association: association,
-        })
-        </a>
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'TagsController',
+        variant: 'associations',
+      })
+        Tags
       @end
-    </div>
 
-    @!shared.pagination({
-      data: associations,
-      variant: 'associations',
-      classes: 'mt-8',
+      @shared.title()
+        {{ tag.name }}
+
+        @slot('actions')
+          @can('TagPolicy.update')
+            @elements.button({
+              variant: 'associations',
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('TagsController.edit', { id: tag.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
+    @end
+
+    @!shared.delete({
+      item: tag,
+      policy: 'TagPolicy',
+      controller: 'TagsController',
+      end: "le tag"
     })
-  </section>
+
+    @shared.subSection()
+      @slot('title')
+        Associations associés
+      @end
+
+      @shared.list({
+        items: associations
+      })
+        @slot('main', association)
+          <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+            @!associations.card({
+              association,
+            })
+          </a>
+        @end
+      @end
+
+      @!shared.pagination({
+        data: associations,
+        variant: 'associations',
+        className: 'mt-8',
+      })
+    @end
+  @end
 @end
