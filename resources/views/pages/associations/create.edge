@@ -1,6 +1,5 @@
 @layout('layouts/app')
 @set('title', 'Créer une association')
-@set('className', '!border-associations-primary-base focus:!ring-associations-primary-base focus-within:!outline-none')
 
 @section('content')
   @shared.article()
@@ -22,17 +21,17 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @form.group({name: 'name', className: 'lg:col-span-2'})
           @!form.label({ title: 'Nom' })
-          @!form.input({ type: 'text', placeholder: 'Saisir un nom',  classes: className })
+          @!form.input({ type: 'text', placeholder: 'Saisir un nom', variant: 'associations' })
         @end
 
         @form.group({name: 'email'})
           @!form.label({ title: 'Adresse électronique' })
-          @!form.input({ type: 'email', placeholder: 'Saisir l\'adresse électronique', classes: className})
+          @!form.input({ type: 'email', placeholder: 'Saisir l\'adresse électronique', variant: 'associations' })
         @end
 
         @form.group({name: 'website'})
           @!form.label({ title: 'Site internet' })
-          @!form.input({ type: 'url', placeholder: 'Saisir le site internet', classes: className })
+          @!form.input({ type: 'url', placeholder: 'Saisir le site internet', variant: 'associations' })
         @end
 
 
@@ -68,7 +67,7 @@
 
         @form.group({name: 'overview', className: 'lg:col-span-2'})
           @!form.label({ title: 'Présentation' })
-          @!form.area({ type: 'text', classes: className, variant: 'associations' })
+          @!form.area({ type: 'text', variant: 'associations' })
         @end
       </div>
 

@@ -1,6 +1,5 @@
 @layout('layouts/app')
 @set('title', 'Modifier le profil de ' + profile.firstName)
-@set('className', '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none')
 
 @section('content')
   @shared.article()
@@ -22,12 +21,12 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @form.group({name: 'firstName'})
           @!form.label({ title: 'Prénom' })
-          @!form.input({ type: 'firstname', placeholder: 'Saisir le prénom', value: profile.firstName, classes: className })
+          @!form.input({ type: 'firstname', placeholder: 'Saisir le prénom', value: profile.firstName, variant: 'mee' })
         @end
 
         @form.group({name: 'lastName'})
           @!form.label({ title: 'Nom' })
-          @!form.input({ type: 'lastname', placeholder: 'Saisir le nom', value: profile.lastName, classes: className })
+          @!form.input({ type: 'lastname', placeholder: 'Saisir le nom', value: profile.lastName, variant: 'mee' })
         @end
 
         @form.group({name: 'email', disabled: 'true'})
@@ -40,9 +39,9 @@
           @!form.input({ type: 'compagny', value: profile.school.name })
         @end
 
-        @form.group({name: 'graduationYear', className: 'hello'})
+        @form.group({name: 'graduationYear'})
           @!form.label({ title: 'Diplomation' })
-          @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, classes: className })
+          @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, variant: 'mee' })
         @end
 
         @form.group({name: 'roleId'})

@@ -40,11 +40,11 @@
     <form action="{{ route('ProfilesAvatarsController.update', { id: profile.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
       {{ csrfField() }}
 
-      <h3 class="text-xl font-bold">Nouvelle photo</h3>
+      <h3 class="text-xl lg:text-3xl font-bold">Nouvelle photo</h3>
 
       <div class="mt-4">
         @form.group({ name: 'avatar', class: "flex flex-row items-center space-x-2" })
-          @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-grey-500 text-sm file:cursor-pointer" })
+          @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", className: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-mee-primary-grey-light file:text-mee-primary-base hover:file:bg-mee-primary-grey-base text-grey-500 text-sm lg:text-base file:cursor-pointer" })
           @!form.label({ title: 'Changer son avatar', class: "sr-only" })
         @end
       </div>
