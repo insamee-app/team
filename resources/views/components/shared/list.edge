@@ -1,4 +1,4 @@
-<ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<ul class="grid grid-cols-1 md:grid-cols-2 gap-8 {{ className }}">
   @each(item in items)
     <li>
       {{{ await $slots.main(item) }}}

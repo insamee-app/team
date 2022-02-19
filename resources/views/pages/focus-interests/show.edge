@@ -2,32 +2,47 @@
 @set('title', focusInterest.name)
 
 @section('content')
-<h2 class="text-mee-primary-base text-lg font-semibold">
-    <a href="{{ route('SkillsController.index') }}">
-      Centres d'intérets
-    </a>
-  </h2>
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'FocusInterestsController',
+        variant: 'mee',
+      })
+        Centres d'intérêts
+      @end
 
-  <div class="flex flex-row justify-between items-center mt-2">
-    <h1 class="text-slate-900 text-2xl font-bold">{{ focusInterest.name }}</h1>
-    @can('SkillPolicy.update')
-      <a href="{{ route('FocusInterestsController.edit', { id: focusInterest.id}) }}" class="px-2 py-1 text-white bg-mee-primary-base shadow-sm rounded focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Modifier</a>
+      @shared.title()
+        {{ focusInterest.name }}
+
+        @slot('actions')
+          @can('FocusInterestPolicy.update')
+            @elements.button({
+              variant: 'mee',
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('FocusInterestsController.edit', { id: focusInterest.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
     @end
-  </div>
 
-  @!shared.delete({
-    item: focusInterest,
-    policy: 'FocusInterestPolicy',
-    controller: 'FocusInterestsController',
-    end: "le centre d'intéret"
-  })
+    @!shared.delete({
+      item: focusInterest,
+      policy: 'FocusInterestPolicy',
+      controller: 'FocusInterestsController',
+      end: "le centre d'intéret"
+    })
 
-  <section class="flex flex-col mt-8">
-    <h2 class="font-bold text-xl">
-      Mee associés
-    </h2>
+    @shared.subSection()
+      @slot('title')
+        Mee associés
+      @end
 
-    <div class="mt-8">
       @shared.list({
         items: profiles
       })
@@ -39,12 +54,12 @@
           </a>
         @end
       @end
-    </div>
 
-    @!shared.pagination({
-      data: profiles,
-      variant: 'mee',
-      classes: 'mt-8',
-    })
-  </section>
+      @!shared.pagination({
+        data: profiles,
+        variant: 'mee',
+        className: 'mt-8',
+      })
+    @end
+  @end
 @end
