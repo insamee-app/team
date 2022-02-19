@@ -2,36 +2,34 @@
 @set('title', 'Les rapports')
 
 @section('content')
-  <h2 class="text-slate-500 text-lg font-semibold">
-    <a href="{{ route('ReportsController.index') }}">
-      Rapports
-    </a>
-  </h2>
+  @shared.subtitle({
+    controller: 'ReportsController',
+  })
+    Signalements
+  @end
 
-    <div class="flex flex-row justify-between items-center mt-2">
-      <h1 class="text-2xl font-bold">Liste des rapports</h1>
-    </div>
+  @shared.title()
+    Liste des signalements
+  @end
 
-  <div class="mt-4">
-    @shared.list({
-      items: reports
-    })
-      @slot('main', report)
-        <a href="{{ route('ReportsController.show', { id: report.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition hover:shadow-lg">
-          @elements.card({
-            classes: 'border-slate-200'
-          })
-            @elements.cardTitle()
-              Numéro {{ report.number }} - {{ report.isResolved ? 'Résolu' : 'Non résolu' }}
-            @end
+  @shared.list({
+    items: reports
+  })
+    @slot('main', report)
+      <a href="{{ route('ReportsController.show', { id: report.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+        @elements.card({
+          classes: 'border-slate-200 hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            Numéro {{ report.number }} - {{ report.isResolved ? 'Résolu' : 'Non résolu' }}
           @end
-        </a>
-      @end
+        @end
+      </a>
     @end
-  </div>
+  @end
 
   @!shared.pagination({
     data: reports,
-    classes: 'mt-8',
+    className: 'mt-8',
   })
 @end
