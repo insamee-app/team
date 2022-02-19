@@ -1,5 +1,5 @@
-  @set('border', '')
-  @set('focus', '')
+  @set('border', 'border-slate-500')
+  @set('focus', 'focus:ring-slate-500')
   @set('color', '')
 @if(flashMessages.has('info'))
   @set('border', 'border-blue-600')
@@ -16,10 +16,10 @@
 @end
 
 
-@if(flashMessages.has('info') || flashMessages.has('success') || flashMessages.has('error'))
+@if(flashMessages.has('info') || flashMessages.has('success') || flashMessages.has('error') || flashMessages.has('auth.errors'))
   <div x-data="flash" x-show="open" class="fixed z-20 right-4 left-4 top-20 mx-auto max-w-md border {{ border }} rounded-lg flex flex-row justify-between items-start space-x-4 p-4 bg-white/95 backdrop-blur shadow-lg" x-transition.origin.top.duration.250ms>
     <span>
-      {{ flashMessages.get('info') || flashMessages.get('success') || flashMessages.get('error') }}
+      {{ flashMessages.get('info') || flashMessages.get('success') || flashMessages.get('error') || 'Vos identifiants ne sont pas corrects' }}
     </span>
     <button x-on:click="close" class="focus-within:outline-none focus:ring-2 focus:ring-offset-2 {{ focus }} rounded">
       @!icons.x({

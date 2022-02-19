@@ -5,37 +5,41 @@
   <form class="grid gap-2" action='{{ route('AuthController.register') }}' method='POST'>
     {{ csrfField() }}
 
-    @set('classes', '!border-slate-500 !ring-slate-900 rounded placeholder:text-slate-500 focus-visible:outline-none')
     @form.group({name: 'firstName'})
       @!form.label({ title: 'Prénom' })
-      @!form.input({ type: 'firstname', placeholder: 'Votre prénom', classes: classes })
+      @!form.input({ type: 'firstname', placeholder: 'Votre prénom' })
     @end
 
     @form.group({name: 'lastName'})
       @!form.label({ title: 'Nom' })
-      @!form.input({ type: 'lastname', placeholder: 'Votre nom', classes: classes })
+      @!form.input({ type: 'lastname', placeholder: 'Votre nom' })
     @end
 
 
     @form.group({name: 'email'})
       @!form.label({ title: 'Adresse électronique' })
-      @!form.input({ type: 'email', placeholder: 'example@site.fr', classes: classes })
+      @!form.input({ type: 'email', placeholder: 'example@site.fr' })
     @end
 
     @form.group({name: 'password'})
       @!form.label({ title: 'Password' })
-      @!form.input({ type: 'password', placeholder: '********', classes: classes })
+      @!form.input({ type: 'password', placeholder: '********' })
     @end
 
     @form.group({ name: 'password_confirmation' })
       @!form.label({ title: 'Confirmation' })
-      @!form.input({ type: 'password', placeholder: '********', classes: classes })
+      @!form.input({ type: 'password', placeholder: '********' })
     @end
 
     <div class="mt-6 flex flex-row justify-center">
-      @elements.button({type: 'submit', classes: "w-full bg-slate-900 text-white !ring-slate-900" })
-        S'inscrire
-      @end
+        @elements.button({
+          fill: true,
+          variant: 'black'
+        })
+          @slot('main', className)
+           <button class="{{ className }} w-full" type="submit">S'inscrire</button>
+          @end
+        @end
     </div>
   </form>
 

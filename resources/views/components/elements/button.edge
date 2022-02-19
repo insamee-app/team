@@ -1,11 +1,5 @@
 @set('baseClass', 'shadow-sm rounded lg:rounded-md px-2 lg:px-3 py-1 focus-within:outline-none focus:ring-2 focus:ring-offset-2 lg:text-lg')
 @set('colorClass', '')
-@if(fill)
-  @set('colorClass', 'bg-slate-500 text-white focus:ring-slate-500')
-@else
-  @set('colorClass', 'border border-slate-500 bg-text-white text-slate-500 focus:ring-gray-500')
-@end
-
 
 @if(variant === 'mee')
   @if(fill)
@@ -18,6 +12,18 @@
     @set('colorClass', 'bg-associations-primary-base text-black focus:ring-associations-primary-base')
   @else
     @set('colorClass', 'border border-associations-primary-base bg-white text-associations-primary-base focus:ring-gray-500')
+  @end
+@elseif(variant === 'black')
+  @if(fill)
+    @set('colorClass', 'bg-slate-900 text-white focus:ring-slate-900')
+  @else
+    @set('colorClass', 'border border-slate-900 bg-white text-slate-900 focus:ring-slate-900')
+  @end
+@else
+  @if(fill)
+    @set('colorClass', 'bg-slate-500 text-white focus:ring-slate-500')
+  @else
+    @set('colorClass', 'border border-slate-500 bg-text-white text-slate-500 focus:ring-gray-500')
   @end
 @end
 
