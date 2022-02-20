@@ -16,7 +16,7 @@
   @shared.grid()
     @slot('filters', scope)
       @!mee.filters({
-        class: scope.className,
+        className: scope.className,
         schools,
         skills,
         focusInterests,
@@ -24,10 +24,11 @@
     @end
 
     @shared.list({
-      items: profiles
+      items: profiles,
+      variant: 'mee',
     })
       @slot('main', profile)
-        <a href="{{ route('ProfilesController.show', { id: profile.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+        <a href="{{ route('ProfilesController.show', { id: profile.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base h-full">
           @!mee.card({
             profile,
           })
@@ -39,7 +40,7 @@
       @!shared.pagination({
         data: profiles,
         variant: 'mee',
-        classes: scope.className,
+        className: scope.className,
       })
     @end
   @end

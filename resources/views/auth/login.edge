@@ -2,39 +2,37 @@
 @set('title', 'Se connecter')
 
 @section('content')
-    @if(flashMessages.has('auth.errors'))
-    <p>
-      Aucun utilisateur n'a été trouvé avec ces identifiants.
-    </p>
-    @end
-
     <form
-    class="grid gap-2"
-    action="{{ route('AuthController.login') }}"
-    method="POST"
+      class="grid gap-2"
+      action="{{ route('AuthController.login') }}"
+      method="POST"
     >
     {{ csrfField() }}
 
-    @set('classes', 'border !border-slate-500 !ring-slate-900 rounded placeholder:text-slate-500')
     @form.group({ name: 'email' })
       @!form.label({ title: 'Adresse électronique' })
-      @!form.input({ type: 'email', placeholder: "example@site.fr", classes: classes})
+      @!form.input({ type: 'email', placeholder: "example@site.fr"})
     @end
 
     @form.group({ name: 'password' })
       @!form.label({ title: 'Mot de passe' })
-      @!form.input({ type: 'password', placeholder: "********", classes: classes })
+      @!form.input({ type: 'password', placeholder: "********" })
     @end
 
     @form.group({ name: 'rememberMe', class: "flex flex-row items-center space-x-2" })
-      @!form.input({ type: 'checkbox', value: 'true', classes: "text-slate-900 !ring-slate-900" })
+      @!form.input({ type: 'checkbox', value: 'true', variant: 'checkbox' })
       @!form.label({ title: 'Se souvenir de moi' })
     @end
 
     <div class="mt-6 flex flex-row justify-center">
-      @elements.button({ type: 'submit', classes: "w-full bg-slate-900 text-white !ring-slate-900" })
-        Se connecter
-      @end
+        @elements.button({
+          fill: true,
+          variant: 'black'
+        })
+          @slot('main', className)
+           <button class="{{ className }} w-full" type="submit">Se connecter</button>
+          @end
+        @end
     </div>
   </form>
 

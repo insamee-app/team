@@ -4,103 +4,99 @@
 
 @section('content')
   @home.hero()
-    <div class="px-4 flex flex-col space-y-8">
-      @home.heroTitle({
-        classes: '',
-      })
-        Chercher, Trouver, Partager !
-      @end
-      @home.heroSubtitle({
-        classes: '',
-      })
-        Parce qu'être étudiant, c'est rencontrer et découvrir de nouvelles personnes
-      @end
+    <div class="mt-20 lg:mt-24 max-w-screen-xl w-full mx-auto lg:h-full">
+      <div class="px-4 lg:pt-0 lg:h-full lg:flex lg:flex-col lg:justify-center lg:w-1/2">
+        @home.heroTitle()
+          Chercher, Trouver, Partager !
+        @end
+        @home.heroSubtitle({
+          className: 'mt-4 lg:mt-8'
+        })
+          Parce qu'être étudiant, c'est rencontrer et découvrir de nouvelles personnes
+        @end
+      </div>
     </div>
-    <div class="h-[40%] w-auto relative left-[15%]">
+     <div class="lg:absolute lg:-z-10 h-[40%] lg:h-2/3 w-auto relative left-[15%] lg:left-1/2 lg:top-1/2 lg:transform lg:-translate-y-1/2">
       @!graphics.mee({
         class: 'h-full w-auto',
       })
     </div>
-    <div class=" mb-8 flex flex-row justify-center items-center">
+    <div class="mb-8 flex flex-row justify-center items-center lg:col-span-2 lg:place-items-end">
       @!icons.arrowDown({
-        class: 'w-6 h-6 text-mee-primary-base fill-current'
+        class: 'w-6 lg:w-8 h-6 lg:h-8 text-mee-primary-base fill-current'
       })
     </div>
   @end
   @home.section({
-    classes: 'justify-evenly'
+    className: 'justify-evenly'
   })
     <div>
       @!graphics.mee.gameDay({
-        class: 'h-full w-full',
+        class: 'h-full w-full lg:w-1/2 lg:mx-auto',
       })
     </div>
     <div class="flex flex-col space-y-8 px-4">
       @home.sectionTitle()
         Une passion pour le sport ou l'esport à partager ?
       @end
-      @home.sectionText({
-        classes: '',
-      })
+      @home.sectionText()
         <span class="text-mee-primary-base">Mee</span> te permet de trouver des personnes avec qui tu vas pouvoir vibrer devant les meilleurs matchs !
       @end
     </div>
   @end
-  <hr class="bg-mee-primary-grey-base max-w-xs mx-auto">
+  <hr class="bg-mee-primary-grey-base max-w-sm mx-auto">
   @home.section({
-    classes: 'justify-evenly'
+    className: 'justify-evenly'
   })
     <div class="flex flex-col space-y-8 px-4">
       @home.sectionTitle()
         Tu veux faire une partie de foot mais tu ne sais pas avec qui y aller ?
       @end
-      @home.sectionText({
-        classes: '',
-      })
+      @home.sectionText()
         Avec <span class="text-mee-primary-base">Mee</span>, trouve des équipiers parmis les étudiants et former votre propore équipe !
       @end
     </div>
     <div class="w-3/4 mx-auto">
       @!graphics.mee.foot({
-        class: 'h-full w-full',
+        class: 'h-full w-full lg:w-2/3 lg:mx-auto',
       })
     </div>
   @end
-  <hr class="bg-mee-primary-grey-base max-w-xs mx-auto">
+  <hr class="bg-mee-primary-grey-base max-w-sm mx-auto">
   @home.section({
-    classes: 'justify-between'
+    className: 'justify-between lg:justify-evenly'
   })
     @home.sectionTitle({
-      classes: 'px-4'
+      className: 'px-4'
     })
       Tu as un projet formidable en tête mais tu n'as pas toutes les compétences pour le faire ?
     @end
     <div>
       @!graphics.mee.projectTeam({
-        class: 'h-full w-full',
+        class: 'h-full w-full lg:w-1/2',
       })
     </div>
     @home.sectionText({
-      classes: 'px-4',
+      className: 'max-w-screen-md px-4 ml-auto',
     })
       <span class="text-mee-primary-base">Mee</span> te permet de trouver les collaborateurs dont tu as toujours eu besoin pour mener à bien les projets les plus fous !
     @end
   @end
-  <hr class="bg-mee-primary-grey-base max-w-xs mx-auto">
+  <hr class="bg-mee-primary-grey-base max-w-sm mx-auto">
   @home.section({
-    classes: 'justify-between overflow-hidden',
+    className: 'justify-evenly lg:justify-between overflow-hidden',
   })
     <div class="flex flex-col space-y-8 px-4">
       @home.sectionTitle()
         Une idée d'entreprise ou d'association ? Besoin de personnes talentueuses pour monter ton business ?
       @end
       @home.sectionText({
-        classes: 'text-right',
+        className: 'text-right',
       })
         Avec <span class="text-mee-primary-base">Mee</span>, trouve tes futurs associés et crée l'organisation dont tu as toujours rêvé !
       @end
     </div>
-    <div class="relative left-[15%] h-[40%] w-auto">
+    <div class="relative left-[15%] h-[40%] lg:left-0 lg:h-3/4 lg:ml-auto">
       @!graphics.mee.businessDeal({
         class: 'h-full w-auto',
       })

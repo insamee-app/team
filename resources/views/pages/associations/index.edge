@@ -14,9 +14,16 @@
 
     @slot('actions')
       @can('AssociationPolicy.create')
-        <a href="{{ route('AssociationsController.create') }}" class="rounded text-white bg-associations-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base shadow-sm">
-          Ajouter
-        </a>
+        @elements.button({
+          fill: true,
+          variant: 'associations'
+        })
+          @slot('main', className)
+            <a href="{{ route('AssociationsController.create') }}" class="{{ className }}">
+              Ajouter
+            </a>
+          @end
+        @end
       @end
     @end
   @end
@@ -24,7 +31,7 @@
   @shared.grid()
     @slot('filters', scope)
       @!associations.filters({
-        class: scope.className,
+        className: scope.className,
         schools,
         thematics,
         tags,
@@ -32,10 +39,11 @@
     @end
 
     @shared.list({
-      items: associations
+      items: associations,
+      variant: 'associations',
     })
       @slot('main', association)
-        <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+        <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base h-full">
           @!associations.card({
             association,
           })
@@ -47,7 +55,7 @@
       @!shared.pagination({
         data: associations,
         variant: 'associations',
-        classes: scope.className,
+        className: scope.className,
       })
     @end
   @end

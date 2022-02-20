@@ -2,75 +2,85 @@
 @set('title', 'Créer une association')
 
 @section('content')
-  <h2 class="text-lg text-associations-primary-base font-semibold">
-    <a href="{{ route('AssociationsController.index') }}">
-      Associations
-    </a>
-  </h2>
-
-  <div class="flex flex-row justify-between items-center mt-2">
-      <h1 class="text-2xl font-bold">Modifier</h1>
-  </div>
-
-  <form action="{{ route('AssociationsController.store') }}" method="POST" class="mt-8 space-y-8">
-    {{ csrfField() }}
-    <div class="flex flex-col space-y-4">
-      @set('classesAssociations', '!border-associations-primary-base focus:!ring-associations-primary-base focus-within:!outline-none')
-      @form.group({name: 'name'})
-        @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'text', placeholder: 'Saisir un nom',  classes: classesAssociations })
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'AssociationsController',
+        variant: 'associations',
+      })
+        Associations
       @end
 
-      @form.group({name: 'overview'})
-        @!form.label({ title: 'Présentation' })
-        @!form.area({ type: 'text', classes: classesAssociations })
+      @shared.title()
+        Créer une association
       @end
+    @end
 
-      @form.group({name: 'website'})
-        @!form.label({ title: 'Site internet' })
-        @!form.input({ type: 'url', placeholder: 'Saisir le site internet', classes: classesAssociations })
-      @end
+    <form action="{{ route('AssociationsController.store') }}" method="POST">
+      {{ csrfField() }}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @form.group({name: 'name', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Nom' })
+          @!form.input({ type: 'text', placeholder: 'Saisir un nom', variant: 'associations' })
+        @end
 
-      @form.group({name: 'email'})
-        @!form.label({ title: 'Adresse électronique' })
-        @!form.input({ type: 'email', placeholder: 'Saisir l\'adresse électronique', classes: classesAssociations})
-      @end
+        @form.group({name: 'email'})
+          @!form.label({ title: 'Adresse électronique' })
+          @!form.input({ type: 'email', placeholder: 'Saisir l\'adresse électronique', variant: 'associations' })
+        @end
 
-      @form.group({name: 'schoolId'})
+        @form.group({name: 'website'})
+          @!form.label({ title: 'Site internet' })
+          @!form.input({ type: 'url', placeholder: 'Saisir le site internet', variant: 'associations' })
+        @end
+
+
+        @form.group({name: 'schoolId'})
         @!form.label({ title: 'Ecole' })
         @form.select({
           variant: 'associations',
-          data: schools,
-        })
-          Sélectionner une école
+            data: schools,
+          })
+            Sélectionner une école
+          @end
         @end
-      @end
 
-      @form.group({name: 'thematicId'})
-        @!form.label({ title: 'Thématique' })
-        @form.select({
-          variant: 'associations',
-          data: thematics,
-        })
-          Sélectionner une thématique
+        @form.group({name: 'thematicId'})
+          @!form.label({ title: 'Thématique' })
+          @form.select({
+            variant: 'associations',
+            data: thematics,
+          })
+            Sélectionner une thématique
+          @end
         @end
-      @end
 
-      @form.group({name: 'tags'})
+        @form.group({name: 'tags', className: 'lg:col-span-2'})
         @!form.label({ title: 'Tags' })
         @form.multiselect({
           variant: 'associations',
           data: tags,
         })
           Sélectionner des tags
+          @end
         @end
-      @end
-    </div>
 
-    <div class="flex flex-row justify-end mt-8 mb-20">
-      @elements.button({ type: 'submit', classes: 'bg-associations-primary-base text-white focus:!ring-associations-primary-base' })
-        Enregistrer
-      @end
-    </div>
-  </form>
+        @form.group({name: 'overview', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Présentation' })
+          @!form.area({ type: 'text', variant: 'associations' })
+        @end
+      </div>
+
+      <div class="flex flex-row justify-end mt-8">
+        @elements.button({
+          variant: 'associations',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
 @end

@@ -1,30 +1,34 @@
 @elements.card({
   variant: 'associations',
-  classes: 'hover:shadow-lg cursor-pointer space-y-4'
+  classes: 'hover:shadow-lg cursor-pointer space-y-4 lg:space-y-6 transition h-full flex flex-col'
 })
    <header class="flex flex-row justify-between">
     <div class="flex flex-col justify-between">
       <div class="flex flex-col">
-        <h4 class="text-sm text-associations-primary-grey-dark">{{ association.thematic.name }}</h4>
-        <h3 class="text-xl text-associations-primary-base font-bold">{{ association.name }}</h3>
+        <h4 class="text-sm lg:text-base text-associations-primary-grey-dark">{{ association.thematic.name }}</h4>
+        <h3 class="text-xl lg:text-2xl text-associations-primary-base font-bold">{{ association.name }}</h3>
       </div>
-      <h4 class="text-sm text-associations-primary-grey-dark">{{ association.school.name }}</h4>
+      <h4 class="text-sm lg:text-base text-associations-primary-grey-dark">{{ association.school.name }}</h4>
     </div>
     @!shared.picture({
       attachment: association.picture,
       alt: 'Image de l\'association ' + association.name,
       placeholderClasses: 'bg-associations-secondary-base rounded-full',
-      size: 'w-20 h-20',
+      size: 'w-20 h-20 lg:w-24 lg:h-24 flex-shrink-0',
       width: '80',
       height: '80'
     })
   </header>
-  <p class="text-justify">{{ excerpt(association.overview, 150) }}</p>
-  <ul class="flex flex-row gap-2 flex-wrap">
+  <p class="text-justify lg:text-lg">{{ excerpt(association.overview, 150) }}</p>
+  <ul class="flex-grow flex flex-row gap-2 flex-wrap content-end">
     @each((tag, index) in association.tags)
       {{--  Use this because groupLimit doesn't work with soft delete  --}}
       @if(index < 3)
-        <li class="text-sm text-associations-primary-base bg-associations-primary-grey-light rounded-full px-2 py-1">{{tag.name}}</li>
+        @elements.chip({
+          variant: 'associations'
+        })
+          {{ tag.name }}
+        @end
       @endif
     @endeach
   </ul>

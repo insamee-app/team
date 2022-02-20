@@ -10,19 +10,19 @@ module.exports = {
       colors: {
         mee: {
           primary: {
-            base: '#931f1c',
+            base: '#931c1c',
             dark: '#5f0000',
-            light: '#c95144',
+            light: '#d56d6d',
             grey: {
-              base: '#c7bebd',
-              dark: '#584443',
+              base: '#c6bfbf',
+              dark: '#746363',
               light: '#e2dede',
             },
           },
           secondary: {
-            base: '#3ba99c',
-            dark: '#00796e',
-            light: '#72dbcd',
+            base: '#1c9284',
+            dark: '#006156',
+            light: '#6dd5c8',
           },
         },
         associations: {
@@ -32,7 +32,7 @@ module.exports = {
             light: '#6dced5',
             grey: {
               base: '#bec5c5',
-              dark: '#182b2c',
+              dark: '#637374',
               light: '#dee2e2',
             },
           },

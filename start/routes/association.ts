@@ -9,6 +9,7 @@ Route.get('/associations', 'AssociationsController.index')
 Route.group(() => {
   Route.resource('associations', 'AssociationsController').only([
     'create',
+    'store',
     'show',
     'edit',
     'update',

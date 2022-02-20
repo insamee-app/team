@@ -1,34 +1,46 @@
 @layout('layouts/app')
-@set('title', 'Créer un centre d\'intérêt')
+@set('title', 'Créer un centre d\'intéret')
 
 @section('content')
-  <section>
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'FocusInterestsController',
+        variant: 'mee',
+      })
+        Centres d'intérets
+      @end
 
-    <h2 class="text-mee-primary-base text-lg font-semibold">
-      <a href="{{ route('FocusInterestsController.index') }}">
-        Centres d'intérêts
-      </a>
-    </h2>
+      @shared.title()
+        Créer un centre d'intéret
+      @end
+    @end
 
-    <h1 class="text-2xl font-bold mt-2">Créer</h1>
-
-    <form action="{{ route('FocusInterestsController.store') }}" method="POST" class="mt-8">
+    <form action="{{ route('FocusInterestsController.store') }}" method="POST">
       {{ csrfField() }}
 
       @form.group({ name: 'name' })
         @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'text', placeholder: 'Saisir le nom', classes: '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none' })
+        @!form.input({ type: 'text', placeholder: 'Saisir le nom', variant: 'mee' })
       @end
 
       <div class="flex flex-row justify-between mt-8">
-        @elements.button({ type: 'reset', classes: 'text-black border border-mee-primary-base focus:!ring-mee-primary-base' })
-          Annuler
+        @elements.button({
+          variant: 'mee',
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
         @end
-
-        @elements.button({ type: 'submit', classes: 'text-white bg-mee-primary-base focus:!ring-mee-primary-base' })
-          Enregistrer
+        @elements.button({
+          variant: 'mee',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
         @end
       </div>
     </form>
-  </section>
+  @end
 @end

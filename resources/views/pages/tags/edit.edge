@@ -2,33 +2,46 @@
 @set('title', 'Modifier ' + tag.name)
 
 @section('content')
-  <section>
-
-    <h2 class="text-associations-primary-base text-lg font-semibold">
-      <a href="{{ route('TagsController.index') }}">
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'TagsController',
+        variant: 'associations',
+      })
         Tags
-      </a>
-    </h2>
+      @end
 
-    <h1 class="text-2xl font-bold mt-2">Modifier</h1>
+      @shared.title()
+        Modifier un tag
+      @end
+    @end
 
-    <form action="{{ route('TagsController.update', { id: tag.id }) }}?_method=PUT" method="POST" class="mt-8">
+    <form action="{{ route('TagsController.update', { id: tag.id }) }}?_method=PUT" method="POST">
       {{ csrfField() }}
 
       @form.group({ name: 'name' })
         @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'text', value: tag.name, placeholder: 'Saisir le nom', classes: '!border-associations-primary-base focus:!ring-associations-primary-base focus-within:!outline-none' })
+        @!form.input({ type: 'text', value: tag.name, placeholder: 'Saisir le nom', variant: 'associations' })
       @end
 
       <div class="flex flex-row justify-between mt-8">
-        @elements.button({ type: 'reset', classes: 'text-black border border-associations-primary-base hover:border-slate-600 focus:!ring-associations-primary-base' })
-          Annuler
+        @elements.button({
+          variant: 'associations'
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
         @end
-
-        @elements.button({ type: 'submit', classes: 'text-white bg-associations-primary-base hover:bg-slate-600 focus:!ring-associations-primary-base' })
-          Enregistrer
+        @elements.button({
+          fill: true,
+          variant: 'associations',
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
         @end
       </div>
     </form>
-  </section>
+  @end
 @end
+

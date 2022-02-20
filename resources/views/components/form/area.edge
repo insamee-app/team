@@ -1,21 +1,21 @@
 @set('value', flashMessages.get($context.name) || $props.get('value') || '')
 @set('error', flashMessages.get(`errors.${$context.name}`) || '')
 
-@set('classes', 'border-slate-500 focus:ring-slate-500 focus:border-slate-500')
+@set('className', 'border-slate-500 focus:ring-slate-500 focus:border-slate-500')
 @if(variant === 'mee')
-  @set('classes', 'border-mee-primary-base focus:ring-mee-primary-base focus:border-mee-primary-base')
-@elseif(variant === 'association')
-  @set('classes', 'border-associations-primary-base focus:ring-associations-primary-base focus:border-associations-primary-base')
+  @set('className', 'border-mee-primary-base focus:ring-mee-primary-base focus:border-mee-primary-base')
+@elseif(variant === 'associations')
+  @set('className', 'border-associations-primary-base focus:ring-associations-primary-base focus:border-associations-primary-base')
 @endif
 
 <textarea {{
-    $props.serializeExcept(['classes'], {
+    $props.serializeExcept(['className'], {
       id: $context.name,
       name: $context.name,
       disabled: $context.disabled || false,
     })
   }}
-  class="py-1 px-2 rounded border border-1 focus:!ring-2 focus:!ring-offset-2 disabled:text-slate-500 disabled:border-slate-500 disabled:bg-white placeholder:text-slate-500 {{ classes }}"
+  class="py-1 px-2 rounded border border-1 focus:!ring-2 focus:!ring-offset-2 disabled:text-slate-500 disabled:border-slate-500 disabled:bg-white placeholder:text-slate-500 {{ className }}"
 >{{ value }}</textarea>
 
 @if(error)

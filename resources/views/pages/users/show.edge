@@ -2,42 +2,58 @@
 @set('title', 'Utilisateur ' + user.email)
 
 @section('content')
-  <h2 class="text-slate-500 text-lg font-semibold">
-    <a href="{{ route('UsersController.index') }}">
-      Utilisateurs
-    </a>
-  </h2>
 
-  <h1 class="text-2xl font-bold mt-2">{{ user.email }}</h1>
+  @set('blockAction', '')
+  @unless(user.blockedAt)
+    @set('blockAction', route('UsersController.block', { id: user.id, qs: { _method: 'PUT' }}))
+  @else
+    @set('blockAction', route('UsersController.unblock', { id: user.id, qs: { _method: 'DELETE' }}))
+  @end
 
-  <div class="mt-2 flex flex-row space-x-2 text-slate-500 text-sm">
-    <span class="py-1 px-2 bg-slate-200 rounded-full">
-      @if (user.blockedAt)
-        Bloqué
-      @elseif (user.status === UserStatus.Pending)
-        En attente
-      @elseif (user.status === UserStatus.Active)
-        Actif
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'UsersController',
+      })
+        Utilisateurs
+      @end
+
+      @shared.title()
+        {{ user.email }}
+      @end
+
+      <ul class="-mt-1 lg:-mt-5 flex flex-row space-x-2">
+        @elements.chip()
+          @if (user.blockedAt)
+            Bloqué
+          @elseif (user.status === UserStatus.Pending)
+            En attente
+          @elseif (user.status === UserStatus.Active)
+            Actif
+          @endif
+        @end
+        @elements.chip()
+          <span class="font-bold">
+            @if (user.role === UserRole.Admin)
+              Admin
+            @elseif (user.role === UserRole.Moderator)
+              Modérateur
+            @elseif (user.role === UserRole.Member)
+              Member
+            @endif
+          </span>
+        @end
+      </ul>
+    @end
+
+
+    <div class="mt-8 text-right lg:text-lg">
+      @if(user.blockedAt)
+        Bloqué depuis le {{ user.blockedAt.setLocale('fr').toLocaleString() }}
+      @else
+        Membre depuis le {{ user.createdAt.setLocale('fr').toLocaleString() }}
       @endif
-    </span>
-    <span class="py-1 px-2 bg-slate-200 font-bold rounded-full">
-      @if (user.role === UserRole.Admin)
-        Admin
-      @elseif (user.role === UserRole.Moderator)
-        Modérateur
-      @elseif (user.role === UserRole.Member)
-        Member
-      @endif
-    </span>
-  </div>
-
-  <div class="mt-8 text-right">
-    @if(user.blockedAt)
-      Bloqué depuis le {{ user.blockedAt.setLocale('fr').toLocaleString() }}
-    @else
-      Membre depuis le {{ user.createdAt.setLocale('fr').toLocaleString() }}
-    @endif
-  </div>
+    </div>
 
   @can('UserPolicy.update')
     <div class="mt-8 space-y-2 text-right text-slate-500">
@@ -73,24 +89,29 @@
   @end
 
   <div class="mt-8 flex felx-row justify-between">
-    <a href="{{ route('ProfilesController.show', { id: user.profile.id }) }}" class="shadow-sm rounded text-slate-500 border border-slate-500 py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Voir le profil</a>
-
-    @set('blockAction', '')
-    @unless(user.blockedAt)
-      @set('blockAction', route('UsersController.block', { id: user.id, qs: { _method: 'PUT' }}))
-    @else
-      @set('blockAction', route('UsersController.unblock', { id: user.id, qs: { _method: 'DELETE' }}))
+    @elements.button()
+      @slot('main', className)
+        <a href="{{ route('ProfilesController.show', { id: user.profile.id }) }}" class="{{ className }}">Voir le profil</a>
+      @end
     @end
+
+
     <form action="{{ blockAction }}" method="POST">
       {{ csrfField() }}
-      <button type="submit" class="shadow-sm rounded text-white bg-slate-500 py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
-        @if(user.blockedAt)
-          Débloquer
-        @else
-          Bloquer
-        @endif
-      </button>
+      @elements.button({
+        fill: true
+      })
+        @slot('main', className)
+          <button type="submit" class="{{ className }}">
+            @if(user.blockedAt)
+              Débloquer
+            @else
+              Bloquer
+            @endif
+          </button>
+        @end
+      @end
     </form>
   </div>
-
+  @end
 @end

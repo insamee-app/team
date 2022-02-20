@@ -2,37 +2,54 @@
 @set('title', 'Signaler un profil')
 
 @section('content')
-  <h2 class="text-mee-primary-base text-lg font-semibold">
-    <a href="{{ route('ProfilesController.index') }}">
-      Mee
-    </a>
-  </h2>
-
-  <div class="flex flex-row justify-between items-center mt-2">
-    <h1 class="text-2xl font-bold">Signaler l'école</h1>
-  </div>
-
-  <form class="mt-8" action="{{ route('ReportsProfilesController.store', { id: request.routeParams.id }) }}" method="POST">
-    {{ csrfField() }}
-
-    @form.group({ name: 'reasonId' })
-      @!form.label({ title: 'Raison' })
-      @!form.radio({
-        data: reasons,
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'ProfilesController',
         variant: 'mee',
       })
+        Mee
+      @end
+
+      @shared.title()
+        Signaler le mee
+      @end
     @end
 
-    @form.group({ name: 'description', class: 'mt-4 flex flex-col space-y-1' })
-      @!form.label({ title: 'Précisions'})
-      @!form.area({ type: 'text', variant: 'mee'})
-    @end
+    <form action="{{ route('ReportsProfilesController.store', { id: request.routeParams.id }) }}" method="POST">
+      {{ csrfField() }}
+
+      @form.group({ name: 'reasonId' })
+        @!form.label({ title: 'Raison' })
+        @!form.radio({
+          data: reasons,
+          variant: 'mee',
+        })
+      @end
+
+      @form.group({ name: 'description', class: 'mt-4 flex flex-col space-y-1' })
+        @!form.label({ title: 'Précisions'})
+        @!form.area({ type: 'text', variant: 'mee'})
+      @end
 
 
-    <div class="mt-8 flex flex-row justify-between">
-      <button type="reset" class="shadow-sm rounded text-mee-primary-base border border-mee-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Annuler</button>
-      <button type="submit" class="shadow-sm rounded text-white bg-mee-primary-base py-1 px-2 focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">Signaler</button>
-    </div>
-  </form>
-
+      <div class="mt-8 flex flex-row justify-between">
+        @elements.button({
+          variant: 'mee',
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          variant: 'mee',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Signaler</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
 @end

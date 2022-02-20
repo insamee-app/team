@@ -2,33 +2,42 @@
 @set('title', 'Modifier ' + reason.name)
 
 @section('content')
-  <section>
-
-    <h2 class="text-slate-500 text-lg font-semibold">
-      <a href="{{ route('ReasonsController.index') }}">
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'ReasonsController',
+      })
         Raisons
-      </a>
-    </h2>
+      @end
 
-    <h1 class="text-2xl font-bold mt-2">Modifier</h1>
+      @shared.title()
+        Modifier une raison
+      @end
+    @end
 
-    <form action="{{ route('ReasonsController.update', { id: reason.id }) }}?_method=PUT" method="POST" class="mt-8">
+    <form action="{{ route('ReasonsController.update', { id: reason.id }) }}?_method=PUT" method="POST">
       {{ csrfField() }}
 
       @form.group({ name: 'name' })
         @!form.label({ title: 'Nom' })
-        @!form.input({ type: 'text', value: reason.name, placeholder: 'Saisir le nom', classes: '!border-slate-500 focus:!ring-slate-500 focus-within:!outline-none' })
+        @!form.input({ type: 'text', value: reason.name, placeholder: 'Saisir le nom' })
       @end
 
       <div class="flex flex-row justify-between mt-8">
-        @elements.button({ type: 'reset', classes: 'text-black border border-slate-500 hover:border-slate-600 focus:!ring-slate-500' })
-          Annuler
+        @elements.button()
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
         @end
-
-        @elements.button({ type: 'submit', classes: 'text-white bg-slate-500 hover:bg-slate-600 focus:!ring-slate-500' })
-          Enregistrer
+        @elements.button({
+          fill: true,
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
         @end
       </div>
     </form>
-  </section>
+  @end
 @end
+

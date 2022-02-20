@@ -12,10 +12,13 @@
   @entryPointScripts('app')
 </head>
 <body>
+
+  @include('partials/flash')
+
   <main class="mt-16 mb-8 mx-8 space-y-8">
     <div class="flex flex-row justify-center">
       <a href="{{ route('home') }}" title="Redirection vers la page d'accueil">
-        <img src="{{ asset('assets/images/logo_team.png') }}" alt="logo de la plateforme" width="500" height="500" loading="lazy" class="w-32 h-32">
+        <img src="{{ asset('assets/images/logo_team.png') }}" alt="logo de la plateforme" width="500" height="500" loading="lazy" class="w-32 lg:w-44 h-32 lg:h-44">
       </a>
     </div>
     <section class="max-w-xs mx-auto">

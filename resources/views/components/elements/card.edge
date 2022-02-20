@@ -6,6 +6,6 @@
   @set('color', 'border-associations-grey-light')
 @end
 
-<article class="p-4 border rounded-2xl {{ color }} {{ classes }}">
+<article class="p-4 lg:p-6 border rounded-2xl {{ color }} {{ classes }}">
   {{{ await $slots.main() }}}
 </article>
