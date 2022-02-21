@@ -18,6 +18,12 @@
     <form action="{{ route('ReasonsController.update', { id: reason.id }) }}?_method=PUT" method="POST">
       {{ csrfField() }}
 
+      @form.group({ name: 'type' })
+        @!form.label({ title: 'Type' })
+        @!form.radio({ data: ReasonTypeData, value: reason.type})
+      @end
+
+
       @form.group({ name: 'name' })
         @!form.label({ title: 'Nom' })
         @!form.input({ type: 'text', value: reason.name, placeholder: 'Saisir le nom' })

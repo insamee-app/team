@@ -1,13 +1,14 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Reason from 'App/Models/Reason'
+import { ReasonType } from 'App/Enums/ReasonType'
 import ReasonStoreValidator from 'App/Validators/ReasonStoreValidator'
 import ReasonUpdateValidator from 'App/Validators/ReasonUpdateValidator'
 
 export default class ReasonsController {
-  public async index({ view, bouncer }: HttpContextContract) {
+  public async index({ view, bouncer, request }: HttpContextContract) {
     await bouncer.with('ReasonPolicy').authorize('viewList')
 
-    const reasons = await Reason.query().orderBy('name', 'asc')
+    const reasons = await Reason.query().filter(request.qs()).orderBy('name', 'asc')
 
     return view.render('pages/reasons/index', { reasons })
   }
@@ -22,8 +23,8 @@ export default class ReasonsController {
     await bouncer.with('ReasonPolicy').authorize('create')
 
     const data = await request.validate(ReasonStoreValidator)
-
-    const reason = await Reason.create(data)
+    console.log(ReasonType)
+    const reason = await Reason.create(data as unknown as { name: string; type: number })
 
     session.flash('success', 'Raison créée avec succès')
     return response.redirect().toRoute('ReasonsController.show', { id: reason.id })
@@ -52,7 +53,7 @@ export default class ReasonsController {
 
     const data = await request.validate(ReasonUpdateValidator)
 
-    reason.merge(data)
+    reason.merge(data as unknown as { name: string; type: number })
 
     await reason.save()
 

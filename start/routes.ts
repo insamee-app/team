@@ -20,6 +20,11 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+// Avoid to query the database if params does not match
+Route.where('id', {
+  match: /^[0-9a-zA-F]{8}-[0-9a-zA-F]{4}-[0-9a-zA-F]{4}-[0-9a-zA-F]{4}-[0-9a-zA-F]{12}$/,
+})
+
 Route.get('/', async ({ view, auth, response }) => {
   if (auth.user) {
     return response.redirect().toRoute('ProfilesController.index')

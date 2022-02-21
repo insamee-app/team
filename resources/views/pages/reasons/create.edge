@@ -18,6 +18,11 @@
     <form action="{{ route('ReasonsController.store') }}" method="POST">
       {{ csrfField() }}
 
+      @form.group({ name: 'type' })
+        @!form.label({ title: 'Type' })
+        @!form.radio({data: ReasonTypeData})
+      @end
+
       @form.group({ name: 'name' })
         @!form.label({ title: 'Nom' })
         @!form.input({ type: 'text', placeholder: 'Saisir le nom' })

@@ -161,6 +161,13 @@
         controller: 'ReportsProfilesController',
         end: "le profil"
       })
+    @else
+      <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST" class="mt-8 flex justify-end items-center">
+        {{ csrfField() }}
+        <button type="submit" class="text-slate-500 text-sm italic">
+          Se déconnecter
+        </button>
+      </form>
     @end
 
 

@@ -28,7 +28,7 @@
         data.lastPage :
         data.currentPage + visiblePage / 2
       )
-      @set('fromPage', data.currentPage - visiblePage / 2 > 0 ?
+      @set('fromPage', data.currentPage - visiblePage > 0 ?
         data.currentPage - visiblePage + (data.lastPage - data.currentPage > visiblePage / 2 ? visiblePage / 2 : data.lastPage - data.currentPage) :
         1
       )

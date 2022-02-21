@@ -5,5 +5,7 @@
     {{{ await $slots.main() }}}
   </div>
 
-  {{{ await $slots.pagination({ className: 'lg:col-start-2 col-span-1 md:col-span-2' }) }}}
+  @if($slots.pagination)
+    {{{ await $slots.pagination({ className: 'lg:col-start-2 col-span-1 md:col-span-2' }) }}}
+  @end
 </div>

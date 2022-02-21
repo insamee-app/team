@@ -1,10 +1,26 @@
 import View from '@ioc:Adonis/Core/View'
+import { ReasonType } from 'App/Enums/ReasonType'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import User from 'App/Models/User'
 
 View.global('UserRole', UserRole)
 View.global('UserStatus', UserStatus)
+View.global('ReasonType', ReasonType)
+View.global('ReasonTypeData', [
+  {
+    id: String(ReasonType['Profile']),
+    name: 'Profil',
+  },
+  {
+    id: String(ReasonType['Association']),
+    name: 'Association',
+  },
+  {
+    id: String(ReasonType['School']),
+    name: 'Ecole',
+  },
+])
 
 View.global('loadCurrentProfile', async function (user: User) {
   await user.load('profile')

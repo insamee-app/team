@@ -1,0 +1,14 @@
+@shared.filters({
+  className: $props.className,
+  controller: 'ReasonsController',
+})
+  @form.group({name: 'type'})
+    @!form.label({ title: 'Type' })
+    @form.select({
+      data: ReasonTypeData,
+      selectedData: String(request.qs().type || ''),
+    })
+      Sélectionner un type
+    @end
+  @end
+@end
