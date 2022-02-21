@@ -1,4 +1,5 @@
 import Route from '@ioc:Adonis/Core/Route'
+import View from '@ioc:Adonis/Core/View'
 import Markdown from 'App/Services/Markdown'
 import fs from 'fs/promises'
 
@@ -11,8 +12,9 @@ Route.get('/contact-us', async ({ view }) => {
 }).as('contact-us')
 
 Route.get('/terms', async ({ view }) => {
-  const aboutFile = await fs.readFile('./content/terms.md', 'utf-8')
-  const html = await Markdown.render(aboutFile)
+  const file = await fs.readFile('./content/terms.md', 'utf-8')
+  console.log(file)
+  const html = await Markdown.render(View.renderRawSync(file))
 
   return view.render('templates/terms', { html })
 }).as('terms')
