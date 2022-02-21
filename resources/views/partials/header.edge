@@ -202,12 +202,20 @@
                     id="admin-nav"
                     x-show="nav"
                     x-transition.origin.top
-                    class="ml-6 text-slate-500">
+                    class="ml-6 text-slate-500"
+                  >
                     <ul class="mt-4 flex flex-col space-y-2">
                       @can('RolePolicy.viewList')
                         <li>
                           <a href="{{ route('RolesController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('RolesController.index')) ? 'text-slate-900' : '' }}">
                             Les roles
+                          </a>
+                        </li>
+                      @end
+                      @can('ReasonPolicy.viewList')
+                        <li>
+                          <a href="{{ route('ReasonsController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('ReasonsController.index')) ? 'text-slate-900' : '' }}">
+                            Les raisons
                           </a>
                         </li>
                       @end
@@ -352,12 +360,20 @@
               id="admin-nav"
               x-show="nav"
               x-transition.origin.top
-              class="absolute mt-2 p-8 text-slate-500 bg-white rounded-xl shadow-lg">
-              <ul class="mt-4 flex flex-col space-y-2">
+              class="absolute mt-2 p-8 text-slate-500 bg-white rounded-xl shadow-lg"
+            >
+              <ul class="flex flex-col space-y-2">
                 @can('RolePolicy.viewList')
                   <li>
                     <a href="{{ route('RolesController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('RolesController.index')) ? 'text-slate-900' : '' }}">
                       Les roles
+                    </a>
+                  </li>
+                @end
+                @can('ReasonPolicy.viewList')
+                  <li>
+                    <a href="{{ route('ReasonsController.index') }}" class="flex flex-row items-center space-x-2 text-lg {{ request.matchesRoute(route('ReasonsController.index')) ? 'text-slate-900' : '' }}">
+                      Les raisons
                     </a>
                   </li>
                 @end
