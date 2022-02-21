@@ -9,15 +9,15 @@ View.global('UserStatus', UserStatus)
 View.global('ReasonType', ReasonType)
 View.global('ReasonTypeData', [
   {
-    id: ReasonType['Profile'],
+    id: String(ReasonType['Profile']),
     name: 'Profil',
   },
   {
-    id: ReasonType['Association'],
+    id: String(ReasonType['Association']),
     name: 'Association',
   },
   {
-    id: ReasonType['School'],
+    id: String(ReasonType['School']),
     name: 'Ecole',
   },
 ])

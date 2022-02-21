@@ -32,7 +32,7 @@
         <span>
           Pour le type
             <em class="text-slate-500">
-              {{ ReasonTypeData.find((el) => el.id === reason.type).name }}
+              {{ ReasonTypeData.find((el) => el.id === String(reason.type)).name }}
           </em>
           </span>
       </div>
