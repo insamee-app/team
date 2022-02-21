@@ -27,6 +27,15 @@
           @end
         @end
       @end
+
+      <div class="-mt-2 lg:-mt-6 md:text-lg mb-4 lg:mb-8">
+        <span>
+          Pour le type
+            <em class="text-slate-500">
+              {{ ReasonTypeData.find((el) => el.id === reason.type).name }}
+          </em>
+          </span>
+      </div>
     @end
 
     @!shared.delete({
