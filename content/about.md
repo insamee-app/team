@@ -3,6 +3,7 @@
 ## TEAM
 
 > TEAM est encore en développement. Si vous rencontrez des problèmes, des difficultés ou que vous avez des suggestions, n'hésitez pas à [nous contacter](/contact-us).
+> Pour suivre l'avancement, vous pouvez nous suivre sur [Twitter](https://twitter.com/insameeapp) ou vous abonner à [nos news](https://news.insameeapp.fr).
 
 TEAM est un écosystème de mise en relation étudiante. Son objectif est de favoriser la communication, la rencontre et l'échange intra et inter-école au sein de la vie étudiante et de la vie associative.
 
