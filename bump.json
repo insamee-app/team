@@ -1,0 +1,13 @@
+{
+  "files": {
+    "./resources/views/partials/footer.edge": [
+      "      TEAM v(\\d.\\d.\\d*) <br />",
+      "      TEAM v[version] <br />",
+      "i"
+    ]
+  },
+  "commit": {
+    "enable": "true",
+    "message": "Release v[version]"
+  }
+}
