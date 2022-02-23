@@ -1,0 +1,35 @@
+@layout('layouts/app')
+@set('title', 'Les rapports')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'ReportsController',
+  })
+    Signalements
+  @end
+
+  @shared.title()
+    Liste des signalements
+  @end
+
+  @shared.list({
+    items: reports
+  })
+    @slot('main', report)
+      <a href="{{ route('ReportsController.show', { id: report.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+        @elements.card({
+          classes: 'border-slate-200 hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            Numéro {{ report.number }} - {{ report.isResolved ? 'Résolu' : 'Non résolu' }}
+          @end
+        @end
+      </a>
+    @end
+  @end
+
+  @!shared.pagination({
+    data: reports,
+    className: 'mt-8',
+  })
+@end

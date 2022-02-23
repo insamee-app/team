@@ -1,0 +1,45 @@
+@layout('layouts/app')
+@set('title', 'Les centres \'intérêts')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'FocusInterestsController',
+    variant: 'mee',
+  })
+    Centres d'intérets
+  @end
+
+  @shared.title()
+    Liste des centres d'intérêts
+    @slot('actions')
+      @can('FocusInterestPolicy.create')
+        @elements.button({
+          fill: true,
+          variant: 'mee'
+        })
+          @slot('main', className)
+          <a href="{{ route('FocusInterestsController.create') }}" class="{{ className }}">
+            Ajouter
+          </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.list({
+    items: focusInterests
+  })
+    @slot('main', focusInterest)
+      <a href="{{ route('FocusInterestsController.show', { id: focusInterest.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+        @elements.card({
+          classes: 'border-mee-primary-grey-light hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            {{ focusInterest.name }}
+          @end
+        @end
+      </a>
+    @end
+  @end
+@end

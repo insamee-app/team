@@ -1,0 +1,27 @@
+@set('value', flashMessages.get($context.name) || $props.get('value') || '')
+@set('error', flashMessages.get(`errors.${$context.name}`) || '')
+
+@set('className', '!border-slate-500 focus:!ring-slate-500 focus-within:!outline-none')
+
+@if(variant === 'mee')
+  @set('className', '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none')
+@elseif(variant === 'associations')
+  @set('className', '!border-associations-primary-base focus:!ring-associations-primary-base focus-within:!outline-none')
+@elseif(variant === 'checkbox')
+  @set('className', 'text-slate-900 !ring-slate-900')
+@end
+
+<input {{
+    $props.serializeExcept(['classes'], {
+      value: value,
+      id: $context.name,
+      name: $context.name,
+      disabled: $context.disabled || false,
+    })
+  }}
+  class="py-1 px-2 rounded border border-1 focus:!ring-2 focus:!ring-offset-2 disabled:text-slate-500 disabled:border-slate-500 disabled:bg-white placeholder:text-slate-500 {{ className }}"
+  >
+
+@if(error)
+  <span class="text-sm lg:text-base">{{ error }}</span>
+@endif

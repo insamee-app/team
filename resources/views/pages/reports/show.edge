@@ -1,0 +1,120 @@
+@layout('layouts/app')
+@set('title', 'Rapport ' + report.number)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'ReportsController',
+      })
+        Signalements
+      @end
+
+      @shared.title()
+        Numéro {{ report.number }} - {{ report.resolvedAt ? 'Résolu' : 'Non résolu' }}
+      @end
+
+      <div class="-mt-2 lg:-mt-6 md:text-lg mb-4 lg:mb-8">
+        <span>
+          Par
+          <a href="{{ route('ProfilesController.show', { id: report.reporter.profile.id }) }}" class="text-slate-500">
+            {{ report.reporter.profile.firstName }} {{ report.reporter.profile.lastName }}
+          </a>
+        </span>
+      </div>
+    @end
+
+    <section class="mt-8">
+      <h3 class="text-xl lg:text-3xl font-bold">
+        {{ report.reason.name }}
+      </h3>
+
+      @if(report.description)
+        <p class="mt-4 text-justify lg:text-lg">
+          {{ report.description }}
+        </p>
+      @endif
+
+      @if(report.profile)
+        <h3 class="mt-8 text-xl lg:text-3xl font-bold">
+          Profil
+        </h3>
+
+        <div class="mt-4 flex flex-col space-y-2 lg:text-lg">
+          <p>{{ report.profile.firstName }} {{ report.profile.lastName }}</p>
+          <p>{{ report.profile.user.email }}</p>
+          <p>{{ report.profile.school.name }}</p>
+        </div>
+      @elseif(report.association)
+        <h3 class="mt-8 text-xl lg:text-3xl font-bold">
+          Association
+        </h3>
+
+        <div class="mt-4 flex flex-col space-y-2 lg:text-lg">
+          <p>{{ report.association.name }}</p>
+          <p>{{ report.association.school.name }}</p>
+        </div>
+      @elseif(report.school)
+        <h3 class="mt-8 text-xl lg:text-3xl font-bold">
+          School
+        </h3>
+
+        <div class="mt-4 flex flex-col space-y-2 lg:text-lg">
+          <p>{{ report.school.name }}</p>
+        </div>
+      @end
+
+      <div class="mt-8 flex flex-row justify-between">
+        @if(report.profile)
+          @elements.button({
+            fill: true,
+            variant: 'mee'
+          })
+            @slot('main', className)
+              <a href="{{ route('ProfilesController.show', { id: report.profile.id}) }}" class="{{ className }}">
+                Voir le profil
+              </a>
+            @end
+          @end
+        @elseif(report.association)
+          @elements.button({
+            fill: true,
+            variant: 'associations',
+          })
+            @slot('main', className)
+              <a href="{{ route('AssociationsController.show', { id: report.association.id}) }}" class="{{ className }}">
+                Voir l'association
+              </a>
+            @end
+          @end
+        @elseif(report.school)
+          @elements.button({
+            fill: true,
+          })
+            @slot('main', className)
+              <a href="{{ route('SchoolsController.show', { id: report.school.id}) }}" class="{{ className }}">
+                Voir l'école
+              </a>
+            @end
+          @end
+        @end
+        @unless(report.resolvedAt)
+          <form action="{{ route('ReportsController.update', { id: report.id }) }}?_method=PUT" method="POST">
+            {{ csrfField() }}
+            @elements.button({
+              fill: true,
+            })
+              @slot('main', className)
+                <button type="submit" class="{{ className }}">Résoudre</button>
+              @end
+            @end
+          </form>
+        @else
+          <div class="px-2 lg:px-3 py-1 rounded bg-slate-200 lg:text-lg">
+            Résolu par {{ report.resolvedBy.profile.firstName }} {{ report.resolvedBy.profile.lastName }}
+          </div>
+        @end
+      </div>
+    </section>
+  @end
+@end

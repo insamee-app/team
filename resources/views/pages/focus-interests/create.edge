@@ -1,0 +1,46 @@
+@layout('layouts/app')
+@set('title', 'Créer un centre d\'intéret')
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'FocusInterestsController',
+        variant: 'mee',
+      })
+        Centres d'intérets
+      @end
+
+      @shared.title()
+        Créer un centre d'intéret
+      @end
+    @end
+
+    <form action="{{ route('FocusInterestsController.store') }}" method="POST">
+      {{ csrfField() }}
+
+      @form.group({ name: 'name' })
+        @!form.label({ title: 'Nom' })
+        @!form.input({ type: 'text', placeholder: 'Saisir le nom', variant: 'mee' })
+      @end
+
+      <div class="flex flex-row justify-between mt-8">
+        @elements.button({
+          variant: 'mee',
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          variant: 'mee',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end

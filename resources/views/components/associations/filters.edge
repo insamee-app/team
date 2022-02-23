@@ -1,0 +1,39 @@
+@shared.filters({
+  className: $props.className,
+  variant: 'associations',
+  controller: 'AssociationsController',
+})
+
+  @form.group({name: 'schools'})
+    @!form.label({ title: 'Ecoles' })
+    @form.multiselect({
+      variant: 'associations',
+      data: schools,
+      selectedData: request.qs().schools,
+    })
+      Sélectionner des écoles
+    @end
+  @end
+
+  @form.group({name: 'thematics'})
+    @!form.label({ title: 'Thématiques' })
+    @form.multiselect({
+      variant: 'associations',
+      data: thematics,
+      selectedData: request.qs().thematics,
+    })
+      Sélectionner des thématiques
+    @end
+  @end
+
+  @form.group({name: 'tags'})
+    @!form.label({ title: 'Tags' })
+    @form.multiselect({
+      variant: 'associations',
+      data: tags,
+      selectedData: request.qs().tags,
+    })
+      Sélectionner des tags
+    @end
+  @end
+@end

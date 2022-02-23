@@ -1,0 +1,43 @@
+@layout('layouts/app')
+@set('title', 'Créer un rôle')
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'RolesController',
+      })
+        Rôles
+      @end
+
+      @shared.title()
+        Créer un rôle
+      @end
+    @end
+
+    <form action="{{ route('RolesController.store') }}" method="POST">
+      {{ csrfField() }}
+
+      @form.group({ name: 'name' })
+        @!form.label({ title: 'Nom' })
+        @!form.input({ type: 'text', placeholder: 'Saisir le nom' })
+      @end
+
+      <div class="flex flex-row justify-between mt-8">
+        @elements.button()
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          fill: true,
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end
+

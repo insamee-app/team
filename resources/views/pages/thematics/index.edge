@@ -1,0 +1,45 @@
+@layout('layouts/app')
+@set('title', 'Les thematics')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'ThematicsController',
+    variant: 'associations'
+  })
+    Thématiques
+  @end
+
+  @shared.title()
+    Liste des thematics
+    @slot('actions')
+      @can('ThematicPolicy.create')
+        @elements.button({
+          fill: true,
+          variant: 'associations',
+        })
+          @slot('main', className)
+          <a href="{{ route('ThematicsController.create') }}" class="{{ className }}">
+            Ajouter
+          </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.list({
+    items: thematics
+  })
+    @slot('main', thematic)
+      <a href="{{ route('ThematicsController.show', { id: thematic.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+        @elements.card({
+          classes: 'border-associations-primary-grey-light hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            {{ thematic.name }}
+          @end
+        @end
+      </a>
+    @end
+  @end
+@end

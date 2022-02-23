@@ -1,0 +1,66 @@
+@layout('layouts/app')
+@set('title', focusInterest.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'FocusInterestsController',
+        variant: 'mee',
+      })
+        Centres d'intérêts
+      @end
+
+      @shared.title()
+        {{ focusInterest.name }}
+
+        @slot('actions')
+          @can('FocusInterestPolicy.update')
+            @elements.button({
+              variant: 'mee',
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('FocusInterestsController.edit', { id: focusInterest.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
+    @end
+
+    @!shared.delete({
+      item: focusInterest,
+      policy: 'FocusInterestPolicy',
+      controller: 'FocusInterestsController',
+      end: "le centre d'intéret"
+    })
+
+    @shared.subSection()
+      @slot('title')
+        Mee associés
+      @end
+
+      @shared.list({
+        items: profiles,
+        variant: 'mee',
+      })
+        @slot('main', profile)
+          <a href="{{ route('ProfilesController.show', { id: profile.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+            @!mee.card({
+              profile,
+            })
+          </a>
+        @end
+      @end
+
+      @!shared.pagination({
+        data: profiles,
+        variant: 'mee',
+        className: 'mt-8',
+      })
+    @end
+  @end
+@end

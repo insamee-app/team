@@ -1,0 +1,127 @@
+@layout('layouts/app')
+@set('title', association.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'AssociationsController',
+        variant: 'associations',
+      })
+        Associations
+        @slot('extend')
+          <span>
+            |
+          </span>
+          <a href="{{ route('ThematicsController.show', { id: association.thematic.id }) }}" class="capitalize">
+            {{ association.thematic.name }}
+          </a>
+        @end
+      @end
+
+      @shared.title()
+        <div class="flex flex-col space-y-1">
+           <span class="font-bold">
+            {{ association.name }}
+          </span>
+          <span class="text-lg lg:text-2xl font-normal text-associations-primary-grey-dark">
+            {{ association.school.name }}
+          </span>
+        </div>
+
+
+        @slot('actions')
+          @can('AssociationPolicy.update')
+            @elements.button({
+              variant: 'associations',
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('AssociationsController.edit', { id: association.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
+    @end
+
+    <div class="flex flex-col gap-8">
+
+      <div class="flex flex-col space-y-4 items-center text-associations-primary-base">
+        @!shared.picture({
+          attachment: association.picture,
+          alt: 'Image de l\'association ' + association.name,
+          placeholderClasses: 'bg-associations-secondary-base rounded-full',
+          size: 'w-36 h-36',
+          width: '144',
+          height: '144'
+        })
+        @can('AssociationPolicy.update')
+          <a href="{{ route('AssociationsPicturesController.edit', { id: association.id }) }}" class="flex flex-row space-x-1 justify-center items-center">
+            <span>
+              Changer la photo
+            </span>
+            @!icons.photograph({
+              class: 'w-5 h-5 fill-current'
+            })
+          </a>
+        @end
+        <ul class="flex flex-row justify-center items-center gap-2 flex-wrap max-w-lg">
+          @each(tag in association.tags)
+            @elements.chip({
+              variant: 'associations'
+            })
+              {{ tag.name }}
+            @end
+          @endeach
+        </ul>
+      </div>
+
+      <section>
+          <h3 class="text-xl lg:text-2xl font-bold">Présentation</h3>
+          <p class="mt-4 lg:text-lg text-justify">
+            {{ association.overview }}
+        </p>
+      </section>
+
+      <footer class="flex flex-row justify-between">
+        @if(association.website)
+          @elements.button({
+            variant: 'associations',
+            fill: false
+          })
+            @slot('main', className)
+              <a href="{{ association.website }}" rel="noopener noreferrer" target="_blank" class="{{ className }}">En savoir plus</a>
+            @end
+          @end
+        @endif
+        @if(association.email)
+          @elements.button({
+            variant: 'associations',
+            fill: true
+          })
+            @slot('main', className)
+              <a href="mailto:{{ association.email }}" rel="noopener noreferrer" class="{{ className }}">Contacter</a>
+            @end
+          @end
+        @endif
+      </div>
+    </div>
+  @end
+
+  @!shared.report({
+    report,
+    id: association.id,
+    controller: 'ReportsAssociationsController',
+    end: "l'association"
+  })
+
+  @!shared.delete({
+    item: association,
+    policy: 'AssociationPolicy',
+    controller: 'AssociationsController',
+    end: "l'association"
+  })
+@end

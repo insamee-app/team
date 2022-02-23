@@ -1,0 +1,16 @@
+@layout('layouts/error')
+@set('title', 'Cette page n\'existe pas')
+
+@section('content')
+<h1 class="text-slate-500 text-xl font-bold">
+  Page non-trouvée
+</h1>
+
+<p>
+  La page que vous cherchez n'existe pas.
+</p>
+
+<p>
+  Retournez à la <a href="{{ route('home') }}" class="underline text-slate-500">page d'accueil</a> pour trouver ce qu'il vous faut !
+</p>
+@end

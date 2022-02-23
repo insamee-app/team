@@ -1,0 +1,7 @@
+<div class="mt-8 flex flex-row justify-end text-sm font-light italic text-slate-500">
+  @unless(report)
+    <a href="{{ route(controller + '.create', { id: id }) }}"><span class="font-normal">Signaler</span> {{ end }} </a>
+  @else
+    <span>Vous avez déjà signalé {{ end }}</span>
+  @end
+</div>

@@ -1,0 +1,57 @@
+@set('color', 'text-slate-500 focus:ring-slate-500')
+@set('bgColor', 'bg-slate-200')
+
+@if(variant === 'mee')
+  @set('color', 'text-mee-primary-base focus:ring-mee-primary-base')
+  @set('bgColor', 'bg-mee-primary-grey-light')
+@elseif(variant === 'associations')
+  @set('color', 'text-associations-primary-base focus:ring-associations-primary-base')
+  @set('bgColor', 'bg-associations-primary-grey-light')
+@end
+
+<div x-data="{ showFilters: false }" class="p-4 lg:p-6 flex flex-col justify-center items-center rounded-lg {{ bgColor }} {{ $props.className }}">
+
+  @elements.button({
+    fill: true,
+    variant: variant
+  })
+    @slot('main', className)
+      <button x-on:click="showFilters = true" x-transtion.origin.center class="lg:hidden {{ className }}" :class="showFilters && 'hidden'" type="submit">
+        Voir les filtres
+      </button>
+    @end
+  @end
+
+  <form x-cloak x-transition.origin.center method="GET" action="{{ route(controller + '.index') }}" class="w-full lg:flex flex-col items-center justify-center" :class="showFilters ? 'flex' : 'hidden'">
+
+    @inject({ placeholderColor: 'text-slate-600'})
+    <div class="w-full flex flex-col gap-4">
+      {{{ await $slots.main() }}}
+    </div>
+
+    @elements.button({
+      fill: true,
+      variant: variant
+    })
+      @slot('main', className)
+        <button class="{{ className }} mt-8" type="submit">
+          Appliquer les filtres
+        </button>
+      @end
+    @end
+  </form>
+
+  {{--  Used to show button only if filters are applied  --}}
+  @if(Object.keys(request.except(['page'])).length > 0)
+    @elements.button({
+      fill: true,
+      variant: variant
+    })
+      @slot('main', className)
+        <a href="{{ request.url() }}" x-show="!showFilters" x-transtion.origin.center class="mt-4 {{ className }}" >
+          Annuler les filtres
+        </a>
+      @end
+    @end
+  @end
+</div>

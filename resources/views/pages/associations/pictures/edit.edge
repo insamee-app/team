@@ -1,0 +1,64 @@
+@layout('layouts/app')
+@set('title', 'Modifier l\'image de ' + association.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'AssociationsController',
+        variant: 'associations',
+      })
+        Associations
+      @end
+
+      @shared.title()
+        Modifier l'image
+      @end
+    @end
+
+    <section class="flex flex-col space-y-4">
+      <h3 class="text-xl font-bold">Image actuelle</h3>
+
+      <div class="flex flex-col items-center space-y-2">
+        @!shared.picture({
+          attachment: association.picture,
+          alt: 'Image de l\'association ' + association.name,
+          placeholderClasses: 'bg-associations-secondary-base rounded-full',
+          size: 'w-36 h-36',
+          width: '144',
+          height: '144'
+        })
+
+        <form action="{{ route('AssociationsPicturesController.destroy', { id: association.id }) }}?_method=DELETE" method="POST">
+          {{ csrfField() }}
+
+          <button type="submit" class="text-sm text-associations-primary-base">Supprimer l'image</button>
+        </form>
+      </div>
+    </section>
+
+    <form action="{{ route('AssociationsPicturesController.update', { id: association.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
+      {{ csrfField() }}
+
+      <h3 class="text-xl lg:text-3xl font-bold">Nouvelle image</h3>
+
+      <div class="mt-4">
+        @form.group({ name: 'picture', class: "flex flex-row items-center space-x-2" })
+          @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", className: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-associations-primary-grey-light file:text-associations-primary-base hover:file:bg-associations-primary-grey-base text-grey-500 text-sm lg:text-base file:cursor-pointer" })
+          @!form.label({ title: 'Changer son avatar', class: "sr-only" })
+        @end
+      </div>
+
+      <div class="flex flex-col items-end mt-4">
+        @elements.button({
+          variant: 'associations',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end

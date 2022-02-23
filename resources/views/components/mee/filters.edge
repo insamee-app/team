@@ -1,0 +1,38 @@
+@shared.filters({
+  className: $props.className,
+  variant: 'mee',
+  controller: 'ProfilesController',
+})
+  @form.group({name: 'schools'})
+    @!form.label({ title: 'Ecoles' })
+    @form.multiselect({
+      variant: 'mee',
+      data: schools,
+      selectedData: request.qs().schools,
+    })
+      Sélectionner des écoles
+    @end
+  @end
+
+  @form.group({name: 'skills'})
+    @!form.label({ title: 'Compétences' })
+    @form.multiselect({
+      variant: 'mee',
+      data: skills,
+      selectedData: request.qs().skills,
+    })
+      Sélectionner des compétences
+    @end
+  @end
+
+  @form.group({name: 'focusInterests'})
+    @!form.label({ title: 'Centres d\'intérêts' })
+    @form.multiselect({
+      variant: 'mee',
+      data: focusInterests,
+      selectedData: request.qs().focusInterests,
+    })
+      Sélectionner des centres d'intérêts
+    @end
+  @end
+@end

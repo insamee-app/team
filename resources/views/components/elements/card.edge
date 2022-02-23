@@ -1,0 +1,11 @@
+@set('color', '')
+
+@if(variant === 'mee')
+  @set('color', 'border-mee-primary-grey-light')
+@elseif(variant === 'associations')
+  @set('color', 'border-associations-grey-light')
+@end
+
+<article class="p-4 lg:p-6 border rounded-2xl {{ color }} {{ classes }}">
+  {{{ await $slots.main() }}}
+</article>

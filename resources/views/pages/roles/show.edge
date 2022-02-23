@@ -1,0 +1,40 @@
+@layout('layouts/app')
+@set('title', role.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'RolesController',
+      })
+        Rôles
+      @end
+
+      @shared.title()
+        {{ role.name }}
+
+        @slot('actions')
+          @can('RolePolicy.update')
+            @elements.button({
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('RolesController.edit', { id: role.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
+    @end
+
+    @!shared.delete({
+      item: role,
+      policy: 'RolePolicy',
+      controller: 'RolesController',
+      end: "le rôle"
+    })
+
+  @end
+@end

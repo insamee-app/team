@@ -1,0 +1,62 @@
+@layout('layouts/app')
+@set('title', 'Les associations')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'AssociationsController',
+    variant: 'associations',
+  })
+    Associations
+  @end
+
+  @shared.title()
+    Liste des associations
+
+    @slot('actions')
+      @can('AssociationPolicy.create')
+        @elements.button({
+          fill: true,
+          variant: 'associations'
+        })
+          @slot('main', className)
+            <a href="{{ route('AssociationsController.create') }}" class="{{ className }}">
+              Ajouter
+            </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.grid()
+    @slot('filters', scope)
+      @!associations.filters({
+        className: scope.className,
+        schools,
+        thematics,
+        tags,
+      })
+    @end
+
+    @shared.list({
+      items: associations,
+      variant: 'associations',
+    })
+      @slot('main', association)
+        <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base h-full">
+          @!associations.card({
+            association,
+          })
+        </a>
+      @end
+    @end
+
+    @slot('pagination', scope)
+      @!shared.pagination({
+        data: associations,
+        variant: 'associations',
+        className: scope.className,
+      })
+    @end
+  @end
+@end

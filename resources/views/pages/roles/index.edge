@@ -1,0 +1,43 @@
+@layout('layouts/app')
+@set('title', 'Les rôles')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'RolesController',
+  })
+    Rôles
+  @end
+
+  @shared.title()
+    Liste des rôles
+    @slot('actions')
+      @can('RolePolicy.create')
+        @elements.button({
+          fill: true,
+        })
+          @slot('main', className)
+          <a href="{{ route('RolesController.create') }}" class="{{ className }}">
+            Ajouter
+          </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.list({
+    items: roles
+  })
+    @slot('main', role)
+      <a href="{{ route('RolesController.show', { id: role.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+        @elements.card({
+          classes: 'border-slate-200 hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            {{ role.name }}
+          @end
+        @end
+      </a>
+    @end
+  @end
+@end

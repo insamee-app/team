@@ -1,0 +1,53 @@
+@layout('layouts/logo')
+@set('title', 'S\'inscrire')
+
+@section('content')
+  <form class="grid gap-2" action='{{ route('AuthController.register') }}' method='POST'>
+    {{ csrfField() }}
+
+    @form.group({name: 'firstName'})
+      @!form.label({ title: 'Prénom' })
+      @!form.input({ type: 'firstname', placeholder: 'Votre prénom' })
+    @end
+
+    @form.group({name: 'lastName'})
+      @!form.label({ title: 'Nom' })
+      @!form.input({ type: 'lastname', placeholder: 'Votre nom' })
+    @end
+
+
+    @form.group({name: 'email'})
+      @!form.label({ title: 'Adresse électronique' })
+      @!form.input({ type: 'email', placeholder: 'example@site.fr' })
+    @end
+
+    @form.group({name: 'password'})
+      @!form.label({ title: 'Password' })
+      @!form.input({ type: 'password', placeholder: '********' })
+    @end
+
+    @form.group({ name: 'password_confirmation' })
+      @!form.label({ title: 'Confirmation' })
+      @!form.input({ type: 'password', placeholder: '********' })
+    @end
+
+    <div class="mt-6 flex flex-row justify-center">
+        @elements.button({
+          fill: true,
+          variant: 'black'
+        })
+          @slot('main', className)
+           <button class="{{ className }} w-full" type="submit">S'inscrire</button>
+          @end
+        @end
+    </div>
+  </form>
+
+  <div class="w-full flex flex-row justify-center mt-8 py-4 px-5 rounded border border-slate-900">
+    <p class="text-slate-500">Déjà un compte ?</p>&nbsp;
+    <a href="{{ route('AuthController.login') }}">
+      Se connecter
+    </a>
+  </div>
+@end
+

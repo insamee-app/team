@@ -1,0 +1,117 @@
+@layout('layouts/app')
+@set('title', 'Utilisateur ' + user.email)
+
+@section('content')
+
+  @set('blockAction', '')
+  @unless(user.blockedAt)
+    @set('blockAction', route('UsersController.block', { id: user.id, qs: { _method: 'PUT' }}))
+  @else
+    @set('blockAction', route('UsersController.unblock', { id: user.id, qs: { _method: 'DELETE' }}))
+  @end
+
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'UsersController',
+      })
+        Utilisateurs
+      @end
+
+      @shared.title()
+        {{ user.email }}
+      @end
+
+      <ul class="-mt-1 lg:-mt-5 flex flex-row space-x-2">
+        @elements.chip()
+          @if (user.blockedAt)
+            Bloqué
+          @elseif (user.status === UserStatus.Pending)
+            En attente
+          @elseif (user.status === UserStatus.Active)
+            Actif
+          @endif
+        @end
+        @elements.chip()
+          <span class="font-bold">
+            @if (user.role === UserRole.Admin)
+              Admin
+            @elseif (user.role === UserRole.Moderator)
+              Modérateur
+            @elseif (user.role === UserRole.Member)
+              Member
+            @endif
+          </span>
+        @end
+      </ul>
+    @end
+
+
+    <div class="mt-8 text-right lg:text-lg">
+      @if(user.blockedAt)
+        Bloqué depuis le {{ user.blockedAt.setLocale('fr').toLocaleString() }}
+      @else
+        Membre depuis le {{ user.createdAt.setLocale('fr').toLocaleString() }}
+      @endif
+    </div>
+
+  @can('UserPolicy.update')
+    <div class="mt-8 space-y-2 text-right text-slate-500">
+      @if(user.role === UserRole.Member)
+        <form action="{{ route('UsersController.makeModerator', { id: user.id, qs: { _method: 'PUT' }}) }}" method="post">
+          {{ csrfField() }}
+          <button type="submit">
+            Promouvoir Modérateur
+          </button>
+        </form>
+      @elseif(user.role === UserRole.Moderator)
+        <form action="{{ route('UsersController.removeModerator', { id: user.id, qs: { _method: 'DELETE' }}) }}" method="post">
+          {{ csrfField() }}
+          <button type="submit">
+            Rétrograder Membre
+          </button>
+        </form>
+        <form action="{{ route('UsersController.makeAdmin', { id: user.id, qs: { _method: 'PUT' }}) }}" method="post">
+          {{ csrfField() }}
+          <button type="submit">
+            Promouvoir Administrateur
+          </button>
+        </form>
+      @elseif(user.role === UserRole.Admin)
+        <form action="{{ route('UsersController.removeAdmin', { id: user.id, qs: { _method: 'DELETE' }}) }}" method="post">
+          {{ csrfField() }}
+            <button type="submit">
+            Rétrograder Membre
+          </button>
+        </form>
+      @endif
+    </div>
+  @end
+
+  <div class="mt-8 flex felx-row justify-between">
+    @elements.button()
+      @slot('main', className)
+        <a href="{{ route('ProfilesController.show', { id: user.profile.id }) }}" class="{{ className }}">Voir le profil</a>
+      @end
+    @end
+
+
+    <form action="{{ blockAction }}" method="POST">
+      {{ csrfField() }}
+      @elements.button({
+        fill: true
+      })
+        @slot('main', className)
+          <button type="submit" class="{{ className }}">
+            @if(user.blockedAt)
+              Débloquer
+            @else
+              Bloquer
+            @endif
+          </button>
+        @end
+      @end
+    </form>
+  </div>
+  @end
+@end

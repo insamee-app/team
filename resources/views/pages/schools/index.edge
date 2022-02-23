@@ -1,0 +1,44 @@
+@layout('layouts/app')
+@set('title', 'Les écoles')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'SchoolsController',
+  })
+    Ecoles
+  @end
+
+  @shared.title()
+    Liste des écoles
+    @slot('actions')
+      @can('SchoolPolicy.create')
+        @elements.button({
+          fill: true,
+        })
+          @slot('main', className)
+            <a href="{{ route('SchoolsController.create') }}" class="{{ className }}">
+              Ajouter
+            </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.list({
+    items: schools
+  })
+    @slot('main', school)
+      <a href="{{ route('SchoolsController.show', { id: school.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 h-full">
+        @!schools.card({
+          school,
+        })
+      </a>
+    @end
+  @end
+
+  @!shared.pagination({
+    data: schools,
+    className: 'mt-8',
+  })
+@end

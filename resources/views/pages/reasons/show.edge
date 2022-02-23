@@ -1,0 +1,49 @@
+@layout('layouts/app')
+@set('title', reason.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'ReasonsController',
+      })
+        Raisons
+      @end
+
+      @shared.title()
+        {{ reason.name }}
+
+        @slot('actions')
+          @can('ReasonPolicy.update')
+            @elements.button({
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('ReasonsController.edit', { id: reason.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
+
+      <div class="-mt-2 lg:-mt-6 md:text-lg mb-4 lg:mb-8">
+        <span>
+          Pour le type
+            <em class="text-slate-500">
+              {{ ReasonTypeData.find((el) => el.id === String(reason.type)).name }}
+          </em>
+          </span>
+      </div>
+    @end
+
+    @!shared.delete({
+      item: reason,
+      policy: 'ReasonPolicy',
+      controller: 'ReasonsController',
+      end: "la raison"
+    })
+
+  @end
+@end

@@ -1,0 +1,63 @@
+@layout('layouts/app')
+@set('title', 'Créer une association')
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'SchoolsController',
+      })
+        Ecoles
+      @end
+
+      @shared.title()
+        Modifier une école
+      @end
+    @end
+
+    <form action="{{ route('SchoolsController.update', { id: school.id }) }}?_method=PUT" method="POST">
+      {{ csrfField() }}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @form.group({name: 'name'})
+          @!form.label({ title: 'Nom' })
+          @!form.input({ type: 'text', placeholder: 'Saisir un nom', value: school.name })
+        @end
+
+        @form.group({name: 'city'})
+          @!form.label({ title: 'Ville' })
+          @!form.input({ type: 'text', placeholder: 'Saisir la ville', value: school.city })
+        @end
+
+        @form.group({name: 'website'})
+          @!form.label({ title: 'Site internet' })
+          @!form.input({ type: 'url', placeholder: 'Saisir le site internet', value: school.website })
+        @end
+
+        @form.group({name: 'hostname'})
+          @!form.label({ title: 'Nom de domaine' })
+          @!form.input({ type: 'text', placeholder: 'Saisir le nom de domaine', value: school.hostname })
+        @end
+
+        @form.group({name: 'overview', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Présentation' })
+          @!form.area({ type: 'text', value: school.overview })
+        @end
+      </div>
+
+      <div class="flex flex-row justify-between mt-8">
+        @elements.button()
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          fill: true,
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end

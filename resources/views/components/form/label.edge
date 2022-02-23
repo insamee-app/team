@@ -1,0 +1,7 @@
+<label {{ $props.serializeExcept(['classes']) }} for="{{ $context.name }}" class="font-bold lg:text-lg {{ $context.disabled ? 'text-slate-500 font-normal' : '' }} {{ classes }}">
+  @if(title)
+    {{ title }}
+  @else
+    {{{ await $slots.main() }}}
+  @end
+</label>

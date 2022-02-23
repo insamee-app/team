@@ -1,0 +1,8 @@
+@inject({ ...$props.all() })
+
+@set('baseClass', 'flex flex-col space-y-1')
+@set('className', $props.className)
+
+<div {{ $props.serializeExcept(['name', 'disabled', 'className']) }} class="{{baseClass}}{{ className ?  ' ' + className : '' }}">
+  {{{ await $slots.main() }}}
+</div>

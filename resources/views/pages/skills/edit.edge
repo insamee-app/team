@@ -1,0 +1,47 @@
+@layout('layouts/app')
+@set('title', 'Modifier ' + skill.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'SkillsController',
+        variant: 'mee',
+      })
+        Compétences
+      @end
+
+      @shared.title()
+        Modifier une compétence
+      @end
+    @end
+
+    <form action="{{ route('SkillsController.update', { id: skill.id }) }}?_method=PUT" method="POST">
+      {{ csrfField() }}
+
+      @form.group({ name: 'name' })
+        @!form.label({ title: 'Nom' })
+        @!form.input({ type: 'text', value: skill.name, placeholder: 'Saisir le nom', variant: 'mee' })
+      @end
+
+      <div class="flex flex-row justify-between mt-8">
+        @elements.button({
+          variant: 'mee'
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          fill: true,
+          variant: 'mee',
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end
+

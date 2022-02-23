@@ -1,0 +1,66 @@
+@layout('layouts/app')
+@set('title', thematic.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'ThematicsController',
+        variant: 'associations',
+      })
+        Thématiques
+      @end
+
+      @shared.title()
+        {{ thematic.name }}
+
+        @slot('actions')
+          @can('ThematicPolicy.update')
+            @elements.button({
+              variant: 'associations',
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('ThematicsController.edit', { id: thematic.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
+    @end
+
+    @!shared.delete({
+      item: thematic,
+      policy: 'ThematicPolicy',
+      controller: 'ThematicsController',
+      end: "la thématique"
+    })
+
+    @shared.subSection()
+      @slot('title')
+        Associations associés
+      @end
+
+      @shared.list({
+        items: associations
+        variant: 'associations'
+      })
+        @slot('main', association)
+          <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+            @!associations.card({
+              association,
+            })
+          </a>
+        @end
+      @end
+
+      @!shared.pagination({
+        data: associations,
+        variant: 'associations',
+        className: 'mt-8',
+      })
+    @end
+  @end
+@end

@@ -1,0 +1,45 @@
+@layout('layouts/app')
+@set('title', 'Les compétences')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'SkillsController',
+    variant: 'mee'
+  })
+    Compétences
+  @end
+
+  @shared.title()
+    Liste des compétences
+    @slot('actions')
+      @can('SkillPolicy.create')
+        @elements.button({
+          fill: true,
+          variant: 'mee',
+        })
+          @slot('main', className)
+            <a href="{{ route('SkillsController.create') }}" class="{{ className }}">
+              Ajouter
+            </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.list({
+    items: skills
+  })
+    @slot('main', skill)
+      <a href="{{ route('SkillsController.show', { id: skill.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+        @elements.card({
+          classes: 'border-mee-primary-grey-light hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            {{ skill.name }}
+          @end
+        @end
+      </a>
+    @end
+  @end
+@end

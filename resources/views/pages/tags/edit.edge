@@ -1,0 +1,47 @@
+@layout('layouts/app')
+@set('title', 'Modifier ' + tag.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'TagsController',
+        variant: 'associations',
+      })
+        Tags
+      @end
+
+      @shared.title()
+        Modifier un tag
+      @end
+    @end
+
+    <form action="{{ route('TagsController.update', { id: tag.id }) }}?_method=PUT" method="POST">
+      {{ csrfField() }}
+
+      @form.group({ name: 'name' })
+        @!form.label({ title: 'Nom' })
+        @!form.input({ type: 'text', value: tag.name, placeholder: 'Saisir le nom', variant: 'associations' })
+      @end
+
+      <div class="flex flex-row justify-between mt-8">
+        @elements.button({
+          variant: 'associations'
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          fill: true,
+          variant: 'associations',
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end
+

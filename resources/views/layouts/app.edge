@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="FR-fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico"  type="image/ico">
+
+  @include('partials/head')
+
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+<body>
+  @include('partials/header')
+
+  @include('partials/flash')
+
+  <main class="mt-20 lg:mt-24 px-4 max-w-screen-xl mx-auto">
+    @!section('content')
+  </main>
+
+  @include('partials/footer')
+</body>
+</html>

@@ -1,0 +1,22 @@
+@set('value', flashMessages.get($context.name) ?? $props.get('value') ?? '')
+@set('error', flashMessages.get(`errors.${$context.name}`) || '')
+@set('className', 'bg-slate-500 checked:!bg-slate-500 checked:focus:ring-slate-500 border-slate-500')
+@if(variant === 'mee')
+@set('className', 'bg-mee-primary-base checked:!bg-mee-primary-base checked:focus:!ring-mee-primary-base border-mee-primary-base')
+@elseif(variant === 'association')
+  @set('className', 'bg-associations-primary-base checked:!bg-associations-primary-base checked:focus:!ring-associations-primary-base border-associations-primary-base')
+@endif
+
+<div class="flex flex-col space-y-1">
+  @each(item in data)
+    <div class="flex flex-row items-center space-x-2">
+      <input type="radio" id="{{ item.id }}" name="{{ $context.name }}" value="{{ item.id }}" {{ String(value) === String(item.id) ? 'checked':  ''}} class="{{ className }}">
+      <label for="{{ item.id }}">{{ item.name }}</label>
+    </div>
+  @end
+</div>
+
+
+@if(error)
+  <span class="text-sm">{{ error }}</span>
+@endif

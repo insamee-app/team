@@ -1,0 +1,64 @@
+@layout('layouts/app')
+@set('title', 'Les utilisateurs')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'UsersController',
+  })
+    Utilisateurs
+  @end
+
+  @shared.title()
+    Liste des utilisateurs
+  @end
+
+  @shared.list({
+    items: users
+  })
+    @slot('main', user)
+      <a href="{{ route('UsersController.show', { id: user.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+        @elements.card({
+          classes: 'border-slate-200 space-y-4 hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            {{ user.email }}
+          @end
+          <ul class="flex flex-row space-x-2">
+            @elements.chip()
+              @if (user.blockedAt)
+                Bloqué
+              @elseif (user.status === UserStatus.Pending)
+                En attente
+              @elseif (user.status === UserStatus.Active)
+                Actif
+              @endif
+            @end
+            @elements.chip()
+              <span class="font-bold">
+                @if (user.role === UserRole.Admin)
+                  Admin
+                @elseif (user.role === UserRole.Modérateur)
+                  Modérateur
+                @elseif (user.role === UserRole.Member)
+                  Member
+                @endif
+              </span>
+            @end
+            </ul>
+          <div class="text-right italic">
+            @if(user.blockedAt)
+              Bloqué depuis le {{ user.blockedAt.setLocale('fr').toLocaleString() }}
+            @else
+              Membre depuis le {{ user.createdAt.setLocale('fr').toLocaleString() }}
+            @endif
+          </div>
+        @end
+      </a>
+    @end
+  @end
+
+  @!shared.pagination({
+    data: users,
+    className: 'mt-8',
+  })
+@end

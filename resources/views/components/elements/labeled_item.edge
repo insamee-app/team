@@ -1,0 +1,20 @@
+@set('label', $props.label)
+@set('value', $props.value)
+@set('variant', $props.variant)
+@set('color', '')
+
+@inject({ variant: $props.variant })
+
+@if(variant === 'mee')
+  @set('color', 'text-mee-primary-dark')
+@endif
+
+@set('valueClass', 'text-lg lg:text-xl')
+<div class="flex flex-col space-y-1 lg:space-y-[0.375rem]">
+  <span class="font-light lg:text-lg {{color}}">{{ label }}</span>
+  @if(value)
+    <span class="{{ valueClass }}">{{ value }}</span>
+  @else
+    {{{ await $slots.main({ className: valueClass }) }}}
+  @endif
+</div>

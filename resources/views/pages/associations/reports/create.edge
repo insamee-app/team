@@ -1,0 +1,54 @@
+@layout('layouts/app')
+@set('title', 'Signaler une association')
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'AssociationsController',
+        variant: 'Associations',
+      })
+        Associations
+      @end
+
+      @shared.title()
+        Signaler l'association
+      @end
+    @end
+
+    <form action="{{ route('ReportsAssociationsController.store', { id: request.routeParams.id }) }}" method="POST">
+      {{ csrfField() }}
+
+      @form.group({ name: 'reasonId' })
+        @!form.label({ title: 'Raison' })
+        @!form.radio({
+          data: reasons,
+          variant: 'association',
+        })
+      @end
+
+      @form.group({ name: 'description', class: 'mt-4 flex flex-col space-y-1' })
+        @!form.label({ title: 'Précisions'})
+        @!form.area({ type: 'text', variant: 'associations'})
+      @end
+
+      <div class="mt-8 flex flex-row justify-between">
+        @elements.button({
+          variant: 'associations',
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          variant: 'associations',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Signaler</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end

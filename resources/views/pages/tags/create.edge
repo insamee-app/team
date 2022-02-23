@@ -1,0 +1,47 @@
+@layout('layouts/app')
+@set('title', 'Créer un tag')
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'TagsController',
+        variant: 'associations',
+      })
+        Tags
+      @end
+
+      @shared.title()
+        Créer un tag
+      @end
+    @end
+
+    <form action="{{ route('TagsController.store') }}" method="POST">
+      {{ csrfField() }}
+
+      @form.group({ name: 'name' })
+        @!form.label({ title: 'Nom' })
+        @!form.input({ type: 'text', placeholder: 'Saisir le nom', variant: 'associations' })
+      @end
+
+      <div class="flex flex-row justify-between mt-8">
+        @elements.button({
+          variant: 'associations',
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          fill: true,
+          variant: 'associations',
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end
+

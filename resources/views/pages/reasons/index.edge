@@ -1,0 +1,51 @@
+@layout('layouts/app')
+@set('title', 'Les raisons')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'ReasonsController',
+  })
+    Raisons
+  @end
+
+  @shared.title()
+    Liste des raisons
+    @slot('actions')
+      @can('ReasonPolicy.create')
+        @elements.button({
+          fill: true,
+        })
+          @slot('main', className)
+          <a href="{{ route('ReasonsController.create') }}" class="{{ className }}">
+            Ajouter
+          </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.grid()
+    @slot('filters', scope)
+      @!reasons.filters({
+        className: scope.className,
+      })
+    @end
+
+    @shared.list({
+      items: reasons
+    })
+      @slot('main', reason)
+        <a href="{{ route('ReasonsController.show', { id: reason.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+          @elements.card({
+            classes: 'border-slate-200 hover:shadow-lg transition'
+          })
+            @elements.cardTitle()
+              {{ reason.name }}
+            @end
+          @end
+        </a>
+      @end
+    @end
+  @end
+@end

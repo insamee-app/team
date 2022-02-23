@@ -1,0 +1,16 @@
+@layout('layouts/error')
+@set('title', 'Une erreur est survenu')
+
+@section('content')
+  <h1 class="text-slate-500 text-xl font-bold">
+    Erreur
+  </h1>
+
+  <p>
+    La page que vous cherchez rencontre actuellement une erreur.
+  </p>
+
+  <p>
+    Si cela persiste, n'hésitez pas à <a href="{{ }}" class="underline text-slate-500">nous contacter</a>.
+  </p>
+@end

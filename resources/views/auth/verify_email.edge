@@ -1,0 +1,24 @@
+@layout('layouts/logo')
+@set('title', 'Envoyer le email de vérification')
+
+@section('content')
+  <form class="grid grid-2" action="{{ route('AuthController.sendVerifyEmail') }}" method="POST">
+    {{ csrfField() }}
+
+    @form.group({name: 'email' })
+      @!form.label({ title: 'Adresse électronique' })
+      @!form.input({ type: 'email', placeholder: 'example@site.fr'})
+    @end
+
+    <div class="mt-6 flex flex-row justify-center">
+      @elements.button({
+        fill: true,
+        variant: 'black'
+      })
+        @slot('main', className)
+          <button class="{{ className }} w-full" type="submit">Envoyer le courriel de vérification</button>
+        @end
+      @end
+    </div>
+  </form>
+@end
