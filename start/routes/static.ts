@@ -30,3 +30,10 @@ Route.get('/about', async ({ view }) => {
 
   return view.render('templates/about', { html })
 }).as('about')
+
+Route.get('/concept', async ({ view }) => {
+  const file = await fs.readFile('./content/concept.md', 'utf-8')
+  const html = await Markdown.render(view.renderRawSync(file))
+
+  return view.render('templates/concept', { html })
+}).as('concept')

@@ -1,18 +1,27 @@
 # A propos
 
-## TEAM
+@set('name', env("APP_NAME")[0].toUpperCase() + env('APP_NAME').substring(1))
 
-> TEAM est encore en développement. Si vous rencontrez des problèmes, des difficultés ou que vous avez des suggestions, n'hésitez pas à [nous contacter](/contact-us).
+## {{ name }}
+
+> {{ name }} est encore en développement. Si vous rencontrez des problèmes, des difficultés ou que vous avez des suggestions, n'hésitez pas à [nous contacter](/contact-us).
 > Pour suivre l'avancement, vous pouvez nous suivre sur [Twitter](https://twitter.com/insameeapp) ou vous abonner à [nos news](https://news.insameeapp.fr).
 
-TEAM est un écosystème de mise en relation étudiante. Son objectif est de favoriser la communication, la rencontre et l'échange intra et inter-école au sein de la vie étudiante et de la vie associative.
+{{ name }} est un écosystème de mise en relation étudiante. Son objectif est de favoriser la communication, la rencontre et l'échange intra et inter-école au sein de la vie étudiante et de la vie associative.
 
 Cet écosystème est composé de 4 plateformes:
 
-- Tutorat, plateforme de mise en relation des étudiants et des tuteurs;
-- Evènements, plateforme de mise en relation entre évènements et étudiants;
+- [Tutorat](/tutorat/home), plateforme de mise en relation des étudiants et des tuteurs;
+- [Evènements](/evenements/home), plateforme de mise en relation entre évènements et étudiants;
 - [Associations](/associations/home), plateforme de mise en relation des associations;
 - [Mee](/mee/home), plateforme de mise en relation des profils étudiants.
+
+Dans cet écosystème, il vous est possible de vous créer un compte puis de naviguer entre les différentes plateformes et d'interagir au sein de ces dernières. Cela vous permettra d'être au plus proche de votre campus et des étudiants qui le compose !
+
+Pour en savoir plus :
+
+- [Le concept](/concept);
+- [TEAM](https://insameeapp.fr).
 
 ## InsameeApp
 
