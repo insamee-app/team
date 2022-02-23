@@ -1,0 +1,341 @@
+### Version 0.0.0
+- Initial commit
+- initial commit
+- feat(users): add uuid
+- fix(users): update id to string
+- fix(view): update home
+- feat(register): start creating form
+- feat(register): create view and components
+- feat(auth): create user validator
+- feat(auth): create user
+- feat(auth): login user
+- fix(auth): add csrf to register
+- Revert "fix(auth): add csrf to register"
+- fix(auth): add csrf to register
+- feat(auth): add confirm register page
+- chore: add mailer
+- chore(auth): add env
+- feat(auth): support email verification
+- feat(auth): add user status to schema
+- feat(auth): active email
+- fix(auth): translate password message
+- feat(auth): active user on email check
+- feat(auth): send new email
+- feat(auth): logout
+- fix(auth): update userActive rule
+- feat(auth): add reset password
+- chore: install tailwindcss
+- chore: update webpack-encore
+- fix(auth): update usgin one email
+- feat(auth): update path to home
+- feat(auth): update button with class
+- feat(auth): add silent middleware
+- fix(auth): update class to classes
+- feat(auth): update layout center
+- feat(school): format files
+- feat(school): create migration
+- fix(school): remove comments from user migration
+- feat(school): create model
+- feat(school): create resource
+- feat(school): create crud
+- fix(school): update value from input
+- fix(school): update edit button
+- chore: format
+- feat(profile): add relations
+- feat(profile): create migration
+- fix(profile): remove comments
+- fix(profile): string to uuid in migration
+- feat(profile): add rule to check host in shcool
+- feat(profile): link profile, school and user on register
+- chore: format
+- chore: install bouncer
+- feat(role): add to user model and migration
+- feat(role): create user factory
+- feat(role): create bounder for school
+- feat(role): create policy
+- feat(role): add policy to controller
+- feat(role): add policy to template
+- feat(design): update style from auth pages
+- feat(design): support for rememberMe
+- feat(design): create factory for profiles
+- feat(design): support for first and last name on register
+- fix(design): add auth middleware
+- chore: format
+- feat(profile): add graduation year
+- feat(profile): update factory
+- fix(profile): update color
+- fix(profile): profile seeder
+- fix(profile): update team logo
+- feat(profile): start adding page
+- feat(profile): add more data on page
+- feat(profile): update profile
+- feat(profile): add package to handle avatar
+- feat(profile): create html
+- feat(profile): handle avatar
+- feat(profile): update link style
+- feat(profile): update design
+- feat(profile): update policy on template
+- chore: format
+- feat(skill): create migration and model
+- feat(skill): create seeder
+- feat(skill): create resource
+- feat(skils): create all pages
+- feat(skills): add policy
+- fix(skills): update order in list
+- feat(focus): create migration
+- feat(focus): create model and factory
+- feat(focus): create validators
+- feat(focus): create policy
+- feat(focus): rename files
+- feat(focus): create resource
+- fix(focus): change table in validators
+- feat(focus): create all pages
+- chore: format
+- fix(skill focus): update margin top on title
+- feat(focus skills): create many to many migrations
+- feat(focus skills): add relationship to models
+- feat(profile): create multiselect
+- feat(profile): can update skills
+- chore: install tailwind forms
+- feat(profiles): update design
+- feat(profiles): update multiselect
+- feat(profiles): add focus interests
+- feat(profiles): add a maxLength to array
+- feat(profiles): handle error on multiselect
+- feat(profile): handle flashMessages to restore data
+- feat(profiles): max select size in css
+- fix(typo): mee show
+- feat(association): create migration
+- feat(association): create model
+- fix(association): update factories and models
+- fix(skills): unique name
+- fix(focus): unique name
+- feat(association): create controller
+- fix(auth): remove log
+- fix: remove dev code
+- feat(associations): add route
+- feat(associations): create index
+- feat(association): create pages
+- feat(association): create policy
+- fix: update card design
+- fix(routes): update mee
+- fix(routs): update associations/pictures
+- fix(mee): update avatar to avatars
+- fix(components): remove space in textarea
+- feat(association): add picture ability
+- fix(mee): component picture
+- chore: format
+- fix: remove timestamp on pivots
+- feat(thematic): create migration
+- feat(thematic): create model
+- feat(thematic): create policy
+- feat(thematic): create validators
+- feat(thematic): create controller
+- feat(thematic): create factory
+- feat(thematic): create pages
+- fix(pages): add ability on links
+- feat(thematic): add routes
+- feat(tag): create migration
+- feat(tag): create model
+- feat(tag): create policy
+- feat(tag): create validators
+- feat(tag): create seeder
+- feat(tag): create controller
+- feat(tag): create route
+- feat(tag): create views
+- chore: format
+- feat(thematic): add link to association
+- feat(tag): create pivot with association
+- feat(tag): link to association
+- fix: remove unused code
+- fix: migrations order
+- feat(association): update factory
+- feat(association): create link with profile
+- feat(association): link model with profile
+- feat(association): add to seeder
+- fix(title): update name
+- feat(association): add thematic and tags
+- feat(association): add thematic and tags
+- feat(association): add select
+- fix(components): add variant
+- fix(components): add variant
+- feat(profile): add associations
+- feat(association): rework index
+- feat(association): add tags and thematic to show
+- fix(association): update color
+- feat(association): add _blank to link
+- fix(association): update limit to preload
+- fix(picture): update behavior
+- feat(profile): add association in show
+- feat(mee): create index
+- feat(components): move mee and associations to cards
+- feat(skill): add mee list
+- feat(skill): update color
+- feat(focus): update color
+- feat(focus): add list of mee
+- feat(tag): update show in controller
+- feat(thematic): update show in controller
+- fix(skill): update show view
+- feat(tag): rework pages and add list in show
+- feat(thematic): rework pages and add list in show
+- fix(profile): update to profile query
+- fix(index): update pages
+- fix(mee): remove usage of user
+- fix: pages
+- feat(logo): add logos
+- feat(shell): padding
+- fix(shell): update errors
+- refactor(shell): move team link to global view
+- feat(shell): create nav
+- feat(shell): create footer
+- feat(shell): create error pages
+- feat(shell): remove error pages in dev
+- fix(shell): add transtion
+- fix(shell): color
+- feat(school): update model and migration
+- feat(school): update seed
+- fix(school): update host to hostname
+- feat(school): create index
+- fix(school): index
+- feat(school): create show
+- feat(school): create page
+- feat(school): create edit page
+- feat(banner): handle banner
+- feat(school): add associations list
+- fix(school): remove section of related associations when null
+- feat(reason): create reasons resource
+- feat(report): create model
+- feat(report): rework models
+- feat(report): rework routes
+- feat(report): create seeder
+- refactor: add shadow and reduc mt
+- refactor: add shadow and reduc mt
+- feat(report): create index show
+- feat(report): create update
+- feat(report): remove resolved from index
+- feat(report): move resolve field from boolean to datetime
+- feat(report): try create
+- fix(report): remove unused function
+- feat(report): create bouncer
+- feat(report): create school validator
+- feat(report): update report school controller
+- fix(report): handle radio value when form issue
+- feat(components): add variant
+- fix(report): remove unused class
+- feat(report): create for profiles
+- feat(report): create for associations
+- feat(report): add link to reports in headers
+- feat(marketing): add contact-us route
+- feat(marketing): create home
+- feat(marketing): update home
+- feat(marketing): add typo to tailwind
+- feat(marketing): add graphics for associations
+- feat(marketing): add graphics for mee
+- feat(marketing): create static md pages
+- feat(marketing): create components for home pages
+- feat(marketing): create mee home
+- feat(marketing): create associations home
+- fit(marketing): add missing arrow
+- feat(marketing): create home page
+- fix(associations): add create route
+- feat(role): create model and migration
+- fix(role): remove created_at and updated_at
+- feat(role): create controller and views
+- feat(profile): add support for role and bio
+- chore: format
+- feat(mail): rework  mail using mjml
+- fix(mail): typo
+- feat(mail): add welcome mail
+- feat(flash): create flash components
+- feat(flash): update components
+- feat(flash): update components
+- feat(flash): add messages in controller
+- fix(authorization): remove blocked from enum
+- fix(authorization): add functions to block user
+- fix(authorization): update user migration
+- fix(authorization): update policy
+- feat(authorization): can block a user
+- feat(authorization): add a comment
+- feat(authorization): add access to users in header
+- feat(authorization): add moderator to enum
+- feat(authorization): admin can add moderator
+- feat(authorization): setup first bootup
+- feat(authorization): add resolvedBy in reports
+- feat(authorization): add moderator role
+- feat(authorization): add migration deleted_at
+- feat(authorization): add soft deletes to models
+- feat(authorization): add delete routes
+- fix(authorization): migrations
+- feat(authorization): add destroy controller
+- feat(authorization): add ability to delete
+- fix(authorization): many issues when user is a member
+- fix: some issues
+- chore: format
+- feat(filters): add addon
+- feat(filters): add filters to profile
+- feat(filters): add filters to profiles
+- feat(filters): add filters to associations
+- fix(profile): update policy
+- feat(filters): add more contrast
+- fix: update per_page
+- fix(profile): add policy for avatars
+- chore: format
+- feat(shell): create footer in pc
+- feat(shell): add anchor attributs
+- feat(shell): update margin top pc
+- feat(shell): create pc header for guest
+- feat(shell): create pc header for auth
+- feat(shell): pc for index mee
+- feat(shell): pc for index associations
+- feat(shell): mee pages for pc
+- feat(shell): create home for mee
+- chore: format
+- feat(shell): update associations routes
+- feat(shell): associations idnex
+- feat(shell): create association
+- feat(shell): create edit associations
+- feat(shell): update footer
+- feat(shell): show associations
+- feat(shell): report  associations
+- feat(shell): picture  associations
+- chore: rearrange button class
+- feat(shell): increase label size
+- fix(shell): color in report area
+- feat(shell): finish associations
+- fix(shell): color button associations
+- feat(shell): update mee cards
+- feat(shell): update show
+- feat(shell): update focus interest
+- fix(shell): fix some issue
+- fix(shell): fix some issue
+- fix(shell): update reasons
+- feat(shell): update reports to pc
+- feat(shell): update roles to pc
+- feat(shell): update skills to pc
+- feat(shell): create tags pc
+- feat(shell): create thematics pc
+- feat(shell): create pc for users
+- feat(shell): update static for pc
+- feat(shell): create home for associations
+- feat(shell): create pc for schools
+- feat(shell): update auth
+- feat(shell): update colors
+- feat(shell): update pagination width
+- feat(shell): add string when list is empty
+- fix: add type to reasons
+- feat(reasons): add filter on type
+- fix: update header nav
+- fix: pagination issue on small value
+- fix: add a matcher to id
+- feat: add logout on profile page
+- feat(docs): add first terms
+- feat(docs): create privacy
+- fix: update static controller
+- feat(docs): add about
+- fix(doc): update about
+- feat(colors): add primary for tutorat and events
+- fix(footer): update order of links
+- fix(footer): add target to link
+- feat(docs): create concept page
+- chore: format
+- build: add bump
