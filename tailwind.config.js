@@ -42,6 +42,30 @@ module.exports = {
             light: '#d56db2',
           },
         },
+        evenements: {
+          primary: {
+            base: '#a88900',
+            dark: '#a88900',
+            light: '#ffe46b',
+            grey: {
+              base: '#c5c4be',
+              dark: '#747163',
+              light: '#e2e1de',
+            },
+          },
+        },
+        tutorat: {
+          primary: {
+            base: '#1c5392',
+            dark: '#002d61',
+            light: '#6d9dd5',
+            grey: {
+              base: '#bec2c5',
+              dark: '#636b74',
+              light: '#dee0e2',
+            },
+          },
+        },
       },
     },
   },
