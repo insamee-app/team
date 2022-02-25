@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, HasMany, hasMany, HasManyThrough, hasManyThrough } from '@ioc:Adonis/Lucid/Orm'
 import Profile from './Profile'
 import Association from './Association'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 import Report from './Report'
 import AppSoftDeletes from './AppSoftDeletes'
+import Event from './Event'
 
 export default class School extends AppSoftDeletes {
   @column({ isPrimary: true })
@@ -51,4 +52,18 @@ export default class School extends AppSoftDeletes {
     foreignKey: 'entityId',
   })
   public reports: HasMany<typeof Report>
+
+  @hasMany(() => Event, {
+    localKey: 'id',
+    foreignKey: 'schoolId',
+  })
+  public organizedEvents: HasMany<typeof Event>
+
+  @hasManyThrough([() => Event, () => Association], {
+    localKey: 'id',
+    foreignKey: 'schoolId',
+    throughLocalKey: 'id',
+    throughForeignKey: 'organizerAssociationId',
+  })
+  public events: HasManyThrough<typeof Event>
 }
