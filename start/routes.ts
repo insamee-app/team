@@ -44,6 +44,7 @@ import './routes/users'
 import './routes/profile'
 import './routes/school'
 import './routes/association'
+import './routes/events'
 
 import './routes/report'
 
@@ -51,10 +52,6 @@ import './routes/report'
 Route.get('tutorats', ({ response }) => {
   return response.redirect('/')
 }).as('TutoratsController.index')
-// Temporary
-Route.get('events', ({ response }) => {
-  return response.redirect('/')
-}).as('EventsController.index')
 
 Route.group(() => {
   Route.resource('roles', 'RolesController')
