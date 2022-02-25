@@ -8,7 +8,7 @@ export default class Events extends BaseSchema {
       table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
 
       table.string('name').notNullable()
-      table.string('description').notNullable()
+      table.string('description', 2048).notNullable()
       table.integer('status').unsigned().notNullable()
       table.integer('type').unsigned().notNullable()
       table.string('location').nullable()

@@ -15,6 +15,9 @@ import { ReportEntity } from 'App/Enums/ReportEntity'
 import { DateTime } from 'luxon'
 import { ReasonType } from 'App/Enums/ReasonType'
 import Role from 'App/Models/Role'
+import Event from 'App/Models/Event'
+import { EventType } from 'App/Enums/EventType'
+import { EventStatus } from 'App/Enums/EventStatus'
 
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
@@ -98,6 +101,26 @@ export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
   .relation('school', () => SchoolFactory)
   .relation('associations', () => AssociationFactory)
   .relation('role', () => RoleFactory)
+  .build()
+
+export const EventFactory = Factory.define(Event, ({ faker }) => {
+  return {
+    name: faker.lorem.words(),
+    description: faker.lorem.paragraph(),
+    startAt: DateTime.local(),
+    endAt: DateTime.local(),
+    location: faker.address.city(),
+    ticketUrl: faker.internet.url(),
+    url: faker.internet.url(),
+    status: EventStatus.Published,
+    type: EventType.InPerson,
+  }
+})
+  .relation('organizerAssociation', () => AssociationFactory)
+  .relation('organizerSchool', () => SchoolFactory)
+  .relation('creator', () => UserFactory)
+  .state('online', (event) => (event.type = EventType.Online))
+  .state('cancelled', (event) => (event.status = EventStatus.Cancelled))
   .build()
 
 export const UserFactory = Factory.define(User, ({ faker }) => {
