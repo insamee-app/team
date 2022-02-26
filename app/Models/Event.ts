@@ -32,7 +32,7 @@ export default class Event extends AppSoftDeletes {
   public endAt: DateTime
 
   @column()
-  public ticketUrl?: string
+  public ticketsUrl?: string
 
   @column()
   public url?: string

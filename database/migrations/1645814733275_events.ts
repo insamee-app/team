@@ -14,7 +14,7 @@ export default class Events extends BaseSchema {
       table.string('location').nullable()
       table.timestamp('start_at', { useTz: true }).notNullable()
       table.timestamp('end_at', { useTz: true }).notNullable()
-      table.string('ticket_url').nullable()
+      table.string('tickets_url').nullable()
       table.string('url').nullable()
 
       table.uuid('organizer_association_id').nullable().references('id').inTable('associations')
