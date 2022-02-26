@@ -19,6 +19,12 @@
   @else
     @set('colorClass', 'border border-slate-900 bg-white text-slate-900 focus:ring-slate-900')
   @end
+@elseif(variant === 'events')
+  @if(fill)
+    @set('colorClass', 'bg-evenements-primary-base text-white focus:ring-evenements-primary-base')
+  @else
+    @set('colorClass', 'border border-evenements-primary-base bg-white text-evenements-primary-base focus:ring-evenements-primary-base')
+  @end
 @else
   @if(fill)
     @set('colorClass', 'bg-slate-500 text-white focus:ring-slate-500')
