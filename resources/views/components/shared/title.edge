@@ -1,7 +1,15 @@
-<div class="flex flex-row justify-between items-center mt-2 mb-4 lg:mb-8">
-  <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold">{{{ await $slots.main() }}}</h1>
+<div class="mt-2 mb-4 lg:mb-8">
+  @if($slots.top)
+    {{{ await $slots.top() }}}
+  @endif
+  <div class="flex flex-row justify-between items-center">
+    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold">{{{ await $slots.main() }}}</h1>
 
-  @if($slots.actions)
+    @if($slots.actions)
     {{{ await $slots.actions() }}}
-  @end
+    @end
+  </div>
+  @if($slots.bottom)
+    {{{ await $slots.bottom() }}}
+  @endif
 </div>
