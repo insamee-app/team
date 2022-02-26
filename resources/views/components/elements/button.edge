@@ -25,6 +25,12 @@
   @else
     @set('colorClass', 'border border-evenements-primary-base bg-white text-evenements-primary-base focus:ring-evenements-primary-base')
   @end
+@elseif(variant === 'events-secondary-grey')
+  @if(fill)
+    @set('colorClass', 'bg-evenements-secondary-grey-dark text-white focus:ring-evenements-secondary-grey-dark')
+  @else
+    @set('colorClass', 'border border-evenements-secondary-grey-dark bg-white text-evenements-secondary-grey-dark focus:ring-evenements-secondary-grey-dark')
+  @end
 @else
   @if(fill)
     @set('colorClass', 'bg-slate-500 text-white focus:ring-slate-500')
