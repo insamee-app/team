@@ -1,0 +1,59 @@
+@layout('layouts/app')
+@set('title', 'Les évènements')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'EventsController',
+    variant: 'events',
+  })
+    Evènements
+  @end
+
+  @shared.title()
+    Liste des évènements
+
+    @slot('actions')
+      @can('EventPolicy.create')
+        @elements.button({
+          fill: true,
+          variant: 'events'
+        })
+          @slot('main', className)
+            <a href="{{ route('EventsController.create') }}" class="{{ className }}">
+              Créer
+            </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.grid()
+    @slot('filters', scope)
+      @!events.filters({
+        className: scope.className,
+      })
+    @end
+
+    @shared.list({
+      items: events,
+      variant: 'events',
+    })
+      @slot('main', event)
+        <a href="{{ route('EventsController.show', { id: event.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-evenements-primary-base h-full">
+          @!events.card({
+            event,
+          })
+        </a>
+      @end
+    @end
+
+    {{--  @slot('pagination', scope)
+      @!shared.pagination({
+        data: associations,
+        variant: 'associations',
+        className: scope.className,
+      })
+    @end  --}}
+  @end
+@end
