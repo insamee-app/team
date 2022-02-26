@@ -4,6 +4,8 @@
   @set('colorClass', 'text-mee-primary-base bg-mee-primary-grey-light')
 @elseif(variant === 'associations')
   @set('colorClass', 'text-associations-primary-base bg-associations-primary-grey-light')
+@elseif(variant === 'events')
+  @set('colorClass', 'text-evenements-primary-base bg-evenements-primary-grey-light')
 @end
 
 <li class="text-sm lg:text-base rounded-full px-2 py-1 lg:px-3 {{colorClass}}">
