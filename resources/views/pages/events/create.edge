@@ -1,0 +1,122 @@
+@layout('layouts/app')
+@set('title', 'Créer un évènement')
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'EventsController',
+        variant: 'events',
+      })
+        Evènements
+      @end
+
+      @shared.title()
+        Créer un évènement
+      @end
+    @end
+
+    <form action="{{ route('EventsController.store') }}" method="POST">
+      {{ csrfField() }}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @form.group({name: 'name'})
+          @!form.label({ title: 'Nom' })
+          @!form.input({ type: 'text', placeholder: 'Saisir le nom de l\'évènement', variant: 'events' })
+        @end
+
+        @form.group({name: 'type'})
+          @!form.label({ title: 'Type' })
+          @form.select({
+            variant: 'events',
+            data: EventType,
+          })
+            Sélectionner le type d'évènement
+          @end
+        @end
+
+        @form.group({name: 'location', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Localisation' })
+          @!form.input({ type: 'text', placeholder: 'Saisir l\'adresse', variant: 'events' })
+        @end
+
+        @form.group({name: 'startDate'})
+          @!form.label({ title: 'Date de début' })
+          @!form.input({ type: 'date', variant: 'events' })
+        @end
+
+        @form.group({name: 'startTime'})
+          @!form.label({ title: 'Temps de début' })
+          @!form.input({ type: 'time', variant: 'events' })
+        @end
+
+        @form.group({name: 'endDate'})
+          @!form.label({ title: 'Date de fin' })
+          @!form.input({ type: 'date', variant: 'events' })
+        @end
+
+        @form.group({name: 'endTime'})
+          @!form.label({ title: 'Temps de fin' })
+          @!form.input({ type: 'time', variant: 'events' })
+        @end
+
+        @form.group({name: 'ticketsUrl'})
+          @!form.label({ title: 'Billets' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url des billets', variant: 'events' })
+        @end
+
+        @form.group({name: 'url'})
+          @!form.label({ title: 'Lien vers l\'évènement' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url pour en savoir plus', variant: 'events' })
+        @end
+
+        @form.group({name: 'organizerAssociationId'})
+          @!form.label({ title: 'Association organisatrice' })
+          @form.select({
+            variant: 'events',
+            data: associations,
+          })
+            Sélectionner une association organisatrice
+          @end
+        @end
+
+        @form.group({name: 'organizerSchoolId'})
+          @!form.label({ title: 'Ecole organisatrice' })
+          @form.select({
+            variant: 'events',
+            data: schools,
+          })
+            Sélectionner une école organisatrice
+          @end
+        @end
+
+        <p class="lg:col-span-2">
+          En l'absence d'organisateur, le créateur de l'évènement sera l'organisateur.
+        </p>
+
+        @form.group({name: 'description', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Description' })
+          @!form.area({ type: 'text', variant: 'events' })
+        @end
+      </div>
+
+      <div class="flex flex-row justify-between mt-8">
+        @elements.button({
+          variant: 'events',
+          fill: false
+        })
+          @slot('main', className)
+            <button type="reset" class="{{ className }}">Annuler</button>
+          @end
+        @end
+        @elements.button({
+          variant: 'events',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end
