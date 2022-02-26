@@ -25,10 +25,10 @@ export default class Event extends AppSoftDeletes {
   @column()
   public location?: string
 
-  @column()
+  @column.dateTime({ autoCreate: false, autoUpdate: false })
   public startAt: DateTime
 
-  @column()
+  @column.dateTime({ autoCreate: false, autoUpdate: false })
   public endAt: DateTime
 
   @column()
