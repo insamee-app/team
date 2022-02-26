@@ -2,6 +2,7 @@ import View from '@ioc:Adonis/Core/View'
 import { ReasonType } from 'App/Enums/ReasonType'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
+import { EventType } from 'App/Enums/EventType'
 import User from 'App/Models/User'
 
 View.global('UserRole', UserRole)
@@ -19,6 +20,20 @@ View.global('ReasonTypeData', [
   {
     id: String(ReasonType['School']),
     name: 'Ecole',
+  },
+  {
+    id: String(ReasonType['Event']),
+    name: 'Événement',
+  },
+])
+View.global('EventType', [
+  {
+    id: String(EventType['InPerson']),
+    name: 'En présence',
+  },
+  {
+    id: String(EventType['Online']),
+    name: 'A distance',
   },
 ])
 
