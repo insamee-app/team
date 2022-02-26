@@ -14,6 +14,11 @@
   @set('listClasses', 'hover:bg-associations-primary-grey-base')
   @set('currentListItemClasses', 'bg-associations-primary-grey-base')
   @set('selectedListItemClasses', 'bg-associations-primary-grey-light')
+@elseif(variant === 'events')
+  @set('buttonClasses', 'border-evenements-primary-base focus:ring-evenements-primary-base')
+  @set('listClasses', 'hover:bg-evenements-primary-grey-base')
+  @set('currentListItemClasses', 'bg-evenements-primary-grey-base')
+  @set('selectedListItemClasses', 'bg-evenements-primary-grey-light')
 @end
 
 <div
