@@ -7,6 +7,74 @@ import User from 'App/Models/User'
 import { EventProfileState } from 'App/Enums/EventProfileState'
 
 View.global('UserRole', UserRole)
+View.global('UserRoleData', [
+  {
+    id: UserRole.SuperAdmin,
+    name: 'Super Admin',
+    controller: 'UsersRolesController.makeSuperAdmin',
+    policy: 'UserRolePolicy.makeSuperAdmin',
+  },
+  {
+    id: UserRole.Admin,
+    name: 'Admin',
+    controller: 'UsersRolesController.makeAdmin',
+    policy: 'UserRolePolicy.makeAdmin',
+  },
+  {
+    id: UserRole.Moderator,
+    name: 'Modérateur',
+    controller: 'UsersRolesController.makeModerator',
+    policy: 'UserRolePolicy.makeModerator',
+  },
+  {
+    id: UserRole.SuperSupervisor,
+    name: 'Super Responsable',
+    controller: 'UsersRolesController.makeSuperSupervisor',
+    policy: 'UserRolePolicy.makeSuperSupervisor',
+  },
+  {
+    id: UserRole.SuperAssociativeManager,
+    name: 'Super Responsable Associatif',
+    controller: 'UsersRolesController.makeSuperAssociativeManager',
+    policy: 'UserRolePolicy.makeSuperAssociativeManager',
+  },
+  {
+    id: UserRole.SuperEventsManager,
+    name: 'Super Responsable Événements',
+    controller: 'UsersRolesController.makeSuperEventsManager',
+    policy: 'UserRolePolicy.makeSuperEventsManager',
+  },
+  {
+    id: UserRole.Supervisor,
+    name: 'Responsable',
+    controller: 'UsersRolesController.makeSupervisor',
+    policy: 'UserRolePolicy.makeSupervisor',
+  },
+  {
+    id: UserRole.AssociativeManager,
+    name: 'Responsable Associatif',
+    controller: 'UsersRolesController.makeAssociativeManager',
+    policy: 'UserRolePolicy.makeAssociativeManager',
+  },
+  {
+    id: UserRole.EventsManager,
+    name: 'Responsable Événements',
+    controller: 'UsersRolesController.makeEventsManager',
+    policy: 'UserRolePolicy.makeEventsManager',
+  },
+  {
+    id: UserRole.EventsCreator,
+    name: 'Créateur Événements',
+    controller: 'UsersRolesController.makeEventsCreator',
+    policy: 'UserRolePolicy.makeEventsCreator',
+  },
+  {
+    id: UserRole.Member,
+    name: 'Membre',
+    controller: 'UsersRolesController.makeMember',
+    policy: 'UserRolePolicy.makeMember',
+  },
+])
 View.global('UserStatus', UserStatus)
 View.global('EventProfileState', EventProfileState)
 View.global('EventType', EventType)
