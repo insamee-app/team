@@ -6,7 +6,7 @@ export default class UserPolicy extends BasePolicy {
   public async before(user: User) {
     if (user.blockedAt) return false
 
-    if (user.role === UserRole.Admin) {
+    if (user.role === UserRole.SuperAdmin) {
       return true
     }
   }
