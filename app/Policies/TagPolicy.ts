@@ -6,7 +6,7 @@ export default class TagPolicy extends BasePolicy {
   public async before(user: User) {
     if (user.blockedAt) return false
 
-    if (user.role === UserRole.Admin) {
+    if (user.role === UserRole.SuperAdmin) {
       return true
     }
   }
@@ -19,15 +19,33 @@ export default class TagPolicy extends BasePolicy {
     return true
   }
 
-  public async create() {
-    return false
+  public async create(user: User) {
+    return (
+      user.role === UserRole.AssociativeManager ||
+      user.role === UserRole.Supervisor ||
+      user.role === UserRole.SuperAssociativeManager ||
+      user.role === UserRole.SuperSupervisor ||
+      user.role === UserRole.Admin
+    )
   }
 
-  public async update() {
-    return false
+  public async update(user: User) {
+    return (
+      user.role === UserRole.AssociativeManager ||
+      user.role === UserRole.Supervisor ||
+      user.role === UserRole.SuperAssociativeManager ||
+      user.role === UserRole.SuperSupervisor ||
+      user.role === UserRole.Admin
+    )
   }
 
-  public async delete() {
-    return false
+  public async delete(user: User) {
+    return (
+      user.role === UserRole.AssociativeManager ||
+      user.role === UserRole.Supervisor ||
+      user.role === UserRole.SuperAssociativeManager ||
+      user.role === UserRole.SuperSupervisor ||
+      user.role === UserRole.Admin
+    )
   }
 }
