@@ -22,4 +22,10 @@ Route.group(() => {
 
   Route.get('events/:id/reports/create', 'ReportsEventsController.create')
   Route.post('events/:id/reports', 'ReportsEventsController.store')
+
+  Route.post('events/:id/interested', 'EventsInterestedController.store')
+  Route.delete('events/:id/interested', 'EventsInterestedController.destroy')
+
+  Route.post('events/:id/participate', 'EventsParticipateController.store')
+  Route.delete('events/:id/participate', 'EventsParticipateController.destroy')
 }).middleware('auth')

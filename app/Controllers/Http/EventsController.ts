@@ -6,7 +6,7 @@ import Report from 'App/Models/Report'
 import School from 'App/Models/School'
 import EventsService from 'App/Services/EventsService'
 import EventStoreValidator from 'App/Validators/EventStoreValidator'
-import { DateTime } from 'luxon'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class EventsController {
   private PER_PAGE = 10
@@ -68,6 +68,7 @@ export default class EventsController {
   public async show({ view, params, bouncer, auth }: HttpContextContract) {
     await bouncer.with('EventPolicy').authorize('view')
 
+    await auth.user?.load('profile')
     const event = await Event.query()
       .preload('creator', (creator) =>
         creator.preload('profile', (profile) => profile.select('id', 'first_name', 'last_name'))
@@ -76,13 +77,23 @@ export default class EventsController {
       .preload('organizerSchool')
       .where('id', params.id)
       .firstOrFail()
+    const eventProfile = await Database.query()
+      .select('state')
+      .from('profiles_events')
+      .where('profile_id', auth.user!.profile!.id)
+      .andWhere('event_id', event.id)
+      .first()
     const report = await Report.query()
       .where('reporterId', auth.user!.id)
       .where('entityId', params.id)
       .whereNull('resolvedAt')
       .first()
 
-    return view.render('pages/events/show', { event, report })
+    return view.render('pages/events/show', {
+      event,
+      eventProfileState: eventProfile?.state,
+      report,
+    })
   }
 
   public async edit({ view, params, bouncer }: HttpContextContract) {

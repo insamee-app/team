@@ -69,39 +69,49 @@
           @end
         @end
       @end
-
     @end
 
     <div class="mt-4 flex flex-col gap-8">
       <div class="flex flex-row justify-end space-x-4">
-        @elements.button({
-          variant: 'events-secondary-grey',
-          fill: false
-        })
-          @slot('main', className)
-            <button class="{{ className }} flex flex-row items-center space-x-2">
-              @!icons.star({class: 'w-5 h-5 fill-current'})
-              <span>
-                Ça m'intéresse
-              </span>
-            </button>
-          @end
-        @end
+        @if(eventProfileState)
+          @!events.stateDropdown({
+            eventProfileState,
+            event,
+          })
+        @else
+          <form action="{{ route('EventsInterestedController.store', { id: event.id }) }}" method="POST">
+            {{ csrfField() }}
+            @elements.button({
+              variant: 'events-secondary-grey',
+              fill: false
+            })
+              @slot('main', className)
+                <button class="{{ className }} flex flex-row items-center space-x-2">
+                  @!icons.star({class: 'w-5 h-5 fill-current'})
+                  <span>
+                    Ça m'intéresse
+                  </span>
+                </button>
+              @end
+            @end
+          </form>
 
-        @elements.button({
-          variant: 'events-secondary-grey',
-          fill: false
-        })
-          @slot('main', className)
-            <button class="{{ className }} flex flex-row items-center space-x-2">
-              @!icons.check({class: 'w-5 h-5 fill-current'})
-              <span>
-                Je participe
-              </span>
-            </button>
+          @elements.button({
+            variant: 'events-secondary-grey',
+            fill: false
+          })
+            @slot('main', className)
+              <button class="{{ className }} flex flex-row items-center space-x-2">
+                @!icons.check({class: 'w-5 h-5 fill-current'})
+                <span>
+                  Je participe
+                </span>
+              </button>
+            @end
           @end
-        @end
+        @endif
       </div>
+
 
       @if(event.description)
         <p class="text-justify lg:text-lg">

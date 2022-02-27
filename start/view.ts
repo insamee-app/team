@@ -4,10 +4,12 @@ import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import { EventType } from 'App/Enums/EventType'
 import User from 'App/Models/User'
+import { EventProfileState } from 'App/Enums/EventProfileState'
 
 View.global('UserRole', UserRole)
 View.global('UserStatus', UserStatus)
-View.global('ReasonType', ReasonType)
+View.global('EventProfileState', EventProfileState)
+View.global('EventType', EventType)
 View.global('ReasonTypeData', [
   {
     id: String(ReasonType['Profile']),

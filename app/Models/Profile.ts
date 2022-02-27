@@ -17,6 +17,7 @@ import {
 import { DateTime } from 'luxon'
 import AppSoftDeletes from './AppSoftDeletes'
 import Association from './Association'
+import Event from './Event'
 import ProfileFilter from './Filters/ProfileFilter'
 import FocusInterest from './FocusInterest'
 import Report from './Report'
@@ -105,6 +106,16 @@ export default class Profile extends compose(AppSoftDeletes, Filterable) {
     relatedKey: 'id',
   })
   public associations: ManyToMany<typeof Association>
+
+  @manyToMany(() => Event, {
+    pivotTable: 'profiles_events',
+    localKey: 'id',
+    pivotForeignKey: 'profile_id',
+    pivotRelatedForeignKey: 'event_id',
+    relatedKey: 'id',
+    pivotColumns: ['state'],
+  })
+  public events: ManyToMany<typeof Event>
 
   @hasMany(() => Report, {
     localKey: 'id',
