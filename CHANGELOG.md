@@ -1,5 +1,14 @@
-### Version 0.0.0
+### Version 0.0.2
+- feat(role): create new roles
+- feat(role): add more details
+- feat(role): add more to policy
+- chore: format
+- fix(role): update controllers
+- feat(role): create dropdown
+- fix(role): apply policy to dropdown
+- fix(bump): remove tag creation
 
+### Version 0.0.0
 - Initial commit
 - initial commit
 - feat(users): add uuid
