@@ -9,5 +9,8 @@
   "commit": {
     "enable": "true",
     "message": "Release v[version]"
+  },
+  "tag": {
+    "enable": "false"
   }
 }

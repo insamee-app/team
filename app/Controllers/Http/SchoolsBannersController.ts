@@ -5,9 +5,8 @@ import SchoolBannerValidator from 'App/Validators/SchoolBannerValidator'
 
 export default class SchoolsBannersController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
-    await bouncer.with('SchoolPolicy').authorize('update')
-
-    const school = await School.findOrFail(params.id)
+    const school = await School.query().where('id', params.id).firstOrFail()
+    await bouncer.with('SchoolPolicy').authorize('update', school)
 
     return view.render('pages/schools/banners/edit', {
       school,
@@ -15,9 +14,8 @@ export default class SchoolsBannersController {
   }
 
   public async update({ params, request, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('SchoolPolicy').authorize('update')
-
-    const school = await School.findOrFail(params.id)
+    const school = await School.query().where('id', params.id).firstOrFail()
+    await bouncer.with('SchoolPolicy').authorize('update', school)
 
     const { banner } = await request.validate(SchoolBannerValidator)
 
@@ -32,7 +30,7 @@ export default class SchoolsBannersController {
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('SchoolPolicy').authorize('delete')
 
-    const school = await School.findOrFail(params.id)
+    const school = await School.query().where('id', params.id).firstOrFail()
 
     school.banner = null
 

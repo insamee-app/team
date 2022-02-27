@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { UserRole } from 'App/Enums/UserRole'
 import Association from 'App/Models/Association'
 import Report from 'App/Models/Report'
 import School from 'App/Models/School'
@@ -35,10 +36,19 @@ export default class AssociationsController {
     return view.render('pages/associations/index', { associations, schools, thematics, tags })
   }
 
-  public async create({ view, bouncer }: HttpContextContract) {
+  public async create({ view, bouncer, auth }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('create')
 
-    const schools = await School.query().select('id', 'name').orderBy('name')
+    await auth.user!.load('profile')
+    const schools = await School.query()
+      .select('id', 'name')
+      .orderBy('name')
+      .if(
+        auth.user!.role === UserRole.AssociativeManager ||
+          auth.user!.role === UserRole.Supervisor ||
+          auth.user!.role === UserRole.Admin,
+        (query) => query.where('id', auth.user!.profile.schoolId)
+      )
     const thematics = await Thematic.query().select('id', 'name').orderBy('name')
     const tags = await Tag.query().select('id', 'name').orderBy('name')
 
@@ -46,11 +56,13 @@ export default class AssociationsController {
   }
 
   public async store({ request, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('AssociationPolicy').authorize('create')
-
     const { tags, ...payload } = await request.validate(AssociationStoreValidator)
 
-    const association = await Association.create(payload)
+    const association = new Association()
+    association.merge(payload)
+    await bouncer.with('AssociationPolicy').authorize('store', association)
+
+    await association.save()
     await association.related('tags').sync(tags || [])
 
     session.flash('success', 'Association créée avec succès')
@@ -76,9 +88,8 @@ export default class AssociationsController {
   }
 
   public async edit({ view, params, bouncer }: HttpContextContract) {
-    await bouncer.with('AssociationPolicy').authorize('update')
-
-    const association = await Association.findOrFail(params.id)
+    const association = await Association.query().where('id', params.id).firstOrFail()
+    await bouncer.with('AssociationPolicy').authorize('update', association)
 
     const schools = await School.query().select('id', 'name').orderBy('name')
     const thematics = await Thematic.query().select('id', 'name').orderBy('name')
@@ -92,9 +103,8 @@ export default class AssociationsController {
   }
 
   public async update({ request, response, params, bouncer, session }: HttpContextContract) {
-    await bouncer.with('AssociationPolicy').authorize('update')
-
-    const association = await Association.findOrFail(params.id)
+    const association = await Association.query().where('id', params.id).firstOrFail()
+    await bouncer.with('AssociationPolicy').authorize('update', association)
 
     const { tags, ...payload } = await request.validate(AssociationUpdateValidator)
 

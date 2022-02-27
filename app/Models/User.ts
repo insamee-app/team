@@ -106,9 +106,43 @@ export default class User extends AppSoftDeletes {
     this.blockedAt = null
     await this.save()
   }
+  public async makeMember() {
+    this.role = UserRole.Member
+    await this.save()
+  }
 
-  public async makeAdmin() {
-    this.role = UserRole.Admin
+  public async makeEventsCreator() {
+    this.role = UserRole.EventsCreator
+    await this.save()
+  }
+
+  public async makeEventsManager() {
+    this.role = UserRole.EventsManager
+    await this.save()
+  }
+
+  public async makeSuperEventsManager() {
+    this.role = UserRole.SuperEventsManager
+    await this.save()
+  }
+
+  public async makeAssociativeManager() {
+    this.role = UserRole.AssociativeManager
+    await this.save()
+  }
+
+  public async makeSuperAssociativeManager() {
+    this.role = UserRole.SuperAssociativeManager
+    await this.save()
+  }
+
+  public async makeSupervisor() {
+    this.role = UserRole.Supervisor
+    await this.save()
+  }
+
+  public async makeSuperSupervisor() {
+    this.role = UserRole.SuperSupervisor
     await this.save()
   }
 
@@ -117,8 +151,12 @@ export default class User extends AppSoftDeletes {
     await this.save()
   }
 
-  public async makeMember() {
-    this.role = UserRole.Member
+  public async makeAdmin() {
+    this.role = UserRole.Admin
+    await this.save()
+  }
+  public async makeSuperAdmin() {
+    this.role = UserRole.SuperAdmin
     await this.save()
   }
 }

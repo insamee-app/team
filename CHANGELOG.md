@@ -1,3 +1,13 @@
+### Version 0.0.2
+- feat(role): create new roles
+- feat(role): add more details
+- feat(role): add more to policy
+- chore: format
+- fix(role): update controllers
+- feat(role): create dropdown
+- fix(role): apply policy to dropdown
+- fix(bump): remove tag creation
+
 ### Version 0.0.0
 - Initial commit
 - initial commit
@@ -163,7 +173,7 @@
 - feat(association): rework index
 - feat(association): add tags and thematic to show
 - fix(association): update color
-- feat(association): add _blank to link
+- feat(association): add \_blank to link
 - fix(association): update limit to preload
 - fix(picture): update behavior
 - feat(profile): add association in show
@@ -243,7 +253,7 @@
 - feat(role): create controller and views
 - feat(profile): add support for role and bio
 - chore: format
-- feat(mail): rework  mail using mjml
+- feat(mail): rework mail using mjml
 - fix(mail): typo
 - feat(mail): add welcome mail
 - feat(flash): create flash components
@@ -296,8 +306,8 @@
 - feat(shell): create edit associations
 - feat(shell): update footer
 - feat(shell): show associations
-- feat(shell): report  associations
-- feat(shell): picture  associations
+- feat(shell): report associations
+- feat(shell): picture associations
 - chore: rearrange button class
 - feat(shell): increase label size
 - fix(shell): color in report area

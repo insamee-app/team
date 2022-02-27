@@ -7,16 +7,20 @@ export default class ProfileAvatarPolicy extends BasePolicy {
   public async before(user: User) {
     if (user.blockedAt) return false
 
-    if (user.role === UserRole.Admin) {
+    if (user.role === UserRole.SuperAdmin) {
       return true
     }
   }
 
   public async update(user: User, profile: Profile) {
-    return user.role === UserRole.Moderator || user.id === profile.userId
+    return (
+      user.role === UserRole.Moderator || user.role === UserRole.Admin || user.id === profile.userId
+    )
   }
 
   public async delete(user: User, profile: Profile) {
-    return user.role === UserRole.Moderator || user.id === profile.userId
+    return (
+      user.role === UserRole.Moderator || user.role === UserRole.Admin || user.id === profile.userId
+    )
   }
 }
