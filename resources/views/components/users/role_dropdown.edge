@@ -52,14 +52,16 @@
             class="absolute right-0 overflow-hidden mt-2 py-2 flex flex-col space-y-1 bg-white lg:text-lg rounded-lg shadow-lg"
         >
           @each(role in UserRoleData)
-            <form action="{{ route(role.controller, { id: user.id }) }}?_method=PUT" method="POST">
-              {{ csrfField() }}
-              <button class="w-full hover:bg-slate-400 flex flex-row items-center space-x-2 py-1 px-4 {{ user.role === role.id? 'bg-slate-200' : '' }}">
-                <span class="whitespace-nowrap">
-                  {{ role.name }}
-                </span>
-              </button>
-            </form>
+            @can(role.policy, user)
+              <form action="{{ route(role.controller, { id: user.id }) }}?_method=PUT" method="POST">
+                {{ csrfField() }}
+                <button class="w-full hover:bg-slate-400 flex flex-row items-center space-x-2 py-1 px-4 {{ user.role === role.id? 'bg-slate-200' : '' }}">
+                  <span class="whitespace-nowrap">
+                    {{ role.name }}
+                  </span>
+                </button>
+              </form>
+            @end
           @endeach
         </div>
     </div>
