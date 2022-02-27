@@ -1,11 +1,11 @@
 {
-  "assets/app.css": "http://localhost:8080/assets/app.css",
-  "assets/app.js": "http://localhost:8080/assets/app.js",
-  "assets/images/logo_tutorat.png": "http://localhost:8080/assets/images/logo_tutorat.fc624d3d.png",
-  "assets/images/logo_mee.png": "http://localhost:8080/assets/images/logo_mee.e02e210c.png",
-  "assets/images/logo_associations.png": "http://localhost:8080/assets/images/logo_associations.859df648.png",
-  "assets/images/logo_team.png": "http://localhost:8080/assets/images/logo_team.ebbde318.png",
-  "assets/images/logo_evenements.png": "http://localhost:8080/assets/images/logo_evenements.3d6b4421.png",
-  "assets/images/mail_globe.png": "http://localhost:8080/assets/images/mail_globe.d24d384a.png",
-  "assets/images/mail_twitter.png": "http://localhost:8080/assets/images/mail_twitter.ad8beb98.png"
+  "assets/app.css": "/assets/app.af18cd93.css",
+  "assets/app.js": "/assets/app.f1510344.js",
+  "assets/images/logo_tutorat.png": "/assets/images/logo_tutorat.fc624d3d.png",
+  "assets/images/logo_mee.png": "/assets/images/logo_mee.e02e210c.png",
+  "assets/images/logo_associations.png": "/assets/images/logo_associations.859df648.png",
+  "assets/images/logo_team.png": "/assets/images/logo_team.ebbde318.png",
+  "assets/images/logo_evenements.png": "/assets/images/logo_evenements.3d6b4421.png",
+  "assets/images/mail_globe.png": "/assets/images/mail_globe.d24d384a.png",
+  "assets/images/mail_twitter.png": "/assets/images/mail_twitter.ad8beb98.png"
 }

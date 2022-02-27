@@ -20,7 +20,17 @@ export default class AssociationPolicy extends BasePolicy {
     return true
   }
 
-  public async create(user: User, association: Association) {
+  public async create(user: User) {
+    return (
+      user.role === UserRole.AssociativeManager ||
+      user.role === UserRole.Supervisor ||
+      user.role === UserRole.Admin ||
+      user.role === UserRole.SuperAssociativeManager ||
+      user.role === UserRole.SuperSupervisor
+    )
+  }
+
+  public async store(user: User, association: Association) {
     await user.load('profile')
 
     return (
