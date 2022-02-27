@@ -63,19 +63,17 @@ export default class SchoolsController {
   }
 
   public async edit({ params, view, bouncer }: HttpContextContract) {
-    await bouncer.with('SchoolPolicy').authorize('update')
-
     const school = await School.query().where('id', params.id).firstOrFail()
+    await bouncer.with('SchoolPolicy').authorize('update', school)
 
     return view.render('pages/schools/edit', { school })
   }
 
   public async update({ params, request, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('SchoolPolicy').authorize('update')
+    const school = await School.query().where('id', params.id).firstOrFail()
+    await bouncer.with('SchoolPolicy').authorize('update', school)
 
     const payload = await request.validate(SchoolUpdateValidator)
-
-    const school = await School.query().where('id', params.id).firstOrFail()
 
     school.merge(payload)
 

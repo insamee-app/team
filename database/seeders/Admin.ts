@@ -14,7 +14,7 @@ export default class AdminSeeder extends BaseSeeder {
         email: Env.get('ADMIN_EMAIL'),
         password: Env.get('ADMIN_PASSWORD'),
         status: UserStatus.Active,
-        role: UserRole.Admin,
+        role: UserRole.SuperAdmin,
       }
     )
 

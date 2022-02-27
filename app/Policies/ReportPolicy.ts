@@ -6,17 +6,17 @@ export default class ReportPolicy extends BasePolicy {
   public async before(user: User) {
     if (user.blockedAt) return false
 
-    if (user.role === UserRole.Admin) {
+    if (user.role === UserRole.SuperAdmin) {
       return true
     }
   }
 
   public async viewList(user: User) {
-    return user.role === UserRole.Moderator
+    return user.role === UserRole.Moderator || user.role === UserRole.Admin
   }
 
   public async view(user: User) {
-    return user.role === UserRole.Moderator
+    return user.role === UserRole.Moderator || user.role === UserRole.Admin
   }
 
   public async create() {
@@ -24,7 +24,7 @@ export default class ReportPolicy extends BasePolicy {
   }
 
   public async update(user: User) {
-    return user.role === UserRole.Moderator
+    return user.role === UserRole.Moderator || user.role === UserRole.Admin
   }
 
   public async delete() {

@@ -5,9 +5,9 @@ import AssociationPictureValidator from 'App/Validators/AssociationPictureValida
 
 export default class AssociationsPicturesController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
-    await bouncer.with('AssociationPicturePolicy').authorize('update')
+    const association = await Association.query().where('id', params.id).firstOrFail()
 
-    const association = await Association.findOrFail(params.id)
+    await bouncer.with('AssociationPicturePolicy').authorize('update', association)
 
     return view.render('pages/associations/pictures/edit', {
       association,
@@ -15,9 +15,9 @@ export default class AssociationsPicturesController {
   }
 
   public async update({ params, request, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('AssociationPicturePolicy').authorize('update')
+    const association = await Association.query().where('id', params.id).firstOrFail()
 
-    const association = await Association.findOrFail(params.id)
+    await bouncer.with('AssociationPicturePolicy').authorize('update', association)
 
     const { picture } = await request.validate(AssociationPictureValidator)
 
@@ -30,9 +30,9 @@ export default class AssociationsPicturesController {
   }
 
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('AssociationPicturePolicy').authorize('delete')
+    const association = await Association.query().where('id', params.id).firstOrFail()
 
-    const association = await Association.findOrFail(params.id)
+    await bouncer.with('AssociationPicturePolicy').authorize('delete', association)
 
     association.picture = null
 
