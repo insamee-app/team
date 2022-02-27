@@ -34,13 +34,7 @@
         @end
         @elements.chip()
           <span class="font-bold">
-            @if (user.role === UserRole.SuperAdmin)
-              Admin
-            @elseif (user.role === UserRole.Moderator)
-              Modérateur
-            @elseif (user.role === UserRole.Member)
-              Member
-            @endif
+            {{ UserRoleData.find((role) => String(user.role) === String(role.id)).name }}
           </span>
         @end
       </ul>
@@ -55,63 +49,36 @@
       @endif
     </div>
 
-  @can('UserPolicy.update')
-    <div class="mt-8 space-y-2 text-right text-slate-500">
-      @if(user.role === UserRole.Member)
-        <form action="{{ route('UsersController.makeModerator', { id: user.id, qs: { _method: 'PUT' }}) }}" method="post">
-          {{ csrfField() }}
-          <button type="submit">
-            Promouvoir Modérateur
-          </button>
-        </form>
-      @elseif(user.role === UserRole.Moderator)
-        <form action="{{ route('UsersController.removeModerator', { id: user.id, qs: { _method: 'DELETE' }}) }}" method="post">
-          {{ csrfField() }}
-          <button type="submit">
-            Rétrograder Membre
-          </button>
-        </form>
-        <form action="{{ route('UsersController.makeAdmin', { id: user.id, qs: { _method: 'PUT' }}) }}" method="post">
-          {{ csrfField() }}
-          <button type="submit">
-            Promouvoir Administrateur
-          </button>
-        </form>
-      @elseif(user.role === UserRole.Admin)
-        <form action="{{ route('UsersController.removeAdmin', { id: user.id, qs: { _method: 'DELETE' }}) }}" method="post">
-          {{ csrfField() }}
-            <button type="submit">
-            Rétrograder Membre
-          </button>
-        </form>
-      @endif
-    </div>
-  @end
-
-  <div class="mt-8 flex felx-row justify-between">
-    @elements.button()
-      @slot('main', className)
-        <a href="{{ route('ProfilesController.show', { id: user.profile.id }) }}" class="{{ className }}">Voir le profil</a>
-      @end
-    @end
-
-
-    <form action="{{ blockAction }}" method="POST">
-      {{ csrfField() }}
-      @elements.button({
-        fill: true
+    <div class="mt-8 flex flex-row justify-end">
+      @!users.roleDropdown({
+        user,
       })
+    </div>
+
+    <div class="mt-8 flex felx-row justify-between">
+      @elements.button()
         @slot('main', className)
-          <button type="submit" class="{{ className }}">
-            @if(user.blockedAt)
-              Débloquer
-            @else
-              Bloquer
-            @endif
-          </button>
+          <a href="{{ route('ProfilesController.show', { id: user.profile.id }) }}" class="{{ className }}">Voir le profil</a>
         @end
       @end
-    </form>
-  </div>
+
+
+      <form action="{{ blockAction }}" method="POST">
+        {{ csrfField() }}
+        @elements.button({
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">
+              @if(user.blockedAt)
+                Débloquer
+              @else
+                Bloquer
+              @endif
+            </button>
+          @end
+        @end
+      </form>
+    </div>
   @end
 @end

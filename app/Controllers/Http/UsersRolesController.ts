@@ -13,33 +13,33 @@ export default class UsersRolesController {
     return response.redirect().toRoute('UsersController.show', { id: user.id })
   }
 
-  public async makeEventCreator({ response, params, bouncer, session }: HttpContextContract) {
+  public async makeEventsCreator({ response, params, bouncer, session }: HttpContextContract) {
     const user = await User.withBlocked().where('id', params.id).firstOrFail()
-    await bouncer.with('UserRolePolicy').authorize('makeEventCreator', user)
+    await bouncer.with('UserRolePolicy').authorize('makeEventsCreator', user)
 
-    await user.makeEventCreator()
+    await user.makeEventsCreator()
 
     session.flash('success', "Role de créateur d'évènement donné à l'utilisateur")
 
     return response.redirect().toRoute('UsersController.show', { id: user.id })
   }
 
-  public async makeEventManager({ response, params, bouncer, session }: HttpContextContract) {
+  public async makeEventsManager({ response, params, bouncer, session }: HttpContextContract) {
     const user = await User.withBlocked().where('id', params.id).firstOrFail()
-    await bouncer.with('UserRolePolicy').authorize('makeEventCreator', user)
+    await bouncer.with('UserRolePolicy').authorize('makeEventsCreator', user)
 
-    await user.makeEventManager()
+    await user.makeEventsManager()
 
     session.flash('success', "Role de gestionnaire d'évènement donné à l'utilisateur")
     return response.redirect().toRoute('UsersController.show', { id: user.id })
   }
 
-  public async makeSuperEventManager({ response, params, bouncer, session }: HttpContextContract) {
-    await bouncer.with('UserRolePolicy').authorize('makeSuperEventManager')
+  public async makeSuperEventsManager({ response, params, bouncer, session }: HttpContextContract) {
+    await bouncer.with('UserRolePolicy').authorize('makeSuperEventsManager')
 
     const user = await User.withBlocked().where('id', params.id).firstOrFail()
 
-    await user.makeSuperEventManager()
+    await user.makeSuperEventsManager()
 
     session.flash('success', "Role de super gestionnaire d'évènement donné à l'utilisateur")
     return response.redirect().toRoute('UsersController.show', { id: user.id })

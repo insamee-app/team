@@ -15,12 +15,12 @@ export default class UserRolePolicy extends BasePolicy {
     return user.role > target.role
   }
 
-  public async makeEventCreator(user: User, target: User) {
+  public async makeEventsCreator(user: User, target: User) {
     await user.load('profile')
     await target.load('profile')
 
     return (
-      (user.role === UserRole.EventManager ||
+      (user.role === UserRole.EventsManager ||
         user.role === UserRole.AssociativeManager ||
         user.role === UserRole.Supervisor ||
         user.role === UserRole.Admin) &&
@@ -28,7 +28,7 @@ export default class UserRolePolicy extends BasePolicy {
     )
   }
 
-  public async makeEventManager(user: User, target: User) {
+  public async makeEventsManager(user: User, target: User) {
     await user.load('profile')
     await target.load('profile')
 
@@ -58,7 +58,7 @@ export default class UserRolePolicy extends BasePolicy {
     )
   }
 
-  public async makeSuperEventManager(user: User) {
+  public async makeSuperEventsManager(user: User) {
     return user.role === UserRole.SuperSupervisor
   }
 

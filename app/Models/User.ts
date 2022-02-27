@@ -111,18 +111,18 @@ export default class User extends AppSoftDeletes {
     await this.save()
   }
 
-  public async makeEventCreator() {
-    this.role = UserRole.EventCreator
+  public async makeEventsCreator() {
+    this.role = UserRole.EventsCreator
     await this.save()
   }
 
-  public async makeEventManager() {
-    this.role = UserRole.EventManager
+  public async makeEventsManager() {
+    this.role = UserRole.EventsManager
     await this.save()
   }
 
-  public async makeSuperEventManager() {
-    this.role = UserRole.SuperEventManager
+  public async makeSuperEventsManager() {
+    this.role = UserRole.SuperEventsManager
     await this.save()
   }
 

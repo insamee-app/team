@@ -1,10 +1,10 @@
 export enum UserRole {
   Member = 1,
-  EventCreator,
-  EventManager,
+  EventsCreator,
+  EventsManager,
   AssociativeManager,
   Supervisor,
-  SuperEventManager,
+  SuperEventsManager,
   SuperAssociativeManager,
   SuperSupervisor,
   Moderator,

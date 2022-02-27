@@ -12,11 +12,11 @@ export default class UserPolicy extends BasePolicy {
   }
 
   public async viewList(user: User) {
-    return user.role > UserRole.EventCreator
+    return user.role > UserRole.EventsCreator
   }
 
   public async view(user: User) {
-    return user.role > UserRole.EventCreator
+    return user.role > UserRole.EventsCreator
   }
 
   public async create() {

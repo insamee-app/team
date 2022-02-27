@@ -35,13 +35,7 @@
             @end
             @elements.chip()
               <span class="font-bold">
-                @if (user.role === UserRole.SuperAdmin)
-                  Admin
-                @elseif (user.role === UserRole.Modérateur)
-                  Modérateur
-                @elseif (user.role === UserRole.Member)
-                  Member
-                @endif
+                {{ UserRoleData.find((role) => String(user.role) === String(role.id)).name }}
               </span>
             @end
             </ul>
