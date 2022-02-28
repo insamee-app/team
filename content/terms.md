@@ -2,7 +2,7 @@
 
 ## ARTICLE 1 : Objet
 
-Les présentes « conditions générales d'utilisation » ont pour objet l'encadrement juridique de l’utilisation du site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}), de ses sous-domaines, et de ses services.
+Les présentes « conditions générales d'utilisation » ont pour objet l'encadrement juridique de l’utilisation du site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}), de ses sous-domaines, et de ses services.
 
 Ce contrat est conclu entre:
 
@@ -14,9 +14,9 @@ Les conditions générales d'utilisation doivent être acceptées par tout Utili
 
 ## ARTICLE 2 : Mentions légales
 
-Le site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) et ses sous-domaines sont édités anonymement.
+Le site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}) et ses sous-domaines sont édités anonymement.
 
-Le site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) et ses sous-domaines sont hébergés chez {{ env('PROVIDER_NAME') }}.
+Le site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}) et ses sous-domaines sont hébergés chez {{ env('PROVIDER_NAME') }}.
 
 Adresse: {{ env('PROVIDER_ADDRESS') }}
 
@@ -24,7 +24,7 @@ Téléphone: {{ env('PROVIDER_PHONE') }}
 
 ## ARTICLE 3 : accès aux services
 
-L’Utilisateur du site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) et de ses sous-domaines à accès aux services suivants:
+L’Utilisateur du site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}) et de ses sous-domaines à accès aux services suivants:
 
 - Adresse électronique de contact;
 - Portail d'inscription;
@@ -44,9 +44,9 @@ Le site et ses différents services peuvent être interrompus ou suspendus par l
 
 Lorsque vous accédez aux Services ou que vous les utilisez, vous ne pouvez effectuer aucune des actions suivantes:
 
-- Accéder à, trafiquer ou utiliser des zones non publiques des Services, des systèmes informatiques d'[{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) ou de ses sous-domaines;
+- Accéder à, trafiquer ou utiliser des zones non publiques des Services, des systèmes informatiques d'[{{ env('APP_HOST') }}]({{ env('APP_URL') }}) ou de ses sous-domaines;
 - Sonder, explorer ou tester la vulnérabilité d’un quelconque système ou réseau, ou violer ou contourner de quelconques mesures de sécurité ou d’authentification;
-- Rechercher les Services, y accéder, ou tenter de les rechercher ou d’y accéder par tout moyen (automatisé ou non) autre que les interfaces actuellement disponibles, développées et fournies par [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) ou de ses sous-domaines (sous réserve de respecter les conditions générales en vigueur), à moins que vous n’y ayez été expressément autorisé(e) aux termes d’un accord séparé avec l'Editeur (NOTE : le crawling [indexation systématique] des Services est autorisé si cela est fait conformément aux dispositions du fichier robots.txt ; par contre, le scraping [extraction à des fins d’exploitation] des Services sans l’accord préalable de l'Editeur est expressément interdit);
+- Rechercher les Services, y accéder, ou tenter de les rechercher ou d’y accéder par tout moyen (automatisé ou non) autre que les interfaces actuellement disponibles, développées et fournies par [{{ env('APP_HOST') }}]({{ env('APP_URL') }}) ou de ses sous-domaines (sous réserve de respecter les conditions générales en vigueur), à moins que vous n’y ayez été expressément autorisé(e) aux termes d’un accord séparé avec l'Editeur (NOTE : le crawling [indexation systématique] des Services est autorisé si cela est fait conformément aux dispositions du fichier robots.txt ; par contre, le scraping [extraction à des fins d’exploitation] des Services sans l’accord préalable de l'Editeur est expressément interdit);
 - Falsifier un quelconque en-tête de paquet TCP/IP ou toute partie des informations de l’en-tête d’un quelconque courriel ou post, ou, de quelque autre façon, utiliser les Services pour envoyer des identifiants de source altérés, trompeurs ou faux;
 - Entraver ou perturber (ou tenter de le faire) l’accès d’un quelconque utilisateur, hôte ou réseau, aux Services, notamment et entre autres, par envoi de virus, overloading [surcharge], flooding [engorgement], spamming [pollupostage], mailbombing [bombardement de courrier], ou par l’exécution de scripts de création de Contenu de manière à perturber ou à saturer les Services.
 
@@ -66,7 +66,7 @@ L'Utilisateur est responsable des risques liés à l’utilisation de son identi
 
 Le mot de passe de l’Utilisateur doit rester secret. En cas de divulgation de mot de passe, l’Éditeur décline toute responsabilité.
 
-L’Utilisateur assume l’entière responsabilité de l’utilisation qu’il fait des informations et contenus présents sur le site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}).
+L’Utilisateur assume l’entière responsabilité de l’utilisation qu’il fait des informations et contenus présents sur le site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}).
 
 Tout usage du service par l'Utilisateur ayant directement ou indirectement pour conséquence des dommages doit faire l'objet d'une indemnisation au profit du site.
 
@@ -84,13 +84,13 @@ Tout dysfonctionnement du serveur ou du réseau ne peut engager la responsabilit
 
 De même, la responsabilité du site ne peut être engagée en cas de force majeure ou du fait imprévisible et insurmontable d'un tiers.
 
-Le site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) ou de ses sous-domaines s'engage à mettre en œuvre tous les moyens nécessaires pour garantir la sécurité et la confidentialité des données. Toutefois, il n’apporte pas une garantie de sécurité totale.
+Le site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}) ou de ses sous-domaines s'engage à mettre en œuvre tous les moyens nécessaires pour garantir la sécurité et la confidentialité des données. Toutefois, il n’apporte pas une garantie de sécurité totale.
 
 L’Éditeur se réserve la faculté d’une non-garantie de la fiabilité des sources, bien que les informations diffusées sur le site soient réputées fiables.
 
 ## ARTICLE 6 : Propriété intellectuelle
 
-Les contenus du site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) ou de ses sous-domaines (logos, textes, vidéos, etc.) son protégés par le droit d’auteur, en vertu du Code de la propriété intellectuelle. Cependant, l'ensemble des illustrations (images de décorations du site), proviennent du site unDraw.co.
+Les contenus du site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}) ou de ses sous-domaines (logos, textes, vidéos, etc.) son protégés par le droit d’auteur, en vertu du Code de la propriété intellectuelle. Cependant, l'ensemble des illustrations (images de décorations du site), proviennent du site unDraw.co.
 
 L’Utilisateur devra obtenir l’autorisation de l’éditeur du site avant toute reproduction, copie ou publication de ces différents contenus.
 
@@ -106,13 +106,13 @@ L’Éditeur du site se réserve le droit de modérer ou de supprimer librement 
 
 ## ARTICLE 8 : Liens hypertextes
 
-Les domaines vers lesquels mènent les liens hypertextes présents sur le site n’engagent pas la responsabilité de l’Éditeur d'[{{ env('APP_HOST') }}]({{ env('APP_HOST') }}), qui n’a pas de contrôle sur ces liens.
+Les domaines vers lesquels mènent les liens hypertextes présents sur le site n’engagent pas la responsabilité de l’Éditeur d'[{{ env('APP_HOST') }}]({{ env('APP_URL') }}), qui n’a pas de contrôle sur ces liens.
 
-Il est possible pour un tiers de créer un lien vers une page du site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) ou de ses sous-domaines sans autorisation expresse de l’éditeur.
+Il est possible pour un tiers de créer un lien vers une page du site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}) ou de ses sous-domaines sans autorisation expresse de l’éditeur.
 
 ## ARTICLE 9 : Évolution des conditions générales d’utilisation
 
-Le site [{{ env('APP_HOST') }}]({{ env('APP_HOST') }}) se réserve le droit de modifier les clauses de ces conditions générales d’utilisation à tout moment et sans justification.
+Le site [{{ env('APP_HOST') }}]({{ env('APP_URL') }}) se réserve le droit de modifier les clauses de ces conditions générales d’utilisation à tout moment et sans justification.
 
 ## ARTICLE 10 : Durée du contrat
 

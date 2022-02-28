@@ -41,12 +41,12 @@ import './routes/static'
 
 import './routes/auth'
 import './routes/users'
-import './routes/profile'
-import './routes/school'
-import './routes/association'
+import './routes/profiles'
+import './routes/schools'
+import './routes/associations'
 import './routes/events'
 
-import './routes/report'
+import './routes/reports'
 
 // Temporary
 Route.get('tutorats', ({ response }) => {

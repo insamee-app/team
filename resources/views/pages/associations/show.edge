@@ -50,18 +50,16 @@
     <div class="flex flex-col gap-8">
 
       <div class="flex flex-col space-y-4 items-center text-associations-primary-base">
-        @!shared.picture({
+        @!shared.avatar({
           attachment: association.picture,
           alt: 'Image de l\'association ' + association.name,
-          placeholderClasses: 'bg-associations-secondary-base rounded-full',
-          size: 'w-36 h-36',
-          width: '144',
-          height: '144'
+          variant: 'associations',
+          placeholder: true,
         })
         @can('AssociationPolicy.update')
           <a href="{{ route('AssociationsPicturesController.edit', { id: association.id }) }}" class="flex flex-row space-x-1 justify-center items-center">
             <span>
-              Changer la photo
+              {{ association.picture ? 'Modifier l\'image' : 'Ajouter une image' }}
             </span>
             @!icons.photograph({
               class: 'w-5 h-5 fill-current'

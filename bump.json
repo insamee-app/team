@@ -7,10 +7,10 @@
     ]
   },
   "commit": {
-    "enable": true,
+    "enabled": true,
     "message": "Release v[version]"
   },
   "tag": {
-    "enable": false
+    "enabled": false
   }
 }

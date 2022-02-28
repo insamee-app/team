@@ -18,7 +18,4 @@
   @end
 </div>
 
-
-@if(error)
-  <span class="text-sm">{{ error }}</span>
-@endif
+@!form.error({ error })

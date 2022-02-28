@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
 import { UserRole } from 'App/Enums/UserRole'
+import { UserStatus } from 'App/Enums/UserStatus'
 import Association from 'App/Models/Association'
 import FocusInterest from 'App/Models/FocusInterest'
 import Profile from 'App/Models/Profile'
@@ -8,6 +9,7 @@ import Report from 'App/Models/Report'
 import Role from 'App/Models/Role'
 import School from 'App/Models/School'
 import Skill from 'App/Models/Skill'
+import User from 'App/Models/User'
 import ProfileValidator from 'App/Validators/ProfileValidator'
 export default class ProfilesController {
   private PER_PAGE = 10
@@ -25,6 +27,7 @@ export default class ProfilesController {
       .filter(qs)
       .preload('focusInterests')
       .preload('role')
+      .whereNotIn('user_id', User.query().select('id').where('status', UserStatus.Pending))
       .paginate(page, this.PER_PAGE)
 
     profiles.baseUrl(request.url()).queryString(qs)
