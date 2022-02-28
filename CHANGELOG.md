@@ -1,3 +1,28 @@
+### Version 0.0.4
+- chore: update bump
+- Merge tag '0.0.3' into develop
+- fix: update env
+- fix #10
+- fix #2
+- fix #3
+- fix #4
+- fix #12
+- fix #13
+- fix #14
+- chore: format
+- fix #6
+- chore: format
+- fix #5
+- chore: format
+- fix #7
+- fix(avatar): use in cards
+- chore: format
+- fix #11
+- fix #17
+- fix #16
+- fix #15
+- fix: update illusations in home associations
+
 ### Version 0.0.3
 
 - Merge tag '0.0.2' into develop
