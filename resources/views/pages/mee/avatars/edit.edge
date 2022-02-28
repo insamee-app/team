@@ -16,28 +16,27 @@
       @end
     @end
 
-    <section class="flex flex-col space-y-4">
-      <h3 class="text-xl font-bold">Photo actuelle</h3>
+    @if(profile.avatar)
+      <section class="flex flex-col space-y-4 mb-8">
+        <h3 class="text-xl font-bold">Photo actuelle</h3>
 
-      <div class="flex flex-col items-center space-y-2">
-        @!shared.picture({
-          attachment: profile.avatar,
-          alt: 'Photo de ' + profile.firstName,
-          placeholderClasses: 'bg-mee-secondary-base rounded-full',
-          size: 'w-36 h-36',
-          width: '144',
-          height: '144'
-        })
+        <div class="flex flex-col items-center space-y-2">
+          @!shared.avatar({
+            attachment: profile.avatar,
+            alt: 'Photo de ' + profile.firstName,
+            variant: 'mee',
+          })
 
-        <form action="{{ route('ProfilesAvatarsController.destroy', { id: profile.id }) }}?_method=DELETE" method="POST">
-          {{ csrfField() }}
+          <form action="{{ route('ProfilesAvatarsController.destroy', { id: profile.id }) }}?_method=DELETE" method="POST">
+            {{ csrfField() }}
 
-          <button type="submit" class="text-sm text-mee-primary-base">Supprimer sa photo</button>
-        </form>
-      </div>
-    </section>
+            <button type="submit" class="text-sm text-mee-primary-base">Supprimer sa photo</button>
+          </form>
+        </div>
+      </section>
+    @endif
 
-    <form action="{{ route('ProfilesAvatarsController.update', { id: profile.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
+    <form action="{{ route('ProfilesAvatarsController.update', { id: profile.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly">
       {{ csrfField() }}
 
       <h3 class="text-xl lg:text-3xl font-bold">Nouvelle photo</h3>
