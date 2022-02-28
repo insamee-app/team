@@ -10,13 +10,12 @@
       </div>
       <h4 class="text-sm lg:text-base text-associations-primary-grey-dark">{{ association.school.name }}</h4>
     </div>
-    @!shared.picture({
+    @!shared.avatar({
       attachment: association.picture,
       alt: 'Image de l\'association ' + association.name,
-      placeholderClasses: 'bg-associations-secondary-base rounded-full',
+      variant: 'associations',
+      placeholder: true,
       size: 'w-20 h-20 lg:w-24 lg:h-24 flex-shrink-0',
-      width: '80',
-      height: '80'
     })
   </header>
   <p class="text-justify lg:text-lg">{{ excerpt(association.overview, 150) }}</p>
