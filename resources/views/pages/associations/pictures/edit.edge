@@ -16,28 +16,27 @@
       @end
     @end
 
-    <section class="flex flex-col space-y-4">
-      <h3 class="text-xl font-bold">Image actuelle</h3>
+    @if(association.picture)
+      <section class="flex flex-col space-y-4 mb-8">
+        <h3 class="text-xl font-bold">Image actuelle</h3>
 
-      <div class="flex flex-col items-center space-y-2">
-        @!shared.picture({
-          attachment: association.picture,
-          alt: 'Image de l\'association ' + association.name,
-          placeholderClasses: 'bg-associations-secondary-base rounded-full',
-          size: 'w-36 h-36',
-          width: '144',
-          height: '144'
-        })
+        <div class="flex flex-col items-center space-y-2">
+          @!shared.avatar({
+            attachment: association.picture,
+            alt: 'Image de l\'association ' + association.name,
+            variant: 'associations',
+          })
 
-        <form action="{{ route('AssociationsPicturesController.destroy', { id: association.id }) }}?_method=DELETE" method="POST">
-          {{ csrfField() }}
+          <form action="{{ route('AssociationsPicturesController.destroy', { id: association.id }) }}?_method=DELETE" method="POST">
+            {{ csrfField() }}
 
-          <button type="submit" class="text-sm text-associations-primary-base">Supprimer l'image</button>
-        </form>
-      </div>
-    </section>
+            <button type="submit" class="text-sm text-associations-primary-base">Supprimer l'image</button>
+          </form>
+        </div>
+      </section>
+    @endif
 
-    <form action="{{ route('AssociationsPicturesController.update', { id: association.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
+    <form action="{{ route('AssociationsPicturesController.update', { id: association.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly">
       {{ csrfField() }}
 
       <h3 class="text-xl lg:text-3xl font-bold">Nouvelle image</h3>
