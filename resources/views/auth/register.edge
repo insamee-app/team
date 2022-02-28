@@ -2,7 +2,7 @@
 @set('title', 'S\'inscrire')
 
 @section('content')
-  <form class="grid gap-2" action='{{ route('AuthController.register') }}' method='POST'>
+  <form class="flex flex-col gap-2" action='{{ route('AuthController.register') }}' method='POST'>
     {{ csrfField() }}
 
     @form.group({name: 'firstName'})
