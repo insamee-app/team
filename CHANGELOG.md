@@ -1,9 +1,11 @@
 ### Version 0.0.3
+
 - Merge tag '0.0.2' into develop
 - fix(bump): remove tag creation
 - build: copy content to build file
 
 ### Version 0.0.2
+
 - feat(role): create new roles
 - feat(role): add more details
 - feat(role): add more to policy
@@ -12,7 +14,9 @@
 - feat(role): create dropdown
 - fix(role): apply policy to dropdown
 - fix(bump): remove tag creation
+
 ### Version 0.0.0
+
 - Initial commit
 - initial commit
 - feat(users): add uuid
