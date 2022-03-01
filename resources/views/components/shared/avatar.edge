@@ -5,7 +5,7 @@
   @set('roundedClass', 'rounded-full')
 @elseif(variant === 'associations')
   @set('bgColor', 'bg-associations-secondary-base')
-  @set('roundedClass', 'rounded')
+  @set('roundedClass', 'rounded md:rounded-lg')
 @endif
 
 @set('size', $props.size ? $props.size : 'w-36 h-36 lg:w-44 lg:h-44')
