@@ -1,4 +1,18 @@
+### Version 0.0.5
+- Merge tag '0.0.4' into develop
+- fix #19
+- fix #21
+- fix #20
+- fix #25
+- fix(profile): update text under picture
+- fix #18
+- chore: format
+- fix(avatar): upadate rounded corners for associations
+- fix #23
+- fix #24
+
 ### Version 0.0.4
+
 - chore: update bump
 - Merge tag '0.0.3' into develop
 - fix: update env

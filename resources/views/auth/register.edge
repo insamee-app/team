@@ -31,10 +31,10 @@
       @!form.input({ type: 'password', placeholder: '********' })
     @end
 
-    <div class="mt-6 flex flex-row justify-center">
+    <div class="mt-4 flex flex-row justify-center">
         @elements.button({
           fill: true,
-          variant: 'black'
+          variant: 'auth'
         })
           @slot('main', className)
            <button class="{{ className }} w-full" type="submit">S'inscrire</button>

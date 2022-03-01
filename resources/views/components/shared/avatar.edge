@@ -1,14 +1,17 @@
 @set('bgColor', 'bg-slate-200')
+@set('roundedClass', '')
 @if(variant === 'mee')
   @set('bgColor', 'bg-mee-secondary-base')
+  @set('roundedClass', 'rounded-full')
 @elseif(variant === 'associations')
   @set('bgColor', 'bg-associations-secondary-base')
+  @set('roundedClass', 'rounded md:rounded-lg')
 @endif
 
 @set('size', $props.size ? $props.size : 'w-36 h-36 lg:w-44 lg:h-44')
 
 @if(!attachment && placeholder)
-  <div class="{{ bgColor }} {{ size }} mx-auto rounded-full"></div>
+  <div class="{{ bgColor }} {{ size }} {{ roundedClass }}"></div>
 @elseif(attachment)
-  <img src="{{ attachment.url }}" class="mt-4 mx-auto {{ size }} rounded-full" alt="{{ alt }}" loading="lazy"/>
+  <img src="{{ attachment.url }}" class="{{ size }} {{ roundedClass }}" alt="{{ alt }}" loading="lazy"/>
 @endif
