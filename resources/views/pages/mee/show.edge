@@ -55,7 +55,7 @@
         @can('ProfilePolicy.delete', profile)
           <a href="{{ route('ProfilesAvatarsController.edit', { id: profile.id }) }}" class="flex flex-row items-center space-x-1 text-mee-primary-base">
             <span>
-             {{ profile.avatar ? 'Modifier l\'avatar' : 'Ajouter un avatar' }}
+             {{ profile.avatar ? 'Modifier la photo' : 'Ajouter une photo' }}
             </span>
             @!icons.userCircle({
               'aria-label': 'Carte d\'identification',
