@@ -8,7 +8,7 @@
 @set('size', $props.size ? $props.size : 'w-36 h-36 lg:w-44 lg:h-44')
 
 @if(!attachment && placeholder)
-  <div class="{{ bgColor }} {{ size }} mx-auto rounded-full"></div>
+  <div class="{{ bgColor }} {{ size }} rounded-full"></div>
 @elseif(attachment)
-  <img src="{{ attachment.url }}" class="mt-4 mx-auto {{ size }} rounded-full" alt="{{ alt }}" loading="lazy"/>
+  <img src="{{ attachment.url }}" class="{{ className }} {{ size }} rounded-full" alt="{{ alt }}" loading="lazy"/>
 @endif

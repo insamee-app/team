@@ -111,15 +111,13 @@
                 </span>
               </a>
               <div class="flex flex-row items-center mt-4">
-                @!shared.picture({
+                @!shared.avatar({
                   attachment: auth.user.profile.avatar,
                   alt: 'Photo de ' + auth.user.profile.firstName,
-                  placeholderClasses: 'bg-mee-primary-base rounded-full',
+                  placeholder: true,
                   size: 'w-24 h-24',
-                  width: '96',
-                  height: '96'
                 })
-                <div class="ml-4 flex flex-col space-y-2 text-lg">
+                <div class="flex-grow ml-4 flex flex-col space-y-2 text-lg">
                   <span>
                     {{ auth.user.profile.firstName }}
                   </span>
