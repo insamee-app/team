@@ -1,6 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { UserStatus } from 'App/Enums/UserStatus'
 import Report from 'App/Models/Report'
 import School from 'App/Models/School'
+import User from 'App/Models/User'
 import SchoolStoreValidator from 'App/Validators/SchoolStoreValidator'
 import SchoolUpdateValidator from 'App/Validators/SchoolUpdateValidator'
 
@@ -14,7 +16,9 @@ export default class SchoolsController {
 
     const schools = await School.query()
       .withCount('associations')
-      .withCount('profiles')
+      .withCount('profiles', (profile) =>
+        profile.whereNotIn('user_id', User.query().select('id').where('status', UserStatus.Pending))
+      )
       .paginate(page, this.PER_PAGE)
 
     schools.baseUrl(request.url())
