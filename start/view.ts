@@ -2,6 +2,7 @@ import View from '@ioc:Adonis/Core/View'
 import { ReasonType } from 'App/Enums/ReasonType'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
+import Profile from 'App/Models/Profile'
 import User from 'App/Models/User'
 
 View.global('UserRole', UserRole)
@@ -97,24 +98,34 @@ View.global('loadCurrentProfile', async function (user: User) {
 View.global('routesTeam', [
   {
     name: 'TutoratsController.index',
+    filters: () => {},
     title: 'Tutorat',
     asset: 'logo_tutorat.png',
     color: 'text-tutorat-primary-base',
   },
   {
     name: 'EventsController.index',
+    filters: () => {},
     title: 'Évènements',
     asset: 'logo_evenements.png',
     color: 'text-evenements-primary-base',
   },
   {
     name: 'AssociationsController.index',
+    filters: (profile?: Profile) => {
+      if (!profile) return {}
+      // Default filters get associations from current user profile
+      return {
+        'schools[]': profile.schoolId,
+      }
+    },
     title: 'Associations',
     asset: 'logo_associations.png',
     color: 'text-associations-primary-base',
   },
   {
     name: 'ProfilesController.index',
+    filters: () => {},
     title: 'Mee',
     asset: 'logo_mee.png',
     color: 'text-mee-primary-base',

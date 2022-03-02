@@ -450,7 +450,7 @@
                 <ul class="flex flex-col space-y-6">
                   @each(item in routesTeam)
                     <li>
-                      <a href="{{ route(item.name) }}" class="flex flex-row items-center space-x-1 {{item.color}}">
+                      <a href="{{ route(item.name, { qs: item.filters(auth.user?.profile) }) }}" class="flex flex-row items-center space-x-1 {{item.color}}">
                         <div class="w-7">
                           <img src="{{ asset(`assets/images/${item.asset}`) }}" alt="Logo de la plateforme {{ item.title }}" width="500" height="500" loading="lazy" class="h-6 w-auto">
                         </div>
