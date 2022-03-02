@@ -1,8 +1,6 @@
 import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Route from '@ioc:Adonis/Core/Route'
 import { UserStatus } from 'App/Enums/UserStatus'
-import ResetPassword from 'App/Mailers/ResetPassword'
 import Welcome from 'App/Mailers/Welcome'
 import User from 'App/Models/User'
 import { getSchoolByHost } from 'App/Services/school'
