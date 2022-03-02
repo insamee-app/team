@@ -53,7 +53,9 @@ const driveConfig: DriveConfig = {
       | files.
       |
       */
-      root: Application.makePath('../storage/uploads'),
+      root: Application.inProduction
+        ? Env.get('DRIVE_ROOT') + '/storage/uploads'
+        : Application.makePath('../storage/uploads'),
 
       /*
       |--------------------------------------------------------------------------
