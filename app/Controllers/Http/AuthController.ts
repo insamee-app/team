@@ -52,7 +52,7 @@ export default class AuthController {
       {
         id: user.id,
       },
-      { expiresIn: '1h' }
+      { expiresIn: '10m' }
     )
 
     new EmailValidation(user, profile, `${Env.get('APP_URL')}${url}`).sendLater()
@@ -109,7 +109,7 @@ export default class AuthController {
       {
         id: user!.id,
       },
-      { expiresIn: '1h' }
+      { expiresIn: '10m' }
     )
 
     new EmailValidation(user!, profile, `${Env.get('APP_URL')}${url}`).sendLater()
@@ -133,7 +133,7 @@ export default class AuthController {
       {
         user_id: user!.id,
       },
-      { expiresIn: '1h' }
+      { expiresIn: '10m' }
     )
 
     new ResetPassword(user!, profile, `${Env.get('APP_URL')}${url}`).sendLater()
