@@ -122,7 +122,13 @@ View.global('routesTeam', [
   },
   {
     name: 'EventsController.index',
-    filters: () => {},
+    filters: (profile?: Profile) => {
+      if (!profile) return {}
+      // Default filters get events for current user profile
+      return {
+        'schools[]': profile.schoolId,
+      }
+    },
     title: 'Évènements',
     asset: 'logo_evenements.png',
     color: 'text-evenements-primary-base',
@@ -131,7 +137,7 @@ View.global('routesTeam', [
     name: 'AssociationsController.index',
     filters: (profile?: Profile) => {
       if (!profile) return {}
-      // Default filters get associations from current user profile
+      // Default filters get associations for current user profile
       return {
         'schools[]': profile.schoolId,
       }
