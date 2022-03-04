@@ -21,6 +21,7 @@ export default class EventsController {
     const { page = 1, ...qs } = request.qs()
 
     const events = await Event.query()
+      .filter(qs)
       .preload('creator')
       .preload('organizerAssociation')
       .preload('organizerSchool')
@@ -28,7 +29,10 @@ export default class EventsController {
 
     events.baseUrl(request.url()).queryString(qs)
 
-    return view.render('pages/events/index', { events })
+    const associations = await Association.query().select('id', 'name').orderBy('name')
+    const schools = await School.query().select('id', 'name').orderBy('name')
+
+    return view.render('pages/events/index', { events, associations, schools })
   }
 
   public async create({ view, bouncer }: HttpContextContract) {

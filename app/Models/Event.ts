@@ -1,12 +1,17 @@
-import { DateTime } from 'luxon'
-import { BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
-import AppSoftDeletes from './AppSoftDeletes'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
-import User from './User'
+import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
+import { compose } from '@ioc:Adonis/Core/Helpers'
+import { BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { DateTime } from 'luxon'
+import AppSoftDeletes from './AppSoftDeletes'
 import Association from './Association'
+import EventFilter from './Filters/EventFilter'
 import School from './School'
+import User from './User'
 
-export default class Event extends AppSoftDeletes {
+export default class Event extends compose(AppSoftDeletes, Filterable) {
+  public static $filter = () => EventFilter
+
   @column({ isPrimary: true })
   public id: string
 

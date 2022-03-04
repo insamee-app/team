@@ -3,5 +3,30 @@
   variant: 'events',
   controller: 'EventsController',
 })
+  @form.group({name: 'schools'})
+    @!form.label({ title: 'Ecoles' })
+    @form.multiselect({
+      variant: 'events',
+      data: schools,
+      selectedData: request.qs().schools,
+    })
+      Sélectionner des écoles
+    @end
+  @end
 
+  @form.group({name: 'associations'})
+    @!form.label({ title: 'Assocations' })
+    @form.multiselect({
+      variant: 'events',
+      data: associations,
+      selectedData: request.qs().associations,
+    })
+      Sélectionner des associations
+    @end
+  @end
+
+  @form.group({name: 'date'})
+    @!form.label({ title: 'Date' })
+    @!form.input({ type: 'date', variant: 'events', fill: true, value: request.qs().date })
+  @end
 @end
