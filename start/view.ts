@@ -6,6 +6,7 @@ import { EventType } from 'App/Enums/EventType'
 import Profile from 'App/Models/Profile'
 import User from 'App/Models/User'
 import { EventProfileState } from 'App/Enums/EventProfileState'
+import { DateTime } from 'luxon'
 
 View.global('UserRole', UserRole)
 View.global('UserRoleData', [
@@ -124,9 +125,10 @@ View.global('routesTeam', [
     name: 'EventsController.index',
     filters: (profile?: Profile) => {
       if (!profile) return {}
-      // Default filters get events for current user profile
+      // Default filters get events for current user profile and after today
       return {
         'schools[]': profile.schoolId,
+        'date': DateTime.local().toFormat('yyyy-MM-dd'),
       }
     },
     title: 'Évènements',
