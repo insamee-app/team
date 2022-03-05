@@ -25,8 +25,14 @@ export default class EventStoreValidator {
     }),
     ticketsUrl: schema.string.optional({ trim: true }, [rules.url()]),
     url: schema.string.optional({ trim: true }, [rules.url()]),
-    organizerAssociationId: schema.string.optional({}, [rules.uuid({ version: 4 })]),
-    organizerSchoolId: schema.string.optional({}, [rules.uuid({ version: 4 })]),
+    organizerAssociationId: schema.string.optional({}, [
+      rules.uuid({ version: 4 }),
+      rules.exists({ table: 'associations', column: 'id' }),
+    ]),
+    organizerSchoolId: schema.string.optional({}, [
+      rules.uuid({ version: 4 }),
+      rules.exists({ table: 'schools', column: 'id' }),
+    ]),
     description: schema.string({ trim: true }, [rules.maxLength(2048)]),
   })
 
@@ -47,7 +53,9 @@ export default class EventStoreValidator {
     'ticketsUrl.url': "L'URL des billets doit être une URL valide",
     'url.url': "L'URL doit être une URL valide",
     'organizerAssociationId.uuid': "L'association organisatrice doit être valide",
+    'organizerAssociationId.exists': "L'association organisatrice doit être valide",
     'organizerSchoolId.uuid': "L'école organisatrice doit être valide",
+    'organizerSchoolId.exists': "L'école organisatrice doit être valide",
     'description.required': 'La description est requise',
     'description.maxLength': 'La description doit faire moins de 2048 caractères',
   }
