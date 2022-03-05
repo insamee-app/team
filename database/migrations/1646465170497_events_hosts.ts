@@ -1,15 +1,13 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class ProfilesEvents extends BaseSchema {
-  protected tableName = 'profiles_events'
+export default class EventsHosts extends BaseSchema {
+  protected tableName = 'events_hosts'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.primary(['profile_id', 'event_id'])
+      table.primary(['event_id', 'school_id'])
       table.uuid('event_id').notNullable().references('id').inTable('events')
-      table.uuid('profile_id').notNullable().references('id').inTable('profiles')
-
-      table.integer('state').notNullable()
+      table.uuid('school_id').notNullable().references('id').inTable('schools')
     })
   }
 

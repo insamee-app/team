@@ -17,8 +17,6 @@ export default class Events extends BaseSchema {
       table.string('tickets_url').nullable()
       table.string('url').nullable()
 
-      table.uuid('organizer_association_id').nullable().references('id').inTable('associations')
-      table.uuid('organizer_school_id').nullable().references('id').inTable('schools')
       table.uuid('creator_id').notNullable().references('id').inTable('users')
 
       table.json('image').nullable()
