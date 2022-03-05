@@ -31,7 +31,9 @@ export default class AssociationPolicy extends BasePolicy {
   }
 
   public async store(user: User, association: Association) {
-    await user.load('profile')
+    if (!user.profile) {
+      await user.load('profile')
+    }
 
     return (
       ((user.role === UserRole.AssociativeManager ||
@@ -44,7 +46,9 @@ export default class AssociationPolicy extends BasePolicy {
   }
 
   public async update(user: User, association: Association) {
-    await user.load('profile')
+    if (!user.profile) {
+      await user.load('profile')
+    }
 
     return (
       ((user.role === UserRole.AssociativeManager ||
@@ -56,7 +60,18 @@ export default class AssociationPolicy extends BasePolicy {
     )
   }
 
-  public async delete(user: User) {
-    return user.role === UserRole.Admin
+  public async delete(user: User, association: Association) {
+    if (!user.profile) {
+      await user.load('profile')
+    }
+
+    return (
+      ((user.role === UserRole.AssociativeManager ||
+        user.role === UserRole.Supervisor ||
+        user.role === UserRole.Admin) &&
+        user.profile.schoolId === association.schoolId) ||
+      user.role === UserRole.SuperAssociativeManager ||
+      user.role === UserRole.SuperSupervisor
+    )
   }
 }
