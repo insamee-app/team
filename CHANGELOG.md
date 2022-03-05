@@ -1,3 +1,22 @@
+### Version 0.0.7
+- Merge tag '0.0.6' into develop
+- chore: format
+- feat(associations): add default filters - fix #22
+- fix #27
+- fix(signedUrls): update time from 1h to 10m
+- feat(auth): add delay for emails - fix #26
+- refactor: remove unused import
+- chore: format
+- chore: format
+- fix(associations): update policy
+- fix(associations): update controller
+- fix #30 & #33
+- chore: format
+- fix #31
+- chore: format
+- chore: format
+- fix(rate_limiter): many issues
+
 ### Version 0.0.6
 
 - Merge tag '0.0.5' into develop
