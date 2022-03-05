@@ -55,7 +55,7 @@
         @end
 
         @slot('actions')
-          @can('EventPolicy.update')
+          @can('EventPolicy.update', event)
             @elements.button({
               fill: true,
               variant: 'events'
@@ -95,20 +95,22 @@
               @end
             @end
           </form>
-
-          @elements.button({
-            variant: 'events-secondary-grey',
-            fill: false
-          })
-            @slot('main', className)
-              <button class="{{ className }} flex flex-row items-center space-x-2">
-                @!icons.check({class: 'w-5 h-5 fill-current'})
-                <span>
-                  Je participe
-                </span>
-              </button>
+          <form action="{{ route('EventsParticipateController.store', { id: event.id }) }}" method="POST">
+            {{ csrfField() }}
+            @elements.button({
+              variant: 'events-secondary-grey',
+              fill: false
+            })
+              @slot('main', className)
+                <button class="{{ className }} flex flex-row items-center space-x-2">
+                  @!icons.check({class: 'w-5 h-5 fill-current'})
+                  <span>
+                    Je participe
+                  </span>
+                </button>
+              @end
             @end
-          @end
+          </form>
         @endif
       </div>
 
@@ -119,7 +121,7 @@
         </p>
       @end
 
-      <p>
+      {{--  <p>
         Evènement de
         <span class="font-bold">
           @if(event.organizerAssociation)
@@ -136,7 +138,7 @@
           </a>
           @end
         </span>
-      </p>
+      </p>  --}}
 
       <footer class="flex flex-row justify-between">
           @if(event.url)

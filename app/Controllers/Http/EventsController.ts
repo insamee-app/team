@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import { EventStatus } from 'App/Enums/EventStatus'
 import Association from 'App/Models/Association'
 import Event from 'App/Models/Event'
@@ -6,7 +7,6 @@ import Report from 'App/Models/Report'
 import School from 'App/Models/School'
 import EventsService from 'App/Services/EventsService'
 import EventStoreValidator from 'App/Validators/EventStoreValidator'
-import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class EventsController {
   private PER_PAGE = 10
@@ -22,9 +22,8 @@ export default class EventsController {
 
     const events = await Event.query()
       .filter(qs)
-      .preload('creator')
-      .preload('organizerAssociation')
-      .preload('organizerSchool')
+      .withCount('interestedProfiles', (query) => query.as('interestedCount'))
+      .withCount('participatingProfiles', (query) => query.as('participatingCount'))
       .paginate(page, this.PER_PAGE)
 
     events.baseUrl(request.url()).queryString(qs)
@@ -38,9 +37,7 @@ export default class EventsController {
   public async create({ view, bouncer }: HttpContextContract) {
     await bouncer.with('EventPolicy').authorize('create')
 
-    // TODO: use user role to filter schools
     const schools = await School.query().select('id', 'name').orderBy('name')
-    // TODO: use user role to filter associations
     const associations = await Association.query().select('id', 'name').orderBy('name')
 
     return view.render('pages/events/create', { schools, associations })
@@ -48,6 +45,7 @@ export default class EventsController {
 
   public async store({ request, response, bouncer, session, auth }: HttpContextContract) {
     await bouncer.with('EventPolicy').authorize('create')
+    // TODO: Update with new configuration
 
     const { startDate, startTime, endDate, endTime, type, ...data } = await request.validate(
       EventStoreValidator
@@ -77,8 +75,10 @@ export default class EventsController {
       .preload('creator', (creator) =>
         creator.preload('profile', (profile) => profile.select('id', 'first_name', 'last_name'))
       )
-      .preload('organizerAssociation')
-      .preload('organizerSchool')
+      .preload('organizingAssociations')
+      .preload('organizingSchools')
+      .withCount('interestedProfiles', (query) => query.as('interestedCount'))
+      .withCount('participatingProfiles', (query) => query.as('participatingCount'))
       .where('id', params.id)
       .firstOrFail()
     const eventProfile = await Database.query()
@@ -100,26 +100,30 @@ export default class EventsController {
     })
   }
 
-  public async edit({ view, params, bouncer }: HttpContextContract) {
-    await bouncer.with('EventPolicy').authorize('update')
+  public async edit({ view, params, bouncer, auth }: HttpContextContract) {
+    const event = await Event.query().preload('creator').where('id', params.id).firstOrFail()
 
-    const event = await Event.query()
-      .preload('creator')
-      .preload('organizerAssociation')
-      .preload('organizerSchool')
-      .where('id', params.id)
-      .firstOrFail()
+    await auth.user?.load('profile')
+    await event.load('hostSchools', (query) => query.select('id', 'name'))
+    await bouncer.with('EventPolicy').authorize('update', event)
 
-    // TODO: use user role to filter schools
+    await event.load('organizingAssociations')
+    await event.load('organizingSchools')
+    await event.load('hostSchools')
+
     const schools = await School.query().select('id', 'name').orderBy('name')
-    // TODO: use user role to filter associations
     const associations = await Association.query().select('id', 'name').orderBy('name')
 
     return view.render('pages/events/edit', { event, schools, associations })
   }
 
-  public async update({ request, response, bouncer, session, params }: HttpContextContract) {
-    await bouncer.with('EventPolicy').authorize('update')
+  public async update({ request, response, bouncer, session, params, auth }: HttpContextContract) {
+    // TODO: Update with new configuration
+    const event = await Event.query().where('id', params.id).firstOrFail()
+
+    await auth.user?.load('profile')
+    await event.load('hostSchools', (query) => query.select('id'))
+    await bouncer.with('EventPolicy').authorize('update', event)
 
     const { startDate, startTime, endDate, endTime, type, ...data } = await request.validate(
       EventStoreValidator
@@ -127,8 +131,6 @@ export default class EventsController {
 
     const startAt = EventsService.toDateTime(startDate, startTime)
     const endAt = EventsService.toDateTime(endDate, endTime)
-
-    const event = await Event.query().where('id', params.id).firstOrFail()
 
     event.merge({
       ...data,
@@ -144,10 +146,11 @@ export default class EventsController {
     return response.redirect().toRoute('EventsController.show', { id: event.id })
   }
 
-  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('EventPolicy').authorize('delete')
-
+  public async destroy({ params, response, bouncer, session, auth }: HttpContextContract) {
     const event = await Event.query().where('id', params.id).firstOrFail()
+    await auth.user?.load('profile')
+    await event.load('hostSchools', (query) => query.select('id'))
+    await bouncer.with('EventPolicy').authorize('delete', event)
 
     await event.delete()
 

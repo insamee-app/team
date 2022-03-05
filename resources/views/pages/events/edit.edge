@@ -35,9 +35,20 @@
           @end
         @end
 
-        @form.group({name: 'location', className: 'lg:col-span-2'})
+        @form.group({name: 'location'})
           @!form.label({ title: 'Localisation' })
           @!form.input({ type: 'text', placeholder: 'Saisir l\'adresse', variant: 'events', value: event.location })
+        @end
+
+        @form.group({name: 'hosts'})
+          @!form.label({ title: 'Ecoles hôtes' })
+          @form.multiselect({
+            variant: 'events',
+            data: schools,
+            selectedData: event.hostSchools.map(school => school.id),
+          })
+            Sélectionner le / les écoles hôtes
+          @end
         @end
 
         @form.group({name: 'startDate'})
@@ -67,33 +78,33 @@
 
         @form.group({name: 'url'})
           @!form.label({ title: 'Lien vers l\'évènement' })
-          @!form.input({ type: 'url', placeholder: 'Saisir l\'url pour en savoir plus', variant: 'events' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url pour en savoir plus', variant: 'events', value: event.url })
         @end
 
-        @form.group({name: 'organizerAssociationId'})
-          @!form.label({ title: 'Association organisatrice' })
-          @form.select({
+        @form.group({name: 'associations'})
+          @!form.label({ title: 'Associations organisatrices' })
+          @form.multiselect({
             variant: 'events',
             data: associations,
-            selectedData: event.organizerAssociationId ?? undefined,
+            selectedData: event.organizingAssociations.map(association => association.id),
           })
-            Sélectionner une association organisatrice
+            Sélectionner le / les associations organisatrices
           @end
         @end
 
-        @form.group({name: 'organizerSchoolId'})
-          @!form.label({ title: 'Ecole organisatrice' })
-          @form.select({
+        @form.group({name: 'schools'})
+          @!form.label({ title: 'Ecoles organisatrices' })
+          @form.multiselect({
             variant: 'events',
             data: schools,
-            selectedData: event.organizerSchoolId ?? undefined,
+            selectedData: event.organizingSchools.map(school => school.id),
           })
-            Sélectionner une école organisatrice
+            Sélectionner le / les écoles organisatrices
           @end
         @end
 
         <p class="lg:col-span-2">
-          En l'absence d'organisateur, le créateur de l'évènement sera l'organisateur.
+          En l'absence d'organisateurs, le créateur de l'évènement sera l'organisateur.
         </p>
 
         @form.group({name: 'description', className: 'lg:col-span-2'})

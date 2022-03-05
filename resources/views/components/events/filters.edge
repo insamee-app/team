@@ -3,8 +3,19 @@
   variant: 'events',
   controller: 'EventsController',
 })
+  @form.group({name: 'hosts'})
+    @!form.label({ title: 'Ecoles hôtes' })
+    @form.multiselect({
+      variant: 'events',
+      data: schools,
+      selectedData: request.qs().hosts,
+    })
+      Sélectionner des écoles
+    @end
+  @end
+
   @form.group({name: 'schools'})
-    @!form.label({ title: 'Ecoles' })
+    @!form.label({ title: 'Ecoles organisatrices' })
     @form.multiselect({
       variant: 'events',
       data: schools,
@@ -15,7 +26,7 @@
   @end
 
   @form.group({name: 'associations'})
-    @!form.label({ title: 'Assocations' })
+    @!form.label({ title: 'Assocations organisatrices' })
     @form.multiselect({
       variant: 'events',
       data: associations,
