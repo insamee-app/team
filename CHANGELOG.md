@@ -1,8 +1,29 @@
+### Version 0.0.7
+- Merge tag '0.0.6' into develop
+- chore: format
+- feat(associations): add default filters - fix #22
+- fix #27
+- fix(signedUrls): update time from 1h to 10m
+- feat(auth): add delay for emails - fix #26
+- refactor: remove unused import
+- chore: format
+- chore: format
+- fix(associations): update policy
+- fix(associations): update controller
+- fix #30 & #33
+- chore: format
+- fix #31
+- chore: format
+- chore: format
+- fix(rate_limiter): many issues
+
 ### Version 0.0.6
+
 - Merge tag '0.0.5' into develop
 - fix(drive): loss file uploads
 
 ### Version 0.0.5
+
 - Merge tag '0.0.4' into develop
 - fix #19
 - fix #21
@@ -14,7 +35,9 @@
 - fix(avatar): upadate rounded corners for associations
 - fix #23
 - fix #24
+
 ### Version 0.0.4
+
 - chore: update bump
 - Merge tag '0.0.3' into develop
 - fix: update env
@@ -38,11 +61,15 @@
 - fix #16
 - fix #15
 - fix: update illusations in home associations
+
 ### Version 0.0.3
+
 - Merge tag '0.0.2' into develop
 - fix(bump): remove tag creation
 - build: copy content to build file
+
 ### Version 0.0.2
+
 - feat(role): create new roles
 - feat(role): add more details
 - feat(role): add more to policy
@@ -51,7 +78,9 @@
 - feat(role): create dropdown
 - fix(role): apply policy to dropdown
 - fix(bump): remove tag creation
+
 ### Version 0.0.0
+
 - Initial commit
 - initial commit
 - feat(users): add uuid

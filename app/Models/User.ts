@@ -38,6 +38,12 @@ export default class User extends AppSoftDeletes {
   public role: UserRole
 
   @column.dateTime({ autoCreate: false, autoUpdate: false })
+  public sendValidationAt: DateTime | null
+
+  @column.dateTime({ autoCreate: false, autoUpdate: false })
+  public sendResetPasswordAt: DateTime | null
+
+  @column.dateTime({ autoCreate: false, autoUpdate: false })
   public blockedAt: DateTime | null
 
   @column.dateTime({ autoCreate: true })
