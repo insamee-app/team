@@ -45,11 +45,18 @@ export default class EventsController {
 
   public async store({ request, response, bouncer, session, auth }: HttpContextContract) {
     await bouncer.with('EventPolicy').authorize('create')
-    // TODO: Update with new configuration
 
-    const { startDate, startTime, endDate, endTime, type, ...data } = await request.validate(
-      EventStoreValidator
-    )
+    const {
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      type,
+      associations = [],
+      schools = [],
+      hosts = [],
+      ...data
+    } = await request.validate(EventStoreValidator)
 
     const startAt = EventsService.toDateTime(startDate, startTime)
     const endAt = EventsService.toDateTime(endDate, endTime)
@@ -62,6 +69,10 @@ export default class EventsController {
       status: EventStatus.Published,
       creatorId: auth.user!.id,
     })
+
+    await event.related('organizingSchools').attach(schools)
+    await event.related('organizingAssociations').attach(associations)
+    await event.related('hostSchools').attach(hosts)
 
     session.flash('success', 'Evènement créé avec succès')
     return response.redirect().toRoute('EventsController.show', { id: event.id })
@@ -77,6 +88,7 @@ export default class EventsController {
       )
       .preload('organizingAssociations')
       .preload('organizingSchools')
+      .preload('hostSchools', (query) => query.select('id'))
       .withCount('interestedProfiles', (query) => query.as('interestedCount'))
       .withCount('participatingProfiles', (query) => query.as('participatingCount'))
       .where('id', params.id)
@@ -118,16 +130,23 @@ export default class EventsController {
   }
 
   public async update({ request, response, bouncer, session, params, auth }: HttpContextContract) {
-    // TODO: Update with new configuration
     const event = await Event.query().where('id', params.id).firstOrFail()
 
     await auth.user?.load('profile')
     await event.load('hostSchools', (query) => query.select('id'))
     await bouncer.with('EventPolicy').authorize('update', event)
 
-    const { startDate, startTime, endDate, endTime, type, ...data } = await request.validate(
-      EventStoreValidator
-    )
+    const {
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      type,
+      associations = [],
+      schools = [],
+      hosts = [],
+      ...data
+    } = await request.validate(EventStoreValidator)
 
     const startAt = EventsService.toDateTime(startDate, startTime)
     const endAt = EventsService.toDateTime(endDate, endTime)
@@ -141,6 +160,9 @@ export default class EventsController {
     })
 
     await event.save()
+    await event.related('organizingSchools').sync(schools)
+    await event.related('organizingAssociations').sync(associations)
+    await event.related('hostSchools').sync(hosts)
 
     session.flash('success', 'Evènement modifié avec succès')
     return response.redirect().toRoute('EventsController.show', { id: event.id })
