@@ -31,7 +31,9 @@ export default class AssociationPolicy extends BasePolicy {
   }
 
   public async store(user: User, association: Association) {
-    await user.load('profile')
+    if (!user.profile) {
+      await user.load('profile')
+    }
 
     return (
       ((user.role === UserRole.AssociativeManager ||
@@ -44,7 +46,9 @@ export default class AssociationPolicy extends BasePolicy {
   }
 
   public async update(user: User, association: Association) {
-    await user.load('profile')
+    if (!user.profile) {
+      await user.load('profile')
+    }
 
     return (
       ((user.role === UserRole.AssociativeManager ||
@@ -57,7 +61,9 @@ export default class AssociationPolicy extends BasePolicy {
   }
 
   public async delete(user: User, association: Association) {
-    await user.load('profile')
+    if (!user.profile) {
+      await user.load('profile')
+    }
 
     return (
       ((user.role === UserRole.AssociativeManager ||
