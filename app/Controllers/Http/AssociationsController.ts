@@ -117,9 +117,8 @@ export default class AssociationsController {
   }
 
   public async destroy({ params, response, bouncer, session }: HttpContextContract) {
-    await bouncer.with('AssociationPolicy').authorize('delete')
-
-    const association = await Association.findOrFail(params.id)
+    const association = await Association.query().where('id', params.id).firstOrFail()
+    await bouncer.with('AssociationPolicy').authorize('delete', association)
 
     await association.related('tags').detach()
     await association.delete()
