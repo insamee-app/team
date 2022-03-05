@@ -110,14 +110,15 @@ export const EventFactory = Factory.define(Event, ({ faker }) => {
     startAt: DateTime.local(),
     endAt: DateTime.local(),
     location: faker.address.city(),
-    ticketUrl: faker.internet.url(),
+    ticketsUrl: faker.internet.url(),
     url: faker.internet.url(),
     status: EventStatus.Published,
     type: EventType.InPerson,
   }
 })
-  .relation('organizerAssociation', () => AssociationFactory)
-  .relation('organizerSchool', () => SchoolFactory)
+  .relation('hostSchools', () => SchoolFactory)
+  .relation('organizingSchools', () => SchoolFactory)
+  .relation('organizingAssociations', () => AssociationFactory)
   .relation('creator', () => UserFactory)
   .state('online', (event) => (event.type = EventType.Online))
   .state('cancelled', (event) => (event.status = EventStatus.Cancelled))
