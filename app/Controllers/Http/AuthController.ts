@@ -1,17 +1,16 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Env from '@ioc:Adonis/Core/Env'
-import Route from '@ioc:Adonis/Core/Route'
-import EmailValidation from 'App/Mailers/EmailValidation'
-import User from 'App/Models/User'
-import RegisterValidator from 'App/Validators/RegisterValidator'
-import LoginValidator from 'App/Validators/LoginValidator'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { UserStatus } from 'App/Enums/UserStatus'
-import SendVerifyEmailValidator from 'App/Validators/SendVerifyEmailValidator'
-import ResetPassword from 'App/Mailers/ResetPassword'
-import SendResetPasswordValidator from 'App/Validators/SendResetPasswordValidator'
-import ChangePasswordValidator from 'App/Validators/ChangePasswordValidator'
-import { getSchoolByHost } from 'App/Services/school'
 import Welcome from 'App/Mailers/Welcome'
+import User from 'App/Models/User'
+import { getSchoolByHost } from 'App/Services/school'
+import SendResetPasswordService from 'App/Services/SendResetPasswordService'
+import SendVerifyEmailService from 'App/Services/SendVerifyEmailService'
+import ChangePasswordValidator from 'App/Validators/ChangePasswordValidator'
+import LoginValidator from 'App/Validators/LoginValidator'
+import RegisterValidator from 'App/Validators/RegisterValidator'
+import SendResetPasswordValidator from 'App/Validators/SendResetPasswordValidator'
+import SendVerifyEmailValidator from 'App/Validators/SendVerifyEmailValidator'
 
 export default class AuthController {
   public async showLoginForm({ view }: HttpContextContract) {
@@ -47,18 +46,12 @@ export default class AuthController {
       .related('profile')
       .create({ firstName, lastName, schoolId: school!.id, userId: user.id })
 
-    const url = Route.makeSignedUrl(
-      'AuthController.validateUser',
-      {
-        id: user.id,
-      },
-      { expiresIn: '1h' }
-    )
-
-    new EmailValidation(user, profile, `${Env.get('APP_URL')}${url}`).sendLater()
-
-    session.flash('success', `Un email de confirmation vous a été envoyé`)
-    return response.redirect().toRoute('home')
+    await new SendVerifyEmailService(user!, profile)
+      .afterSend(() => {
+        session.flash('success', 'Un email de confirmation vous a été envoyé')
+        response.redirect().toRoute('home')
+      })
+      .exec()
   }
 
   public async logout({ auth, response }: HttpContextContract) {
@@ -69,8 +62,13 @@ export default class AuthController {
 
   public async validateUser({ auth, request, response, session, params }: HttpContextContract) {
     if (!request.hasValidSignature()) {
-      session.flash('error', `Ce lien n'est pas valide`)
-      return response.redirect().toRoute('home')
+      if (auth.isGuest) {
+        session.flash('error', `Ce lien n'est pas valide`)
+        return response.redirect().toRoute('home')
+      } else {
+        session.flash('info', `Votre compte est déjà validé`)
+        return response.redirect().toRoute('ProfilesController.show', { id: auth.user!.id })
+      }
     }
 
     const id = params.id
@@ -79,8 +77,10 @@ export default class AuthController {
 
     if (user.status === UserStatus.Pending) {
       user.status = UserStatus.Active
+      user.sendValidationAt = null
       await user.save()
 
+      // Only login when user was pending
       await auth.login(user)
 
       new Welcome(user, profile, `${Env.get('APP_URL')}`).sendLater()
@@ -104,57 +104,80 @@ export default class AuthController {
     const user = await User.query().where('email', email.toLowerCase()).firstOrFail()
     const profile = await user!.related('profile').query().select('first_name').firstOrFail()
 
-    const url = Route.makeSignedUrl(
-      'AuthController.validateUser',
-      {
-        id: user!.id,
-      },
-      { expiresIn: '1h' }
-    )
-
-    new EmailValidation(user!, profile, `${Env.get('APP_URL')}${url}`).sendLater()
-
-    session.flash('success', `Un email de confirmation vous a été envoyé`)
-    return response.redirect().toRoute('home')
+    await new SendVerifyEmailService(user!, profile)
+      .alreadyVerified(() => {
+        session.flash('info', `Votre email est déjà validé. Vous pouvez vous connecter !`)
+        response.redirect().toRoute('AuthController.login')
+      })
+      .alreadySend(() => {
+        session.flash(
+          'info',
+          'Un email de confirmation vous a déjà été envoyé. Veuillez vérifier votre boite mail et patienter quelques minutes avant de réessayer !'
+        )
+        response.redirect().toRoute('home')
+      })
+      .afterSend(() => {
+        session.flash('success', 'Un email de confirmation vous a été envoyé')
+        response.redirect().toRoute('home')
+      })
+      .exec()
   }
 
   public async showSendResetPasswordForm({ view }: HttpContextContract) {
     return view.render('auth/reset_password')
   }
 
-  public async sendResetPassword({ request, response, session }: HttpContextContract) {
+  public async sendResetPassword({ request, response, session, auth }: HttpContextContract) {
     const { email } = await request.validate(SendResetPasswordValidator)
 
     const user = await User.query().where('email', email.toLowerCase()).firstOrFail()
-    const profile = await user!.related('profile').query().select('first_name').firstOrFail()
+    const profile = await user!.related('profile').query().select('id', 'first_name').firstOrFail()
 
-    const url = Route.makeSignedUrl(
-      'AuthController.changePassword',
-      {
-        user_id: user!.id,
-      },
-      { expiresIn: '1h' }
-    )
+    await new SendResetPasswordService(user!, profile)
+      .alreadySend(() => {
+        session.flash(
+          'info',
+          'Un email de réinitialisation de mot de passe vous a déjà été envoyé. Veuillez vérifier votre boite mail et patienter quelques minutes avant de réessayer !'
+        )
+      })
+      .afterSend(() => {
+        session.flash('success', 'Un email de réinitialisation de mot de passe vous a été envoyé')
+      })
+      .exec()
 
-    new ResetPassword(user!, profile, `${Env.get('APP_URL')}${url}`).sendLater()
-
-    session.flash('success', `Un email de réinitialisation de mot de passe vous a été envoyé`)
-    return response.redirect().toRoute('home')
+    if (auth.isLoggedIn)
+      return response.redirect().toRoute('ProfilesController.show', { id: profile.id })
+    else return response.redirect().toRoute('home')
   }
 
   public async showChangePasswordForm({ view, params }: HttpContextContract) {
     return view.render('auth/change_password', { user_id: params.user_id })
   }
 
-  public async changePassword({ request, response, session, params }: HttpContextContract) {
+  public async changePassword({ request, response, session, params, auth }: HttpContextContract) {
+    if (!request.hasValidSignature()) {
+      session.flash('error', `Ce lien n'est pas valide`)
+      if (auth.isGuest) {
+        return response.redirect().toRoute('home')
+      } else {
+        await auth.user!.load('profile', (query) => query.select('id'))
+        return response.redirect().toRoute('ProfilesController.show', { id: auth.user!.profile.id })
+      }
+    }
+
     const { password } = await request.validate(ChangePasswordValidator)
 
-    const user = await User.findOrFail(params.user_id)
+    const user = await User.query().where('id', params.user_id).firstOrFail()
 
-    user!.merge({ password })
+    user!.merge({ password, sendResetPasswordAt: null })
     await user!.save()
 
     session.flash('success', `Votre mot de passe a été modifié avec succès`)
-    response.redirect().toRoute('home')
+    if (auth.isLoggedIn) {
+      await auth.user!.load('profile', (query) => query.select('id'))
+      return response.redirect().toRoute('ProfilesController.show', { id: auth.user!.profile.id })
+    } else {
+      return response.redirect().toRoute('home')
+    }
   }
 }
