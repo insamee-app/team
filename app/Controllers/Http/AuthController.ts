@@ -62,8 +62,13 @@ export default class AuthController {
 
   public async validateUser({ auth, request, response, session, params }: HttpContextContract) {
     if (!request.hasValidSignature()) {
-      session.flash('error', `Ce lien n'est pas valide`)
-      return response.redirect().toRoute('home')
+      if (auth.isGuest) {
+        session.flash('error', `Ce lien n'est pas valide`)
+        return response.redirect().toRoute('home')
+      } else {
+        session.flash('info', `Votre compte est déjà validé`)
+        return response.redirect().toRoute('ProfilesController.show', { id: auth.user!.id })
+      }
     }
 
     const id = params.id
@@ -107,7 +112,7 @@ export default class AuthController {
       .alreadySend(() => {
         session.flash(
           'info',
-          'Un email de confirmation vous a déjà été envoyé. Veuillez vérifier votre boite mail et patientez quelques minutes avant de réessayer !'
+          'Un email de confirmation vous a déjà été envoyé. Veuillez vérifier votre boite mail et patienter quelques minutes avant de réessayer !'
         )
         response.redirect().toRoute('home')
       })
@@ -122,40 +127,57 @@ export default class AuthController {
     return view.render('auth/reset_password')
   }
 
-  public async sendResetPassword({ request, response, session }: HttpContextContract) {
+  public async sendResetPassword({ request, response, session, auth }: HttpContextContract) {
     const { email } = await request.validate(SendResetPasswordValidator)
 
     const user = await User.query().where('email', email.toLowerCase()).firstOrFail()
-    const profile = await user!.related('profile').query().select('first_name').firstOrFail()
+    const profile = await user!.related('profile').query().select('id', 'first_name').firstOrFail()
 
     await new SendResetPasswordService(user!, profile)
       .alreadySend(() => {
         session.flash(
           'info',
-          'Un email de réinitialisation de mot de passe vous a déjà été envoyé. Veuillez vérifier votre boite mail et patientez quelques minutes avant de réessayer !'
+          'Un email de réinitialisation de mot de passe vous a déjà été envoyé. Veuillez vérifier votre boite mail et patienter quelques minutes avant de réessayer !'
         )
-        response.redirect().toRoute('home')
       })
       .afterSend(() => {
         session.flash('success', 'Un email de réinitialisation de mot de passe vous a été envoyé')
-        response.redirect().toRoute('home')
       })
       .exec()
+
+    if (auth.isLoggedIn)
+      return response.redirect().toRoute('ProfilesController.show', { id: profile.id })
+    else return response.redirect().toRoute('home')
   }
 
   public async showChangePasswordForm({ view, params }: HttpContextContract) {
     return view.render('auth/change_password', { user_id: params.user_id })
   }
 
-  public async changePassword({ request, response, session, params }: HttpContextContract) {
+  public async changePassword({ request, response, session, params, auth }: HttpContextContract) {
+    if (!request.hasValidSignature()) {
+      session.flash('error', `Ce lien n'est pas valide`)
+      if (auth.isGuest) {
+        return response.redirect().toRoute('home')
+      } else {
+        await auth.user!.load('profile', (query) => query.select('id'))
+        return response.redirect().toRoute('ProfilesController.show', { id: auth.user!.profile.id })
+      }
+    }
+
     const { password } = await request.validate(ChangePasswordValidator)
 
-    const user = await User.findOrFail(params.user_id)
+    const user = await User.query().where('id', params.user_id).firstOrFail()
 
     user!.merge({ password, sendResetPasswordAt: null })
     await user!.save()
 
     session.flash('success', `Votre mot de passe a été modifié avec succès`)
-    response.redirect().toRoute('home')
+    if (auth.isLoggedIn) {
+      await auth.user!.load('profile', (query) => query.select('id'))
+      return response.redirect().toRoute('ProfilesController.show', { id: auth.user!.profile.id })
+    } else {
+      return response.redirect().toRoute('home')
+    }
   }
 }
