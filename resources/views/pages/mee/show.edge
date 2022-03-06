@@ -72,11 +72,23 @@
       })
 
       <div class="flex flex-row justify-between">
-        @!elements.labeledItem({
+        @elements.labeledItem({
           label: 'Ecole',
-          value: profile.school.name,
           variant: 'mee'
         })
+          @slot('main', props)
+            <a href="{{ route('SchoolsController.show', { id: profile.school.id }) }}" class="{{ props.className }} flex flex-row space-x-3 items-center">
+              @!shared.avatar({
+                attachment: profile.school.picture,
+                alt: 'Logo de ' + profile.school.name,
+                placeholder: false,
+                variant: 'profile.schools',
+                size: 'w-auto h-6 lg:w-auto lg:h-8',
+              })
+              <span>{{ profile.school.name }} </span>
+            </a>
+          @end
+        @end
 
         @!elements.labeledItem({
           label: 'Diplomation',
