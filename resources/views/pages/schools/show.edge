@@ -19,7 +19,7 @@
         <div aria-hidden="true" class="max-w-3xl mx-auto rounded-lg bg-slate-500 w-full h-32 mt-2 lg:mt-4"></div>
       @end
 
-      @can('SchoolPolicy.delete')
+      @can('SchoolPolicy.update', school)
         <div class="flex flex-row justify-center items-center mt-2">
           <a href="{{ route('SchoolsBannersController.edit', { id: school.id }) }}" class="flex flex-row items-center space-x-1 text-slate-500">
             <span>
@@ -50,7 +50,7 @@
               </h1>
             </div>
 
-            @can('SchoolPolicy.delete')
+            @can('SchoolPolicy.update', school)
               <a href="{{ route('SchoolsPicturesController.edit', { id: school.id }) }}" class="flex flex-row items-center space-x-1 text-slate-500">
                 <span>
                    {{ school.picture ? 'Modifier l\'image' : 'Ajouter une image' }}
