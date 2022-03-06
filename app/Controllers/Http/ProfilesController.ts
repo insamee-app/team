@@ -110,12 +110,9 @@ export default class ProfilesController {
       ProfileValidator
     )
 
-    console.log(payload)
-
     profile!.merge(payload)
 
     await profile!.save()
-    console.log(profile.$isPersisted)
     await profile?.related('skills').sync(skills || [])
     await profile?.related('focusInterests').sync(focusInterests || [])
     await profile?.related('associations').sync(associations || [])
