@@ -7,6 +7,7 @@ import Profile from 'App/Models/Profile'
 import User from 'App/Models/User'
 import { EventProfileState } from 'App/Enums/EventProfileState'
 import { DateTime } from 'luxon'
+import { EventStatus } from 'App/Enums/EventStatus'
 
 View.global('UserRole', UserRole)
 View.global('UserRoleData', [
@@ -98,7 +99,7 @@ View.global('ReasonTypeData', [
     name: 'Événement',
   },
 ])
-View.global('EventType', [
+View.global('EventTypeData', [
   {
     id: String(EventType['InPerson']),
     name: 'En présence',
@@ -106,6 +107,17 @@ View.global('EventType', [
   {
     id: String(EventType['Online']),
     name: 'A distance',
+  },
+])
+View.global('EventStatus', EventStatus)
+View.global('EventStatusData', [
+  {
+    id: String(EventStatus['Published']),
+    name: 'Publié',
+  },
+  {
+    id: String(EventStatus['Cancelled']),
+    name: 'Annulé',
   },
 ])
 

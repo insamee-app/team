@@ -19,16 +19,27 @@
     <form action="{{ route('EventsController.update', { id: event.id }) }}?_method=PUT" method="POST">
       {{ csrfField() }}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        @form.group({name: 'name'})
+        @form.group({name: 'name', className: 'lg:col-span-2'})
           @!form.label({ title: 'Nom' })
           @!form.input({ type: 'text', placeholder: 'Saisir le nom de l\'évènement', variant: 'events', value: event.name })
+        @end
+
+        @form.group({name: 'status'})
+          @!form.label({ title: 'Statut' })
+          @form.select({
+            variant: 'events',
+            data: EventStatusData,
+            selectedData : String(event.status),
+          })
+            Sélectionner le statut de l'évènement
+          @end
         @end
 
         @form.group({name: 'type'})
           @!form.label({ title: 'Type' })
           @form.select({
             variant: 'events',
-            data: EventType,
+            data: EventTypeData,
             selectedData: String(event.type),
           })
             Sélectionner le type d'évènement

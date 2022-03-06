@@ -1,6 +1,7 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { EventType } from 'App/Enums/EventType'
+import { EventStatus } from 'App/Enums/EventStatus'
 
 export default class EventUpdateValidator {
   constructor(protected ctx: HttpContextContract) {}
@@ -8,6 +9,7 @@ export default class EventUpdateValidator {
   public schema = schema.create({
     name: schema.string({ trim: true }, [rules.maxLength(255)]),
     type: schema.enum(Object.keys(EventType)),
+    status: schema.enum(Object.keys(EventStatus)),
     location: schema.string.optional({ trim: true }, [
       rules.requiredWhen('type', '=', String(EventType.InPerson)),
     ]),

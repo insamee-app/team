@@ -7,6 +7,7 @@ import Report from 'App/Models/Report'
 import School from 'App/Models/School'
 import EventsService from 'App/Services/EventsService'
 import EventStoreValidator from 'App/Validators/EventStoreValidator'
+import EventUpdateValidator from 'App/Validators/EventUpdateValidator'
 
 export default class EventsController {
   private PER_PAGE = 10
@@ -142,21 +143,22 @@ export default class EventsController {
       endDate,
       endTime,
       type,
+      status,
       associations = [],
       schools = [],
       hosts = [],
       ...data
-    } = await request.validate(EventStoreValidator)
+    } = await request.validate(EventUpdateValidator)
 
     const startAt = EventsService.toDateTime(startDate, startTime)
     const endAt = EventsService.toDateTime(endDate, endTime)
 
     event.merge({
       ...data,
+      status: Number(status),
       type: Number(type),
       startAt,
       endAt,
-      status: EventStatus.Published,
     })
 
     await event.save()

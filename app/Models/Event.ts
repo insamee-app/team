@@ -112,4 +112,8 @@ export default class Event extends compose(AppSoftDeletes, Filterable) {
     },
   })
   public participatingProfiles: ManyToMany<typeof Profile>
+
+  public isPassed(): boolean {
+    return this.endAt.diff(DateTime.now(), 'days').toObject().days! < 0
+  }
 }

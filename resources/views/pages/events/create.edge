@@ -19,16 +19,21 @@
     <form action="{{ route('EventsController.store') }}" method="POST">
       {{ csrfField() }}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        @form.group({name: 'name'})
+        @form.group({name: 'name', className: 'lg:col-span-2'})
           @!form.label({ title: 'Nom' })
           @!form.input({ type: 'text', placeholder: 'Saisir le nom de l\'évènement', variant: 'events' })
+        @end
+
+        @form.group({name: 'status', disabled: true})
+          @!form.label({ title: 'Statut' })
+          @!form.input({ type: 'text', value: 'Publié', variant: 'events' })
         @end
 
         @form.group({name: 'type'})
           @!form.label({ title: 'Type' })
           @form.select({
             variant: 'events',
-            data: EventType,
+            data: EventTypeData,
           })
             Sélectionner le type d'évènement
           @end
