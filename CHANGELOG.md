@@ -1,3 +1,14 @@
+### Version 0.0.8
+- Merge tag '0.0.7' into develop
+- chore: format
+- fix #34
+- chore: format
+- chore: format
+- feat(schools): update cards with pictures
+- fix: remove logs
+- chore: format
+- feat(profiles): add school's picture
+
 ### Version 0.0.7
 
 - Merge tag '0.0.6' into develop
