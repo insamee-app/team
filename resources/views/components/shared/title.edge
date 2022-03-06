@@ -1,5 +1,12 @@
+@set('titleClassName', 'text-2xl md:text-3xl lg:text-4xl font-bold')
 <div class="flex flex-row justify-between items-center mt-2 mb-4 lg:mb-8">
-  <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold">{{{ await $slots.main() }}}</h1>
+  @if($slots.main && !$slots.title)
+    <h1 class="{{ titleClassName }}">{{{ await $slots.main() }}}</h1>
+  @end
+
+  @if($slots.title)
+    {{{ await $slots.title({ titleClassName }) }}}
+  @end
 
   @if($slots.actions)
     {{{ await $slots.actions() }}}

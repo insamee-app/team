@@ -1,0 +1,61 @@
+@layout('layouts/app')
+@set('title', 'Modifier l\'image de ' + school.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'SchoolsController',
+      })
+        Ecoles
+      @end
+
+      @shared.title()
+        Modifier l'image
+      @end
+    @end
+
+    @if(school.picture)
+      <section class="flex flex-col space-y-4 mb-8">
+        <h3 class="text-xl font-bold">Image actuelle</h3>
+
+        <div class="flex flex-col items-center space-y-2">
+          @!shared.avatar({
+            attachment: school.picture,
+            alt: 'Image de l\'école ' + school.name,
+            variant: 'schools',
+          })
+
+          <form action="{{ route('SchoolsPicturesController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
+            {{ csrfField() }}
+
+            <button type="submit" class="text-sm text-slate-500">Supprimer l'image</button>
+          </form>
+        </div>
+      </section>
+    @endif
+
+    <form action="{{ route('SchoolsPicturesController.update', { id: school.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly">
+      {{ csrfField() }}
+
+      <h3 class="text-xl lg:text-3xl font-bold">Nouvelle image</h3>
+
+      <div class="mt-4">
+        @form.group({ name: 'picture', class: "flex flex-row items-center space-x-2" })
+          @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", class: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-slate-200 file:text-slate-500 hover:file:bg-slate-300 hover:file:text-slate-600 text-grey-500 text-sm lg:text-base file:cursor-pointer" })
+          @!form.label({ title: 'Changer l\'image', class: "sr-only" })
+        @end
+      </div>
+
+      <div class="flex flex-col items-end mt-4">
+        @elements.button({
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end
