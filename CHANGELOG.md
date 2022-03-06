@@ -1,4 +1,5 @@
 ### Version 0.0.7
+
 - Merge tag '0.0.6' into develop
 - chore: format
 - feat(associations): add default filters - fix #22
