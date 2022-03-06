@@ -2,15 +2,18 @@
   variant: 'mee',
   classes: 'hover:shadow-lg cursor-pointer space-y-4 lg:space-y-6 transition h-full flex flex-col'
 })
-  <header class="flex flex-col space-y-4">
-    @if(school.banner)
-      <img src="{{ school.banner.url }}" class="w-full h-auto rounded-lg" alt="Bannière de {{ school.name }}" loading="lazy" width="500" height="128"/>
-    @else
-      <div aria-hidden="true" class="rounded-lg bg-slate-500 w-full h-32"></div>
-    @end
+  <header class="flex flex-row justify-between space-x-4">
     <h3 class="font-bold text-xl lg:text-2xl">
       {{ school.name }}
     </h3>
+
+    @!shared.avatar({
+      attachment: school.picture,
+      alt: 'Image de l\'école ' + school.name,
+      variant: 'associations',
+      placeholder: false,
+      size: 'w-auto h-20',
+    })
   </header>
 
   @if(school.overview)

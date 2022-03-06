@@ -23,7 +23,6 @@ export default class ReasonsController {
     await bouncer.with('ReasonPolicy').authorize('create')
 
     const data = await request.validate(ReasonStoreValidator)
-    console.log(ReasonType)
     const reason = await Reason.create(data as unknown as { name: string; type: number })
 
     session.flash('success', 'Raison créée avec succès')
