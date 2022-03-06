@@ -7,6 +7,10 @@ Route.group(() => {
   Route.put('schools/:id/banners', 'SchoolsBannersController.update')
   Route.delete('schools/:id/banners', 'SchoolsBannersController.destroy')
 
+  Route.get('schools/:id/pictures/edit', 'SchoolsPicturesController.edit')
+  Route.put('schools/:id/pictures', 'SchoolsPicturesController.update')
+  Route.delete('schools/:id/pictures', 'SchoolsPicturesController.destroy')
+
   Route.get('schools/:id/reports/create', 'ReportsSchoolsController.create')
   Route.post('schools/:id/reports', 'ReportsSchoolsController.store')
 }).middleware('auth')

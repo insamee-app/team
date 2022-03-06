@@ -25,8 +25,11 @@ export default class School extends AppSoftDeletes {
   @column()
   public overview?: string
 
-  @attachment({ folder: 'banners', preComputeUrl: true })
+  @attachment({ folder: 'schools/banners', preComputeUrl: true })
   public banner?: AttachmentContract | null
+
+  @attachment({ folder: 'schools/pictures', preComputeUrl: true })
+  public picture?: AttachmentContract | null
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
