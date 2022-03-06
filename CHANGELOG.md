@@ -1,4 +1,10 @@
+### Version 0.0.9
+- Merge tag '0.0.8' into develop
+- chore: format
+- build: remove unused code
+
 ### Version 0.0.8
+
 - Merge tag '0.0.7' into develop
 - chore: format
 - fix #34

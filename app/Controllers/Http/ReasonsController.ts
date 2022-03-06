@@ -1,6 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Reason from 'App/Models/Reason'
-import { ReasonType } from 'App/Enums/ReasonType'
 import ReasonStoreValidator from 'App/Validators/ReasonStoreValidator'
 import ReasonUpdateValidator from 'App/Validators/ReasonUpdateValidator'
 
