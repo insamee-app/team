@@ -68,7 +68,7 @@ export default class ProfilesController {
         'school_id'
       )
       .where('id', params.id)
-      .preload('school', (school) => school.select('id', 'name'))
+      .preload('school', (school) => school.select('id', 'name', 'picture'))
       .preload('skills', (skill) => skill.select('id', 'name'))
       .preload('focusInterests', (focusInterest) => focusInterest.select('id', 'name'))
       .preload('associations', (association) => association.select('id', 'name', 'picture'))
@@ -110,12 +110,9 @@ export default class ProfilesController {
       ProfileValidator
     )
 
-    console.log(payload)
-
     profile!.merge(payload)
 
     await profile!.save()
-    console.log(profile.$isPersisted)
     await profile?.related('skills').sync(skills || [])
     await profile?.related('focusInterests').sync(focusInterests || [])
     await profile?.related('associations').sync(associations || [])
