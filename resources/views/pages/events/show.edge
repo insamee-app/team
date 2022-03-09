@@ -2,6 +2,8 @@
 @set('title', event.name)
 
 @set('sameDate', event.startAt.hasSame(event.endAt, 'day'))
+@set('avatarSize', 'w-9 h-9 lg:w-12 lg:h-12')
+
 
 @section('content')
   @if(event.status === EventStatus.Cancelled)
@@ -131,24 +133,52 @@
         </p>
       @end
 
-      {{--  <p>
-        Evènement de
-        <span class="font-bold">
-          @if(event.organizerAssociation)
-          <a href="{{ route('AssociationsController.show', { id: event.organizerAssociation.id }) }}">
-            {{ event.organizerAssociation.name }}
-          </a>
-          @elseif(event.organizerSchool)
-          <a href="{{ route('SchoolsController.show', { id: event.organizerSchool.id }) }}">
-            {{ event.organizerSchool.name }}
-          </a>
-          @else
-          <a href="{{ route('ProfilesController.show', { id: event.creator.profile.id }) }}">
-            {{ event.creator.profile.firstName }} {{ event.creator.profile.lastName }}
-          </a>
-          @end
-        </span>
-      </p>  --}}
+      <div>
+        <h3 class="text-xl lg:text-2xl font-bold">Un évènement par</h3>
+
+        @if(event.organizingAssociations.length === 0 && event.organizingSchools.length === 0)
+          <div class="mt-2">
+            <a href="{{ route('ProfilesController.show', { id: event.creator.profile.id }) }}">
+              @!shared.avatar({
+                attachment: event.creator.profile.avatar,
+                alt: 'Avatar de ' + event.creator.profile.firstName,
+                variant: 'mee',
+                placeholder: true,
+                size: avatarSize,
+              })
+            </a>
+          </div>
+        @else
+          <ul class="mt-2 flex flex-row space-x-2">
+            @each(association in event.organizingAssociations)
+              <li>
+                <a href="{{ route('AssociationsController.show', { id: association.id }) }}">
+                  @!shared.avatar({
+                    attachment: association.picture,
+                    alt: 'Logo de l\'association ' + association.name,
+                    variant: 'associations',
+                    placeholder: true,
+                    size: avatarSize,
+                  })
+                </a>
+              </li>
+            @endeach
+            @each(school in event.organizingSchools)
+              <li>
+                <a href="{{ route('SchoolsController.show', { id: school.id }) }}">
+                  @!shared.avatar({
+                    attachment: school.picture,
+                    alt: 'Image de l\'école ' + school.name,
+                    variant: 'schools',
+                    placeholder: true,
+                    size: avatarSize,
+                  })
+                </a>
+              </li>
+            @endeach
+          </ul>
+        @end
+      </div>
 
       <footer class="flex flex-row justify-between">
           @if(event.url)

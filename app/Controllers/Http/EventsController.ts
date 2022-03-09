@@ -85,10 +85,10 @@ export default class EventsController {
     await auth.user?.load('profile')
     const event = await Event.query()
       .preload('creator', (creator) =>
-        creator.preload('profile', (profile) => profile.select('id', 'first_name', 'last_name'))
+        creator.preload('profile', (profile) => profile.select('id', 'avatar'))
       )
-      .preload('organizingAssociations')
-      .preload('organizingSchools')
+      .preload('organizingAssociations', (association) => association.select('id', 'picture'))
+      .preload('organizingSchools', (school) => school.select('id', 'picture'))
       .preload('hostSchools', (query) => query.select('id'))
       .withCount('interestedProfiles', (query) => query.as('interestedCount'))
       .withCount('participatingProfiles', (query) => query.as('participatingCount'))
