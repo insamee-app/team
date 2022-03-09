@@ -175,7 +175,7 @@
                   </ul>
                 </nav>
               </div>
-              @if(auth.user.role !== UserRole.Member)
+              @if(auth.user.role > UserRole.EventsCreator)
                 <div class="mt-8" x-data="{ nav: false }">
                   <button x-on:click="nav = !nav" class="w-full flex flex-row justify-between items-center text-slate-500" aria-haspopup="true" :aria-expanded="nav" aria-controls="admin-nav">
                     <div class="flex flex-row items-center text-lg font-bold">
@@ -334,7 +334,7 @@
             </ul>
           </nav>
         </div>
-        @if(auth.user.role !== UserRole.Member)
+        @if(auth.user.role > UserRole.EventsCreator)
           <div class="hidden lg:block" x-data="{ nav: false }">
             <button x-on:click="nav = !nav" class="w-full flex flex-row space-x-2 justify-between items-center text-slate-500 text-lg font-bold" aria-haspopup="true" :aria-expanded="nav" aria-controls="admin-nav">
                 @!icons.lockClosed({
