@@ -6,6 +6,7 @@ import Association from './Association'
 import School from './School'
 import { ReportEntity } from 'App/Enums/ReportEntity'
 import Profile from './Profile'
+import Event from './Event'
 
 export default class Report extends BaseModel {
   @column({ isPrimary: true })
@@ -70,6 +71,12 @@ export default class Report extends BaseModel {
     foreignKey: 'entityId',
   })
   public school: BelongsTo<typeof School>
+
+  @belongsTo(() => Event, {
+    localKey: 'id',
+    foreignKey: 'entityId',
+  })
+  public event: BelongsTo<typeof Event>
 
   @belongsTo(() => User, {
     localKey: 'id',
