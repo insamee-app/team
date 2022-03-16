@@ -1,3 +1,22 @@
+### Version 0.0.10
+- Merge tag '0.0.9' into develop
+- chore: format
+- feat(subjects): create migrations
+- feat(subjects): create model
+- feat(subjects): create controller
+- feat(subjects): create seeder
+- feat(subjects): add bouncer
+- feat(subjects): create views
+- feat(subjects): save in profile using edit
+- feat(subjects): show subjects in profile
+- fix #41
+- fix #43
+- fix #42
+- chore: format
+- fix #40
+- fix #36
+- fix #35
+
 ### Version 0.0.9
 
 - Merge tag '0.0.8' into develop
