@@ -1,0 +1,45 @@
+@layout('layouts/app')
+@set('title', 'Les matières')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'SubjectsController',
+    variant: 'mee'
+  })
+    Matières
+  @end
+
+  @shared.title()
+    Liste des matières
+    @slot('actions')
+      @can('SubjectPolicy.create')
+        @elements.button({
+          fill: true,
+          variant: 'mee',
+        })
+          @slot('main', className)
+            <a href="{{ route('SubjectsController.create') }}" class="{{ className }}">
+              Ajouter
+            </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.list({
+    items: subjects
+  })
+    @slot('main', subject)
+      <a href="{{ route('SubjectsController.show', { id: subject.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+        @elements.card({
+          classes: 'border-mee-primary-grey-light hover:shadow-lg transition'
+        })
+          @elements.cardTitle()
+            {{ subject.name }}
+          @end
+        @end
+      </a>
+    @end
+  @end
+@end

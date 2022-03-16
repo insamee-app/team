@@ -1,0 +1,42 @@
+@layout('layouts/app')
+@set('title', subject.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'SubjectsController',
+        variant: 'mee',
+      })
+        Matières
+      @end
+
+      @shared.title()
+        {{ subject.name }}
+
+        @slot('actions')
+          @can('SubjectPolicy.update')
+            @elements.button({
+              variant: 'mee',
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('SubjectsController.edit', { id: subject.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
+    @end
+
+    @!shared.delete({
+      item: subject,
+      policy: 'SubjectPolicy',
+      controller: 'SubjectsController',
+      end: "la matière"
+    })
+
+  @end
+@end
