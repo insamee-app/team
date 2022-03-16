@@ -161,6 +161,15 @@
           @end
         @end
       @end
+
+    @if(profile.preferredSubjects.length)
+        @elements.labeledItem({
+          label: 'Matières préférées',
+          variant: 'mee'
+        })
+          @!elements.chips({ data: profile.preferredSubjects })
+        @end
+      @end
     </div>
 
     @if(auth.user.id !== profile.user.id)

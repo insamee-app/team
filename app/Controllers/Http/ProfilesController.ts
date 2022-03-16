@@ -75,6 +75,7 @@ export default class ProfilesController {
       .preload('focusInterests', (focusInterest) => focusInterest.select('id', 'name'))
       .preload('associations', (association) => association.select('id', 'name', 'picture'))
       .preload('role', (role) => role.select('id', 'name'))
+      .preload('preferredSubjects', (subject) => subject.select('id', 'name'))
       .firstOrFail()
     const report = await Report.query()
       .select('id')
