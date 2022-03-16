@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
+import { SubjectType } from 'App/Enums/SubjectType'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Association from 'App/Models/Association'
@@ -9,6 +10,7 @@ import Report from 'App/Models/Report'
 import Role from 'App/Models/Role'
 import School from 'App/Models/School'
 import Skill from 'App/Models/Skill'
+import Subject from 'App/Models/Subject'
 import User from 'App/Models/User'
 import ProfileValidator from 'App/Validators/ProfileValidator'
 export default class ProfilesController {
@@ -93,29 +95,48 @@ export default class ProfilesController {
     await profile.load('skills')
     await profile.load('focusInterests')
     await profile.load('associations')
+    await profile.load('preferredSubjects')
 
     const skills = await Skill.query().select('id', 'name').orderBy('name')
     const focusInterests = await FocusInterest.query().select('id', 'name').orderBy('name')
     const associations = await Association.query().select('id', 'name').orderBy('name')
     const roles = await Role.query().select('id', 'name').orderBy('name')
+    const subjects = await Subject.query().select('id', 'name').orderBy('name')
 
-    return view.render('pages/mee/edit', { profile, skills, focusInterests, associations, roles })
+    return view.render('pages/mee/edit', {
+      profile,
+      skills,
+      focusInterests,
+      associations,
+      roles,
+      subjects,
+    })
   }
 
   public async update({ request, params, response, bouncer, session }: HttpContextContract) {
     const profile = await Profile.query().where('id', params.id).firstOrFail()
     await bouncer.with('ProfilePolicy').authorize('update', profile)
 
-    const { skills, focusInterests, associations, ...payload } = await request.validate(
-      ProfileValidator
-    )
+    const {
+      skills = [],
+      focusInterests = [],
+      preferredSubjects = [],
+      associations = [],
+      ...payload
+    } = await request.validate(ProfileValidator)
 
     profile!.merge(payload)
 
     await profile!.save()
-    await profile?.related('skills').sync(skills || [])
-    await profile?.related('focusInterests').sync(focusInterests || [])
-    await profile?.related('associations').sync(associations || [])
+    await profile?.related('skills').sync(skills)
+    await profile?.related('focusInterests').sync(focusInterests)
+    await profile?.related('associations').sync(associations)
+
+    const subjects = {}
+    for (const subject of preferredSubjects) {
+      subjects[subject] = { type: SubjectType.Favorite }
+    }
+    await profile?.related('preferredSubjects').sync(subjects)
 
     session.flash('success', 'Profil mis à jour avec succès')
     return response.redirect().toRoute('ProfilesController.show', { id: params.id })

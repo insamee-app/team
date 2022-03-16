@@ -77,6 +77,17 @@
           @end
         @end
 
+      @form.group({name: 'preferredSubjects', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Matières préférées' })
+          @form.multiselect({
+            variant: 'mee',
+            data: subjects,
+            selectedData: profile.preferredSubjects.map(subject => subject.id),
+          })
+            Sélectionner des matières
+          @end
+        @end
+
         @form.group({name: 'associations', className: 'lg:col-span-2'})
           @!form.label({ title: 'Associations' })
           @form.multiselect({
