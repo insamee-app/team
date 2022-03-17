@@ -1,5 +1,6 @@
 module.exports = {
   content: [
+    'start/**/*.ts',
     './resources/views/**/*.edge',
     './resources/css/**/*.css',
     './resources/js/**/*.js',
@@ -63,6 +64,16 @@ module.exports = {
               base: '#bec2c5',
               dark: '#636b74',
               light: '#dee0e2',
+            },
+          },
+          secondary: {
+            base: '#1c925d',
+            dark: '#006135',
+            light: '#6dd5a6',
+            grey: {
+              base: '#bec5c2',
+              dark: '#63746c',
+              light: '#dee2e0',
             },
           },
         },
