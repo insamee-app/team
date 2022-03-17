@@ -9,7 +9,7 @@ export default class Tutorats extends BaseSchema {
 
       table.string('description', 2048).notNullable()
       table.integer('type').nullable()
-      table.boolean('offer').notNullable()
+      table.integer('kind').notNullable()
       table.integer('status').notNullable()
       table.integer('attendee_capacity').nullable()
 

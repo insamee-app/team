@@ -16,7 +16,7 @@ export default class Tutorat extends AppSoftDeletes {
   public type?: number
 
   @column()
-  public offer: boolean
+  public kind: number
 
   @column()
   public status: number
@@ -34,10 +34,10 @@ export default class Tutorat extends AppSoftDeletes {
   public creatorId: string
 
   @column.dateTime({ autoCreate: false, autoUpdate: false })
-  public startAt: DateTime
+  public startAt?: DateTime
 
   @column.dateTime({ autoCreate: false, autoUpdate: false })
-  public endAt: DateTime
+  public endAt?: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
