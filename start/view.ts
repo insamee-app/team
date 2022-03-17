@@ -98,7 +98,13 @@ View.global('loadCurrentProfile', async function (user: User) {
 View.global('routesTeam', [
   {
     name: 'TutoratsController.index',
-    filters: () => {},
+    filters: (profile?: Profile) => {
+      if (!profile) return {}
+
+      return {
+        'schools[]': profile.schoolId,
+      }
+    },
     title: 'Tutorat',
     asset: 'logo_tutorat.png',
     color: 'text-tutorat-primary-base',
