@@ -1,5 +1,4 @@
 @set('error', flashMessages.get(`errors.${$context.name}`) || '')
-
   @set('buttonClasses', 'border-slate-500 focus:ring-slate-500')
   @set('listClasses', 'hover:bg-slate-400')
   @set('currentListItemClasses', 'bg-slate-400')
@@ -14,6 +13,21 @@
   @set('listClasses', 'hover:bg-associations-primary-grey-base')
   @set('currentListItemClasses', 'bg-associations-primary-grey-base')
   @set('selectedListItemClasses', 'bg-associations-primary-grey-light')
+@elseif(variant === 'tutorat')
+  @set('buttonClasses', 'border-tutorat-primary-base focus:ring-tutorat-primary-base')
+  @set('listClasses', 'hover:bg-tutorat-primary-grey-base')
+  @set('currentListItemClasses', 'bg-tutorat-primary-grey-base')
+  @set('selectedListItemClasses', 'bg-tutorat-primary-grey-light')
+@elseif(variant === 'tutorat-offer')
+  @set('buttonClasses', 'border-tutorat-primary-base focus:ring-tutorat-primary-base')
+  @set('listClasses', 'hover:bg-tutorat-primary-grey-base')
+  @set('currentListItemClasses', 'bg-tutorat-primary-grey-base')
+  @set('selectedListItemClasses', 'bg-tutorat-primary-grey-light')
+@elseif (variant === 'tutorat-demand')
+  @set('buttonClasses', 'border-tutorat-secondary-base focus:ring-tutorat-secondary-base')
+  @set('listClasses', 'hover:bg-tutorat-secondary-grey-base')
+  @set('currentListItemClasses', 'bg-tutorat-secondary-grey-base')
+  @set('selectedListItemClasses', 'bg-tutorat-secondary-grey-light')
 @end
 
 <div
