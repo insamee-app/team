@@ -25,6 +25,7 @@ import Role from './Role'
 import School from './School'
 import Skill from './Skill'
 import Subject from './Subject'
+import Tutorat from './Tutorat'
 import User from './User'
 
 export default class Profile extends compose(AppSoftDeletes, Filterable) {
@@ -119,6 +120,16 @@ export default class Profile extends compose(AppSoftDeletes, Filterable) {
     relatedKey: 'id',
   })
   public associations: ManyToMany<typeof Association>
+
+  @manyToMany(() => Tutorat, {
+    pivotTable: 'profiles_tutorats',
+    localKey: 'id',
+    pivotForeignKey: 'profile_id',
+    pivotRelatedForeignKey: 'tutorat_id',
+    relatedKey: 'id',
+    pivotColumns: ['state'],
+  })
+  public tutorats: ManyToMany<typeof Tutorat>
 
   @hasMany(() => Report, {
     localKey: 'id',

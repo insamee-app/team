@@ -1,11 +1,18 @@
+import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
+import { compose } from '@ioc:Adonis/Core/Helpers'
+import { BelongsTo, belongsTo, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { TutoratProfileState } from 'App/Enums/TutoratProfileState'
 import { DateTime } from 'luxon'
-import { BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import AppSoftDeletes from './AppSoftDeletes'
-import Subject from './Subject'
+import TutoratFilter from './Filters/TutoratFilter'
+import Profile from './Profile'
 import School from './School'
+import Subject from './Subject'
 import User from './User'
 
-export default class Tutorat extends AppSoftDeletes {
+export default class Tutorat extends compose(AppSoftDeletes, Filterable) {
+  public static $filter = () => TutoratFilter
+
   @column({ isPrimary: true })
   public id: string
 
@@ -62,4 +69,37 @@ export default class Tutorat extends AppSoftDeletes {
     localKey: 'id',
   })
   public creator: BelongsTo<typeof User>
+
+  @manyToMany(() => Profile, {
+    pivotTable: 'profiles_tutorats',
+    pivotForeignKey: 'tutorat_id',
+    pivotRelatedForeignKey: 'profile_id',
+    relatedKey: 'id',
+    localKey: 'id',
+    onQuery: (query) => {
+      query.where('state', TutoratProfileState.Interested)
+    },
+  })
+  public interestedProfiles: ManyToMany<typeof Profile>
+
+  @manyToMany(() => Profile, {
+    pivotTable: 'profiles_tutorats',
+    pivotForeignKey: 'tutorat_id',
+    pivotRelatedForeignKey: 'profile_id',
+    relatedKey: 'id',
+    localKey: 'id',
+    onQuery: (query) => {
+      query.where('state', TutoratProfileState.Participate)
+    },
+  })
+  public participatingProfiles: ManyToMany<typeof Profile>
+
+  @manyToMany(() => Profile, {
+    pivotTable: 'profiles_tutorats',
+    pivotForeignKey: 'tutorat_id',
+    pivotRelatedForeignKey: 'profile_id',
+    relatedKey: 'id',
+    localKey: 'id',
+  })
+  public profiles: ManyToMany<typeof Profile>
 }

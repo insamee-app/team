@@ -17,8 +17,8 @@ export default class Tutorats extends BaseSchema {
       table.uuid('school_id').references('id').inTable('schools')
       table.uuid('creator_id').references('id').inTable('users')
 
-      table.timestamp('start_at', { useTz: true }).notNullable()
-      table.timestamp('end_at', { useTz: true }).notNullable()
+      table.timestamp('start_at', { useTz: true }).nullable()
+      table.timestamp('end_at', { useTz: true }).nullable()
 
       table.timestamp('deleted_at', { useTz: true }).nullable()
       table.timestamp('created_at', { useTz: true })
