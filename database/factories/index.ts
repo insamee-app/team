@@ -109,7 +109,7 @@ export const TutoratFactory = Factory.define(Tutorat, ({ faker }) => {
   .relation('subject', () => SubjectFactory)
   .relation('school', () => SchoolFactory)
   .relation('creator', () => UserFactory)
-  .state('demande', (tutorat) => {
+  .state('demand', (tutorat) => {
     tutorat.kind = TutoratKind.Demand
     tutorat.attendeeCapacity = undefined
     tutorat.startAt = undefined
