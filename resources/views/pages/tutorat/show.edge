@@ -1,0 +1,140 @@
+@layout('layouts/app')
+@set('title', 'Tutorat de ' + tutorat.subject.name)
+@set('isOffer', tutorat.kind === TutoratKind.Offer)
+@set('sameDate', isOffer ? tutorat.startAt.hasSame(tutorat.endAt, 'day') : false)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'TutoratsController',
+        variant: 'tutorat',
+      })
+        Tutorat
+      @end
+
+      @shared.title()
+        @slot('top')
+          @if(isOffer)
+            <div class="mb-1 text-base md:text-lg lg:text-xl {{ isOffer ? 'text-tutorat-primary-base' : 'text-tutorat-secondary-base' }}">
+              @if(sameDate)
+                le {{ tutorat.startAt.setLocale('fr').toFormat('dd MMM yyyy \'de\' HH:mm') }} à {{ tutorat.endAt.setLocale('fr').toFormat('HH:mm') }}
+              @else
+                du {{ tutorat.startAt.setLocale('fr').toFormat('dd MMM yyyy à HH:mm') }}
+                au {{ tutorat.endAt.setLocale('fr').toFormat('dd MMM yyyy à HH:mm') }}
+              @end
+            </div>
+          @end
+        @end
+
+        {{ tutorat.subject.name }}
+
+        @slot('bottom')
+          <div class="mt-1 text-base md:text-lg lg:text-xl {{ isOffer ? 'text-tutorat-primary-grey-dark' : 'text-tutorat-secondary-grey-dark' }}">
+            {{ tutorat.school.name }}
+          </div>
+        @end
+
+
+        @slot('actions')
+          @can('AssociationPolicy.update', association)
+            @elements.button({
+              variant: isOffer ? 'tutorat-offer' : 'tutorat-demand',
+              fill: true
+            })
+              @slot('main', className)
+                <a href="{{ route('TutoratsController.edit', { id: tutorat.id }) }}" class="{{ className }}">
+                  Modifier
+                </a>
+              @end
+            @end
+          @end
+        @end
+      @end
+    @end
+
+    <div class="flex flex-col gap-8">
+
+      @if(isOffer)
+        <div class="flex flex-col space-y-2">
+          <div class="flex flex-row justify-end space-x-4">
+            @if(tutoratProfileState)
+              @!tutorat.stateDropdown({
+                tutoratProfileState,
+                tutorat,
+              })
+            @else
+              <form action="{{ route('TutoratsInterestedController.store', { id: tutorat.id }) }}" method="POST">
+                {{ csrfField() }}
+                @elements.button({
+                  variant: 'tutorat-secondary-grey',
+                  fill: false
+                })
+                  @slot('main', className)
+                    <button class="{{ className }} flex flex-row items-center space-x-2">
+                      @!icons.star({class: 'w-5 h-5 fill-current'})
+                      <span>
+                        Ça m'intéresse
+                      </span>
+                    </button>
+                  @end
+                @end
+              </form>
+              <form action="{{ route('TutoratsParticipateController.store', { id: tutorat.id }) }}" method="POST">
+                {{ csrfField() }}
+                @elements.button({
+                  variant: 'tutorat-secondary-grey',
+                  fill: false
+                })
+                  @slot('main', className)
+                    <button class="{{ className }} flex flex-row items-center space-x-2">
+                      @!icons.check({class: 'w-5 h-5 fill-current'})
+                      <span>
+                        Je participe
+                      </span>
+                    </button>
+                  @end
+                @end
+              </form>
+            @endif
+          </div>
+          <p class="text-right italic">{{ tutorat.$extras.interestedCount }}  {{ Number(tutorat.$extras.interestedCount) > 1 ? 'intéressés' : 'intéressé' }} et {{ tutorat.$extras.participatingCount }} {{ Number(tutorat.$extras.participatingCount) > 1 ? 'participants' : 'participant' }}</p>
+        </div>
+      @endif
+
+      <p class="mt-4 lg:text-lg text-justify">
+        {{ tutorat.description }}
+      </p>
+
+      <footer class="flex flex-row justify-between">
+        <a href="{{ route('ProfilesController.show', { id: tutorat.creator.profile.id }) }}" class="flex flex-row items-center space-x-4">
+          @!shared.avatar({
+            attachment: tutorat.creator.avatar,
+            alt: 'Avatar de ' + tutorat.creator.profile.firstName,
+            variant: isOffer ? 'tutorat-offer' : 'tutorat-demand',
+            placeholder: true,
+            size: 'w-9 h-9',
+          })
+          <span class="{{ isOffer ? 'text-tutorat-primary-grey-dark' : 'text-tutorat-secondary-grey-dark' }}">
+            {{ tutorat.creator.profile.firstName }}
+            {{ tutorat.creator.profile.lastName }}
+          </span>
+        </a>
+      </footer>
+    </div>
+  @end
+
+  @!shared.report({
+    report,
+    id: tutorat.id,
+    controller: 'ReportsTutoratsController',
+    end: "le tutorat"
+  })
+
+  @!shared.delete({
+    item: tutorat,
+    policy: 'TutoratPolicy',
+    controller: 'TutoratsController',
+    end: "le tutorat"
+  })
+@end

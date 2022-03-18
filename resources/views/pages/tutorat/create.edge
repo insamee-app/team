@@ -1,0 +1,116 @@
+@layout('layouts/app')
+@set('title', 'Créer un tutorat')
+
+@section('content')
+  @set('variant', 'tutorat')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'TutoratsController',
+        variant: 'tutorat',
+      })
+        Tutorat
+      @end
+
+      @shared.title()
+        Créer
+      @end
+    @end
+
+    <form action="{{ route('TutoratsController.store') }}" method="POST">
+      {{ csrfField() }}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @form.group({name: 'subjectId'})
+          @!form.label({ title: 'Matière' })
+          @form.select({
+            variant: variant,
+            data: subjects,
+          })
+            Sélectionner la matière
+          @end
+        @end
+
+        @form.group({name: 'schoolId'})
+          @!form.label({ title: 'Ecole' })
+          @form.select({
+            variant: variant,
+            data: schools,
+          })
+            Sélectionner une école
+          @end
+        @end
+
+        @form.group({name: 'type'})
+          @!form.label({ title: 'Type' })
+          @form.select({
+            variant: variant,
+            data: TutoratTypeData,
+          })
+            Sélectionner le type de tutorat
+          @end
+        @end
+
+        @form.group({name: 'attendeeCapacity'})
+          @!form.label({ title: 'Capacité' })
+          @!form.input({ type: 'number', placeholder: 'Capacité du tutorat', variant: variant })
+        @end
+
+        @form.group({name: 'kind'})
+          @!form.label({ title: 'Offre ou demande' })
+          @form.select({
+            variant: variant,
+            data: TutoratKindData,
+          })
+            Sélectionner offre ou demande
+          @end
+        @end
+
+        @form.group({name: 'status'})
+          @!form.label({ title: 'Statut' })
+          @form.select({
+            variant: variant,
+            data: TutoratStatusData,
+          })
+            Sélectionner le statut du tutorat
+          @end
+        @end
+
+        @form.group({name: 'startDate'})
+          @!form.label({ title: 'Date de début' })
+          @!form.input({ type: 'date', variant: variant })
+        @end
+
+        @form.group({name: 'startTime'})
+          @!form.label({ title: 'Temps de début' })
+          @!form.input({ type: 'time', variant: variant })
+        @end
+
+        @form.group({name: 'endDate'})
+          @!form.label({ title: 'Date de fin' })
+          @!form.input({ type: 'date', variant: variant })
+        @end
+
+        @form.group({name: 'endTime'})
+          @!form.label({ title: 'Temps de fin' })
+          @!form.input({ type: 'time', variant: variant })
+        @end
+
+        @form.group({name: 'description', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Description' })
+          @!form.area({ type: 'text', variant: variant })
+        @end
+      </div>
+
+      <div class="flex flex-row justify-end mt-8 mb-20">
+        @elements.button({
+          variant: variant,
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end
