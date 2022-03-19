@@ -20,6 +20,12 @@
   @set('currentListItemClasses', 'bg-associations-primary-grey-base')
   @set('selectedListItemClasses', 'bg-associations-primary-grey-light')
   @set('selectedItemClasses', 'bg-associations-primary-base')
+@elseif(variant === 'tutorat')
+  @set('buttonClasses', 'border-tutorat-primary-base focus:ring-tutorat-primary-base')
+  @set('listClasses', 'hover:bg-tutorat-primary-grey-base')
+  @set('currentListItemClasses', 'bg-tutorat-primary-grey-base')
+  @set('selectedListItemClasses', 'bg-tutorat-primary-grey-light')
+  @set('selectedItemClasses', 'bg-tutorat-primary-base')
 @end
 
 <div
