@@ -8,6 +8,7 @@ import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Profile from 'App/Models/Profile'
 import User from 'App/Models/User'
+import { DateTime } from 'luxon'
 
 View.global('UserRole', UserRole)
 View.global('UserRoleData', [
@@ -140,6 +141,7 @@ View.global('routesTeam', [
 
       return {
         'schools[]': profile.schoolId,
+        'date': DateTime.local().toFormat('yyyy-MM-dd'),
       }
     },
     title: 'Tutorat',
