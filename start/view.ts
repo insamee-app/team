@@ -1,5 +1,9 @@
 import View from '@ioc:Adonis/Core/View'
 import { ReasonType } from 'App/Enums/ReasonType'
+import { TutoratKind } from 'App/Enums/TutoratKind'
+import { TutoratStatus } from 'App/Enums/TutoratStatus'
+import { TutoratType } from 'App/Enums/TutoratType'
+import { TutoratProfileState } from 'App/Enums/TutoratProfileState'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Profile from 'App/Models/Profile'
@@ -88,6 +92,39 @@ View.global('ReasonTypeData', [
   {
     id: String(ReasonType['School']),
     name: 'Ecole',
+  },
+])
+View.global('TutoratProfileState', TutoratProfileState)
+View.global('TutoratKind', TutoratKind)
+View.global('TutoratTypeData', [
+  {
+    id: String(TutoratType['Online']),
+    name: 'En ligne',
+  },
+  {
+    id: String(TutoratType['InPerson']),
+    name: 'En présence',
+  },
+])
+View.global('TutoratStatus', TutoratStatus)
+View.global('TutoratStatusData', [
+  {
+    id: String(TutoratStatus['Published']),
+    name: 'Publié',
+  },
+  {
+    id: String(TutoratStatus['Cancelled']),
+    name: 'Annulé',
+  },
+])
+View.global('TutoratKindData', [
+  {
+    id: String(TutoratKind['Offer']),
+    name: 'Offre',
+  },
+  {
+    id: String(TutoratKind['Demand']),
+    name: 'Demande',
   },
 ])
 
