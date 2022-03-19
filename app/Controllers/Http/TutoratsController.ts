@@ -44,7 +44,7 @@ export default class TutoratsController {
     return view.render('pages/tutorat/index', { tutorats, subjects, schools })
   }
 
-  public async create({ view, bouncer, auth }: HttpContextContract) {
+  public async create({ view, bouncer }: HttpContextContract) {
     await bouncer.with('TutoratPolicy').authorize('create')
 
     const subjects = await Subject.query().select('id', 'name').orderBy('name')
