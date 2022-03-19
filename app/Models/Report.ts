@@ -6,6 +6,7 @@ import Association from './Association'
 import School from './School'
 import { ReportEntity } from 'App/Enums/ReportEntity'
 import Profile from './Profile'
+import Tutorat from './Tutorat'
 
 export default class Report extends BaseModel {
   @column({ isPrimary: true })
@@ -70,6 +71,12 @@ export default class Report extends BaseModel {
     foreignKey: 'entityId',
   })
   public school: BelongsTo<typeof School>
+
+  @belongsTo(() => Tutorat, {
+    localKey: 'id',
+    foreignKey: 'entityId',
+  })
+  public tutorat: BelongsTo<typeof Tutorat>
 
   @belongsTo(() => User, {
     localKey: 'id',
