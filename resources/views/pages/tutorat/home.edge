@@ -1,5 +1,5 @@
 @layout('layouts/showcase')
-@set('title', 'Mee')
+@set('title', 'Tutorat')
 
 
 @section('content')
@@ -7,99 +7,83 @@
     <div class="mt-20 lg:mt-24 max-w-screen-xl w-full mx-auto lg:h-full">
       <div class="px-4 lg:pt-0 lg:h-full lg:flex lg:flex-col lg:justify-center lg:w-1/2">
         @home.heroTitle()
-          Chercher, Trouver, Partager !
+          Besoin d'aide dans une matière ?
         @end
         @home.heroSubtitle({
           className: 'mt-4 lg:mt-8'
         })
-          Parce qu'être étudiant, c'est rencontrer et découvrir de nouvelles personnes
+          Parce qu'être étudiant, c'est réussir sa scolarité et aider ceux qui ont des difficultés
         @end
       </div>
     </div>
      <div class="lg:absolute lg:-z-10 h-[40%] lg:h-2/3 w-auto relative left-[15%] lg:left-1/2 lg:top-1/2 lg:transform lg:-translate-y-1/2">
-      @!graphics.mee({
+      @!graphics.tutorat({
         class: 'h-full w-auto',
       })
     </div>
     <div class="mb-8 flex flex-row justify-center items-center lg:col-span-2 lg:place-items-end">
       @!icons.arrowDown({
-        class: 'w-6 lg:w-8 h-6 lg:h-8 text-mee-primary-base fill-current'
+        class: 'w-6 lg:w-8 h-6 lg:h-8 text-tutorat-primary-base fill-current'
       })
     </div>
   @end
   @home.section({
-    className: 'justify-evenly'
+    className: 'justify-evenly relative'
   })
-    <div>
-      @!graphics.mee.gameDay({
-        class: 'h-full w-full lg:w-1/2 lg:mx-auto',
-      })
-    </div>
-    <div class="flex flex-col space-y-8 px-4">
-      @home.sectionTitle()
-        Une passion pour le sport ou l'esport à partager ?
-      @end
-      @home.sectionText()
-        <span class="text-mee-primary-base">Mee</span> te permet de trouver des personnes avec qui tu vas pouvoir vibrer devant les meilleurs matchs !
-      @end
-    </div>
-  @end
-  <hr class="bg-mee-primary-grey-base max-w-sm mx-auto">
-  @home.section({
-    className: 'justify-evenly'
-  })
-    <div class="flex flex-col space-y-8 px-4">
-      @home.sectionTitle()
-        Tu veux faire une partie de foot mais tu ne sais pas avec qui y aller ?
-      @end
-      @home.sectionText()
-        Avec <span class="text-mee-primary-base">Mee</span>, trouve des équipiers parmis les étudiants et forme ta propore équipe !
-      @end
-    </div>
-    <div class="w-3/4 mx-auto">
-      @!graphics.mee.foot({
-        class: 'h-full w-full lg:w-2/3 lg:mx-auto',
-      })
-    </div>
-  @end
-  <hr class="bg-mee-primary-grey-base max-w-sm mx-auto">
-  @home.section({
-    className: 'justify-between lg:justify-evenly'
-  })
-    @home.sectionTitle({
-      className: 'px-4'
-    })
-      Tu as un projet formidable en tête mais tu n'as pas toutes les compétences pour le faire ?
+  <div class="flex flex-col space-y-8 px-4">
+    @home.sectionTitle()
+      Tu as du temps libre pour proposer tes services ?
     @end
-    <div>
-      @!graphics.mee.projectTeam({
-        class: 'h-full w-full lg:w-1/2',
-      })
-    </div>
     @home.sectionText({
-      className: 'max-w-screen-md px-4 ml-auto',
+      className: 'text-right',
     })
-      <span class="text-mee-primary-base">Mee</span> te permet de trouver les collaborateurs dont tu as toujours eu besoin pour mener à bien les projets les plus fous !
+      Sur <span class="text-tutorat-primary-base">Tutorat</span>, tu peux proposer tes services pour aider des intérressés !
     @end
+  </div>
+  <div class="mx-auto md:w-1/2 md:mx-auto">
+    @!graphics.tutorat.teaching({
+      class: 'h-full w-full',
+    })
+  </div>
   @end
-  <hr class="bg-mee-primary-grey-base max-w-sm mx-auto">
+  <hr class="bg-tutorat-primary-grey-base max-w-sm mx-auto">
+    @home.section({
+      className: 'justify-evenly relative overflow-hidden'
+    })
+      <div class="flex flex-col space-y-8 px-4">
+        @home.sectionTitle()
+          Tu veux faire des cours depuis chez toi ?
+        @end
+        @home.sectionText({
+          className: '',
+        })
+          Avec <span class="text-tutorat-primary-base">Tutorat</span>, tu peux choisir où et comment organiser la séance, aussi bien à distance qu'en présence !
+        @end
+      </div>
+      <div class="mx-auto md:w-[70%]">
+        @!graphics.tutorat.onlineLearning({
+          class: 'h-full w-full',
+        })
+    </div>
+  @end
+  <hr class="bg-tutorat-primary-grey-base max-w-sm mx-auto">
   @home.section({
-    className: 'justify-evenly lg:justify-between overflow-hidden',
+    className: 'justify-evenly'
   })
-    <div class="flex flex-col space-y-8 px-4">
-      @home.sectionTitle()
-        Une idée d'entreprise ou d'association ? Besoin de personnes talentueuses pour monter ton business ?
-      @end
-      @home.sectionText({
-        className: 'text-right',
+  <div class="flex flex-col space-y-8 px-4">
+    @home.sectionTitle({
+    })
+      Perfectionne tes connaissances en les partageant
+    @end
+    @home.sectionText({
+    })
+      <span class="text-tutorat-primary-base">Tutorat</span> te permet d'apprendre en faisant apprendre aux autres et tout le monde est gagnant !
+    @end
+  </div>
+  <div class="w-full lg:w-3/4 mx-auto relative">
+      @!graphics.tutorat.knowledge({
+        class: 'w-full h-auto',
       })
-        Avec <span class="text-mee-primary-base">Mee</span>, trouve tes futurs associés et crée l'organisation dont tu as toujours rêvé !
-      @end
-    </div>
-    <div class="relative left-[15%] h-[40%] lg:left-0 lg:h-3/4 lg:ml-auto">
-      @!graphics.mee.businessDeal({
-        class: 'h-full w-auto',
-      })
-    </div>
+  </div>
   @end
 @end
