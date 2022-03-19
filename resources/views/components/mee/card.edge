@@ -23,7 +23,7 @@
   @if(profile.bio)
     <p class="text-justify lg:text-lg">{{ excerpt(profile.bio, 150) }}</p>
   @end
-  @if(profile.focusInterests.length)
+  @if(profile.focusInterests && profile.focusInterests.length)
     <ul class="flex-grow flex flex-row gap-2 flex-wrap content-end">
       @each((focusInterest, index) in profile.focusInterests)
         {{--  Use this because groupLimit doesn't work with soft delete  --}}
