@@ -14,6 +14,7 @@ import {
   manyToMany,
   ModelQueryBuilderContract,
 } from '@ioc:Adonis/Lucid/Orm'
+import { SubjectType } from 'App/Enums/SubjectType'
 import { DateTime } from 'luxon'
 import AppSoftDeletes from './AppSoftDeletes'
 import Association from './Association'
@@ -24,6 +25,7 @@ import Report from './Report'
 import Role from './Role'
 import School from './School'
 import Skill from './Skill'
+import Subject from './Subject'
 import User from './User'
 
 export default class Profile extends compose(AppSoftDeletes, Filterable) {
@@ -97,6 +99,18 @@ export default class Profile extends compose(AppSoftDeletes, Filterable) {
     relatedKey: 'id',
   })
   public focusInterests: ManyToMany<typeof FocusInterest>
+
+  @manyToMany(() => Subject, {
+    pivotTable: 'subjects_profiles',
+    localKey: 'id',
+    pivotForeignKey: 'profile_id',
+    pivotRelatedForeignKey: 'subject_id',
+    relatedKey: 'id',
+    onQuery: (query) => {
+      query.wherePivot('type', SubjectType.Favorite)
+    },
+  })
+  public preferredSubjects: ManyToMany<typeof Subject>
 
   @manyToMany(() => Association, {
     pivotTable: 'profiles_associations',

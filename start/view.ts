@@ -179,6 +179,10 @@ View.global('routesExplorer', [
     title: "Centres d'intérêts",
   },
   {
+    name: 'SubjectsController.index',
+    title: 'Matières',
+  },
+  {
     name: 'ThematicsController.index',
     title: 'Thématiques',
   },

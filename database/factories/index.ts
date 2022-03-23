@@ -1,23 +1,24 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
-import { UserStatus } from 'App/Enums/UserStatus'
+import { EventStatus } from 'App/Enums/EventStatus'
+import { EventType } from 'App/Enums/EventType'
+import { ReasonType } from 'App/Enums/ReasonType'
+import { ReportEntity } from 'App/Enums/ReportEntity'
 import { UserRole } from 'App/Enums/UserRole'
-import FocusInterest from 'App/Models/FocusInterest'
+import { UserStatus } from 'App/Enums/UserStatus'
 import Association from 'App/Models/Association'
-import Thematic from 'App/Models/Thematic'
+import Event from 'App/Models/Event'
+import FocusInterest from 'App/Models/FocusInterest'
 import Profile from 'App/Models/Profile'
-import School from 'App/Models/School'
-import Skill from 'App/Models/Skill'
-import User from 'App/Models/User'
-import Tag from 'App/Models/Tag'
 import Reason from 'App/Models/Reason'
 import Report from 'App/Models/Report'
-import { ReportEntity } from 'App/Enums/ReportEntity'
-import { DateTime } from 'luxon'
-import { ReasonType } from 'App/Enums/ReasonType'
 import Role from 'App/Models/Role'
-import Event from 'App/Models/Event'
-import { EventType } from 'App/Enums/EventType'
-import { EventStatus } from 'App/Enums/EventStatus'
+import School from 'App/Models/School'
+import Skill from 'App/Models/Skill'
+import Subject from 'App/Models/Subject'
+import Tag from 'App/Models/Tag'
+import Thematic from 'App/Models/Thematic'
+import User from 'App/Models/User'
+import { DateTime } from 'luxon'
 
 export const SchoolFactory = Factory.define(School, ({ faker }) => {
   return {
@@ -45,6 +46,12 @@ export const SkillFactory = Factory.define(Skill, ({ faker }) => {
 }).build()
 
 export const FocusInterestFactory = Factory.define(FocusInterest, ({ faker }) => {
+  return {
+    name: faker.lorem.words(),
+  }
+}).build()
+
+export const SubjectFactory = Factory.define(Subject, ({ faker }) => {
   return {
     name: faker.lorem.words(),
   }

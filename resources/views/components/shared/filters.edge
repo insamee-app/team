@@ -46,15 +46,8 @@
 
   {{--  Used to show button only if filters are applied  --}}
   @if(Object.keys(request.except(['page'])).length > 0)
-    @elements.button({
-      fill: true,
-      variant: variant
-    })
-      @slot('main', className)
-        <a href="{{ request.url() }}" x-show="!showFilters" x-transtion.origin.center class="mt-4 {{ className }}" >
-          Annuler les filtres
-        </a>
-      @end
-    @end
+    <a href="{{ request.url() }}" x-show="!showFilters" x-transtion.origin.center class="mt-4 {{ color }}" >
+      Annuler les filtres
+    </a>
   @end
 </div>

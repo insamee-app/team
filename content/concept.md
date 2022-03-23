@@ -1,6 +1,6 @@
 # Le concept
 
-@set('name', env("TEAM_NAME")[0].toUpperCase() + env('APP_NAME').substring(1))
+@set('name', env("TEAM_NAME")[0].toUpperCase() + env('TEAM_NAME').substring(1))
 
 ## {{ name }}
 

@@ -57,6 +57,7 @@ Route.group(() => {
   Route.resource('roles', 'RolesController')
   Route.resource('skills', 'SkillsController')
   Route.resource('focus-interests', 'FocusInterestsController')
+  Route.resource('subjects', 'SubjectsController')
   Route.resource('thematics', 'ThematicsController')
   Route.resource('tags', 'TagsController')
   Route.resource('reasons', 'ReasonsController')
