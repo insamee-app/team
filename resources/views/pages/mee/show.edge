@@ -65,11 +65,16 @@
         @end
       </div>
 
-      @!elements.labeledItem({
+      @elements.labeledItem({
         label: 'Adresse électronique',
-        value: profile.user.email,
         variant: 'mee'
       })
+        @slot('main', props)
+          <a href="mailto:{{ profile.user.email }}" class="{{ props.className }}">
+            {{ profile.user.email }}
+          </a>
+        @end
+      @end
 
       <div class="flex flex-row justify-between">
         @elements.labeledItem({
