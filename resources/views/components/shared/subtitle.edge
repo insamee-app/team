@@ -3,6 +3,8 @@
   @set('color', 'text-mee-primary-base')
 @elseif(variant === 'associations')
   @set('color', 'text-associations-primary-base')
+@elseif(variant === 'events')
+  @set('color', 'text-evenements-primary-base')
 @endif
 
 <h2 class="text-lg md:text-xl lg:text-2xl font-semibold {{ color }}">

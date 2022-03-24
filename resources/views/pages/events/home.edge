@@ -1,0 +1,89 @@
+@layout('layouts/showcase')
+@set('title', 'Evènements')
+
+
+@section('content')
+  @home.hero()
+    <div class="mt-20 lg:mt-24 max-w-screen-xl w-full mx-auto lg:h-full">
+      <div class="px-4 lg:pt-0 lg:h-full lg:flex lg:flex-col lg:justify-center lg:w-1/2">
+        @home.heroTitle()
+          Besoin de te sortir des cours ?
+        @end
+        @home.heroSubtitle({
+          className: 'mt-4 lg:mt-8'
+        })
+          Parce qu'être étudiant, c'est s'épanouir dans la vie étudiante grâce à ses évènements
+        @end
+      </div>
+    </div>
+     <div class="lg:absolute lg:-z-10 h-[40%] lg:h-2/3 w-auto relative lg:left-1/2 lg:top-1/2 lg:transform lg:-translate-y-1/2">
+      @!graphics.evenements({
+        class: 'h-full w-auto',
+      })
+    </div>
+    <div class="mb-8 flex flex-row justify-center items-center lg:col-span-2 lg:place-items-end">
+      @!icons.arrowDown({
+        class: 'w-6 lg:w-8 h-6 lg:h-8 text-evenements-primary-base fill-current'
+      })
+    </div>
+  @end
+  @home.section({
+    className: 'justify-evenly relative'
+  })
+  <div class="flex flex-col space-y-8 px-4">
+    @home.sectionTitle()
+      Besoin de sortir de ton appartement ?
+    @end
+    @home.sectionText({
+      className: 'text-right',
+    })
+      Avec <span class="text-evenements-primary-base">Evènements</span> trouve simplement et rapidement les évènements organisés sur ton campus par les associations ou ton école !
+    @end
+  </div>
+  <div class="w-[90%] mx-auto relative">
+    @!graphics.events.people({
+      class: 'h-full w-full lg:w-1/2 lg:mx-auto',
+    })
+  </div>
+  @end
+  <hr class="max-w-xs mx-auto bg-evenements-primary-grey-base">
+  @home.section({
+    className: 'justify-evenly relative overflow-hidden'
+  })
+    <div class="flex flex-col space-y-8 px-4">
+      @home.sectionTitle()
+        Envie de voir du monde ?
+      @end
+      @home.sectionText({
+        className: '',
+      })
+        Avec <span class="text-evenements-primary-base">Evènements</span>, tu trouveras l'évènement qui te convient et tu pourras y simplement inviter tes amis à y participer !
+      @end
+    </div>
+    <div class="mx-auto lg:w-3/4">
+      @!graphics.events.streetFood({
+        class: 'h-full w-full',
+      })
+    </div>
+  @end
+  <hr class="bg-evenements-primary-grey-base max-w-xs mx-auto">
+  @home.section({
+    className: 'justify-between lg:justify-evenly'
+  })
+  <div class="flex flex-col space-y-8 px-4">
+    @home.sectionTitle({
+    })
+      Besoin d'idées pour organiser le prochain évènement ?
+    @end
+    @home.sectionText({
+    })
+      Avec <span class="text-evenements-primary-base">Evènements</span>, tu pourras explirer l'historique et trouver l'inspiration !
+    @end
+  </div>
+  <div class="h-[55%] w-auto mx-auto relative">
+      @!graphics.events.lightbulbMoment({
+        class: 'w-auto h-full',
+      })
+  </div>
+  @end
+@end

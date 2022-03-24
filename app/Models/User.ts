@@ -17,6 +17,7 @@ import Profile from './Profile'
 import { UserRole } from 'App/Enums/UserRole'
 import Report from './Report'
 import AppSoftDeletes from './AppSoftDeletes'
+import Event from './Event'
 
 export default class User extends AppSoftDeletes {
   @column({ isPrimary: true })
@@ -63,6 +64,12 @@ export default class User extends AppSoftDeletes {
     localKey: 'id',
   })
   public reports: HasMany<typeof Report>
+
+  @hasMany(() => Event, {
+    foreignKey: 'creator_id',
+    localKey: 'id',
+  })
+  public events: HasMany<typeof Event>
 
   @beforeSave()
   public static async hashPassword(user: User) {

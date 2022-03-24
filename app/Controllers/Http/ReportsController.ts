@@ -61,6 +61,11 @@ export default class ReportsController {
       case ReportEntity.School:
         await report.load('school', (school) => school.select('id', 'name'))
         break
+
+      case ReportEntity.Event:
+        await report.load('event', (event) => event.select('id', 'name'))
+        break
+
       default:
         break
     }
