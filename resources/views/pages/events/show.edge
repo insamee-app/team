@@ -10,9 +10,7 @@
     <div class="mb-4 p-4 w-full bg-red-50 border border-red-700 rounded-lg text-center text-lg text-red-700">
       L'événement a été annulé.
     </div>
-  @endif
-
-  @if(event.isPassed())
+  @elseif(event.isPassed())
     <div class="mb-4 p-4 w-full bg-blue-50 border border-blue-700 rounded-lg text-center text-lg text-blue-700">
       L'événement est terminé.
     </div>
@@ -85,47 +83,49 @@
 
     <div class="mt-4 flex flex-col gap-8">
       <div class="flex flex-col space-y-2">
-        <div class="flex flex-row justify-end space-x-4">
-          @if(eventProfileState)
-            @!events.stateDropdown({
-              eventProfileState,
-              event,
-            })
-          @else
-            <form action="{{ route('EventsInterestedController.store', { id: event.id }) }}" method="POST">
-              {{ csrfField() }}
-              @elements.button({
-                variant: 'events-secondary-grey',
-                fill: false
+        @if(!event.isPassed())
+          <div class="flex flex-row justify-end space-x-4">
+            @if(eventProfileState)
+              @!events.stateDropdown({
+                eventProfileState,
+                event,
               })
-                @slot('main', className)
-                  <button class="{{ className }} flex flex-row items-center space-x-2">
-                    @!icons.star({class: 'w-5 h-5 fill-current'})
-                    <span>
-                      Ça m'intéresse
-                    </span>
-                  </button>
+            @else
+              <form action="{{ route('EventsInterestedController.store', { id: event.id }) }}" method="POST">
+                {{ csrfField() }}
+                @elements.button({
+                  variant: 'events-secondary-grey',
+                  fill: false
+                })
+                  @slot('main', className)
+                    <button class="{{ className }} flex flex-row items-center space-x-2">
+                      @!icons.star({class: 'w-5 h-5 fill-current'})
+                      <span>
+                        Ça m'intéresse
+                      </span>
+                    </button>
+                  @end
                 @end
-              @end
-            </form>
-            <form action="{{ route('EventsParticipateController.store', { id: event.id }) }}" method="POST">
-              {{ csrfField() }}
-              @elements.button({
-                variant: 'events-secondary-grey',
-                fill: false
-              })
-                @slot('main', className)
-                  <button class="{{ className }} flex flex-row items-center space-x-2">
-                    @!icons.check({class: 'w-5 h-5 fill-current'})
-                    <span>
-                      Je participe
-                    </span>
-                  </button>
+              </form>
+              <form action="{{ route('EventsParticipateController.store', { id: event.id }) }}" method="POST">
+                {{ csrfField() }}
+                @elements.button({
+                  variant: 'events-secondary-grey',
+                  fill: false
+                })
+                  @slot('main', className)
+                    <button class="{{ className }} flex flex-row items-center space-x-2">
+                      @!icons.check({class: 'w-5 h-5 fill-current'})
+                      <span>
+                        Je participe
+                      </span>
+                    </button>
+                  @end
                 @end
-              @end
-            </form>
-          @endif
-        </div>
+              </form>
+            @endif
+          </div>
+        @endif
         <p class="text-right italic">{{ event.$extras.interestedCount }}  {{ Number(event.$extras.interestedCount) > 1 ? 'intéressés' : 'intéressé' }} et {{ event.$extras.participatingCount }} {{ Number(event.$extras.participatingCount) > 1 ? 'participants' : 'participant' }}</p>
       </div>
 
