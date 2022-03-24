@@ -139,7 +139,7 @@ View.global('routesTeam', [
       if (!profile) return {}
       // Default filters get events for current user profile and after today
       return {
-        'schools[]': profile.schoolId,
+        'hosts[]': profile.schoolId,
         'date': DateTime.local().toFormat('yyyy-MM-dd'),
       }
     },
