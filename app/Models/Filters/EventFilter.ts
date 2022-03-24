@@ -1,10 +1,15 @@
 import { BaseModelFilter } from '@ioc:Adonis/Addons/LucidFilter'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
+import { EventStatus } from 'App/Enums/EventStatus'
 import Event from 'App/Models/Event'
 
 export default class EventFilter extends BaseModelFilter {
   public $query: ModelQueryBuilderContract<typeof Event, Event>
+
+  public setup() {
+    this.$query.where('status', EventStatus.Published)
+  }
 
   // hosts[]
   public hosts(ids: string[]) {
