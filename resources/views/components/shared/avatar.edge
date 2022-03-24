@@ -6,6 +6,9 @@
 @elseif(variant === 'associations')
   @set('bgColor', 'bg-associations-secondary-base')
   @set('roundedClass', 'rounded md:rounded-lg')
+@elseif(variant === 'schools')
+  @set('bgColor', 'bg-slate-500')
+  @set('roundedClass', 'rounded md:rounded-lg')
 @endif
 
 @set('size', $props.size ? $props.size : 'w-36 h-36 lg:w-44 lg:h-44')
