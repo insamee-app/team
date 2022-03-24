@@ -7,11 +7,6 @@ import Event from 'App/Models/Event'
 export default class EventFilter extends BaseModelFilter {
   public $query: ModelQueryBuilderContract<typeof Event, Event>
 
-  public setup() {
-    // TODO: Create a filter for the event status
-    // this.$query.where('status', EventStatus.Published)
-  }
-
   // hosts[]
   public hosts(ids: string[]) {
     const dataInPivot = Database.from('events_hosts').select('event_id').whereIn('school_id', ids)
@@ -35,5 +30,9 @@ export default class EventFilter extends BaseModelFilter {
   // events that start after the given date
   public date(date: string) {
     this.$query.where('start_at', '>=', date)
+  }
+
+  public status(status: EventStatus) {
+    this.$query.where('status', status)
   }
 }

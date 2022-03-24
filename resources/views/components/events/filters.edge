@@ -40,4 +40,15 @@
     @!form.label({ title: 'Date' })
     @!form.input({ type: 'date', variant: 'events', fill: true, value: request.qs().date })
   @end
+
+  @form.group({name: 'status'})
+    @!form.label({ title: 'Statut' })
+    @form.select({
+      variant: 'events',
+      data: EventStatusData,
+      selectedData : request.qs().status,
+    })
+      Sélectionner le statut
+    @end
+  @end
 @end
