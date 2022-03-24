@@ -1,6 +1,7 @@
 import { BaseModelFilter } from '@ioc:Adonis/Addons/LucidFilter'
 import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
 import { TutoratKind } from 'App/Enums/TutoratKind'
+import { TutoratStatus } from 'App/Enums/TutoratStatus'
 import Tutorat from 'App/Models/Tutorat'
 
 export default class TutoratFilter extends BaseModelFilter {
@@ -12,6 +13,7 @@ export default class TutoratFilter extends BaseModelFilter {
     date.setDate(date.getDate() - 15)
     this.$query.where((query) => {
       query.where('kind', TutoratKind.Offer)
+      query.where('status', TutoratStatus.Published)
       query.orWhere((query) => {
         query.where('kind', '=', TutoratKind.Demand).andWhere('created_at', '>=', date)
       })
