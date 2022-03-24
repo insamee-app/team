@@ -1,4 +1,5 @@
 ### Version 0.0.10
+
 - Merge tag '0.0.9' into develop
 - chore: format
 - feat(subjects): create migrations
