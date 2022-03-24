@@ -6,9 +6,12 @@ import { TutoratType } from 'App/Enums/TutoratType'
 import { TutoratProfileState } from 'App/Enums/TutoratProfileState'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
+import { EventType } from 'App/Enums/EventType'
 import Profile from 'App/Models/Profile'
 import User from 'App/Models/User'
+import { EventProfileState } from 'App/Enums/EventProfileState'
 import { DateTime } from 'luxon'
+import { EventStatus } from 'App/Enums/EventStatus'
 
 View.global('UserRole', UserRole)
 View.global('UserRoleData', [
@@ -80,7 +83,8 @@ View.global('UserRoleData', [
   },
 ])
 View.global('UserStatus', UserStatus)
-View.global('ReasonType', ReasonType)
+View.global('EventProfileState', EventProfileState)
+View.global('EventType', EventType)
 View.global('ReasonTypeData', [
   {
     id: String(ReasonType['Profile']),
@@ -93,6 +97,31 @@ View.global('ReasonTypeData', [
   {
     id: String(ReasonType['School']),
     name: 'Ecole',
+  },
+  {
+    id: String(ReasonType['Event']),
+    name: 'Événement',
+  },
+])
+View.global('EventTypeData', [
+  {
+    id: String(EventType['InPerson']),
+    name: 'En présence',
+  },
+  {
+    id: String(EventType['Online']),
+    name: 'A distance',
+  },
+])
+View.global('EventStatus', EventStatus)
+View.global('EventStatusData', [
+  {
+    id: String(EventStatus['Published']),
+    name: 'Publié',
+  },
+  {
+    id: String(EventStatus['Cancelled']),
+    name: 'Annulé',
   },
 ])
 View.global('TutoratProfileState', TutoratProfileState)
@@ -150,7 +179,14 @@ View.global('routesTeam', [
   },
   {
     name: 'EventsController.index',
-    filters: () => {},
+    filters: (profile?: Profile) => {
+      if (!profile) return {}
+      // Default filters get events for current user profile and after today
+      return {
+        'hosts[]': profile.schoolId,
+        'date': DateTime.local().toFormat('yyyy-MM-dd'),
+      }
+    },
     title: 'Évènements',
     asset: 'logo_evenements.png',
     color: 'text-evenements-primary-base',
@@ -159,7 +195,7 @@ View.global('routesTeam', [
     name: 'AssociationsController.index',
     filters: (profile?: Profile) => {
       if (!profile) return {}
-      // Default filters get associations from current user profile
+      // Default filters get associations for current user profile
       return {
         'schools[]': profile.schoolId,
       }

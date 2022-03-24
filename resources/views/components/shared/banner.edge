@@ -1,0 +1,13 @@
+@set('bgColor', 'bg-slate-200')
+@if(variant === 'events')
+  @set('bgColor', 'bg-evenements-secondary-grey-base')
+@end
+
+
+@if(!attachment && placeholder)
+  <div class="{{ bgColor }} mx-auto w-full md:w-3/4 h-40 rounded-lg"></div>
+@elseif(attachment)
+  <img src="{{ attachment.url }}" class="mt-4 mx-auto w-auto max-h-[26rem]" alt="{{ alt }}" loading="lazy"/>
+@endif
+
+

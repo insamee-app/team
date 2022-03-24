@@ -12,6 +12,9 @@
 @elseif(variant === 'tutorat-demand')
   @set('bgColor', 'bg-tutorat-secondary-base')
   @set('roundedClass', 'rounded-full')
+@elseif(variant === 'schools')
+  @set('bgColor', 'bg-slate-500')
+  @set('roundedClass', 'rounded md:rounded-lg')
 @endif
 
 @set('size', $props.size ? $props.size : 'w-36 h-36 lg:w-44 lg:h-44')

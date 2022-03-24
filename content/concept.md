@@ -24,7 +24,11 @@ Dans cet écosystème, il vous est possible de vous créer un compte puis de nav
 
 ## Evènements
 
-> Evènements est en cours de construction. Merci de votre patience.
+**Evénements**, c'est un outil te permettant de te tenir à jour sur l'actualité de la vie associative du campus à travers ses différents événements. Tu auras une vue d'ensemble des événements à venir et des associations qui les organisent pour t'y préparer et y participer. Si besoin, tu pourras contacter l'organisateur.
+
+En tant que participant, tu pourras marquer ton intérêt aux évènements !
+
+Aussi, tu pourras retourner dans le passé pour découvrir les évènements terminés et découvrir les évènements des autres écoles présentes, pour t'inspirer ou en co-organiser de nouveaux.
 
 ## Associations
 

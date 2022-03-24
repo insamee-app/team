@@ -1,4 +1,6 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
+import { EventStatus } from 'App/Enums/EventStatus'
+import { EventType } from 'App/Enums/EventType'
 import { ReasonType } from 'App/Enums/ReasonType'
 import { ReportEntity } from 'App/Enums/ReportEntity'
 import { TutoratKind } from 'App/Enums/TutoratKind'
@@ -7,6 +9,7 @@ import { TutoratType } from 'App/Enums/TutoratType'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Association from 'App/Models/Association'
+import Event from 'App/Models/Event'
 import FocusInterest from 'App/Models/FocusInterest'
 import Profile from 'App/Models/Profile'
 import Reason from 'App/Models/Reason'
@@ -133,6 +136,27 @@ export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
   .relation('school', () => SchoolFactory)
   .relation('associations', () => AssociationFactory)
   .relation('role', () => RoleFactory)
+  .build()
+
+export const EventFactory = Factory.define(Event, ({ faker }) => {
+  return {
+    name: faker.lorem.words(),
+    description: faker.lorem.paragraph(),
+    startAt: DateTime.local(),
+    endAt: DateTime.local(),
+    location: faker.address.city(),
+    ticketsUrl: faker.internet.url(),
+    url: faker.internet.url(),
+    status: EventStatus.Published,
+    type: EventType.InPerson,
+  }
+})
+  .relation('hostSchools', () => SchoolFactory)
+  .relation('organizingSchools', () => SchoolFactory)
+  .relation('organizingAssociations', () => AssociationFactory)
+  .relation('creator', () => UserFactory)
+  .state('online', (event) => (event.type = EventType.Online))
+  .state('cancelled', (event) => (event.status = EventStatus.Cancelled))
   .build()
 
 export const UserFactory = Factory.define(User, ({ faker }) => {

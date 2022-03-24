@@ -13,11 +13,10 @@
         @end
       @end
 
-      @if(school.banner)
-        <img src="{{ school.banner.url }}" class="max-w-3xl mx-auto h-auto rounded-lg mt-2 lg:mt-4" alt="Bannière de {{ school.name }}" loading="lazy" width="500" height="128"/>
-      @else
-        <div aria-hidden="true" class="max-w-3xl mx-auto rounded-lg bg-slate-500 w-full h-32 mt-2 lg:mt-4"></div>
-      @end
+      @!shared.banner({
+        attachment: school.banner,
+        alt: 'Image de l\'école ' + school.name,
+      })
 
       @can('SchoolPolicy.update', school)
         <div class="flex flex-row justify-center items-center mt-2">

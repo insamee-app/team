@@ -1,0 +1,62 @@
+@layout('layouts/app')
+@set('title', 'Modifier l\'image de ' + event.name)
+
+@section('content')
+  @shared.article()
+    @slot('header')
+      @shared.subtitle({
+        controller: 'EventsController',
+        variant: 'events',
+      })
+        Evènements
+      @end
+
+      @shared.title()
+        Modifier l'image
+      @end
+    @end
+
+    @if(event.image)
+      <section class="flex flex-col space-y-4 mb-8">
+        <h3 class="text-xl lg:text-3xl font-bold">Image actuelle</h3>
+        <div class="flex flex-col items-center space-y-2">
+          @!shared.banner({
+            attachment: event.image,
+            alt: 'Image de l\'évènement ' + event.name,
+            variant: 'events',
+          })
+
+          <form action="{{ route('EventsImagesController.destroy', { id: event.id }) }}?_method=DELETE" method="POST">
+            {{ csrfField() }}
+
+            <button type="submit" class="text-sm text-evenements-primary-base">Supprimer l'image</button>
+          </form>
+        </div>
+      </section>
+    @endif
+
+    <form action="{{ route('EventsImagesController.update', { id: event.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly">
+      {{ csrfField() }}
+
+      <h3 class="text-xl lg:text-3xl font-bold">Nouvelle image</h3>
+
+      <div class="mt-4">
+        @form.group({ name: 'image', class: "flex flex-row items-center space-x-2" })
+          @!form.input({ type: 'file', accept: "image/png, image/gif, image/jpeg", className: "file:mr-4 file:py-2 file:px-4 file:border-0 file:shadow-sm  file:font-semibold file:rounded file:bg-evenements-primary-grey-light file:text-evenements-primary-base hover:file:bg-evenements-primary-grey-base text-grey-500 text-sm lg:text-base file:cursor-pointer" })
+          @!form.label({ title: 'Changer l\'image', class: "sr-only" })
+        @end
+      </div>
+
+      <div class="flex flex-col items-end mt-4">
+        @elements.button({
+          variant: 'events',
+          fill: true
+        })
+          @slot('main', className)
+            <button type="submit" class="{{ className }}">Enregistrer</button>
+          @end
+        @end
+      </div>
+    </form>
+  @end
+@end

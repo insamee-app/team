@@ -8,6 +8,7 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  computed,
   HasMany,
   hasMany,
   ManyToMany,
@@ -18,6 +19,7 @@ import { SubjectType } from 'App/Enums/SubjectType'
 import { DateTime } from 'luxon'
 import AppSoftDeletes from './AppSoftDeletes'
 import Association from './Association'
+import Event from './Event'
 import ProfileFilter from './Filters/ProfileFilter'
 import FocusInterest from './FocusInterest'
 import Report from './Report'
@@ -48,6 +50,23 @@ export default class Profile extends compose(AppSoftDeletes, Filterable) {
 
   @column()
   public bio?: string
+
+  @column()
+  public facebookUrl?: string
+
+  @column()
+  public instagramUrl?: string
+
+  @column()
+  public twitterUrl?: string
+
+  @column()
+  public linkedinUrl?: string
+
+  @computed()
+  public hasContacts(): boolean {
+    return !!(this.facebookUrl || this.instagramUrl || this.twitterUrl || this.linkedinUrl)
+  }
 
   @column()
   public roleId: string
@@ -130,6 +149,16 @@ export default class Profile extends compose(AppSoftDeletes, Filterable) {
     pivotColumns: ['state'],
   })
   public tutorats: ManyToMany<typeof Tutorat>
+
+  @manyToMany(() => Event, {
+    pivotTable: 'profiles_events',
+    localKey: 'id',
+    pivotForeignKey: 'profile_id',
+    pivotRelatedForeignKey: 'event_id',
+    relatedKey: 'id',
+    pivotColumns: ['state'],
+  })
+  public events: ManyToMany<typeof Event>
 
   @hasMany(() => Report, {
     localKey: 'id',

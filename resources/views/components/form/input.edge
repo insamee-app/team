@@ -17,9 +17,15 @@
   @set('className', '!border-tutorat-primary-base focus:!ring-tutorat-primary-base focus-within:!outline-none')
 @elseif(variant === 'tutorat-demand')
   @set('className', '!border-tutorat-secondary-base focus:!ring-tutorat-secondary-base focus-within:!outline-none')
+@elseif(variant === 'events')
+  @if(fill)
+    @set('className', '!border-evenements-primary-base !bg-evenements-primary-grey-light focus:!ring-evenements-primary-base focus-within:!outline-none')
+  @else
+    @set('className', '!border-evenements-primary-base focus:!ring-evenements-primary-base focus-within:!outline-none')
+  @endif
 @elseif(variant === 'checkbox')
   @set('className', 'text-slate-900 !ring-slate-900')
-@end
+@endif
 
 <input {{
     $props.serializeExcept(['classes'], {

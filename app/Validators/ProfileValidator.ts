@@ -31,6 +31,22 @@ export default class ProfileValidator {
       .members(
         schema.string({}, [rules.uuid(), rules.exists({ table: 'associations', column: 'id' })])
       ),
+    facebookUrl: schema.string.optional({ trim: true }, [
+      rules.url({
+        allowedHosts: ['facebook.com'],
+      }),
+    ]),
+    instagramUrl: schema.string.optional({ trim: true }, [
+      rules.url({ allowedHosts: ['instagram.com'] }),
+    ]),
+    twitterUrl: schema.string.optional({ trim: true }, [
+      rules.url({ allowedHosts: ['twitter.com'] }),
+    ]),
+    linkedinUrl: schema.string.optional({ trim: true }, [
+      rules.url({
+        allowedHosts: ['linkedin.com'],
+      }),
+    ]),
   })
 
   public messages = {
@@ -53,5 +69,13 @@ export default class ProfileValidator {
     'associations.*.string': 'Une association doit être une chaîne de caractères',
     'associations.*.uuid': 'Une association doit être un identifiant unique',
     'associations.*.exists': "Une association n'existe pas",
+    'facebookUrl.url': 'Lien Facebook invalide',
+    'facebookUrl.url.allowedHosts': 'Lien Facebook invalide',
+    'instagramUrl.url': 'Lien Instagram invalide',
+    'instagramUrl.url.allowedHosts': 'Lien Instagram invalide',
+    'twitterUrl.url': 'Lien Twitter invalide',
+    'twitterUrl.url.allowedHosts': 'Lien Twitter invalide',
+    'linkedinUrl.url': 'Lien LinkedIn invalide',
+    'linkedinUrl.url.allowedHosts': 'Lien LinkedIn invalide',
   }
 }

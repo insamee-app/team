@@ -15,23 +15,25 @@
       @end
     @end
 
-    <section class="flex flex-col space-y-4 mt-8">
-      <h3 class="text-xl font-bold">Bannière actuelle</h3>
+    @if(school.banner)
+      <section class="flex flex-col space-y-4 mt-8">
+        <h3 class="text-xl lg:text-3xl font-bold">Bannière actuelle</h3>
 
-      <div class="flex flex-col items-center space-y-2">
-        @if(school.banner)
-          <img src="{{ school.banner.url }}" class="w-full h-auto rounded-lg mt-2" alt="Bannière de {{ school.name }}" loading="lazy" width="500" height="128"/>
-        @else
-          <div aria-hidden="true" class="rounded-lg bg-slate-500 w-full h-32 mt-2"></div>
-        @end
+        <div class="flex flex-col items-center space-y-2">
+          @!shared.banner({
+            attachment: school.banner,
+            alt: 'Image de l\'école ' + school.name,
+            variant: 'events',
+          })
 
-        <form action="{{ route('SchoolsBannersController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
-          {{ csrfField() }}
+          <form action="{{ route('SchoolsBannersController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
+            {{ csrfField() }}
 
-          <button type="submit" class="text-sm text-slate-500">Supprimer la bannière</button>
-        </form>
-      </div>
-    </section>
+            <button type="submit" class="text-sm text-slate-500">Supprimer la bannière</button>
+          </form>
+        </div>
+      </section>
+    @endif
 
     <form action="{{ route('SchoolsBannersController.update', { id: school.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly mt-8">
       {{ csrfField() }}

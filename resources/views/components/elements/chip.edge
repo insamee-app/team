@@ -6,6 +6,8 @@
   @set('colorClass', 'text-associations-primary-base bg-associations-primary-grey-light')
 @elseif(variant === 'tutorat')
   @set('colorClass', 'text-tutorat-primary-base bg-tutorat-primary-grey-light')
+@elseif(variant === 'events')
+  @set('colorClass', 'text-evenements-primary-base bg-evenements-primary-grey-light')
 @end
 
 <li class="text-sm lg:text-base rounded-full px-2 py-1 lg:px-3 {{colorClass}}">

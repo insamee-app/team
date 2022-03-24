@@ -26,6 +26,12 @@
   @set('currentListItemClasses', 'bg-tutorat-primary-grey-base')
   @set('selectedListItemClasses', 'bg-tutorat-primary-grey-light')
   @set('selectedItemClasses', 'bg-tutorat-primary-base')
+@elseif(variant === 'events')
+  @set('buttonClasses', 'border-evenements-primary-base focus:ring-evenements-primary-base')
+  @set('listClasses', 'hover:bg-evenements-primary-grey-base')
+  @set('currentListItemClasses', 'bg-evenements-primary-grey-base')
+  @set('selectedListItemClasses', 'bg-evenements-primary-grey-light')
+  @set('selectedItemClasses', 'bg-evenements-primary-base')
 @end
 
 <div

@@ -41,7 +41,7 @@
 
         @form.group({name: 'graduationYear'})
           @!form.label({ title: 'Diplomation' })
-          @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, variant: 'mee' })
+          @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, variant: 'mee', min: 1957, max: new Date().getFullYear() + 8 })
         @end
 
         @form.group({name: 'roleId'})
@@ -102,6 +102,26 @@
         @form.group({name: 'bio', className: 'lg:col-span-2'})
           @!form.label({ title: 'Bio' })
           @!form.area({ type: 'text', classes: classesAssociations, value: profile.bio, variant: 'mee' })
+        @end
+
+        @form.group({name: 'facebookUrl'})
+          @!form.label({ title: 'Facebook' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url de votre profil', value: profile.facebookUrl, variant: 'mee' })
+        @end
+
+        @form.group({name: 'instagramUrl'})
+          @!form.label({ title: 'Instagram' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url de votre profil', value: profile.instagramUrl, variant: 'mee' })
+        @end
+
+        @form.group({name: 'twitterUrl'})
+          @!form.label({ title: 'Twitter' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url de votre profil', value: profile.twitterUrl, variant: 'mee' })
+        @end
+
+        @form.group({name: 'linkedinUrl'})
+          @!form.label({ title: 'LinkedIn' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url de votre profil', value: profile.linkedinUrl, variant: 'mee' })
         @end
       </div>
 
