@@ -8,7 +8,8 @@ export default class EventFilter extends BaseModelFilter {
   public $query: ModelQueryBuilderContract<typeof Event, Event>
 
   public setup() {
-    this.$query.where('status', EventStatus.Published)
+    // TODO: Create a filter for the event status
+    // this.$query.where('status', EventStatus.Published)
   }
 
   // hosts[]
