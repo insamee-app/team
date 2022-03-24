@@ -34,6 +34,7 @@ export default class TutoratsController {
           .select('id')
           .preload('profile', (query) => query.select('first_name', 'last_name', 'id', 'avatar'))
       )
+      .orderBy('created_at', 'desc')
       .orderBy('start_at', 'asc')
       .paginate(page, this.PER_PAGE)
 
