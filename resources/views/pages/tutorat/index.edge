@@ -1,0 +1,61 @@
+@layout('layouts/app')
+@set('title', 'Les tutorat')
+
+@section('content')
+  @shared.subtitle({
+    controller: 'TutoratsController',
+    variant: 'tutorat',
+  })
+    Tutorat
+  @end
+
+  @shared.title()
+    Liste des tutorats
+
+    @slot('actions')
+      @can('TutoratPolicy.create')
+        @elements.button({
+          fill: true,
+          variant: 'tutorat'
+        })
+          @slot('main', className)
+            <a href="{{ route('TutoratsController.create') }}" class="{{ className }}">
+              Créer
+            </a>
+          @end
+        @end
+      @end
+    @end
+  @end
+
+  @shared.grid()
+    @slot('filters', scope)
+      @!tutorat.filters({
+        className: scope.className,
+        subjects,
+        schools,
+      })
+    @end
+
+    @shared.list({
+      items: tutorats,
+      variant: 'tutorat',
+    })
+      @slot('main', tutorat)
+        <a href="{{ route('TutoratsController.show', { id: tutorat.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 {{tutorat.kind === TutoratKind.Offer ? 'focus:ring-tutorat-primary-base' : 'focus:ring-tutorat-secondary-base'}} h-full">
+          @!tutorat.card({
+            tutorat,
+          })
+        </a>
+      @end
+    @end
+
+    @slot('pagination', scope)
+      @!shared.pagination({
+        data: tutorats,
+        variant: 'tutorat',
+        className: scope.className,
+      })
+    @end
+  @end
+@end

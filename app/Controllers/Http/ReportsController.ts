@@ -62,6 +62,14 @@ export default class ReportsController {
         await report.load('school', (school) => school.select('id', 'name'))
         break
 
+      case ReportEntity.Tutorat:
+        await report.load('tutorat', (tutorat) =>
+          tutorat
+            .select('id', 'description', 'subject_id')
+            .preload('subject', (subject) => subject.select('name'))
+        )
+        break
+
       case ReportEntity.Event:
         await report.load('event', (event) => event.select('id', 'name'))
         break

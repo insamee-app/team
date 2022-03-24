@@ -3,4 +3,5 @@ export enum ReasonType {
   Association,
   School,
   Event,
+  Tutorat,
 }

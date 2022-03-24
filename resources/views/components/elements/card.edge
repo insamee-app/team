@@ -4,6 +4,10 @@
   @set('color', 'border-mee-primary-grey-light')
 @elseif(variant === 'associations')
   @set('color', 'border-associations-grey-light')
+@elseif(variant === 'tutorat-offer')
+  @set('color', 'border-tutorat-grey-light')
+@elseif(variant === 'tutorat-demand')
+  @set('color', 'border-tutorat-secondary-grey-light')
 @end
 
 <article class="p-4 lg:p-6 border rounded-2xl {{ color }} {{ classes }}">

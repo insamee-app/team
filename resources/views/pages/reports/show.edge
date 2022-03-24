@@ -62,6 +62,14 @@
         <div class="mt-4 flex flex-col space-y-2 lg:text-lg">
           <p>{{ report.school.name }}</p>
         </div>
+      @elseif(report.tutorat)
+        <h3 class="mt-8 text-xl lg:text-3xl font-bold">
+          Tutorat
+        </h3>
+
+        <div class="mt-4 flex flex-col space-y-2 lg:text-lg">
+          <p>{{ report.tutorat.subject.name }}</p>
+          <p>{{ report.tutorat.description }}</p>
       @elseif(report.event)
         <h3 class="mt-8 text-xl lg:text-3xl font-bold">
           Evènement
@@ -105,6 +113,14 @@
               </a>
             @end
           @end
+        @elseif(report.tutorat)
+          @elements.button({
+            fill: true,
+            variant: 'tutorat',
+          })
+            @slot('main', className)
+              <a href="{{ route('TutoratsController.show', { id: report.tutorat.id}) }}" class="{{ className }}">
+                Voir le tutorat
         @elseif(report.event)
           @elements.button({
             fill: true,

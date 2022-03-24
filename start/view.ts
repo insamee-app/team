@@ -1,5 +1,9 @@
 import View from '@ioc:Adonis/Core/View'
 import { ReasonType } from 'App/Enums/ReasonType'
+import { TutoratKind } from 'App/Enums/TutoratKind'
+import { TutoratStatus } from 'App/Enums/TutoratStatus'
+import { TutoratType } from 'App/Enums/TutoratType'
+import { TutoratProfileState } from 'App/Enums/TutoratProfileState'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import { EventType } from 'App/Enums/EventType'
@@ -120,6 +124,39 @@ View.global('EventStatusData', [
     name: 'Annulé',
   },
 ])
+View.global('TutoratProfileState', TutoratProfileState)
+View.global('TutoratKind', TutoratKind)
+View.global('TutoratTypeData', [
+  {
+    id: String(TutoratType['Online']),
+    name: 'En ligne',
+  },
+  {
+    id: String(TutoratType['InPerson']),
+    name: 'En présence',
+  },
+])
+View.global('TutoratStatus', TutoratStatus)
+View.global('TutoratStatusData', [
+  {
+    id: String(TutoratStatus['Published']),
+    name: 'Publié',
+  },
+  {
+    id: String(TutoratStatus['Cancelled']),
+    name: 'Annulé',
+  },
+])
+View.global('TutoratKindData', [
+  {
+    id: String(TutoratKind['Offer']),
+    name: 'Offre',
+  },
+  {
+    id: String(TutoratKind['Demand']),
+    name: 'Demande',
+  },
+])
 
 View.global('loadCurrentProfile', async function (user: User) {
   await user.load('profile')
@@ -128,7 +165,14 @@ View.global('loadCurrentProfile', async function (user: User) {
 View.global('routesTeam', [
   {
     name: 'TutoratsController.index',
-    filters: () => {},
+    filters: (profile?: Profile) => {
+      if (!profile) return {}
+
+      return {
+        'schools[]': profile.schoolId,
+        'date': DateTime.local().toFormat('yyyy-MM-dd'),
+      }
+    },
     title: 'Tutorat',
     asset: 'logo_tutorat.png',
     color: 'text-tutorat-primary-base',

@@ -7,6 +7,16 @@
   @set('className', '!border-mee-primary-base focus:!ring-mee-primary-base focus-within:!outline-none')
 @elseif(variant === 'associations')
   @set('className', '!border-associations-primary-base focus:!ring-associations-primary-base focus-within:!outline-none')
+@elseif(variant === 'tutorat')
+  @if(fill)
+    @set('className', '!border-tutorat-primary-base !bg-tutorat-primary-grey-light focus:!ring-tutorat-primary-base focus-within:!outline-none')
+  @else
+    @set('className', '!border-tutorat-primary-base focus:!ring-tutorat-primary-base focus-within:!outline-none')
+  @endif
+@elseif(variant === 'tutorat-offer')
+  @set('className', '!border-tutorat-primary-base focus:!ring-tutorat-primary-base focus-within:!outline-none')
+@elseif(variant === 'tutorat-demand')
+  @set('className', '!border-tutorat-secondary-base focus:!ring-tutorat-secondary-base focus-within:!outline-none')
 @elseif(variant === 'events')
   @if(fill)
     @set('className', '!border-evenements-primary-base !bg-evenements-primary-grey-light focus:!ring-evenements-primary-base focus-within:!outline-none')

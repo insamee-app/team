@@ -11,7 +11,25 @@
   @if(fill)
     @set('colorClass', 'bg-associations-primary-base text-black focus:ring-associations-primary-base')
   @else
-    @set('colorClass', 'border border-associations-primary-base bg-white text-associations-primary-base focus:ring-gray-500')
+    @set('colorClass', 'border border-associations-primary-base bg-white text-associations-primary-base focus:ring-associations-primary-base')
+  @end
+@elseif(variant === 'tutorat')
+  @if(fill)
+    @set('colorClass', 'bg-tutorat-primary-base text-white focus:ring-tutorat-primary-base')
+  @else
+    @set('colorClass', 'border border-tutorat-primary-base bg-white text-tutorat-primary-base focus:ring-tutorat-primary-base')
+  @end
+@elseif(variant === 'tutorat-offer')
+  @if(fill)
+    @set('colorClass', 'bg-tutorat-primary-base text-white focus:ring-tutorat-primary-base')
+  @else
+    @set('colorClass', 'border border-tutorat-primary-base bg-white text-tutorat-primary-base focus:ring-tutorat-primary-base')
+  @end
+@elseif(variant === 'tutorat-demand')
+  @if(fill)
+    @set('colorClass', 'bg-tutorat-secondary-base text-white focus:ring-tutorat-secondary-base')
+  @else
+    @set('colorClass', 'border border-tutorat-secondary-base bg-white text-tutorat-secondary-base focus:ring-tutorat-secondary-base')
   @end
 @elseif(variant === 'auth')
   @set('baseClass', baseClass.replace('py-1', 'py-2'))

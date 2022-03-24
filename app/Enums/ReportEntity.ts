@@ -3,4 +3,5 @@ export enum ReportEntity {
   Association,
   School,
   Event,
+  Tutorat,
 }
