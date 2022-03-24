@@ -1,6 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { TutoratProfileState } from 'App/Enums/TutoratProfileState'
-import { TutoratStatus } from 'App/Enums/TutoratStatus'
 import Tutorat from 'App/Models/Tutorat'
 
 export default class TutoratsParticipateController {

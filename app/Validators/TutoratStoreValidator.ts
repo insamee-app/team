@@ -2,7 +2,6 @@ import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { TutoratKind } from 'App/Enums/TutoratKind'
 import { TutoratType } from 'App/Enums/TutoratType'
-import { TutoratStatus } from 'App/Enums/TutoratStatus'
 
 export default class TutoratStoreValidator {
   constructor(protected ctx: HttpContextContract) {}
