@@ -103,6 +103,26 @@
           @!form.label({ title: 'Bio' })
           @!form.area({ type: 'text', classes: classesAssociations, value: profile.bio, variant: 'mee' })
         @end
+
+        @form.group({name: 'facebookUrl'})
+          @!form.label({ title: 'Facebook' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url de votre profil', value: profile.facebookUrl, variant: 'mee' })
+        @end
+
+        @form.group({name: 'instagramUrl'})
+          @!form.label({ title: 'Instagram' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url de votre profil', value: profile.instagramUrl, variant: 'mee' })
+        @end
+
+        @form.group({name: 'twitterUrl'})
+          @!form.label({ title: 'Twitter' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url de votre profil', value: profile.twitterUrl, variant: 'mee' })
+        @end
+
+        @form.group({name: 'linkedinUrl'})
+          @!form.label({ title: 'LinkedIn' })
+          @!form.input({ type: 'url', placeholder: 'Saisir l\'url de votre profil', value: profile.linkedinUrl, variant: 'mee' })
+        @end
       </div>
 
       <div class="flex flex-row justify-end mt-8 mb-20">

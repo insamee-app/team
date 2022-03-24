@@ -8,6 +8,7 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  computed,
   HasMany,
   hasMany,
   ManyToMany,
@@ -60,6 +61,11 @@ export default class Profile extends compose(AppSoftDeletes, Filterable) {
 
   @column()
   public linkedinUrl?: string
+
+  @computed()
+  public hasContacts(): boolean {
+    return !!(this.facebookUrl || this.instagramUrl || this.twitterUrl || this.linkedinUrl)
+  }
 
   @column()
   public roleId: string

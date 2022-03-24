@@ -67,7 +67,11 @@ export default class ProfilesController {
         'bio',
         'role_id',
         'user_id',
-        'school_id'
+        'school_id',
+        'facebook_url',
+        'twitter_url',
+        'instagram_url',
+        'linkedin_url'
       )
       .where('id', params.id)
       .preload('school', (school) => school.select('id', 'name', 'picture'))
