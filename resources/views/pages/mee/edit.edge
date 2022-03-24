@@ -41,7 +41,7 @@
 
         @form.group({name: 'graduationYear'})
           @!form.label({ title: 'Diplomation' })
-          @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, variant: 'mee' })
+          @!form.input({ type: 'number', placeholder: 'Saisir l\'année de diplomation', value: profile.graduationYear, variant: 'mee', min: 1957, max: new Date().getFullYear() + 8 })
         @end
 
         @form.group({name: 'roleId'})
