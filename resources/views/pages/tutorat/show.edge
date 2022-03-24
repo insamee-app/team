@@ -8,9 +8,7 @@
     <div class="mb-4 p-4 w-full bg-red-50 border border-red-700 rounded-lg text-center text-lg text-red-700">
       Le tutorat a été annulé.
     </div>
-  @endif
-
-  @if(tutorat.isPassed())
+  @elseif(tutorat.isPassed())
     <div class="mb-4 p-4 w-full bg-blue-50 border border-blue-700 rounded-lg text-center text-lg text-blue-700">
       Le tutorat est terminé.
     </div>
@@ -66,8 +64,7 @@
     @end
 
     <div class="flex flex-col gap-8">
-
-      @if(isOffer)
+      @if(isOffer && tutorat.status === TutoratStatus.Published && !tutorat.isPassed())
         <div class="flex flex-col space-y-2">
           <div class="flex flex-row justify-end space-x-4">
             @if(tutoratProfileState)
@@ -92,25 +89,27 @@
                   @end
                 @end
               </form>
-              <form action="{{ route('TutoratsParticipateController.store', { id: tutorat.id }) }}" method="POST">
-                {{ csrfField() }}
-                @elements.button({
-                  variant: 'tutorat-secondary-grey',
-                  fill: false
-                })
-                  @slot('main', className)
-                    <button class="{{ className }} flex flex-row items-center space-x-2">
-                      @!icons.check({class: 'w-5 h-5 fill-current'})
-                      <span>
-                        Je participe
-                      </span>
-                    </button>
+              @if(tutorat.$extras.participatingCount < tutorat.attendeeCapacity)
+                <form action="{{ route('TutoratsParticipateController.store', { id: tutorat.id }) }}" method="POST">
+                  {{ csrfField() }}
+                  @elements.button({
+                    variant: 'tutorat-secondary-grey',
+                    fill: false
+                  })
+                    @slot('main', className)
+                      <button class="{{ className }} flex flex-row items-center space-x-2">
+                        @!icons.check({class: 'w-5 h-5 fill-current'})
+                        <span>
+                          Je participe
+                        </span>
+                      </button>
+                    @end
                   @end
-                @end
-              </form>
+                </form>
+              @endif
             @endif
           </div>
-          <p class="text-right italic">{{ tutorat.$extras.interestedCount }}  {{ Number(tutorat.$extras.interestedCount) > 1 ? 'intéressés' : 'intéressé' }} et {{ tutorat.$extras.participatingCount }} {{ Number(tutorat.$extras.participatingCount) > 1 ? 'participants' : 'participant' }}</p>
+          <p class="text-right italic">{{ tutorat.$extras.interestedCount }}  {{ Number(tutorat.$extras.interestedCount) > 1 ? 'intéressés' : 'intéressé' }} et {{ tutorat.$extras.participatingCount }} {{ Number(tutorat.$extras.participatingCount) > 1 ? 'participants' : 'participant' }} pour {{ tutorat.attendeeCapacity }} {{ tutorat.attendeeCapacity > 1 ? 'places': 'place' }}</p>
         </div>
       @endif
 

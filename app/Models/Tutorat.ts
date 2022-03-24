@@ -110,4 +110,12 @@ export default class Tutorat extends compose(AppSoftDeletes, Filterable) {
     if (!this.startAt) return false
     return this.startAt.diff(DateTime.now(), 'days').toObject().days! < 0
   }
+
+  public isPublished(): boolean {
+    return this.status === TutoratStatus.Published
+  }
+
+  public isAnOffer(): boolean {
+    return this.kind === TutoratKind.Offer
+  }
 }
