@@ -50,6 +50,18 @@ export default class Profile extends compose(AppSoftDeletes, Filterable) {
   public bio?: string
 
   @column()
+  public facebookUrl?: string
+
+  @column()
+  public instagramUrl?: string
+
+  @column()
+  public twitterUrl?: string
+
+  @column()
+  public linkedinUrl?: string
+
+  @column()
   public roleId: string
 
   @column()
