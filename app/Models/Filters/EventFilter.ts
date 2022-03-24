@@ -1,6 +1,7 @@
 import { BaseModelFilter } from '@ioc:Adonis/Addons/LucidFilter'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { ModelQueryBuilderContract } from '@ioc:Adonis/Lucid/Orm'
+import { EventStatus } from 'App/Enums/EventStatus'
 import Event from 'App/Models/Event'
 
 export default class EventFilter extends BaseModelFilter {
@@ -29,5 +30,9 @@ export default class EventFilter extends BaseModelFilter {
   // events that start after the given date
   public date(date: string) {
     this.$query.where('start_at', '>=', date)
+  }
+
+  public status(status: EventStatus) {
+    this.$query.where('status', status)
   }
 }

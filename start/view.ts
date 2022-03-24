@@ -185,6 +185,7 @@ View.global('routesTeam', [
       return {
         'hosts[]': profile.schoolId,
         'date': DateTime.local().toFormat('yyyy-MM-dd'),
+        'status': EventStatus.Published,
       }
     },
     title: 'Évènements',
