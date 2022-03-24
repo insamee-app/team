@@ -1,7 +1,10 @@
 import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
 import { compose } from '@ioc:Adonis/Core/Helpers'
 import { BelongsTo, belongsTo, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { TutoratKind } from 'App/Enums/TutoratKind'
 import { TutoratProfileState } from 'App/Enums/TutoratProfileState'
+import { TutoratStatus } from 'App/Enums/TutoratStatus'
+import { TutoratType } from 'App/Enums/TutoratType'
 import { DateTime } from 'luxon'
 import AppSoftDeletes from './AppSoftDeletes'
 import TutoratFilter from './Filters/TutoratFilter'
@@ -20,13 +23,13 @@ export default class Tutorat extends compose(AppSoftDeletes, Filterable) {
   public description: string
 
   @column()
-  public type?: number
+  public type?: TutoratType
 
   @column()
-  public kind: number
+  public kind: TutoratKind
 
   @column()
-  public status: number
+  public status: TutoratStatus
 
   @column()
   public attendeeCapacity?: number
@@ -102,4 +105,9 @@ export default class Tutorat extends compose(AppSoftDeletes, Filterable) {
     localKey: 'id',
   })
   public profiles: ManyToMany<typeof Profile>
+
+  public isPassed(): boolean {
+    if (!this.startAt) return false
+    return this.startAt.diff(DateTime.now(), 'days').toObject().days! < 0
+  }
 }

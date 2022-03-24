@@ -4,6 +4,18 @@
 @set('sameDate', isOffer ? tutorat.startAt.hasSame(tutorat.endAt, 'day') : false)
 
 @section('content')
+    @if(tutorat.status === TutoratStatus.Cancelled)
+    <div class="mb-4 p-4 w-full bg-red-50 border border-red-700 rounded-lg text-center text-lg text-red-700">
+      Le tutorat a été annulé.
+    </div>
+  @endif
+
+  @if(tutorat.isPassed())
+    <div class="mb-4 p-4 w-full bg-blue-50 border border-blue-700 rounded-lg text-center text-lg text-blue-700">
+      Le tutorat est terminé.
+    </div>
+  @endif
+
   @shared.article()
     @slot('header')
       @shared.subtitle({
@@ -37,7 +49,7 @@
 
 
         @slot('actions')
-          @can('AssociationPolicy.update', association)
+          @can('TutoratPolicy.update', tutorat)
             @elements.button({
               variant: isOffer ? 'tutorat-offer' : 'tutorat-demand',
               fill: true

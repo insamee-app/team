@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { TutoratKind } from 'App/Enums/TutoratKind'
+import { TutoratStatus } from 'App/Enums/TutoratStatus'
 import Report from 'App/Models/Report'
 import School from 'App/Models/School'
 import Subject from 'App/Models/Subject'
@@ -56,29 +57,28 @@ export default class TutoratsController {
   public async store({ request, response, bouncer, session, auth }: HttpContextContract) {
     await bouncer.with('TutoratPolicy').authorize('create')
 
-    const {
-      type = undefined,
-      status,
-      kind,
-      startDate,
-      startTime,
-      endDate,
-      endTime,
-      ...payload
-    } = await request.validate(TutoratStoreValidator)
+    const { type, kind, startDate, startTime, endDate, endTime, ...payload } =
+      await request.validate(TutoratStoreValidator)
 
-    const startAt = TutoratService.toDateTime(startDate, startTime)
-    const endAt = TutoratService.toDateTime(endDate, endTime)
+    const tutorat = new Tutorat()
+    if ((kind as unknown as TutoratKind) === TutoratKind.Offer) {
+      const startAt = TutoratService.toDateTime(startDate, startTime)
+      const endAt = TutoratService.toDateTime(endDate, endTime)
+      tutorat.fill({
+        type: Number(type),
+        startAt,
+        endAt,
+      })
+    }
 
-    const tutorat = await Tutorat.create({
-      type: type ? Number(type) : undefined,
-      status: Number(status),
+    tutorat.merge({
       kind: Number(kind),
-      startAt,
-      endAt,
+      status: TutoratStatus.Published,
       creatorId: auth.user?.id,
       ...payload,
     })
+
+    await tutorat.save()
 
     session.flash('success', 'Tutorat créé avec succès')
     return response.redirect().toRoute('TutoratsController.show', { id: tutorat.id })
@@ -134,7 +134,6 @@ export default class TutoratsController {
     await bouncer.with('TutoratPolicy').authorize('update', tutorat)
 
     const subjects = await Subject.query().select('id', 'name').orderBy('name')
-    // const schools = await School.query().select('id', 'name').orderBy('name')
 
     await tutorat.load('school', (query) => query.select('id', 'name'))
     await tutorat.load('subject', (query) => query.select('id', 'name'))
@@ -158,13 +157,13 @@ export default class TutoratsController {
       const startAt = TutoratService.toDateTime(startDate!, startTime!)
       const endAt = TutoratService.toDateTime(endDate!, endTime!)
       tutorat.merge({
+        type: Number(type),
         startAt,
         endAt,
       })
     }
 
     tutorat.merge({
-      type: Number(type),
       status: Number(status),
       ...payload,
     })

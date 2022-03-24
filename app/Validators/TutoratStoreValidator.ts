@@ -12,7 +12,6 @@ export default class TutoratStoreValidator {
     type: schema.enum.optional(Object.keys(TutoratType), [
       rules.requiredWhen('kind', '=', TutoratKind.Offer),
     ]),
-    status: schema.enum.optional(Object.keys(TutoratStatus)),
     startDate: schema.date({
       format: 'yyyy-MM-dd',
     }),
@@ -43,7 +42,6 @@ export default class TutoratStoreValidator {
     'kind.enum': 'Veuillez sélectionner un type de tutorat valide',
     'type.required': 'Veuillez sélectionner un type',
     'type.enum': 'Veuillez sélectionner un type valide',
-    'status.enum': 'Veuillez sélectionner un statut valide',
     'startDate.required': 'Veuillez sélectionner une date de début',
     'startDate.date': 'Veuillez sélectionner une date de début valide',
     'startTime.required': 'Veuillez sélectionner une heure de début',

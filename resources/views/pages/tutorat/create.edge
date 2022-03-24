@@ -65,14 +65,9 @@
           @end
         @end
 
-        @form.group({name: 'status'})
+        @form.group({name: 'status', disabled: 'true'})
           @!form.label({ title: 'Statut' })
-          @form.select({
-            variant: variant,
-            data: TutoratStatusData,
-          })
-            Sélectionner le statut du tutorat
-          @end
+          @!form.input({ type: 'text', value: 'Publié' })
         @end
 
         @form.group({name: 'startDate'})
@@ -95,7 +90,7 @@
           @!form.input({ type: 'time', variant: variant })
         @end
 
-        @form.group({name: 'description', className: 'lg:col-span-2'})
+        @form.group({name: 'description', className: 'md:col-span-2'})
           @!form.label({ title: 'Description' })
           @!form.area({ type: 'text', variant: variant })
         @end
