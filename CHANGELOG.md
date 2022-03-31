@@ -1,8 +1,10 @@
 ### Version 0.1.1
+
 - Merge tag '0.1.0' into develop
 - fix(profile): update allowed hosts
 
 ### Version 0.1.0
+
 - chore: format
 - fix #46
 - fix(title): update size in lg when edit images
@@ -29,7 +31,9 @@
 - fix(tutorat): remove unused code
 - chore: format
 - feat(concept): update texts
+
 ### Version 0.0.10
+
 - Merge tag '0.0.9' into develop
 - chore: format
 - feat(subjects): create migrations
@@ -47,11 +51,15 @@
 - fix #40
 - fix #36
 - fix #35
+
 ### Version 0.0.9
+
 - Merge tag '0.0.8' into develop
 - chore: format
 - build: remove unused code
+
 ### Version 0.0.8
+
 - Merge tag '0.0.7' into develop
 - chore: format
 - fix #34
@@ -61,7 +69,9 @@
 - fix: remove logs
 - chore: format
 - feat(profiles): add school's picture
+
 ### Version 0.0.7
+
 - Merge tag '0.0.6' into develop
 - chore: format
 - feat(associations): add default filters - fix #22
@@ -79,10 +89,14 @@
 - chore: format
 - chore: format
 - fix(rate_limiter): many issues
+
 ### Version 0.0.6
+
 - Merge tag '0.0.5' into develop
 - fix(drive): loss file uploads
+
 ### Version 0.0.5
+
 - Merge tag '0.0.4' into develop
 - fix #19
 - fix #21
@@ -94,7 +108,9 @@
 - fix(avatar): upadate rounded corners for associations
 - fix #23
 - fix #24
+
 ### Version 0.0.4
+
 - chore: update bump
 - Merge tag '0.0.3' into develop
 - fix: update env
@@ -118,11 +134,15 @@
 - fix #16
 - fix #15
 - fix: update illusations in home associations
+
 ### Version 0.0.3
+
 - Merge tag '0.0.2' into develop
 - fix(bump): remove tag creation
 - build: copy content to build file
+
 ### Version 0.0.2
+
 - feat(role): create new roles
 - feat(role): add more details
 - feat(role): add more to policy
@@ -131,7 +151,9 @@
 - feat(role): create dropdown
 - fix(role): apply policy to dropdown
 - fix(bump): remove tag creation
+
 ### Version 0.0.0
+
 - Initial commit
 - initial commit
 - feat(users): add uuid
