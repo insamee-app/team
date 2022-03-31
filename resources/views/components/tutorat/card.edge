@@ -1,0 +1,59 @@
+@set('isOffer', tutorat.kind === TutoratKind.Offer)
+
+@elements.card({
+  variant: isOffer ? 'tutorat-offer' : 'tutorat-demand',
+  classes: 'hover:shadow-lg cursor-pointer space-y-4 lg:space-y-6 transition h-full flex flex-col'
+})
+  <header class="flex flex-col space-y-2">
+    <div class="lg:text-lg {{ isOffer ? 'text-tutorat-primary-grey-dark' : 'text-tutorat-secondary-grey-dark' }}">
+      {{ isOffer ? 'Offre' : 'Demande' }}
+    </div>
+    <h3 class="text-xl lg:text-2xl font-bold {{ isOffer ? 'text-tutorat-primary-dark' : 'text-tutorat-secondary-dark' }}">
+      {{ tutorat.subject.name }}
+    </h3>
+    @if(isOffer)
+      <div class="{{ isOffer ? 'text-tutorat-primary-grey-dark' : 'text-tutorat-secondary-grey-dark' }}">
+        {{ tutorat.startAt.setLocale('fr').toFormat('dd MMM yyyy à HH:mm') }}  | {{ tutorat.school.name }}
+      </div>
+    @endif
+  </header>
+
+  @if(isOffer)
+    @if(Number(tutorat.$extras.interestedCount) > 0 || Number(tutorat.$extras.participatingCount) > 0)
+        <ul class="flex flex-row space-x-2">
+          @if(Number(tutorat.$extras.interestedCount) > 0)
+            @elements.chip({
+              variant: 'tutorat',
+            })
+              <strong class="font-bold">{{ Number(tutorat.$extras.interestedCount) }}</strong>
+              {{ Number(tutorat.$extras.interestedCount) === 1 ? 'intéressé' : 'intéressés' }}
+            @end
+          @end
+          @if(Number(tutorat.$extras.participatingCount) > 0)
+            @elements.chip({
+              variant: 'tutorat',
+            })
+              <strong class="font-bold">{{ Number(tutorat.$extras.participatingCount) }}</strong>
+              {{ Number(tutorat.$extras.participatingCount) === 1 ? 'participant' : 'participants' }}
+            @end
+          @end
+        </ul>
+      @end
+  @endif
+
+  <div class="flex-grow flex flex-col justify-end">
+    <div class="flex flex-row items-center space-x-4">
+      @!shared.avatar({
+        attachment: tutorat.creator.avatar,
+        alt: 'Avatar de ' + tutorat.creator.profile.firstName,
+        variant: isOffer ? 'tutorat-offer' : 'tutorat-demand',
+        placeholder: true,
+        size: 'w-9 h-9',
+      })
+      <span class="{{ isOffer ? 'text-tutorat-primary-grey-dark' : 'text-tutorat-secondary-grey-dark' }}">
+        {{ tutorat.creator.profile.firstName }}
+        {{ tutorat.creator.profile.lastName }}
+      </span>
+    </div>
+  </div>
+@end

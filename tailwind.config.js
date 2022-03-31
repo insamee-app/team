@@ -1,9 +1,11 @@
 module.exports = {
   content: [
+    'start/**/*.ts',
     './resources/views/**/*.edge',
     './resources/css/**/*.css',
     './resources/js/**/*.js',
     './resources/js/**/*.ts',
+    './start/view.ts',
   ],
   theme: {
     extend: {
@@ -44,13 +46,23 @@ module.exports = {
         },
         evenements: {
           primary: {
-            base: '#a88900',
-            dark: '#a88900',
+            base: '#9a8019',
+            dark: '#655410',
             light: '#ffe46b',
             grey: {
               base: '#c5c4be',
-              dark: '#747163',
-              light: '#e2e1de',
+              dark: '#747063',
+              light: '#e2e2df',
+            },
+          },
+          secondary: {
+            base: '#4720bb',
+            dark: '#2b1371',
+            light: '#6b86ff',
+            grey: {
+              base: '#c0bec5',
+              dark: '#676374',
+              light: '#dcdde0',
             },
           },
         },
@@ -63,6 +75,16 @@ module.exports = {
               base: '#bec2c5',
               dark: '#636b74',
               light: '#dee0e2',
+            },
+          },
+          secondary: {
+            base: '#1c925d',
+            dark: '#006135',
+            light: '#6dd5a6',
+            grey: {
+              base: '#bec5c2',
+              dark: '#63746c',
+              light: '#dee2e0',
             },
           },
         },

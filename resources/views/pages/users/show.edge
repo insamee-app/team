@@ -5,9 +5,9 @@
 
   @set('blockAction', '')
   @unless(user.blockedAt)
-    @set('blockAction', route('UsersController.block', { id: user.id, qs: { _method: 'PUT' }}))
+    @set('blockAction', route('UsersController.block', { id: user.id }, { qs: { _method: 'PUT' }}))
   @else
-    @set('blockAction', route('UsersController.unblock', { id: user.id, qs: { _method: 'DELETE' }}))
+    @set('blockAction', route('UsersController.unblock', { id: user.id }, { qs: { _method: 'DELETE' }}))
   @end
 
   @shared.article()

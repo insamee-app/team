@@ -7,6 +7,12 @@
 @elseif(variant === 'associations')
   @set('color', 'text-associations-primary-base focus:ring-associations-primary-base')
   @set('bgColor', 'bg-associations-primary-grey-light')
+@elseif(variant === 'tutorat')
+  @set('color', 'text-tutorat-primary-base focus:ring-tutorat-primary-base')
+  @set('bgColor', 'bg-tutorat-primary-grey-light')
+@elseif(variant === 'events')
+  @set('color', 'text-evenements-primary-base focus:ring-evenements-primary-base')
+  @set('bgColor', 'bg-evenements-primary-grey-light')
 @end
 
 <div x-data="{ showFilters: false }" class="p-4 lg:p-6 flex flex-col justify-center items-center rounded-lg {{ bgColor }} {{ $props.className }}">

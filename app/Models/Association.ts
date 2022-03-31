@@ -12,6 +12,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import AppSoftDeletes from './AppSoftDeletes'
+import Event from './Event'
 import AssociationFilter from './Filters/AssociationFilter'
 import Profile from './Profile'
 import Report from './Report'
@@ -87,4 +88,10 @@ export default class Association extends compose(AppSoftDeletes, Filterable) {
     foreignKey: 'entityId',
   })
   public reports: HasMany<typeof Report>
+
+  @hasMany(() => Event, {
+    localKey: 'id',
+    foreignKey: 'organizerAssociationId',
+  })
+  public organizedEvents: HasMany<typeof Event>
 }

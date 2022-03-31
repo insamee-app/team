@@ -1,0 +1,54 @@
+@shared.filters({
+  className: $props.className,
+  variant: 'events',
+  controller: 'EventsController',
+})
+  @form.group({name: 'hosts'})
+    @!form.label({ title: 'Ecoles hôtes' })
+    @form.multiselect({
+      variant: 'events',
+      data: schools,
+      selectedData: request.qs().hosts,
+    })
+      Sélectionner des écoles
+    @end
+  @end
+
+  @form.group({name: 'schools'})
+    @!form.label({ title: 'Ecoles organisatrices' })
+    @form.multiselect({
+      variant: 'events',
+      data: schools,
+      selectedData: request.qs().schools,
+    })
+      Sélectionner des écoles
+    @end
+  @end
+
+  @form.group({name: 'associations'})
+    @!form.label({ title: 'Assocations organisatrices' })
+    @form.multiselect({
+      variant: 'events',
+      data: associations,
+      selectedData: request.qs().associations,
+    })
+      Sélectionner des associations
+    @end
+  @end
+
+  @form.group({name: 'date'})
+    @!form.label({ title: 'Date' })
+    @!form.input({ type: 'date', variant: 'events', fill: true, value: request.qs().date })
+  @end
+
+  @form.group({name: 'status'})
+    @!form.label({ title: 'Statut' })
+    @form.select({
+      variant: 'events',
+      data: EventStatusData,
+      selectedData : request.qs().status,
+    })
+      Sélectionner le statut
+    @end
+  @end
+@end

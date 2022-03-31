@@ -1,0 +1,32 @@
+@shared.filters({
+  className: $props.className,
+  variant: 'tutorat',
+  controller: 'TutoratsController',
+})
+  @form.group({name: 'subjects'})
+    @!form.label({ title: 'Matières' })
+    @form.multiselect({
+      variant: 'tutorat',
+      data: subjects,
+      selectedData: request.qs().subjects,
+    })
+      Sélectionner des sujets
+    @end
+  @end
+
+  @form.group({name: 'schools'})
+    @!form.label({ title: 'Ecoles' })
+    @form.multiselect({
+      variant: 'tutorat',
+      data: schools,
+      selectedData: request.qs().schools,
+    })
+      Sélectionner des écoles
+    @end
+  @end
+
+  @form.group({name: 'date'})
+    @!form.label({ title: 'Date' })
+    @!form.input({ type: 'date', variant: 'tutorat', fill: true, value: request.qs().date })
+  @end
+@end

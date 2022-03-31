@@ -4,7 +4,7 @@
     @if(item.deleted_at)
         @set('action', route(controller + '.restore', { id: item.id }))
     @else
-        @set('action', route(controller + '.destroy', { id: item.id, qs: { _method: 'DELETE' }}))
+        @set('action', route(controller + '.destroy', { id: item.id }, { qs: { _method: 'DELETE' }}))
     @end
     <form action="{{ action }}" method="POST">
        {{ csrfField() }}

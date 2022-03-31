@@ -1,9 +1,15 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
+import { EventStatus } from 'App/Enums/EventStatus'
+import { EventType } from 'App/Enums/EventType'
 import { ReasonType } from 'App/Enums/ReasonType'
 import { ReportEntity } from 'App/Enums/ReportEntity'
+import { TutoratKind } from 'App/Enums/TutoratKind'
+import { TutoratStatus } from 'App/Enums/TutoratStatus'
+import { TutoratType } from 'App/Enums/TutoratType'
 import { UserRole } from 'App/Enums/UserRole'
 import { UserStatus } from 'App/Enums/UserStatus'
 import Association from 'App/Models/Association'
+import Event from 'App/Models/Event'
 import FocusInterest from 'App/Models/FocusInterest'
 import Profile from 'App/Models/Profile'
 import Reason from 'App/Models/Reason'
@@ -14,6 +20,7 @@ import Skill from 'App/Models/Skill'
 import Subject from 'App/Models/Subject'
 import Tag from 'App/Models/Tag'
 import Thematic from 'App/Models/Thematic'
+import Tutorat from 'App/Models/Tutorat'
 import User from 'App/Models/User'
 import { DateTime } from 'luxon'
 
@@ -91,6 +98,30 @@ export const AssociationFactory = Factory.define(Association, ({ faker }) => {
   .relation('school', () => SchoolFactory)
   .build()
 
+export const TutoratFactory = Factory.define(Tutorat, ({ faker }) => {
+  return {
+    description: faker.lorem.paragraph(),
+    type: TutoratType.InPerson,
+    kind: TutoratKind.Offer,
+    status: TutoratStatus.Published,
+    attendeeCapacity: faker.datatype.number(),
+    startAt: DateTime.local(),
+    endAt: DateTime.local(),
+  }
+})
+  .relation('subject', () => SubjectFactory)
+  .relation('school', () => SchoolFactory)
+  .relation('creator', () => UserFactory)
+  .state('demand', (tutorat) => {
+    tutorat.kind = TutoratKind.Demand
+    tutorat.attendeeCapacity = undefined
+    tutorat.startAt = undefined
+    tutorat.endAt = undefined
+  })
+  .state('online', (tutorat) => (tutorat.type = TutoratType.Online))
+  .state('cancelled', (tutorat) => (tutorat.status = TutoratStatus.Cancelled))
+  .build()
+
 export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
   return {
     firstName: faker.name.firstName(),
@@ -105,6 +136,27 @@ export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
   .relation('school', () => SchoolFactory)
   .relation('associations', () => AssociationFactory)
   .relation('role', () => RoleFactory)
+  .build()
+
+export const EventFactory = Factory.define(Event, ({ faker }) => {
+  return {
+    name: faker.lorem.words(),
+    description: faker.lorem.paragraph(),
+    startAt: DateTime.local(),
+    endAt: DateTime.local(),
+    location: faker.address.city(),
+    ticketsUrl: faker.internet.url(),
+    url: faker.internet.url(),
+    status: EventStatus.Published,
+    type: EventType.InPerson,
+  }
+})
+  .relation('hostSchools', () => SchoolFactory)
+  .relation('organizingSchools', () => SchoolFactory)
+  .relation('organizingAssociations', () => AssociationFactory)
+  .relation('creator', () => UserFactory)
+  .state('online', (event) => (event.type = EventType.Online))
+  .state('cancelled', (event) => (event.status = EventStatus.Cancelled))
   .build()
 
 export const UserFactory = Factory.define(User, ({ faker }) => {

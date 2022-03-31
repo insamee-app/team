@@ -65,11 +65,16 @@
         @end
       </div>
 
-      @!elements.labeledItem({
+      @elements.labeledItem({
         label: 'Adresse électronique',
-        value: profile.user.email,
         variant: 'mee'
       })
+        @slot('main', props)
+          <a href="mailto:{{ profile.user.email }}" class="{{ props.className }}">
+            {{ profile.user.email }}
+          </a>
+        @end
+      @end
 
       <div class="flex flex-row justify-between">
         @elements.labeledItem({
@@ -162,7 +167,7 @@
         @end
       @end
 
-    @if(profile.preferredSubjects.length)
+      @if(profile.preferredSubjects.length)
         @elements.labeledItem({
           label: 'Matières préférées',
           variant: 'mee'
@@ -170,7 +175,37 @@
           @!elements.chips({ data: profile.preferredSubjects })
         @end
       @end
-    </div>
+
+      @if(profile.hasContacts())
+        <div x-data="{ showContacts: false }" class="p-4 flex flex-row justify-center items-center rounded-lg bg-mee-primary-grey-light text-mee-primary-base">
+          @elements.button({
+            fill: true,
+            variant: 'mee'
+          })
+            @slot('main', className)
+              <button x-on:click="showContacts = true" class="{{ className }}" x-transtion.origin.center :class="showContacts && 'hidden'" type="submit">
+                Contacter
+              </button>
+            @end
+          @end
+
+            <div x-cloak x-transition.origin.center x-show="showContacts" class="w-full grid grid-cols-2 justify-items-center gap-8 text-lg lg:text-xl">
+              @if(profile.facebookUrl)
+                <a href="{{ profile.facebookUrl }}" target="_blank" rel="noopener noreferrer">Facebook</a>
+              @endif
+              @if(profile.instagramUrl)
+                <a href="{{ profile.instagramUrl }}" target="_blank" rel="noopener noreferrer">Instagram</a>
+              @endif
+              @if(profile.twitterUrl)
+                <a href="{{ profile.twitterUrl }}" target="_blank" rel="noopener noreferrer">Twitter</a>
+              @endif
+              @if(profile.linkedinUrl)
+                <a href="{{ profile.linkedinUrl }}" target="_blank" rel="noopener noreferrer">Linkedin</a>
+              @endif
+            </div>
+          </div>
+        @endif
+  </div>
 
     @if(auth.user.id !== profile.user.id)
       @!shared.report({
