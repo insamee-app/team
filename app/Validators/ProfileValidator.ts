@@ -33,18 +33,18 @@ export default class ProfileValidator {
       ),
     facebookUrl: schema.string.optional({ trim: true }, [
       rules.url({
-        allowedHosts: ['facebook.com'],
+        allowedHosts: ['facebook.com', 'www.facebook.com'],
       }),
     ]),
     instagramUrl: schema.string.optional({ trim: true }, [
-      rules.url({ allowedHosts: ['instagram.com'] }),
+      rules.url({ allowedHosts: ['instagram.com', 'www.instagram.com'] }),
     ]),
     twitterUrl: schema.string.optional({ trim: true }, [
-      rules.url({ allowedHosts: ['twitter.com'] }),
+      rules.url({ allowedHosts: ['twitter.com', 'www.twitter.com'] }),
     ]),
     linkedinUrl: schema.string.optional({ trim: true }, [
       rules.url({
-        allowedHosts: ['linkedin.com'],
+        allowedHosts: ['linkedin.com', 'www.linkedin.com'],
       }),
     ]),
   })
