@@ -1,3 +1,31 @@
+### Version 0.1.0
+- chore: format
+- fix #46
+- fix(title): update size in lg when edit images
+- fix #38
+- fix(events): update default filters
+- fix #49
+- feat(mee): add contact in database
+- feat(contact): fix #47
+- chore: format
+- feat(profiles): fix #50
+- chore: update dependancies
+- fix(tutorat): text in dropdown
+- fix(tutorat): update create and update
+- fix(tutorat): update filters
+- fix(tutorat): update order in index
+- fix(events): add filter on status
+- fix(events): remove filter on status
+- fix(route): update usage
+- feat(events): add status on filter
+- fix(events): update dropdown
+- fix(events): unactivate participating when event is passed
+- fix(events): unactivate participating when event is passed
+- fix(tutorat): update participating and interresting
+- fix(tutorat): remove unused code
+- chore: format
+- feat(concept): update texts
+
 ### Version 0.0.10
 
 - Merge tag '0.0.9' into develop
