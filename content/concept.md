@@ -11,7 +11,7 @@
 
 Cet écosystème est composé de 4 plateformes:
 
-- [Tutorat](/tutorat/home), plateforme de mise en relation des étudiants et des tuteurs;
+- [Tutorat](/tutoring/home), plateforme de mise en relation des étudiants et des tuteurs;
 - [Evènements](/evenements/home), plateforme de mise en relation entre évènements et étudiants;
 - [Associations](/associations/home), plateforme de mise en relation des associations;
 - [Mee](/mee/home), plateforme de mise en relation des profils étudiants.
