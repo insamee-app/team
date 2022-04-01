@@ -18,126 +18,137 @@
 
   @shared.article()
     @slot('header')
-      @shared.subtitle({
-        controller: 'EventsController',
-        variant: 'events'
-      })
-        Evènements
-      @end
+      @if(up.targetIncludes('[layout-main]'))
+        @shared.subtitle({
+          controller: 'EventsController',
+          variant: 'events'
+        })
+          Evènements
+        @end
 
-      @!shared.banner({
-        attachment: event.image,
-        alt: 'Image de l\'évènement ' + event.name,
-        variant: 'events',
-      })
+        @!shared.banner({
+          attachment: event.image,
+          alt: 'Image de l\'évènement ' + event.name,
+          variant: 'events',
+        })
 
-      @can('EventImagePolicy.update')
-        <div class="flex flex-row justify-center items-center mt-2 mb-4">
-          <a href="{{ route('EventsImagesController.edit', { id: event.id }) }}" class="flex flex-row justify-center items-center space-x-1 text-evenements-primary-base">
-            <span>
-              {{ event.image ? 'Modifier l\'image' : 'Ajouter une image' }}
-            </span>
-            @!icons.photograph({
-              'aria-hidden': true,
-              class: 'w-4 h-4 mt-1 fill-current',
+        @can('EventImagePolicy.update')
+          <div class="flex flex-row justify-center items-center mt-2 mb-4">
+            @elements.anchor({
+              href: route('EventsImagesController.edit', { id: event.id }),
+              class: 'flex flex-row justify-center items-center space-x-1 text-evenements-primary-base'
             })
-          </a>
-        </div>
-      @end
-      @shared.title()
-        @slot('top')
-          <div class="mb-1 text-base md:text-lg lg:text-xl text-evenements-primary-base">
-            @if(sameDate)
-              le {{ event.startAt.setLocale('fr').toFormat('dd MMM yyyy \'de\' HH:mm') }} à {{ event.endAt.setLocale('fr').toFormat('HH:mm') }}
-            @else
-              du {{ event.startAt.setLocale('fr').toFormat('dd MMM yyyy à HH:mm') }}
-              au {{ event.endAt.setLocale('fr').toFormat('dd MMM yyyy à HH:mm') }}
+              <span>
+                {{ event.image ? 'Modifier l\'image' : 'Ajouter une image' }}
+              </span>
+              @!icons.photograph({
+                'aria-hidden': true,
+                class: 'w-4 h-4 mt-1 fill-current',
+              })
             @end
           </div>
         @end
+        @shared.title()
+          @slot('top')
+            <div class="mb-1 text-base md:text-lg lg:text-xl text-evenements-primary-base">
+              @if(sameDate)
+                le {{ event.startAt.setLocale('fr').toFormat('dd MMM yyyy \'de\' HH:mm') }} à {{ event.endAt.setLocale('fr').toFormat('HH:mm') }}
+              @else
+                du {{ event.startAt.setLocale('fr').toFormat('dd MMM yyyy à HH:mm') }}
+                au {{ event.endAt.setLocale('fr').toFormat('dd MMM yyyy à HH:mm') }}
+              @end
+            </div>
+          @end
 
-        {{ event.name }}
+          {{ event.name }}
 
-        @slot('bottom')
-          <div class="mt-1 text-base md:text-lg lg:text-xl text-evenements-primary-grey-dark">
-            {{ event.location ?? 'En ligne' }}
-          </div>
-        @end
+          @slot('bottom')
+            <div class="mt-1 text-base md:text-lg lg:text-xl text-evenements-primary-grey-dark">
+              {{ event.location ?? 'En ligne' }}
+            </div>
+          @end
 
-        @slot('actions')
-          @can('EventPolicy.update', event)
-            @elements.button({
-              fill: true,
-              variant: 'events'
-            })
-              @slot('main', className)
-                <a href="{{ route('EventsController.edit', { id: event.id}) }}" class="{{ className }}">
-                  Modifier
-                </a>
+          @slot('actions')
+            @can('EventPolicy.update', event)
+              @elements.button({
+                fill: true,
+                variant: 'events'
+              })
+                @slot('main', className)
+                  @elements.anchor({
+                    href: route('EventsController.edit', { id: event.id}),
+                    class: className
+                  })
+                    Modifier
+                  @end
+                @end
               @end
             @end
           @end
         @end
-      @end
+      @endif
     @end
 
+
     <div class="mt-4 flex flex-col gap-8">
-      <div class="flex flex-col space-y-2">
-        @if(!event.isPassed() && event.status === EventStatus.Published)
-          <div class="flex flex-row justify-end space-x-4">
-            @if(eventProfileState)
-              @!events.stateDropdown({
-                eventProfileState,
-                event,
-              })
-            @else
-              <form action="{{ route('EventsInterestedController.store', { id: event.id }) }}" method="POST">
-                {{ csrfField() }}
-                @elements.button({
-                  variant: 'events-secondary-grey',
-                  fill: false
+      @if(up.targetIncludes('[layout-main]') || up.targetIncludes('[layout-dropdown]'))
+        <div class="flex flex-col space-y-2" layout-dropdown>
+          @if(!event.isPassed() && event.status === EventStatus.Published)
+            <div class="flex flex-row justify-end space-x-4">
+              @if(eventProfileState)
+                @!events.stateDropdown({
+                  eventProfileState,
+                  event,
                 })
-                  @slot('main', className)
-                    <button class="{{ className }} flex flex-row items-center space-x-2">
-                      @!icons.star({class: 'w-5 h-5 fill-current'})
-                      <span>
-                        Ça m'intéresse
-                      </span>
-                    </button>
+              @else
+                <form action="{{ route('EventsInterestedController.store', { id: event.id }) }}" method="POST" up-target="[layout-dropdown]">
+                  {{ csrfField() }}
+                  @elements.button({
+                    variant: 'events-secondary-grey',
+                    fill: false
+                  })
+                    @slot('main', className)
+                      <button class="{{ className }} flex flex-row items-center space-x-2">
+                        @!icons.star({class: 'w-5 h-5 fill-current'})
+                        <span>
+                          Ça m'intéresse
+                        </span>
+                      </button>
+                    @end
                   @end
-                @end
-              </form>
-              <form action="{{ route('EventsParticipateController.store', { id: event.id }) }}" method="POST">
-                {{ csrfField() }}
-                @elements.button({
-                  variant: 'events-secondary-grey',
-                  fill: false
-                })
-                  @slot('main', className)
-                    <button class="{{ className }} flex flex-row items-center space-x-2">
-                      @!icons.check({class: 'w-5 h-5 fill-current'})
-                      <span>
-                        Je participe
-                      </span>
-                    </button>
+                </form>
+                <form action="{{ route('EventsParticipateController.store', { id: event.id }) }}" method="POST" up-target="[layout-dropdown]">
+                  {{ csrfField() }}
+                  @elements.button({
+                    variant: 'events-secondary-grey',
+                    fill: false
+                  })
+                    @slot('main', className)
+                      <button class="{{ className }} flex flex-row items-center space-x-2">
+                        @!icons.check({class: 'w-5 h-5 fill-current'})
+                        <span>
+                          Je participe
+                        </span>
+                      </button>
+                    @end
                   @end
-                @end
-              </form>
-            @endif
-          </div>
-        @endif
-        <p class="text-right italic">{{ event.$extras.interestedCount }}  {{ Number(event.$extras.interestedCount) > 1 ? 'intéressés' : 'intéressé' }} et {{ event.$extras.participatingCount }} {{ Number(event.$extras.participatingCount) > 1 ? 'participants' : 'participant' }}</p>
-      </div>
+                </form>
+              @endif
+            </div>
+          @endif
+          <p class="text-right italic">{{ event.$extras.interestedCount }}  {{ Number(event.$extras.interestedCount) > 1 ? 'intéressés' : 'intéressé' }} et {{ event.$extras.participatingCount }} {{ Number(event.$extras.participatingCount) > 1 ? 'participants' : 'participant' }}</p>
+        </div>
+      @endif
 
 
+      @if(up.targetIncludes('[layout-main]'))
+        @if(event.description)
+          <p class="text-justify lg:text-lg">
+            {{ event.description }}
+          </p>
+        @end
 
-      @if(event.description)
-        <p class="text-justify lg:text-lg">
-          {{ event.description }}
-        </p>
-      @end
-
-      <div class="flex flex-row justify-between">
+        <div class="flex flex-row justify-between">
           @if(event.url)
             @elements.button({
               variant: 'events',
@@ -158,68 +169,77 @@
               @end
             @end
           @endif
-      </div>
+        </div>
 
-      <div>
-        <h3 class="text-xl lg:text-2xl font-bold">Un évènement par</h3>
+        <div>
+          <h3 class="text-xl lg:text-2xl font-bold">Un évènement par</h3>
 
-        @if(event.organizingAssociations.length === 0 && event.organizingSchools.length === 0)
-          <div class="mt-2">
-            <a href="{{ route('ProfilesController.show', { id: event.creator.profile.id }) }}">
-              @!shared.avatar({
-                attachment: event.creator.profile.avatar,
-                alt: 'Avatar de ' + event.creator.profile.firstName,
-                variant: 'mee',
-                placeholder: true,
-                size: avatarSize,
+          @if(event.organizingAssociations.length === 0 && event.organizingSchools.length === 0)
+            <div class="mt-2">
+              @elements.anchor({
+                href: route('ProfilesController.show', { id: event.creator.profile.id })
               })
-            </a>
-          </div>
-        @else
-          <ul class="mt-2 flex flex-row space-x-2">
-            @each(association in event.organizingAssociations)
-              <li>
-                <a href="{{ route('AssociationsController.show', { id: association.id }) }}">
-                  @!shared.avatar({
-                    attachment: association.picture,
-                    alt: 'Logo de l\'association ' + association.name,
-                    variant: 'associations',
-                    placeholder: true,
-                    size: avatarSize,
+                @!shared.avatar({
+                  attachment: event.creator.profile.avatar,
+                  alt: 'Avatar de ' + event.creator.profile.firstName,
+                  variant: 'mee',
+                  placeholder: true,
+                  size: avatarSize,
+                })
+              @end
+            </div>
+          @else
+            <ul class="mt-2 flex flex-row space-x-2">
+              @each(association in event.organizingAssociations)
+                <li>
+                  @elements.anchor({
+                    href: route('AssociationsController.show', { id: association.id })
                   })
-                </a>
-              </li>
-            @endeach
-            @each(school in event.organizingSchools)
-              <li>
-                <a href="{{ route('SchoolsController.show', { id: school.id }) }}">
-                  @!shared.avatar({
-                    attachment: school.picture,
-                    alt: 'Image de l\'école ' + school.name,
-                    variant: 'schools',
-                    placeholder: true,
-                    size: avatarSize,
+                    @!shared.avatar({
+                      attachment: association.picture,
+                      alt: 'Logo de l\'association ' + association.name,
+                      variant: 'associations',
+                      placeholder: true,
+                      size: avatarSize,
+                    })
+                  @end
+                </li>
+              @endeach
+              @each(school in event.organizingSchools)
+                <li>
+                  @elements.anchor({
+                    href: route('SchoolsController.show', { id: school.id })
                   })
-                </a>
-              </li>
-            @endeach
-          </ul>
-        @end
-      </div>
+                    @!shared.avatar({
+                      attachment: school.picture,
+                      alt: 'Image de l\'école ' + school.name,
+                      variant: 'schools',
+                      placeholder: true,
+                      size: avatarSize,
+                    })
+                  @end
+                </li>
+              @endeach
+            </ul>
+          @end
+        </div>
+      @endif
     </div>
 
-    @!shared.report({
-      report,
-      id: event.id,
-      controller: 'ReportsEventsController',
-      end: "l'évènement"
-    })
+    @if(up.targetIncludes('[layout-main]'))
+      @!shared.report({
+        report,
+        id: event.id,
+        controller: 'ReportsEventsController',
+        end: "l'évènement"
+      })
 
-    @!shared.delete({
-      item: event,
-      policy: 'EventPolicy',
-      controller: 'EventsController',
-      end: "l'évènement"
-    })
+      @!shared.delete({
+        item: event,
+        policy: 'EventPolicy',
+        controller: 'EventsController',
+        end: "l'évènement"
+      })
+    @endif
   @end
 @end

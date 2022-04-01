@@ -19,9 +19,12 @@
           variant: 'events'
         })
           @slot('main', className)
-            <a href="{{ route('EventsController.create') }}" class="{{ className }}">
+            @elements.anchor({
+              href: route('EventsController.create'),
+              class: className
+            })
               Créer
-            </a>
+            @end
           @end
         @end
       @end
@@ -42,11 +45,14 @@
       variant: 'events',
     })
       @slot('main', event)
-        <a href="{{ route('EventsController.show', { id: event.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-evenements-primary-base h-full">
+        @elements.anchor({
+          href: route('EventsController.show', { id: event.id }),
+          class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-evenements-primary-base h-full'
+        })
           @!events.card({
             event,
           })
-        </a>
+        @end
       @end
     @end
 

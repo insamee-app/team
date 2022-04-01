@@ -56,7 +56,7 @@
             style="display: none;"
             class="absolute right-0 overflow-hidden mt-2 py-2 flex flex-col space-y-1 bg-white lg:text-lg rounded-lg shadow-lg"
         >
-          <form action="{{ route('EventsInterestedController.store', { id: event.id }) }}" method="POST">
+          <form action="{{ route('EventsInterestedController.store', { id: event.id }) }}" method="POST" up-target="[layout-dropdown]">
             {{ csrfField() }}
             <button class="{{ className }} w-full hover:bg-evenements-primary-grey-light flex flex-row items-center space-x-2 py-1 px-4 {{ eventProfileState === EventProfileState.Interested ? 'text-evenements-primary-base' : '' }}">
               @!icons.star({class: 'w-5 h-5 fill-current'})
@@ -65,7 +65,7 @@
               </span>
             </button>
           </form>
-          <form action="{{ route('EventsParticipateController.store', { id: event.id }) }}" method="POST">
+          <form action="{{ route('EventsParticipateController.store', { id: event.id }) }}" method="POST" up-target="[layout-dropdown]">
             {{ csrfField() }}
             <button class="{{ className }} w-full hover:bg-evenements-primary-grey-light flex flex-row items-center space-x-2 py-1 px-4 {{ eventProfileState === EventProfileState.Participate ? 'text-evenements-primary-base' : '' }}">
               @!icons.check({class: 'w-5 h-5 fill-current'})
@@ -75,7 +75,7 @@
             </button>
           </form>
           @if(eventProfileState === EventProfileState.Interested)
-            <form action="{{ route('EventsInterestedController.destroy', { id: event.id }) }}?_method=DELETE" method="POST">
+            <form action="{{ route('EventsInterestedController.destroy', { id: event.id }) }}?_method=DELETE" method="POST" up-target="[layout-dropdown]">
               {{ csrfField() }}
               <button class="{{ className }} w-full hover:bg-evenements-primary-grey-light flex flex-row items-center space-x-2 py-1 px-4">
                 @!icons.x({class: 'w-5 h-5 fill-current'})
@@ -85,7 +85,7 @@
               </button>
             </form>
           @elseif(eventProfileState === EventProfileState.Participate)
-            <form action="{{ route('EventsParticipateController.destroy', { id: event.id }) }}?_method=DELETE" method="POST">
+            <form action="{{ route('EventsParticipateController.destroy', { id: event.id }) }}?_method=DELETE" method="POST" up-target="[layout-dropdown]">
               {{ csrfField() }}
               <button class="{{ className }} w-full hover:bg-evenements-primary-grey-light flex flex-row items-center space-x-2 py-1 px-4">
                 @!icons.x({class: 'w-5 h-5 fill-current'})

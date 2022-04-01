@@ -16,7 +16,7 @@
       @end
     @end
 
-    <form action="{{ route('EventsController.update', { id: event.id }) }}?_method=PUT" method="POST">
+    <form action="{{ route('EventsController.update', { id: event.id }) }}?_method=PUT" method="POST" up-submit>
       {{ csrfField() }}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @form.group({name: 'name', className: 'lg:col-span-2'})

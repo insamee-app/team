@@ -79,32 +79,43 @@ export default class EventsController {
     return response.redirect().toRoute('EventsController.show', { id: event.id })
   }
 
-  public async show({ view, params, bouncer, auth }: HttpContextContract) {
+  public async show({ up, view, params, bouncer, auth }: HttpContextContract) {
     await bouncer.with('EventPolicy').authorize('view')
 
     await auth.user?.load('profile')
     const event = await Event.query()
-      .preload('creator', (creator) =>
-        creator.preload('profile', (profile) => profile.select('id', 'avatar'))
+      .if(up.targetIncludes('[layout-main]'), (query) =>
+        query
+          .preload('creator', (creator) =>
+            creator.preload('profile', (profile) => profile.select('id', 'avatar'))
+          )
+          .preload('organizingAssociations', (association) => association.select('id', 'picture'))
+          .preload('organizingSchools', (school) => school.select('id', 'picture'))
+          .preload('hostSchools', (query) => query.select('id'))
       )
-      .preload('organizingAssociations', (association) => association.select('id', 'picture'))
-      .preload('organizingSchools', (school) => school.select('id', 'picture'))
-      .preload('hostSchools', (query) => query.select('id'))
       .withCount('interestedProfiles', (query) => query.as('interestedCount'))
       .withCount('participatingProfiles', (query) => query.as('participatingCount'))
       .where('id', params.id)
       .firstOrFail()
-    const eventProfile = await Database.query()
-      .select('state')
-      .from('profiles_events')
-      .where('profile_id', auth.user!.profile!.id)
-      .andWhere('event_id', event.id)
-      .first()
-    const report = await Report.query()
-      .where('reporterId', auth.user!.id)
-      .where('entityId', params.id)
-      .whereNull('resolvedAt')
-      .first()
+
+    let eventProfile
+    if (up.targetIncludes('[layout-dropdown]') || up.targetIncludes('[layout-main]')) {
+      eventProfile = await Database.query()
+        .select('state')
+        .from('profiles_events')
+        .where('profile_id', auth.user!.profile!.id)
+        .andWhere('event_id', event.id)
+        .first()
+    }
+
+    let report
+    if (up.targetIncludes('[layout-main]')) {
+      report = await Report.query()
+        .where('reporterId', auth.user!.id)
+        .where('entityId', params.id)
+        .whereNull('resolvedAt')
+        .first()
+    }
 
     return view.render('pages/events/show', {
       event,
