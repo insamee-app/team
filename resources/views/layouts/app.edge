@@ -11,7 +11,7 @@
   @entryPointScripts('app')
 </head>
 <body page-body>
-  @if(up.targetIncludes('[layout-header]'))
+  @if(up.targetIncludes('[layout-header]') || up.targetIncludes('[page-body]'))
     @include('partials/header')
   @endif
 
@@ -20,7 +20,7 @@
     @!section('content')
   </main>
 
-  @if(up.targetIncludes('[layout-footer]'))
+  @if(up.targetIncludes('[layout-footer]') || up.targetIncludes('[page-body]'))
     @include('partials/footer')
   @endif
 </body>

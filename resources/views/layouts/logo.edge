@@ -11,17 +11,17 @@
   @entryPointStyles('app')
   @entryPointScripts('app')
 </head>
-<body>
+<body page-body>
 
   @include('partials/flash')
 
   <main class="mt-16 mb-8 mx-8 space-y-8">
     <div class="flex flex-row justify-center">
-      <a href="{{ route('home') }}" title="Redirection vers la page d'accueil">
+      <a href="{{ route('home') }}" title="Redirection vers la page d'accueil" up-target="[page-body]" up-instant up-preload>
         <img src="{{ asset('assets/images/logo_team.png') }}" alt="logo de la plateforme" width="500" height="500" loading="lazy" class="w-32 lg:w-44 h-32 lg:h-44">
       </a>
     </div>
-    <section class="max-w-xs mx-auto">
+    <section class="max-w-xs mx-auto" layout-main>
       @!section('content')
     </section>
   </main>
