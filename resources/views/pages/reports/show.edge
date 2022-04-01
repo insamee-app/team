@@ -17,9 +17,13 @@
       <div class="-mt-2 lg:-mt-6 md:text-lg mb-4 lg:mb-8">
         <span>
           Par
-          <a href="{{ route('ProfilesController.show', { id: report.reporter.profile.id }) }}" class="text-slate-500">
+          @elements.anchor({
+            href: route('ProfilesController.show', { id: report.reporter.profile.id }),
+            class: 'text-slate-500',
+            target: '[layout-main]'
+          })
             {{ report.reporter.profile.firstName }} {{ report.reporter.profile.lastName }}
-          </a>
+          @end
         </span>
       </div>
     @end
@@ -87,9 +91,13 @@
             variant: 'mee'
           })
             @slot('main', className)
-              <a href="{{ route('ProfilesController.show', { id: report.profile.id}) }}" class="{{ className }}">
+              @elements.anchor({
+                href: route('ProfilesController.show', { id: report.profile.id }),
+                target: '[layout-main]',
+                class: className
+              })
                 Voir le profil
-              </a>
+              @end
             @end
           @end
         @elseif(report.association)
@@ -98,9 +106,13 @@
             variant: 'associations',
           })
             @slot('main', className)
-              <a href="{{ route('AssociationsController.show', { id: report.association.id}) }}" class="{{ className }}">
+              @elements.anchor({
+                href: route('AssociationsController.show', { id: report.association.id }),
+                target: '[layout-main]',
+                class: className
+              })
                 Voir l'association
-              </a>
+              @end
             @end
           @end
         @elseif(report.school)
@@ -108,9 +120,13 @@
             fill: true,
           })
             @slot('main', className)
-              <a href="{{ route('SchoolsController.show', { id: report.school.id}) }}" class="{{ className }}">
+              @elements.anchor({
+                href: route('SchoolsController.show', { id: report.prschoolofile.id }),
+                target: '[layout-main]',
+                class: className
+              })
                 Voir l'école
-              </a>
+              @end
             @end
           @end
         @elseif(report.tutorat)
@@ -119,22 +135,33 @@
             variant: 'tutorat',
           })
             @slot('main', className)
-              <a href="{{ route('TutoratsController.show', { id: report.tutorat.id}) }}" class="{{ className }}">
+              @elements.anchor({
+                href: route('TutoratsController.show', { id: report.tutorat.id}),
+                target: '[layout-main]',
+                class: className
+              })
                 Voir le tutorat
+              @end
+            @end
+          @end
         @elseif(report.event)
           @elements.button({
             fill: true,
             variant: 'events'
           })
             @slot('main', className)
-              <a href="{{ route('EventsController.show', { id: report.event.id}) }}" class="{{ className }}">
+              @elements.anchor({
+                href: route('EventsController.show', { id: report.event.id}),
+                target: '[layout-main]',
+                class: className
+              })
                 Voir l'évènement
-              </a>
+              @end
             @end
           @end
-        @end
+        @endif
         @unless(report.resolvedAt)
-          <form action="{{ route('ReportsController.update', { id: report.id }) }}?_method=PUT" method="POST">
+          <form action="{{ route('ReportsController.update', { id: report.id }) }}?_method=PUT" method="POST" up-target="[layout-main]">
             {{ csrfField() }}
             @elements.button({
               fill: true,
@@ -148,7 +175,7 @@
           <div class="px-2 lg:px-3 py-1 rounded bg-slate-200 lg:text-lg">
             Résolu par {{ report.resolvedBy.profile.firstName }} {{ report.resolvedBy.profile.lastName }}
           </div>
-        @end
+        @endunless
       </div>
     </section>
   @end
