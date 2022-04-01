@@ -4,63 +4,79 @@
 @section('content')
   @shared.article()
     @slot('header')
-      @shared.subtitle({
-        controller: 'SkillsController',
-        variant: 'mee',
-      })
-        Compétences
-      @end
+      @if(up.targetIncludes('[layout-main]'))
+        @shared.subtitle({
+          controller: 'SkillsController',
+          variant: 'mee',
+        })
+          Compétences
+        @end
 
-      @shared.title()
-        {{ skill.name }}
+        @shared.title()
+          {{ skill.name }}
 
-        @slot('actions')
-          @can('SkillPolicy.update')
-            @elements.button({
-              variant: 'mee',
-              fill: true
-            })
-              @slot('main', className)
-                <a href="{{ route('SkillsController.edit', { id: skill.id }) }}" class="{{ className }}">
-                  Modifier
-                </a>
+          @slot('actions')
+            @can('SkillPolicy.update')
+              @elements.button({
+                variant: 'mee',
+                fill: true
+              })
+                @slot('main', className)
+                @elements.anchor({
+                  href: route('SkillsController.edit', { id: skill.id }),
+                  target: '[layout-main]',
+                  class: className
+                })
+                    Modifier
+                  @end
+                @end
               @end
             @end
           @end
         @end
-      @end
+      @endif
     @end
 
-    @!shared.delete({
-      item: skill,
-      policy: 'SkillPolicy',
-      controller: 'SkillsController',
-      end: "la compétence"
-    })
+    @if(up.targetIncludes('[layout-main]'))
+      @!shared.delete({
+        item: skill,
+        policy: 'SkillPolicy',
+        controller: 'SkillsController',
+        end: "la compétence"
+      })
+    @endif
 
     @shared.subSection()
       @slot('title')
         Mee associés
       @end
 
-      @shared.list({
-        items: profiles,
-        variant: 'mee',
-      })
-        @slot('main', profile)
-          <a href="{{ route('ProfilesController.show', { id: profile.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
-            @!mee.card({
-              profile,
+      @if(up.targetIncludes('[layout-main]') || up.targetIncludes('[layout-list]'))
+        @shared.list({
+          items: profiles,
+          variant: 'mee',
+        })
+          @slot('main', profile)
+            @elements.anchor({
+              href: route('ProfilesController.show', { id: profile.id }),
+              class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base',
+              target: '[layout-main]',
             })
-          </a>
-        @end
-      @end
+              @!mee.card({
+                profile,
+              })
+            @end
+          @end
 
-      @!shared.pagination({
-        data: profiles,
-        variant: 'mee',
-        className: 'mt-8',
-      })
+          @slot('pagination', scope)
+            @!shared.pagination({
+              data: profiles,
+              variant: 'mee',
+              className: scope.className,
+            })
+          @end
+        @end
+      @endif
     @end
   @end
 @end

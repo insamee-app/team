@@ -16,7 +16,7 @@
       @end
     @end
 
-    <form action="{{ route('SkillsController.update', { id: skill.id }) }}?_method=PUT" method="POST">
+    <form action="{{ route('SkillsController.update', { id: skill.id }) }}?_method=PUT" method="POST" up-target="[layout-main]">
       {{ csrfField() }}
 
       @form.group({ name: 'name' })
