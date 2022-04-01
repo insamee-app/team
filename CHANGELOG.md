@@ -1,3 +1,47 @@
+### Version 0.2.0
+- Merge tag '0.1.1' into develop
+- chore: format
+- feat(unpoly): add provider
+- feat(unpoly): add script
+- feat(unpoly): update styles
+- feat(unpoly): create anchor element
+- feat(unpoly): add fragment
+- feat(unpoly): add targets and conditionnals rendering on layout
+- feat(unpoly): update components to use up
+- feat(unpoly): add on home
+- feat(unpoly): add on footer
+- feat(unpoly): add on header
+- fix: update some css
+- feat(unpoly): add target
+- feat(unpoly): add to associations
+- feat(unpoly): add to events
+- fix(unpoly): remove unused code
+- feat(unpoly): add target on component
+- fix(unpoly): add targets
+- feat: add pagination on list
+- feat(unpoly): add on focus interest
+- feat(unpoly): add on reason
+- feat(unpoly): add on report
+- feat(unpoly): add on role
+- feat(unpoly): add on skill
+- feat(unpoly): add on subject
+- feat(unpoly): add on tag
+- feat(unpoly): add on thematic
+- feat(unpoly): add on user
+- fix: base url on controllers
+- chore: install addon markdown-it
+- feat(markdown): add attributes to link
+- fix(concept): wrong link
+- feat(unpoly): add to auth
+- feat(unpoly): add to tutorat
+- feat(unpoly): add to mee
+- feat(unpoly): add to schools
+- fix(unpoly): update targets
+- fix(unpoly): update targets
+- fix(unpoly): update targets
+- fix(profiles): remove pending from list
+- feat(associations): add profiles
+
 ### Version 0.1.1
 
 - Merge tag '0.1.0' into develop
