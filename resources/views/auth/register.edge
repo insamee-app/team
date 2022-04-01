@@ -2,7 +2,7 @@
 @set('title', 'S\'inscrire')
 
 @section('content')
-  <form class="flex flex-col gap-2" action='{{ route('AuthController.register') }}' method='POST'>
+  <form class="flex flex-col gap-2" action='{{ route('AuthController.register') }}' method='POST' up-target="[page-body]">
     {{ csrfField() }}
 
     @form.group({name: 'firstName'})
@@ -45,7 +45,7 @@
 
   <div class="w-full flex flex-row justify-center mt-8 py-4 px-5 rounded border border-slate-900">
     <p class="text-slate-500">Déjà un compte ?</p>&nbsp;
-    <a href="{{ route('AuthController.login') }}">
+    <a href="{{ route('AuthController.login') }}" up-target="[layout-main]" up-intant up-preload>
       Se connecter
     </a>
   </div>

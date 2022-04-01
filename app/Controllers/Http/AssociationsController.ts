@@ -1,37 +1,47 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { UserRole } from 'App/Enums/UserRole'
+import { UserStatus } from 'App/Enums/UserStatus'
 import Association from 'App/Models/Association'
 import Report from 'App/Models/Report'
 import School from 'App/Models/School'
 import Tag from 'App/Models/Tag'
 import Thematic from 'App/Models/Thematic'
+import User from 'App/Models/User'
 import AssociationStoreValidator from 'App/Validators/AssociationStoreValidator'
 import AssociationUpdateValidator from 'App/Validators/AssociationUpdateValidator'
 
 export default class AssociationsController {
   private PER_PAGE = 10
 
-  public async index({ view, request, bouncer, auth }: HttpContextContract) {
+  public async index({ up, view, request, bouncer, auth }: HttpContextContract) {
     if (auth.isGuest) {
       return view.render('pages/associations/home')
     }
 
     await bouncer.with('AssociationPolicy').authorize('viewList')
 
-    const { page = 1, ...qs } = request.qs()
+    let associations
+    if (up.targetIncludes('[layout-list]') || up.targetIncludes('[layout-main]')) {
+      const { page = 1, ...qs } = request.qs()
 
-    const associations = await Association.query()
-      .filter(qs)
-      .preload('school')
-      .preload('thematic')
-      .preload('tags')
-      .paginate(page, this.PER_PAGE)
+      associations = await Association.query()
+        .filter(qs)
+        .preload('school')
+        .preload('thematic')
+        .preload('tags')
+        .paginate(page, this.PER_PAGE)
 
-    associations.baseUrl(request.url()).queryString(qs)
+      associations.baseUrl(request.url()).queryString(qs)
+    }
 
-    const schools = await School.query().select('id', 'name').orderBy('name')
-    const thematics = await Thematic.query().select('id', 'name').orderBy('name')
-    const tags = await Tag.query().select('id', 'name').orderBy('name')
+    let schools
+    let thematics
+    let tags
+    if (up.targetIncludes('[layout-filters]') || up.targetIncludes('[layout-main]')) {
+      schools = await School.query().select('id', 'name').orderBy('name')
+      thematics = await Thematic.query().select('id', 'name').orderBy('name')
+      tags = await Tag.query().select('id', 'name').orderBy('name')
+    }
 
     return view.render('pages/associations/index', { associations, schools, thematics, tags })
   }
@@ -69,8 +79,10 @@ export default class AssociationsController {
     return response.redirect().toRoute('AssociationsController.show', { id: association.id })
   }
 
-  public async show({ view, params, bouncer, auth }: HttpContextContract) {
+  public async show({ view, params, bouncer, auth, request }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('view')
+
+    const { page, ...qs } = request.qs()
 
     const association = await Association.query()
       .where('id', params.id)
@@ -78,13 +90,22 @@ export default class AssociationsController {
       .preload('thematic')
       .preload('tags')
       .firstOrFail()
+    const profiles = await association
+      .related('profiles')
+      .query()
+      .preload('focusInterests')
+      .whereNotIn('user_id', User.query().select('id').where('status', UserStatus.Pending))
+      .paginate(page, this.PER_PAGE)
+
+    profiles.baseUrl(request.url()).queryString(qs)
+
     const report = await Report.query()
       .where('reporterId', auth.user!.id)
       .where('entityId', params.id)
       .whereNull('resolvedAt')
       .first()
 
-    return view.render('pages/associations/show', { association, report })
+    return view.render('pages/associations/show', { association, report, profiles })
   }
 
   public async edit({ view, params, bouncer }: HttpContextContract) {

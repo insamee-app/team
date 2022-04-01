@@ -53,7 +53,7 @@
         >
           @each(role in UserRoleData)
             @can(role.policy, user)
-              <form action="{{ route(role.controller, { id: user.id }) }}?_method=PUT" method="POST">
+              <form action="{{ route(role.controller, { id: user.id }) }}?_method=PUT" method="POST" up-target="[layout-main]">
                 {{ csrfField() }}
                 <button class="w-full hover:bg-slate-400 flex flex-row items-center space-x-2 py-1 px-4 {{ user.role === role.id? 'bg-slate-200' : '' }}">
                   <span class="whitespace-nowrap">

@@ -15,7 +15,7 @@
       @end
     @end
 
-    <form action="{{ route('ReasonsController.update', { id: reason.id }) }}?_method=PUT" method="POST">
+    <form action="{{ route('ReasonsController.update', { id: reason.id }) }}?_method=PUT" method="POST" up-target="[layout-main]">
       {{ csrfField() }}
 
       @form.group({ name: 'type' })

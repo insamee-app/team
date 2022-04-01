@@ -18,9 +18,13 @@
           variant: 'associations',
         })
           @slot('main', className)
-            <a href="{{ route('TagsController.create') }}" class="{{ className }}">
+            @elements.anchor({
+              href: route('TagsController.create'),
+              class: className,
+              target: '[layout-main]'
+            })
               Ajouter
-            </a>
+            @end
           @end
         @end
       @end
@@ -31,7 +35,11 @@
     items: tags
   })
     @slot('main', tag)
-      <a href="{{ route('TagsController.show', { id: tag.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
+      @elements.anchor({
+        href: route('TagsController.show', { id: tag.id }),
+        class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base',
+        target: '[layout-main]'
+      })
         @elements.card({
           classes: 'border-associations-primary-grey-light hover:shadow-lg transition'
         })
@@ -39,7 +47,7 @@
             {{ tag.name }}
           @end
         @end
-      </a>
+      @end
     @end
   @end
 @end

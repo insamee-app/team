@@ -175,7 +175,7 @@ View.global('routesTeam', [
     },
     title: 'Tutorat',
     asset: 'logo_tutorat.png',
-    color: 'text-tutorat-primary-base',
+    color: '!text-tutorat-primary-base',
   },
   {
     name: 'EventsController.index',
@@ -190,7 +190,7 @@ View.global('routesTeam', [
     },
     title: 'Évènements',
     asset: 'logo_evenements.png',
-    color: 'text-evenements-primary-base',
+    color: '!text-evenements-primary-base',
   },
   {
     name: 'AssociationsController.index',
@@ -203,14 +203,14 @@ View.global('routesTeam', [
     },
     title: 'Associations',
     asset: 'logo_associations.png',
-    color: 'text-associations-primary-base',
+    color: '!text-associations-primary-base',
   },
   {
     name: 'ProfilesController.index',
     filters: () => {},
     title: 'Mee',
     asset: 'logo_mee.png',
-    color: 'text-mee-primary-base',
+    color: '!text-mee-primary-base',
   },
 ])
 

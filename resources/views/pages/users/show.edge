@@ -58,12 +58,18 @@
     <div class="mt-8 flex felx-row justify-between">
       @elements.button()
         @slot('main', className)
-          <a href="{{ route('ProfilesController.show', { id: user.profile.id }) }}" class="{{ className }}">Voir le profil</a>
+          @elements.anchor({
+            href: route('ProfilesController.show', { id: user.profile.id }),
+            class: className,
+            target: '[layout-main]',
+          })
+            Voir le profil
+          @end
         @end
       @end
 
 
-      <form action="{{ blockAction }}" method="POST">
+      <form action="{{ blockAction }}" method="POST" up-target="[layout-main]">
         {{ csrfField() }}
         @elements.button({
           fill: true

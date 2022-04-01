@@ -1,10 +1,26 @@
-import '../css/app.css'
+import 'unpoly'
 import Alpine from 'alpinejs'
 import focus from '@alpinejs/focus'
+
+import 'unpoly/unpoly.css'
+import '../css/app.css'
+
+up.fragment.config.mainTargets.push('[layout-main]')
 
 window.Alpine = Alpine
 
 Alpine.plugin(focus)
+
+document.addEventListener('alpine:initialized', () => {
+  // Select all anchors with the attribut 'up-target'
+  const anchors = document.querySelectorAll('a[up-target]')
+  // Prevent default behavior for all anchors
+  for (const anchor of anchors) {
+    anchor.addEventListener('click', (e) => {
+      e.preventDefault()
+    })
+  }
+})
 
 Alpine.data('multiselect', (data, selectedData = []) => ({
   open: false,

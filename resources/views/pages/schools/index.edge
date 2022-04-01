@@ -16,9 +16,13 @@
           fill: true,
         })
           @slot('main', className)
-            <a href="{{ route('SchoolsController.create') }}" class="{{ className }}">
+            @elements.anchor({
+              href: route('SchoolsController.create'),
+              class: className,
+              target: '[layout-main]'
+            })
               Ajouter
-            </a>
+            @end
           @end
         @end
       @end
@@ -29,11 +33,15 @@
     items: schools
   })
     @slot('main', school)
-      <a href="{{ route('SchoolsController.show', { id: school.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 h-full">
+      @elements.anchor({
+        href: route('SchoolsController.show', { id: school.id }),
+        class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 h-full',
+        target: '[layout-main]'
+      })
         @!schools.card({
           school,
         })
-      </a>
+      @end
     @end
   @end
 

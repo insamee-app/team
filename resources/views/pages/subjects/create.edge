@@ -16,7 +16,7 @@
       @end
     @end
 
-    <form action="{{ route('SubjectsController.store') }}" method="POST">
+    <form action="{{ route('SubjectsController.store') }}" method="POST" up-target="[layout-main]">
       {{ csrfField() }}
 
       @form.group({ name: 'name' })

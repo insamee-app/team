@@ -34,7 +34,7 @@ export default class TagsController {
   public async show({ request, view, bouncer, params }: HttpContextContract) {
     await bouncer.with('TagPolicy').authorize('view')
 
-    const page = request.input('page', 1)
+    const { page, ...qs } = request.qs()
 
     const tag = await Tag.query().where('id', params.id).firstOrFail()
     const associations = await tag
@@ -46,7 +46,7 @@ export default class TagsController {
       .orderBy('name', 'asc')
       .paginate(page, this.PER_PAGE)
 
-    associations.baseUrl(request.url())
+    associations.baseUrl(request.url()).queryString(qs)
 
     return view.render('pages/tags/show', { tag, associations })
   }

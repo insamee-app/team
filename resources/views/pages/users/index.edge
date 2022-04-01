@@ -16,7 +16,11 @@
     items: users
   })
     @slot('main', user)
-      <a href="{{ route('UsersController.show', { id: user.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+      @elements.anchor({
+        href: route('UsersController.show', { id: user.id }),
+        class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500',
+        target: '[layout-main]'
+      })
         @elements.card({
           classes: 'border-slate-200 space-y-4 hover:shadow-lg transition'
         })
@@ -47,12 +51,13 @@
             @endif
           </div>
         @end
-      </a>
+      @end
+    @end
+    @slot('pagination', scope)
+      @!shared.pagination({
+        data: users,
+        className: scope.className,
+      })
     @end
   @end
-
-  @!shared.pagination({
-    data: users,
-    className: 'mt-8',
-  })
 @end

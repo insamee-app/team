@@ -26,7 +26,7 @@
             variant: 'schools',
           })
 
-          <form action="{{ route('SchoolsPicturesController.destroy', { id: school.id }) }}?_method=DELETE" method="POST">
+          <form action="{{ route('SchoolsPicturesController.destroy', { id: school.id }) }}?_method=DELETE" method="POST" up-target="[layout-main]">
             {{ csrfField() }}
 
             <button type="submit" class="text-sm text-slate-500">Supprimer l'image</button>
@@ -35,7 +35,7 @@
       </section>
     @endif
 
-    <form action="{{ route('SchoolsPicturesController.update', { id: school.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly">
+    <form action="{{ route('SchoolsPicturesController.update', { id: school.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly" up-target="[layout-main]">
       {{ csrfField() }}
 
       <h3 class="text-xl lg:text-3xl font-bold">Nouvelle image</h3>

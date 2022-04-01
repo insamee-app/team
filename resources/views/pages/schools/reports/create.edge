@@ -15,7 +15,7 @@
       @end
     @end
 
-    <form class="mt-8" action="{{ route('ReportsSchoolsController.store', { id: request.routeParams.id }) }}" method="POST">
+    <form class="mt-8" action="{{ route('ReportsSchoolsController.store', { id: request.routeParams.id }) }}" method="POST" up-target="[layout-main]">
       {{ csrfField() }}
 
       @form.group({ name: 'reasonId' })

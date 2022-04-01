@@ -9,3 +9,11 @@ body {
 [x-cloak] {
   display: none !important;
 }
+
+a.up-current {
+  @apply text-slate-900;
+}
+
+up-progress-bar {
+  @apply bg-slate-900;
+}

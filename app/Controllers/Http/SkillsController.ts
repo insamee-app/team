@@ -1,5 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { UserStatus } from 'App/Enums/UserStatus'
 import Skill from 'App/Models/Skill'
+import User from 'App/Models/User'
 import SkillStoreValidator from 'App/Validators/SkillStoreValidator'
 import SkillUpdateValidator from 'App/Validators/SkillUpdateValidator'
 
@@ -34,14 +36,17 @@ export default class SkillsController {
   public async show({ request, view, params, bouncer }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('view')
 
-    const page = request.input('page')
+    const { page, ...qs } = request.qs()
 
     const skill = await Skill.query().where('id', params.id).firstOrFail()
     const profiles = await skill
       .related('profiles')
       .query()
       .preload('focusInterests')
+      .whereNotIn('user_id', User.query().select('id').where('status', UserStatus.Pending))
       .paginate(page, this.PER_PAGE)
+
+    profiles.baseUrl(request.url()).queryString(qs)
 
     return view.render('pages/skills/show', { skill, profiles })
   }

@@ -1,8 +1,54 @@
+### Version 0.2.0
+- Merge tag '0.1.1' into develop
+- chore: format
+- feat(unpoly): add provider
+- feat(unpoly): add script
+- feat(unpoly): update styles
+- feat(unpoly): create anchor element
+- feat(unpoly): add fragment
+- feat(unpoly): add targets and conditionnals rendering on layout
+- feat(unpoly): update components to use up
+- feat(unpoly): add on home
+- feat(unpoly): add on footer
+- feat(unpoly): add on header
+- fix: update some css
+- feat(unpoly): add target
+- feat(unpoly): add to associations
+- feat(unpoly): add to events
+- fix(unpoly): remove unused code
+- feat(unpoly): add target on component
+- fix(unpoly): add targets
+- feat: add pagination on list
+- feat(unpoly): add on focus interest
+- feat(unpoly): add on reason
+- feat(unpoly): add on report
+- feat(unpoly): add on role
+- feat(unpoly): add on skill
+- feat(unpoly): add on subject
+- feat(unpoly): add on tag
+- feat(unpoly): add on thematic
+- feat(unpoly): add on user
+- fix: base url on controllers
+- chore: install addon markdown-it
+- feat(markdown): add attributes to link
+- fix(concept): wrong link
+- feat(unpoly): add to auth
+- feat(unpoly): add to tutorat
+- feat(unpoly): add to mee
+- feat(unpoly): add to schools
+- fix(unpoly): update targets
+- fix(unpoly): update targets
+- fix(unpoly): update targets
+- fix(profiles): remove pending from list
+- feat(associations): add profiles
+
 ### Version 0.1.1
+
 - Merge tag '0.1.0' into develop
 - fix(profile): update allowed hosts
 
 ### Version 0.1.0
+
 - chore: format
 - fix #46
 - fix(title): update size in lg when edit images
@@ -29,7 +75,9 @@
 - fix(tutorat): remove unused code
 - chore: format
 - feat(concept): update texts
+
 ### Version 0.0.10
+
 - Merge tag '0.0.9' into develop
 - chore: format
 - feat(subjects): create migrations
@@ -47,11 +95,15 @@
 - fix #40
 - fix #36
 - fix #35
+
 ### Version 0.0.9
+
 - Merge tag '0.0.8' into develop
 - chore: format
 - build: remove unused code
+
 ### Version 0.0.8
+
 - Merge tag '0.0.7' into develop
 - chore: format
 - fix #34
@@ -61,7 +113,9 @@
 - fix: remove logs
 - chore: format
 - feat(profiles): add school's picture
+
 ### Version 0.0.7
+
 - Merge tag '0.0.6' into develop
 - chore: format
 - feat(associations): add default filters - fix #22
@@ -79,10 +133,14 @@
 - chore: format
 - chore: format
 - fix(rate_limiter): many issues
+
 ### Version 0.0.6
+
 - Merge tag '0.0.5' into develop
 - fix(drive): loss file uploads
+
 ### Version 0.0.5
+
 - Merge tag '0.0.4' into develop
 - fix #19
 - fix #21
@@ -94,7 +152,9 @@
 - fix(avatar): upadate rounded corners for associations
 - fix #23
 - fix #24
+
 ### Version 0.0.4
+
 - chore: update bump
 - Merge tag '0.0.3' into develop
 - fix: update env
@@ -118,11 +178,15 @@
 - fix #16
 - fix #15
 - fix: update illusations in home associations
+
 ### Version 0.0.3
+
 - Merge tag '0.0.2' into develop
 - fix(bump): remove tag creation
 - build: copy content to build file
+
 ### Version 0.0.2
+
 - feat(role): create new roles
 - feat(role): add more details
 - feat(role): add more to policy
@@ -131,7 +195,9 @@
 - feat(role): create dropdown
 - fix(role): apply policy to dropdown
 - fix(bump): remove tag creation
+
 ### Version 0.0.0
+
 - Initial commit
 - initial commit
 - feat(users): add uuid

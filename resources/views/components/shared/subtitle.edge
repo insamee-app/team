@@ -10,7 +10,7 @@
 @endif
 
 <h2 class="text-lg md:text-xl lg:text-2xl font-semibold {{ color }}">
-  <a href="{{ route(controller + '.index') }}">
+  <a href="{{ route(controller + '.index') }}" up-target="[layout-main]" up-instant>
     {{{ await $slots.main() }}}
   </a>
   @if($slots.extend)

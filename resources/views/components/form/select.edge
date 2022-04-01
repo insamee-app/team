@@ -80,7 +80,7 @@
       class="absolute z-10 left-0 right-0 top-full mt-1 py-3 bg-white shadow-lg rounded max-h-32 overflow-y-auto"
     >
       <template x-for="(item, i) in items"  >
-        <li x-text="item.name" x-on:click="toggleItem(item)" class="{{ listClasses }} py-1 px-3" :class="classes(item, i, {{ stringify(currentListItemClasses) }}, {{ stringify(selectedListItemClasses) }})" :key="item.id"></li>
+        <li x-text="item.name" x-on:click="toggleItem(item)" class="cursor-pointer {{ listClasses }} py-1 px-3" :class="classes(item, i, {{ stringify(currentListItemClasses) }}, {{ stringify(selectedListItemClasses) }})" :key="item.id"></li>
       </template>
     </ul>
   </div>

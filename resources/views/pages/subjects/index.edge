@@ -18,9 +18,13 @@
           variant: 'mee',
         })
           @slot('main', className)
-            <a href="{{ route('SubjectsController.create') }}" class="{{ className }}">
+            @elements.anchor({
+              href: route('SubjectsController.create'),
+              class: className,
+              target: '[layout-main]'
+            })
               Ajouter
-            </a>
+            @end
           @end
         @end
       @end
@@ -31,7 +35,11 @@
     items: subjects
   })
     @slot('main', subject)
-      <a href="{{ route('SubjectsController.show', { id: subject.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base">
+      @elements.anchor({
+        href: route('SubjectsController.show', { id: subject.id }),
+        class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base',
+        target: '[layout-main]'
+      })
         @elements.card({
           classes: 'border-mee-primary-grey-light hover:shadow-lg transition'
         })
@@ -39,7 +47,7 @@
             {{ subject.name }}
           @end
         @end
-      </a>
+      @end
     @end
   @end
 @end

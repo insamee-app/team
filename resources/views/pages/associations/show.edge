@@ -4,67 +4,85 @@
 @section('content')
   @shared.article()
     @slot('header')
-      @shared.subtitle({
-        controller: 'AssociationsController',
-        variant: 'associations',
-      })
-        Associations
-        @slot('extend')
-          <span>
-            |
-          </span>
-          <a href="{{ route('ThematicsController.show', { id: association.thematic.id }) }}" class="capitalize">
-            {{ association.thematic.name }}
-          </a>
-        @end
-      @end
-
-      @shared.title()
-        <div class="flex flex-col space-y-1">
-           <span class="font-bold">
-            {{ association.name }}
-          </span>
-          <span class="text-lg lg:text-2xl font-normal text-associations-primary-grey-dark">
-            {{ association.school.name }}
-          </span>
-        </div>
-
-
-        @slot('actions')
-          @can('AssociationPolicy.update', association)
-            @elements.button({
-              variant: 'associations',
-              fill: true
+      @if(up.targetIncludes('[layout-main]'))
+        @shared.subtitle({
+          controller: 'AssociationsController',
+          variant: 'associations',
+        })
+          Associations
+          @slot('extend')
+            <span>
+              |
+            </span>
+            @elements.anchor({
+              href: route('ThematicsController.show', {
+                id: association.thematic.id,
+              }),
+              target: '[layout-main]',
+              class: 'capitalize'
             })
-              @slot('main', className)
-                <a href="{{ route('AssociationsController.edit', { id: association.id }) }}" class="{{ className }}">
-                  Modifier
-                </a>
+              {{ association.thematic.name }}
+            @end
+          @end
+        @end
+
+        @shared.title()
+          <div class="flex flex-col space-y-1">
+            <span class="font-bold">
+              {{ association.name }}
+            </span>
+            <span class="text-lg lg:text-2xl font-normal text-associations-primary-grey-dark">
+              {{ association.school.name }}
+            </span>
+          </div>
+
+
+          @slot('actions')
+            @can('AssociationPolicy.update', association)
+              @elements.button({
+                variant: 'associations',
+                fill: true
+              })
+                @slot('main', className)
+                  @elements.anchor({
+                    href: route('AssociationsController.edit', {
+                      id: association.id,
+                    }),
+                    class: className
+                  })
+                    Modifier
+                  @end
+                @end
               @end
             @end
           @end
         @end
-      @end
+      @endif
     @end
 
-    <div class="flex flex-col gap-8">
-
-      <div class="flex flex-col space-y-4 items-center text-associations-primary-base">
-        @!shared.avatar({
-          attachment: association.picture,
-          alt: 'Image de l\'association ' + association.name,
-          variant: 'associations',
-          placeholder: true,
-        })
-        @can('AssociationPolicy.update', association)
-          <a href="{{ route('AssociationsPicturesController.edit', { id: association.id }) }}" class="flex flex-row space-x-1 justify-center items-center">
+    @if(up.targetIncludes('[layout-main]'))
+      <div class="flex flex-col gap-8">
+        <div class="flex flex-col space-y-4 items-center text-associations-primary-base">
+          @!shared.avatar({
+            attachment: association.picture,
+            alt: 'Image de l\'association ' + association.name,
+            variant: 'associations',
+            placeholder: true,
+          })
+          @can('AssociationPolicy.update', association)
+            @elements.anchor({
+              href: route('AssociationsPicturesController.edit', {
+                id: association.id,
+              }),
+              class: 'flex flex-row space-x-1 justify-center items-center'
+            })
             <span>
               {{ association.picture ? 'Modifier l\'image' : 'Ajouter une image' }}
             </span>
             @!icons.photograph({
               class: 'w-5 h-5 fill-current'
             })
-          </a>
+          @end
         @end
         <ul class="flex flex-row justify-center items-center gap-2 flex-wrap max-w-lg">
           @each(tag in association.tags)
@@ -78,9 +96,9 @@
       </div>
 
       <section>
-          <h3 class="text-xl lg:text-2xl font-bold">Présentation</h3>
-          <p class="mt-4 lg:text-lg text-justify">
-            {{ association.overview }}
+        <h3 class="text-xl lg:text-2xl font-bold">Présentation</h3>
+        <p class="mt-4 lg:text-lg text-justify">
+          {{ association.overview }}
         </p>
       </section>
 
@@ -105,21 +123,56 @@
             @end
           @end
         @endif
-      </div>
-    </div>
+        </footer>
+    @endif
+
+    @if(up.targetIncludes('[layout-main]'))
+      @!shared.report({
+        report,
+        id: association.id,
+        controller: 'ReportsAssociationsController',
+        end: "l'association"
+      })
+
+      @!shared.delete({
+        item: association,
+        policy: 'AssociationPolicy',
+        controller: 'AssociationsController',
+        end: "l'association"
+      })
+    @endif
+
+    @shared.subSection()
+      @slot('title')
+        Mee associés
+      @end
+
+      @if(up.targetIncludes('[layout-main]') || up.targetIncludes('[layout-list]'))
+        @shared.list({
+          items: profiles,
+          variant: 'mee',
+        })
+          @slot('main', profile)
+            @elements.anchor({
+              href: route('ProfilesController.show', { id: profile.id }),
+              class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mee-primary-base',
+              target: '[layout-main]',
+            })
+              @!mee.card({
+                profile,
+              })
+            @end
+          @end
+
+          @slot('pagination', scope)
+            @!shared.pagination({
+              data: profiles,
+              variant: 'mee',
+              className: scope.className,
+            })
+          @end
+        @end
+      @endif
+    @end
   @end
-
-  @!shared.report({
-    report,
-    id: association.id,
-    controller: 'ReportsAssociationsController',
-    end: "l'association"
-  })
-
-  @!shared.delete({
-    item: association,
-    policy: 'AssociationPolicy',
-    controller: 'AssociationsController',
-    end: "l'association"
-  })
 @end

@@ -15,7 +15,7 @@
       @end
     @end
 
-    <form action="{{ route('SchoolsController.store') }}" method="POST">
+    <form action="{{ route('SchoolsController.store') }}" method="POST" up-target="[layout-main]">
       {{ csrfField() }}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @form.group({name: 'name'})
@@ -28,11 +28,6 @@
           @!form.input({ type: 'text', placeholder: 'Saisir la ville' })
         @end
 
-        @form.group({name: 'overview'})
-          @!form.label({ title: 'Présentation' })
-          @!form.area({ type: 'text' })
-        @end
-
         @form.group({name: 'website'})
           @!form.label({ title: 'Site internet' })
           @!form.input({ type: 'url', placeholder: 'Saisir le site internet' })
@@ -41,6 +36,11 @@
         @form.group({name: 'hostname'})
           @!form.label({ title: 'Nom de domaine' })
           @!form.input({ type: 'text', placeholder: 'Saisir le nom de domaine'})
+        @end
+
+        @form.group({name: 'overview', className: 'lg:col-span-2'})
+          @!form.label({ title: 'Présentation' })
+          @!form.area({ type: 'text' })
         @end
       </div>
 

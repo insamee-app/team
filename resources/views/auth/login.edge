@@ -6,6 +6,7 @@
       class="flex flex-col gap-2"
       action="{{ route('AuthController.login') }}"
       method="POST"
+      up-target="[page-body]"
     >
     {{ csrfField() }}
 
@@ -38,21 +39,21 @@
 
   <div class="w-full flex flex-row justify-center mt-8 py-4 px-5 rounded border border-slate-900">
     <p class="text-slate-500">Pas encore de compte ?</p>&nbsp;
-    <a href="{{ route('AuthController.register') }}">
+    <a href="{{ route('AuthController.register') }}" up-target="[layout-main]" up-instant up-preload>
       S'inscrire
     </a>
   </div>
 
   <div class="w-full flex flex-col items-center mt-8">
     <p class="text-slate-500">Besoin de vérifier votre compte ?</p>
-    <a href="{{ route('AuthController.sendVerifyEmail') }}">
+    <a href="{{ route('AuthController.sendVerifyEmail') }}" up-target="[layout-main]" up-instant up-preload>
       Envoyer le couriel de vérification
     </a>
   </div>
 
   <div class="w-full flex flex-col items-center mt-8">
     <p class="text-slate-500">Vous avez oublié votre mot de passe ?</p>
-    <a href="{{ route('AuthController.sendResetPassword') }}">
+    <a href="{{ route('AuthController.sendResetPassword') }}" up-target="[layout-main]" up-instant up-preload>
       Envoyer le couriel de réinitialisation
     </a>
   </div>

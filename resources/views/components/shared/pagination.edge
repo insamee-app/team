@@ -18,7 +18,7 @@
 @if(data.hasPages)
   <div class="max-w-lg w-full mx-auto flex flex-row justify-between text-lg md:text-xl font-bold {{ textColor }} {{ className }}">
     @if(data.getPreviousPageUrl())
-      <a href={{ data.getPreviousPageUrl() }}>
+      <a href={{ data.getPreviousPageUrl() }} up-target="[layout-list]" up-instant up-history="true" up-scroll="reset" up-location="{{ data.getPreviousPageUrl() }}">
         @!icons.chevronLeft({
           role: 'img',
           'aria-label': 'Previous page',
@@ -41,14 +41,14 @@
       @set('max', data.lastPage > visiblePage ? visiblePage + 1 : data.lastPage)
       @each(anchor in data.getUrlsForRange(fromPage, fromPage === 1 ? max : toPage))
         <li>
-          <a href="{{ anchor.url }}" class="px-2 py-[2px] md:px-3 md:py-1 {{ anchor.isActive ? 'rounded ' + pageColor : '' }}">
+          <a href="{{ anchor.url }}" class="px-2 py-[2px] md:px-3 md:py-1 {{ anchor.isActive ? 'rounded ' + pageColor : '' }}" up-target="[layout-list]" up-instant up-history="true" up-scroll="reset" up-location="{{ anchor.url }}">
             {{ anchor.page }}
           </a>
         </li>
       @end
     </ul>
     @if(data.getNextPageUrl())
-      <a href={{ data.getNextPageUrl() }}>
+      <a href={{ data.getNextPageUrl() }} up-target="[layout-list]" up-instant up-history="true" up-scroll="reset" up-location="{{ data.getNextPageUrl() }}">
         @!icons.chevronRight({
           role: 'img',
           'aria-label': 'Next page',

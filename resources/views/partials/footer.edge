@@ -1,15 +1,15 @@
 <footer class="max-w-screen-lg mx-auto px-4 mt-16 lg:mt-24 mb-20 grid lg:grid-cols-2 gap-16 text-xs lg:text-sm text-slate-500">
   <hr class="bg-slate-500 lg:col-span-2" />
   <div class="grid grid-flow-col grid-rows-3 grid-cols-2 gap-2 lg:gap-4">
-    <a href="{{ route('terms') }}">Conditions Générales d'Utilisation</a>
-    <a href="{{ route('privacy') }}">Politique de confidentialité</a>
-    <a href="{{ route('about') }}" class="col-start-2">A propos</a>
-    <a href="{{ route('sitemap') }}" class="col-start-2">Plan du site</a>
-    <a href="{{ route('contact-us') }}" class="col-start-2">Nous contacter</a>
+    <a href="{{ route('terms') }}" up-target="[layout-main]" up-instant up-preload>Conditions Générales d'Utilisation</a>
+    <a href="{{ route('privacy') }}" up-target="[layout-main]" up-instant up-preload>Politique de confidentialité</a>
+    <a href="{{ route('about') }}" class="col-start-2" up-target="[layout-main]" up-instant up-preload>A propos</a>
+    <a href="{{ route('sitemap') }}" class="col-start-2" up-target="[layout-main]" up-instant up-preload>Plan du site</a>
+    <a href="{{ route('contact-us') }}" class="col-start-2" up-target="[layout-main]" up-instant up-preload>Nous contacter</a>
   </div>
   <div class="lg:place-self-end grid gap-4">
     <div>
-      TEAM v0.1.1 <br />
+      TEAM v0.2.0 <br />
       Développé par InsameeApp |&nbsp;
       <a href="https://insameeapp.fr" target="_blank">insameeapp.fr</a>
     </div>

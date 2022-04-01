@@ -26,9 +26,13 @@
               fill: true
             })
               @slot('main', className)
-                <a href="{{ route('ProfilesController.edit', { id: profile.id }) }}" class="{{ className }}">
+                @elements.anchor({
+                  href: route('ProfilesController.edit', { id: profile.id }),
+                  class: className,
+                  target: '[layout-main]'
+                })
                   Modifier
-                </a>
+                @end
               @end
             @end
           @end
@@ -53,7 +57,11 @@
         </div>
 
         @can('ProfilePolicy.delete', profile)
-          <a href="{{ route('ProfilesAvatarsController.edit', { id: profile.id }) }}" class="flex flex-row items-center space-x-1 text-mee-primary-base">
+          @elements.anchor({
+            href: route('ProfilesAvatarsController.edit', { id: profile.id }),
+            class: 'flex flex-row items-center space-x-1 text-mee-primary-base',
+            target: '[layout-main]'
+          })
             <span>
              {{ profile.avatar ? 'Modifier la photo' : 'Ajouter une photo' }}
             </span>
@@ -61,7 +69,7 @@
               'aria-label': 'Carte d\'identification',
               class: "w-4 h-4 mt-1"
             })
-          </a>
+          @end
         @end
       </div>
 
@@ -82,7 +90,11 @@
           variant: 'mee'
         })
           @slot('main', props)
-            <a href="{{ route('SchoolsController.show', { id: profile.school.id }) }}" class="{{ props.className }} flex flex-row space-x-3 items-center">
+            @elements.anchor({
+              href: route('SchoolsController.show', { id: profile.school.id }),
+              class: 'flex flex-row space-x-3 items-center' + ' ' + props.className,
+              target: '[layout-main]'
+            })
               @!shared.avatar({
                 attachment: profile.school.picture,
                 alt: 'Logo de ' + profile.school.name,
@@ -91,7 +103,7 @@
                 size: 'w-auto h-6 lg:w-auto lg:h-8',
               })
               <span>{{ profile.school.name }} </span>
-            </a>
+            @end
           @end
         @end
 
@@ -129,7 +141,11 @@
             <ul class="flex flex-col space-y-2 {{ props.className }}">
               @each(association in profile.associations)
               <li>
-                <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="flex flex-row space-x-3 items-center">
+                @elements.anchor({
+                  href: route('AssociationsController.show', { id: association.id }),
+                  class: 'flex flex-row space-x-3 items-center',
+                  target: '[layout-main]'
+                })
                   @!shared.avatar({
                     attachment: association.picture,
                     alt: 'Logo de ' + association.name,
@@ -138,7 +154,7 @@
                     size: 'w-6 h-6 lg:w-8 lg:h-8',
                     })
                     <span>{{ association.name }} </span>
-                  </a>
+                  @end
                 </li>
               @endeach
             </ul>
@@ -215,7 +231,7 @@
         end: "le profil"
       })
     @else
-      <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST" class="mt-8 flex justify-end items-center">
+      <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST" class="mt-8 flex justify-end items-center" up-target="[page-body]">
         {{ csrfField() }}
         <button type="submit" class="text-slate-500 text-sm italic">
           Se déconnecter

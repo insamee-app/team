@@ -10,15 +10,18 @@
   @entryPointStyles('app')
   @entryPointScripts('app')
 </head>
-<body>
-  @include('partials/header')
+<body page-body>
+  @if(up.targetIncludes('[layout-header]') || up.targetIncludes('[page-body]'))
+    @include('partials/header')
+  @endif
 
-  @include('partials/flash')
-
-  <main class="mt-20 lg:mt-24 px-4 max-w-screen-xl mx-auto">
+  <main class="mt-20 lg:mt-24 px-4 max-w-screen-xl mx-auto" layout-main>
+    @include('partials/flash')
     @!section('content')
   </main>
 
-  @include('partials/footer')
+  @if(up.targetIncludes('[layout-footer]') || up.targetIncludes('[page-body]'))
+    @include('partials/footer')
+  @endif
 </body>
 </html>

@@ -19,9 +19,13 @@
           variant: 'tutorat'
         })
           @slot('main', className)
-            <a href="{{ route('TutoratsController.create') }}" class="{{ className }}">
+            @elements.anchor({
+              href: route('TutoratsController.create'),
+              class: className,
+              target: '[layout-main]'
+            })
               Créer
-            </a>
+            @end
           @end
         @end
       @end
@@ -42,14 +46,17 @@
       variant: 'tutorat',
     })
       @slot('main', tutorat)
-        <a href="{{ route('TutoratsController.show', { id: tutorat.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 {{tutorat.kind === TutoratKind.Offer ? 'focus:ring-tutorat-primary-base' : 'focus:ring-tutorat-secondary-base'}} h-full">
+        @elements.anchor({
+          href: route('TutoratsController.show', { id: tutorat.id }),
+          class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 h-full ' + tutorat.kind === TutoratKind.Offer ? 'focus:ring-tutorat-primary-base' : 'focus:ring-tutorat-secondary-base',
+          target: '[layout-main]'
+        })
           @!tutorat.card({
             tutorat,
           })
-        </a>
+        @end
       @end
     @end
-
     @slot('pagination', scope)
       @!shared.pagination({
         data: tutorats,

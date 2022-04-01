@@ -1,5 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { UserStatus } from 'App/Enums/UserStatus'
 import FocusInterest from 'App/Models/FocusInterest'
+import User from 'App/Models/User'
 import FocusInterestStoreValidator from 'App/Validators/FocusInterestStoreValidator'
 import FocusInterestUpdateValidator from 'App/Validators/FocusInterestUpdateValidator'
 
@@ -34,14 +36,18 @@ export default class FocusInterestsController {
   public async show({ request, view, params, bouncer }: HttpContextContract) {
     await bouncer.with('FocusInterestPolicy').authorize('view')
 
-    const page = request.input('page')
+    const { page, ...qs } = request.qs()
 
     const focusInterest = await FocusInterest.query().where('id', params.id).firstOrFail()
+
     const profiles = await focusInterest
       .related('profiles')
       .query()
       .preload('focusInterests')
+      .whereNotIn('user_id', User.query().select('id').where('status', UserStatus.Pending))
       .paginate(page, this.PER_PAGE)
+
+    profiles.baseUrl(request.url()).queryString(qs)
 
     return view.render('pages/focus-interests/show', { focusInterest, profiles })
   }
