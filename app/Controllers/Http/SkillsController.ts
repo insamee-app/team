@@ -1,5 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { UserStatus } from 'App/Enums/UserStatus'
 import Skill from 'App/Models/Skill'
+import User from 'App/Models/User'
 import SkillStoreValidator from 'App/Validators/SkillStoreValidator'
 import SkillUpdateValidator from 'App/Validators/SkillUpdateValidator'
 
@@ -41,6 +43,7 @@ export default class SkillsController {
       .related('profiles')
       .query()
       .preload('focusInterests')
+      .whereNotIn('user_id', User.query().select('id').where('status', UserStatus.Pending))
       .paginate(page, this.PER_PAGE)
 
     profiles.baseUrl(request.url()).queryString(qs)

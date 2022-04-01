@@ -1,5 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { UserStatus } from 'App/Enums/UserStatus'
 import FocusInterest from 'App/Models/FocusInterest'
+import User from 'App/Models/User'
 import FocusInterestStoreValidator from 'App/Validators/FocusInterestStoreValidator'
 import FocusInterestUpdateValidator from 'App/Validators/FocusInterestUpdateValidator'
 
@@ -42,6 +44,7 @@ export default class FocusInterestsController {
       .related('profiles')
       .query()
       .preload('focusInterests')
+      .whereNotIn('user_id', User.query().select('id').where('status', UserStatus.Pending))
       .paginate(page, this.PER_PAGE)
 
     profiles.baseUrl(request.url()).queryString(qs)
