@@ -4,63 +4,77 @@
 @section('content')
   @shared.article()
     @slot('header')
-      @shared.subtitle({
-        controller: 'TagsController',
-        variant: 'associations',
-      })
-        Tags
-      @end
+      @if(up.targetIncludes('[layout-main]'))
+        @shared.subtitle({
+          controller: 'TagsController',
+          variant: 'associations',
+        })
+          Tags
+        @end
 
-      @shared.title()
-        {{ tag.name }}
+        @shared.title()
+          {{ tag.name }}
 
-        @slot('actions')
-          @can('TagPolicy.update')
-            @elements.button({
-              variant: 'associations',
-              fill: true
-            })
-              @slot('main', className)
-                <a href="{{ route('TagsController.edit', { id: tag.id }) }}" class="{{ className }}">
-                  Modifier
-                </a>
+          @slot('actions')
+            @can('TagPolicy.update')
+              @elements.button({
+                variant: 'associations',
+                fill: true
+              })
+                @slot('main', className)
+                  @elements.anchor({
+                    href: route('TagsController.edit', { id: tag.id }),
+                    class: className,
+                    target: '[layout-main]'
+                  })
+                    Modifier
+                  @end
+                @end
               @end
             @end
           @end
         @end
-      @end
+      @endif
     @end
 
-    @!shared.delete({
-      item: tag,
-      policy: 'TagPolicy',
-      controller: 'TagsController',
-      end: "le tag"
-    })
+    @if(up.targetIncludes('[layout-main]'))
+      @!shared.delete({
+        item: tag,
+        policy: 'TagPolicy',
+        controller: 'TagsController',
+        end: "le tag"
+      })
+    @endif
 
     @shared.subSection()
       @slot('title')
         Associations associés
       @end
 
-      @shared.list({
-        items: associations,
-        variant: 'associations',
-      })
-        @slot('main', association)
-          <a href="{{ route('AssociationsController.show', { id: association.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base">
-            @!associations.card({
-              association,
+      @if(up.targetIncludes('[layout-main]') || up.targetIncludes('[layout-list]'))
+        @shared.list({
+          items: associations,
+          variant: 'associations',
+        })
+          @slot('main', association)
+            @elements.anchor({
+              href: route('AssociationsController.edit', { id: association.id }),
+              class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base'
             })
-          </a>
+              @!associations.card({
+                association,
+              })
+            @end
+          @end
+          @slot('pagination', scope)
+            @!shared.pagination({
+              data: associations,
+              variant: 'associations',
+              className: scope.className,
+            })
+          @end
         @end
-      @end
-
-      @!shared.pagination({
-        data: associations,
-        variant: 'associations',
-        className: 'mt-8',
-      })
+      @endif
     @end
   @end
 @end
