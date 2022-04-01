@@ -16,9 +16,13 @@
           fill: true,
         })
           @slot('main', className)
-          <a href="{{ route('RolesController.create') }}" class="{{ className }}">
-            Ajouter
-          </a>
+            @elements.anchor({
+              href: route('RolesController.create'),
+              class: className,
+              target: '[layout-main]'
+            })
+              Ajouter
+            @end
           @end
         @end
       @end
@@ -29,7 +33,11 @@
     items: roles
   })
     @slot('main', role)
-      <a href="{{ route('RolesController.show', { id: role.id }) }}" class="block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+      @elements.anchor({
+        href: route('RolesController.show', { id: role.id }),
+        class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500',
+        target: '[layout-main]'
+      })
         @elements.card({
           classes: 'border-slate-200 hover:shadow-lg transition'
         })
@@ -37,7 +45,7 @@
             {{ role.name }}
           @end
         @end
-      </a>
+      @end
     @end
   @end
 @end

@@ -19,9 +19,12 @@
               fill: true
             })
               @slot('main', className)
-                <a href="{{ route('RolesController.edit', { id: role.id }) }}" class="{{ className }}">
+                @elements.anchor({
+                  href: route('RolesController.edit', { id: role.id }),
+                  class: className
+                })
                   Modifier
-                </a>
+                @end
               @end
             @end
           @end
