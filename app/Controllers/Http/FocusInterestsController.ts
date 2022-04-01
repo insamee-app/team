@@ -34,14 +34,17 @@ export default class FocusInterestsController {
   public async show({ request, view, params, bouncer }: HttpContextContract) {
     await bouncer.with('FocusInterestPolicy').authorize('view')
 
-    const page = request.input('page')
+    const { page, ...qs } = request.qs()
 
     const focusInterest = await FocusInterest.query().where('id', params.id).firstOrFail()
+
     const profiles = await focusInterest
       .related('profiles')
       .query()
       .preload('focusInterests')
       .paginate(page, this.PER_PAGE)
+
+    profiles.baseUrl(request.url()).queryString(qs)
 
     return view.render('pages/focus-interests/show', { focusInterest, profiles })
   }

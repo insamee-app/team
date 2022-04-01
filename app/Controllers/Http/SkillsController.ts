@@ -34,7 +34,7 @@ export default class SkillsController {
   public async show({ request, view, params, bouncer }: HttpContextContract) {
     await bouncer.with('SkillPolicy').authorize('view')
 
-    const page = request.input('page')
+    const { page, ...qs } = request.qs()
 
     const skill = await Skill.query().where('id', params.id).firstOrFail()
     const profiles = await skill
@@ -42,6 +42,8 @@ export default class SkillsController {
       .query()
       .preload('focusInterests')
       .paginate(page, this.PER_PAGE)
+
+    profiles.baseUrl(request.url()).queryString(qs)
 
     return view.render('pages/skills/show', { skill, profiles })
   }

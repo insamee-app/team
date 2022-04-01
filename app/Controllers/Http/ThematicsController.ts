@@ -34,7 +34,7 @@ export default class ThematicsController {
   public async show({ request, view, bouncer, params }: HttpContextContract) {
     await bouncer.with('ThematicPolicy').authorize('view')
 
-    const page = request.input('page', 1)
+    const { page, ...qs } = request.qs()
 
     const thematic = await Thematic.query().where('id', params.id).firstOrFail()
     const associations = await thematic
@@ -46,7 +46,7 @@ export default class ThematicsController {
       .orderBy('name', 'asc')
       .paginate(page, this.PER_PAGE)
 
-    associations.baseUrl(request.url())
+    associations.baseUrl(request.url()).queryString(qs)
 
     return view.render('pages/thematics/show', { thematic, associations })
   }
