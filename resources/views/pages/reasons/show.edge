@@ -19,9 +19,13 @@
               fill: true
             })
               @slot('main', className)
-                <a href="{{ route('ReasonsController.edit', { id: reason.id }) }}" class="{{ className }}">
+                @elements.anchor({
+                  href: route('ReasonsController.edit', { id: reason.id }),
+                  class: className,
+                  target: '[layout-main]'
+                })
                   Modifier
-                </a>
+                @end
               @end
             @end
           @end
