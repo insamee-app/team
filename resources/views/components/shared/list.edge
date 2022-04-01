@@ -26,7 +26,7 @@
     <p class="text-lg lg:text-xl">Désolé, rien ne semble correpondre. <br /> S'il s'agit d'une recherche, il t'est possible d'en essayer une nouvelle.</p>
     <div class="{{ className }} text-sm lg:text-base">
       <p>Si tu penses que c'est une erreur, n'hésite pas à nous contacter.</p>
-      <a href="{{ route('contact-us') }}" class="mt-2 lg:mt-4 block">Nous contacter</a>
+      <a href="{{ route('contact-us') }}" class="mt-2 lg:mt-4 block" up-target="[layout-main]" up-instant up-preload>Nous contacter</a>
     </div>
   </div>
 @end

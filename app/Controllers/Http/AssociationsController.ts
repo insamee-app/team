@@ -1,10 +1,12 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { UserRole } from 'App/Enums/UserRole'
+import { UserStatus } from 'App/Enums/UserStatus'
 import Association from 'App/Models/Association'
 import Report from 'App/Models/Report'
 import School from 'App/Models/School'
 import Tag from 'App/Models/Tag'
 import Thematic from 'App/Models/Thematic'
+import User from 'App/Models/User'
 import AssociationStoreValidator from 'App/Validators/AssociationStoreValidator'
 import AssociationUpdateValidator from 'App/Validators/AssociationUpdateValidator'
 
@@ -77,8 +79,10 @@ export default class AssociationsController {
     return response.redirect().toRoute('AssociationsController.show', { id: association.id })
   }
 
-  public async show({ view, params, bouncer, auth }: HttpContextContract) {
+  public async show({ view, params, bouncer, auth, request }: HttpContextContract) {
     await bouncer.with('AssociationPolicy').authorize('view')
+
+    const { page, ...qs } = request.qs()
 
     const association = await Association.query()
       .where('id', params.id)
@@ -86,13 +90,22 @@ export default class AssociationsController {
       .preload('thematic')
       .preload('tags')
       .firstOrFail()
+    const profiles = await association
+      .related('profiles')
+      .query()
+      .preload('focusInterests')
+      .whereNotIn('user_id', User.query().select('id').where('status', UserStatus.Pending))
+      .paginate(page, this.PER_PAGE)
+
+    profiles.baseUrl(request.url()).queryString(qs)
+
     const report = await Report.query()
       .where('reporterId', auth.user!.id)
       .where('entityId', params.id)
       .whereNull('resolvedAt')
       .first()
 
-    return view.render('pages/associations/show', { association, report })
+    return view.render('pages/associations/show', { association, report, profiles })
   }
 
   public async edit({ view, params, bouncer }: HttpContextContract) {
