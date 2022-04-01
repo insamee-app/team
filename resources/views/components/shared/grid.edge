@@ -1,9 +1,9 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 items-start gap-8 lg:gap-12">
-  @if(up.targetIncludes('[layout-filters]') || up.targetIncludes('[layout-main]'))
+  @if(up.targetIncludes('[layout-filters]') || up.targetIncludes('[layout-main]') || up.targetIncludes('[page-body]'))
     {{{ await $slots.filters({ className: 'col-span-1 md:col-span-2 lg:col-span-1 lg:sticky lg:top-20' }) }}}
   @end
 
-  @if(up.targetIncludes('[layout-list]') || up.targetIncludes('[layout-main]'))
+  @if(up.targetIncludes('[layout-list]') || up.targetIncludes('[layout-main]') || up.targetIncludes('[page-body]'))
     <div class="contents" layout-list>
       <div class="col-span-1 md:col-span-2">
         {{{ await $slots.main() }}}
