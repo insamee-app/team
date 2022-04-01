@@ -17,7 +17,7 @@
       @end
     @end
 
-    <form action="{{ route('TutoratsController.store') }}" method="POST">
+    <form action="{{ route('TutoratsController.store') }}" method="POST" up-target="[layout-main]">
       {{ csrfField() }}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @form.group({name: 'subjectId'})
