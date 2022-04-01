@@ -27,7 +27,7 @@
             variant: 'mee',
           })
 
-          <form action="{{ route('ProfilesAvatarsController.destroy', { id: profile.id }) }}?_method=DELETE" method="POST">
+          <form action="{{ route('ProfilesAvatarsController.destroy', { id: profile.id }) }}?_method=DELETE" method="POST" up-target="[layout-main]">
             {{ csrfField() }}
 
             <button type="submit" class="text-sm text-mee-primary-base">Supprimer sa photo</button>
@@ -36,7 +36,7 @@
       </section>
     @endif
 
-    <form action="{{ route('ProfilesAvatarsController.update', { id: profile.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly">
+    <form action="{{ route('ProfilesAvatarsController.update', { id: profile.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly" up-target="[layout-main]">
       {{ csrfField() }}
 
       <h3 class="text-xl lg:text-3xl font-bold">Nouvelle photo</h3>
