@@ -1,5 +1,5 @@
 @if(items.length)
-  <ul class="grid grid-cols-1 md:grid-cols-2 gap-8 {{ className }}">
+  <ul class="grid grid-cols-1 md:grid-cols-2 gap-8 {{ className }}" layout-list>
     @each(item in items)
       <li>
         {{{ await $slots.main(item) }}}
@@ -16,7 +16,7 @@
     @set('className', 'text-tutorat-primary-grey-dark')
   @end
 
-  <div class="max-w-lg mx-auto flex flex-col space-y-6 lg:space-y-10 text-center">
+  <div class="max-w-lg mx-auto flex flex-col space-y-6 lg:space-y-10 text-center" layout-list>
     <p class="text-lg lg:text-xl">Désolé, rien ne semble correpondre. <br /> S'il s'agit d'une recherche, il t'est possible d'en essayer une nouvelle.</p>
     <div class="{{ className }} text-sm lg:text-base">
       <p>Si tu penses que c'est une erreur, n'hésite pas à nous contacter.</p>

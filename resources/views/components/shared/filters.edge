@@ -28,7 +28,7 @@
     @end
   @end
 
-  <form x-cloak x-transition.origin.center method="GET" action="{{ route(controller + '.index') }}" class="w-full lg:flex flex-col items-center justify-center" :class="showFilters ? 'flex' : 'hidden'">
+  <form x-cloak x-transition.origin.center method="GET" action="{{ route(controller + '.index') }}" class="w-full lg:flex flex-col items-center justify-center" :class="showFilters ? 'flex' : 'hidden'" up-target="[layout-list]" up-history="true">
 
     @inject({ placeholderColor: 'text-slate-600'})
     <div class="w-full flex flex-col gap-4">
@@ -47,10 +47,7 @@
     @end
   </form>
 
-  {{--  Used to show button only if filters are applied  --}}
-  @if(Object.keys(request.except(['page'])).length > 0)
-    <a href="{{ request.url() }}" x-show="!showFilters" x-transtion.origin.center class="mt-4 {{ color }}" >
-      Annuler les filtres
-    </a>
-  @end
+  <a x-cloak href="{{ request.url() }}" x-show="!showFilters" x-transtion.origin.center class="mt-4 {{ color }}" up-target="[layout-main]" up-instant>
+    Annuler les filtres
+  </a>
 </div>
