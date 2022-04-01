@@ -1,0 +1,3 @@
+<a {{ $props.serializeExcept(['target']) }} up-target="{{ $props.target }}" up-instant>
+  {{{ await $slots.main() }}}
+</a>
