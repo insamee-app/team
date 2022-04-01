@@ -1,11 +1,17 @@
 @if(items.length)
-  <ul class="grid grid-cols-1 md:grid-cols-2 gap-8 {{ className }}" layout-list>
-    @each(item in items)
-      <li>
-        {{{ await $slots.main(item) }}}
-      </li>
-    @end
-  </ul>
+  <div layout-list>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-8 {{ className }}">
+      @each(item in items)
+        <li>
+          {{{ await $slots.main(item) }}}
+        </li>
+      @end
+    </ul>
+
+    @if($slots.pagination)
+      {{{ await $slots.pagination({ className: 'mt-8'}) }}}
+    @endif
+  </div>
 @else
   @set('className', 'text-slate-600')
   @if(variant === 'mee')
