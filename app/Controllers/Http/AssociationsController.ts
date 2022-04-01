@@ -11,27 +11,35 @@ import AssociationUpdateValidator from 'App/Validators/AssociationUpdateValidato
 export default class AssociationsController {
   private PER_PAGE = 10
 
-  public async index({ view, request, bouncer, auth }: HttpContextContract) {
+  public async index({ up, view, request, bouncer, auth }: HttpContextContract) {
     if (auth.isGuest) {
       return view.render('pages/associations/home')
     }
 
     await bouncer.with('AssociationPolicy').authorize('viewList')
 
-    const { page = 1, ...qs } = request.qs()
+    let associations
+    if (up.targetIncludes('[layout-list]') || up.targetIncludes('[layout-main]')) {
+      const { page = 1, ...qs } = request.qs()
 
-    const associations = await Association.query()
-      .filter(qs)
-      .preload('school')
-      .preload('thematic')
-      .preload('tags')
-      .paginate(page, this.PER_PAGE)
+      associations = await Association.query()
+        .filter(qs)
+        .preload('school')
+        .preload('thematic')
+        .preload('tags')
+        .paginate(page, this.PER_PAGE)
 
-    associations.baseUrl(request.url()).queryString(qs)
+      associations.baseUrl(request.url()).queryString(qs)
+    }
 
-    const schools = await School.query().select('id', 'name').orderBy('name')
-    const thematics = await Thematic.query().select('id', 'name').orderBy('name')
-    const tags = await Tag.query().select('id', 'name').orderBy('name')
+    let schools
+    let thematics
+    let tags
+    if (up.targetIncludes('[layout-filters]') || up.targetIncludes('[layout-main]')) {
+      schools = await School.query().select('id', 'name').orderBy('name')
+      thematics = await Thematic.query().select('id', 'name').orderBy('name')
+      tags = await Tag.query().select('id', 'name').orderBy('name')
+    }
 
     return view.render('pages/associations/index', { associations, schools, thematics, tags })
   }
