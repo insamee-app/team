@@ -47,7 +47,8 @@
       @slot('main', event)
         @elements.anchor({
           href: route('EventsController.show', { id: event.id }),
-          class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-evenements-primary-base h-full'
+          class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-evenements-primary-base h-full',
+          target: '[layout-main]'
         })
           @!events.card({
             event,

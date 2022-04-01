@@ -50,7 +50,8 @@
       @slot('main', association)
         @elements.anchor({
           href: route('AssociationsController.show', { id: association.id }),
-          class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base h-full'
+          class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base h-full',
+          target: '[layout-main]'
         })
           @!associations.card({
             association,
