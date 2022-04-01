@@ -21,7 +21,6 @@
           })
             @slot('main', className)
               @elements.anchor({
-                target: 'layout-main',
                 href: route('AssociationsController.create'),
                 class: className
               })
@@ -50,7 +49,6 @@
     })
       @slot('main', association)
         @elements.anchor({
-          target: 'layout-main',
           href: route('AssociationsController.show', { id: association.id }),
           class: 'block rounded-2xl focus-within:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-associations-primary-base h-full'
         })
