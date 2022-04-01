@@ -27,7 +27,7 @@
             variant: 'associations',
           })
 
-          <form action="{{ route('AssociationsPicturesController.destroy', { id: association.id }) }}?_method=DELETE" method="POST" up-submit>
+          <form action="{{ route('AssociationsPicturesController.destroy', { id: association.id }) }}?_method=DELETE" method="POST" up-target="[layout-main]">
             {{ csrfField() }}
 
             <button type="submit" class="text-sm text-associations-primary-base">Supprimer l'image</button>
@@ -36,7 +36,7 @@
       </section>
     @endif
 
-    <form action="{{ route('AssociationsPicturesController.update', { id: association.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly" up-submit>
+    <form action="{{ route('AssociationsPicturesController.update', { id: association.id }) }}?_method=PUT" method="POST" enctype="multipart/form-data" class="flex flex-col justify-evenly" up-target="[layout-main]">
       {{ csrfField() }}
 
       <h3 class="text-xl lg:text-3xl font-bold">Nouvelle image</h3>

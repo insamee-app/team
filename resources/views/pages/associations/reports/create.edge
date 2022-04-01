@@ -16,7 +16,7 @@
       @end
     @end
 
-    <form action="{{ route('ReportsAssociationsController.store', { id: request.routeParams.id }) }}" method="POST" up-submit>
+    <form action="{{ route('ReportsAssociationsController.store', { id: request.routeParams.id }) }}" method="POST" up-target="[layout-main]">
       {{ csrfField() }}
 
       @form.group({ name: 'reasonId' })
