@@ -31,18 +31,18 @@ export default class ProfileValidator {
       .members(
         schema.string({}, [rules.uuid(), rules.exists({ table: 'associations', column: 'id' })])
       ),
-    facebookUrl: schema.string.optional({ trim: true }, [
+    facebookUrl: schema.string.nullableAndOptional({ trim: true }, [
       rules.url({
         allowedHosts: ['facebook.com', 'www.facebook.com'],
       }),
     ]),
-    instagramUrl: schema.string.optional({ trim: true }, [
+    instagramUrl: schema.string.nullableAndOptional({ trim: true }, [
       rules.url({ allowedHosts: ['instagram.com', 'www.instagram.com'] }),
     ]),
-    twitterUrl: schema.string.optional({ trim: true }, [
+    twitterUrl: schema.string.nullableAndOptional({ trim: true }, [
       rules.url({ allowedHosts: ['twitter.com', 'www.twitter.com'] }),
     ]),
-    linkedinUrl: schema.string.optional({ trim: true }, [
+    linkedinUrl: schema.string.nullableAndOptional({ trim: true }, [
       rules.url({
         allowedHosts: ['linkedin.com', 'www.linkedin.com'],
       }),
