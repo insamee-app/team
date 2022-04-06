@@ -130,7 +130,7 @@ export default class ProfilesController {
       ...payload
     } = await request.validate(ProfileValidator)
 
-    profile!.merge(payload)
+    profile!.merge(payload as unknown as any)
 
     await profile!.save()
     await profile?.related('skills').sync(skills)
