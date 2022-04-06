@@ -10,10 +10,12 @@
   @entryPointStyles('app')
   @entryPointScripts('app')
 </head>
-<body>
-  @include('partials/header')
+<body page-body>
+  @if(up.targetIncludes('[layout-header]') || up.targetIncludes('[page-body]'))
+    @include('partials/header')
+  @endif
 
-  <div class="h-screen pt-20">
+  <div class="h-screen pt-20" layout-main>
     <div class="flex flex-row justify-center">
       <a href="{{ route('home') }}" title="Redirection vers la page d'accueil">
         <img src="{{ asset('assets/images/logo_team.png') }}" alt="logo de la plateforme" width="128" height="128" loading="lazy" class="w-32 h-32">
@@ -25,6 +27,8 @@
     </main>
   </div>
 
-  @include('partials/footer')
+  @if(up.targetIncludes('[layout-footer]') || up.targetIncludes('[page-body]'))
+    @include('partials/footer')
+  @endif
 </body>
 </html>
