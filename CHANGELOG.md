@@ -1,4 +1,14 @@
+### Version 0.2.1
+- Merge tag '0.2.0' into develop
+- fix(filters): display issue
+- fix(schools): update user in seeder to be validate
+- chore: format
+- fix #53
+- fix #54
+- fix: ts error
+
 ### Version 0.2.0
+
 - Merge tag '0.1.1' into develop
 - chore: format
 - feat(unpoly): add provider

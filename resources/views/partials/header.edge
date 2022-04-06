@@ -242,7 +242,7 @@
                 </div>
               @end
               <div class="mt-8 grow flex flex-col justify-end">
-                <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST" class="flex justify-center items-center">
+                <form action="{{ route('AuthController.logout') }}?_method=DELETE" method="POST" class="flex justify-center items-center" up-target="page-body">
                   {{ csrfField() }}
                   <button type="submit" class="text-slate-500 text-sm">
                     Se déconnecter

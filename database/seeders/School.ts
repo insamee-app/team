@@ -14,7 +14,10 @@ export default class SchoolSeeder extends BaseSeeder {
         )
     )
       .with('profiles', 20, (profile) =>
-        profile.with('user', 1).with('focusInterests', 2).with('skills', 2)
+        profile
+          .with('user', 1, (user) => user.apply('active'))
+          .with('focusInterests', 2)
+          .with('skills', 2)
       )
       .createMany(3)
   }

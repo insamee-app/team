@@ -10,13 +10,17 @@
     @entryPointStyles('app')
     @entryPointScripts('app')
   </head>
-  <body>
+  <body page-body>
+  @if(up.targetIncludes('[layout-header]') || up.targetIncludes('[page-body]'))
     @include('partials/header')
+  @endif
 
-    <main class="overflow-hidden">
+    <main class="overflow-hidden" layout-main>
       @!section('content')
     </main>
 
+  @if(up.targetIncludes('[layout-footer]') || up.targetIncludes('[page-body]'))
     @include('partials/footer')
+  @endif
   </body>
 </html>
